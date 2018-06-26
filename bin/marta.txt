@@ -1,0 +1,4 @@
+upload_real_data
+step_multi,10
+display_model
+quit
