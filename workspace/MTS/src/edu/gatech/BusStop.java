@@ -1,17 +1,20 @@
 package edu.gatech;
 
 import java.util.Random;
+
+import javax.json.bind.annotation.JsonbProperty;
+
 import java.util.HashMap;
 
 public class BusStop {
-    private Integer ID;
-    private String stopName;
-    private Double xCoord;
-    private Double yCoord;
+	private Integer ID;
+	private String stopName;
+	private Double xCoord;
+	private Double yCoord;
     private Random randGenerator;
     private HashMap<Integer, int[]> rateCatchingBus;
     private HashMap<Integer, int[]> rateLeavingBus;
-    private Integer waiting;
+	private Integer waiting;
 
     public BusStop() {
         this.ID = -1;
@@ -114,6 +117,28 @@ public class BusStop {
         System.out.print("> stop - ID: " + Integer.toString(ID));
         System.out.print(" name: " + stopName + " waiting: " + Integer.toString(waiting));
         System.out.println(" xCoord: " + Double.toString(xCoord) + " yCoord: " + Double.toString(yCoord));
+    }
+    
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(this.ID);
+    	sb.append(',');
+    	sb.append("\"name\":\"");
+    	sb.append(this.stopName);
+    	sb.append('\"');
+    	sb.append(',');
+    	sb.append("\"xCoord\":");
+    	sb.append(this.xCoord);
+    	sb.append(',');
+    	sb.append("\"yCoord\":");
+    	sb.append(this.yCoord);
+    	sb.append(',');
+    	sb.append("\"waiting\":");
+    	sb.append(this.waiting);
+    	sb.append('}');
+    	return sb.toString();
     }
 
     public void addArrivalInfo(int timeSlot, int minOn, int avgOn, int maxOn, int minOff, int avgOff, int maxOff) {

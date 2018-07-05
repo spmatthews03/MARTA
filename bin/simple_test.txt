@@ -25,7 +25,7 @@ add_bus,7,0,0,0,10,50
 add_bus,11,1,0,0,10,30
 add_event,1,move_bus,7
 add_event,1,move_bus,11
-step_multi,200
+step_multi,20
 system_report
 display_model
 quit

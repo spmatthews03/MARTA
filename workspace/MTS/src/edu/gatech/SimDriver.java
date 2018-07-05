@@ -2,104 +2,117 @@ package edu.gatech;
 
 import java.util.Scanner;
 
-import msmith606.FileProps;
+import group_a7_8.FileProps;
+import group_a7_8.server.StateChangeListener;
+import group_a7_8.server.UpdateManager;
 
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-public class SimDriver {
+public class SimDriver implements StateChangeListener{
     private static SimQueue simEngine;
     private static BusSystem martaModel;
     private static Random randGenerator;
 
     public SimDriver() {
         simEngine = new SimQueue();
+        simEngine.setStateChangeListener(this);
         martaModel = new BusSystem();
+        martaModel.setStateChangeListener(this);
         randGenerator = new Random();
+    }
+    
+    private final String DELIMITER = ",";
+	private UpdateManager setUpdateManager;
+	private UpdateManager updateManager;
+    public boolean processCommand(String userCommandLine){
+    	//System.out.printf("processing command `%s`\n", userCommandLine);
+        String[] tokens;
+        tokens = userCommandLine.split(DELIMITER);
+
+        switch (tokens[0]) {
+            case "add_event":
+                simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
+                System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
+                System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
+                break;
+            case "add_stop":
+                int stopID = martaModel.makeStop(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]));
+                System.out.println(" new stop: " + Integer.toString(stopID) + " created");
+                break;
+            case "add_route":
+                int routeID = martaModel.makeRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
+                System.out.println(" new route: " + Integer.toString(routeID) + " created");
+                break;
+            case "add_bus":
+                int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
+                System.out.println(" new bus: " + Integer.toString(busID) + " created");
+                break;
+            case "extend_route":
+                martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
+                break;
+            case "upload_real_data":
+                uploadMARTAData();
+                break;
+            case "step_once":
+            	simEngine.triggerNextEvent(martaModel);
+                System.out.println(" queue activated for 1 event");
+                break;
+            case "step_multi":
+                System.out.println(" queue activated for " + Integer.parseInt(tokens[1]) + " event(s)");
+                for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
+                	// display the number of events completed for a given frequency
+                	if (tokens.length >= 3) {
+                		if (i % Integer.parseInt(tokens[2]) == 0) { System.out.println("> " + Integer.toString(i) + " events completed"); }
+                	}
+                	
+                	// execute the next event
+                	simEngine.triggerNextEvent(martaModel);
+                	
+                	// pause after each event for a given number of seconds
+                	if (tokens.length >= 4) {
+                		try { Thread.sleep(Integer.parseInt(tokens[3]) * 1000); }
+                			catch (InterruptedException e) { e.printStackTrace(); }
+                	}
+                	// regenerate the model display (Graphviz dot file) for a given frequency
+                	if (tokens.length >= 5) {
+                		if (i % Integer.parseInt(tokens[4]) == 0) { martaModel.displayModel();}
+                	}
+                }
+                break;
+            case "system_report":
+                System.out.println(" system report - stops, buses and routes:");
+                for (BusStop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
+                for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
+                for (BusRoute singleRoute: martaModel.getRoutes().values()) { singleRoute.displayInternalStatus(); }
+                break;
+            case "display_model":
+            	martaModel.displayModel();
+            	break;
+            case "quit":
+                System.out.println(" stop the command loop");
+                return true;
+            default:
+                System.out.println(" command not recognized");
+                return true;
+        }
+        return false;
     }
 
     public void runInterpreter() {
-        final String DELIMITER = ",";
         Scanner takeCommand = new Scanner(System.in);
-        String[] tokens;
-
+        boolean done = false;
         do {
             System.out.print("# main: ");
             String userCommandLine = takeCommand.nextLine();
-            tokens = userCommandLine.split(DELIMITER);
+            done = processCommand(userCommandLine);
 
-            switch (tokens[0]) {
-                case "add_event":
-                    simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
-                    System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
-                    System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
-                    break;
-                case "add_stop":
-                    int stopID = martaModel.makeStop(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]));
-                    System.out.println(" new stop: " + Integer.toString(stopID) + " created");
-                    break;
-                case "add_route":
-                    int routeID = martaModel.makeRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
-                    System.out.println(" new route: " + Integer.toString(routeID) + " created");
-                    break;
-                case "add_bus":
-                    int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
-                    System.out.println(" new bus: " + Integer.toString(busID) + " created");
-                    break;
-                case "extend_route":
-                    martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
-                    System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
-                    break;
-                case "upload_real_data":
-                    uploadMARTAData();
-                    break;
-                case "step_once":
-                    simEngine.triggerNextEvent(martaModel);
-                    System.out.println(" queue activated for 1 event");
-                    break;
-                case "step_multi":
-                    System.out.println(" queue activated for " + Integer.parseInt(tokens[1]) + " event(s)");
-                    for (int i = 0; i < Integer.parseInt(tokens[1]); i++) {
-                    	// display the number of events completed for a given frequency
-                    	if (tokens.length >= 3) {
-                    		if (i % Integer.parseInt(tokens[2]) == 0) { System.out.println("> " + Integer.toString(i) + " events completed"); }
-                    	}
-                    	
-                    	// execute the next event
-                    	simEngine.triggerNextEvent(martaModel);
-                    	
-                    	// pause after each event for a given number of seconds
-                    	if (tokens.length >= 4) {
-                    		try { Thread.sleep(Integer.parseInt(tokens[3]) * 1000); }
-                    			catch (InterruptedException e) { e.printStackTrace(); }
-                    	}
-                    	// regenerate the model display (Graphviz dot file) for a given frequency
-                    	if (tokens.length >= 5) {
-                    		if (i % Integer.parseInt(tokens[4]) == 0) { martaModel.displayModel();}
-                    	}
-                    }
-                    break;
-                case "system_report":
-                    System.out.println(" system report - stops, buses and routes:");
-                    for (BusStop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
-                    for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
-                    for (BusRoute singleRoute: martaModel.getRoutes().values()) { singleRoute.displayInternalStatus(); }
-                    break;
-                case "display_model":
-                	martaModel.displayModel();
-                	break;
-                case "quit":
-                    System.out.println(" stop the command loop");
-                    break;
-                default:
-                    System.out.println(" command not recognized");
-                    break;
-            }
-
-        } while (!tokens[0].equals("quit"));
+        } while (!done);
 
         takeCommand.close();
     }
@@ -264,5 +277,47 @@ public class SimDriver {
         int upperRange = randGenerator.nextInt(upper - middle + 1) + middle;
         return (lowerRange + upperRange) /2;
     }
+    
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"time\":");
+    	sb.append(simEngine.getTime());
+    	sb.append(',');
+    	sb.append("\"system\":");
+       	sb.append(martaModel.toJSON());
+       	if(simEngine.hasEvents()) {
+       		sb.append(",\"events\":[");
+       		boolean isFirst = true;
+       		for(SimEvent event : simEngine.getEvents()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(event.toJSON());
+       		}
+       		sb.append(']');
+       	}
+        sb.append('}');
+    	return sb.toString();
+    }
 
+	@Override
+	public void updateState() {
+		String message = toJSON();
+		//System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
+		try {
+			updateManager.post(message);
+		} catch (IOException e) {
+			System.out.printf("Some error with posting message to socket");
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void setUpdateManager(UpdateManager updateManager) {
+		this.updateManager= updateManager;
+	}
 }

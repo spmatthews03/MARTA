@@ -1,6 +1,11 @@
 package edu.gatech;
 
 import java.util.HashMap;
+
+
+
+import group_a7_8.server.StateChangeListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.BufferedWriter;
@@ -11,11 +16,17 @@ public class BusSystem {
     private HashMap<Integer, BusStop> stops;
     private HashMap<Integer, BusRoute> routes;
     private HashMap<Integer, Bus> buses;
+    private StateChangeListener listener;
+
 
     public BusSystem() {
         stops = new HashMap<Integer, BusStop>();
         routes = new HashMap<Integer, BusRoute>();
         buses = new HashMap<Integer, Bus>();
+    }
+    
+    public void setStateChangeListener(StateChangeListener listener) {
+        this.listener = listener;
     }
 
     public BusStop getStop(int stopID) {
@@ -36,22 +47,28 @@ public class BusSystem {
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
         stops.put(uniqueID, new BusStop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
+        listener.updateState();
         return uniqueID;
     }
 
     public int makeRoute(int uniqueID, int inputNumber, String inputName) {
         // int uniqueID = routes.size();
         routes.put(uniqueID, new BusRoute(uniqueID, inputNumber, inputName));
+        listener.updateState();
         return uniqueID;
     }
 
     public int makeBus(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         // int uniqueID = buses.size();
         buses.put(uniqueID, new Bus(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+        listener.updateState();
         return uniqueID;
     }
 
-    public void appendStopToRoute(int routeID, int nextStopID) { routes.get(routeID).addNewStop(nextStopID); }
+    public void appendStopToRoute(int routeID, int nextStopID) { 
+    	routes.get(routeID).addNewStop(nextStopID); 
+    	listener.updateState();
+    }
 
     public HashMap<Integer, BusStop> getStops() { return stops; }
 
@@ -119,5 +136,58 @@ public class BusSystem {
     	} catch (Exception e) {
     		System.out.println(e);
     	}
+    }
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+
+    	if(buses!=null && buses.size()>0) {
+        	sb.append("\"buses\":[");    
+        	boolean isFirst = true;
+        	for(Bus bus : buses.values()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(bus.toJSON());
+        	}
+        	sb.append(']');
+    	}
+    	if(sb.length()>1) sb.append(',');
+    	if(routes!=null && routes.size()>0) {
+        	sb.append("\"routes\":[");    
+        	boolean isFirst = true;
+        	for(BusRoute route : routes.values()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(route.toJSON());
+        	}
+        	sb.append(']');
+    	}
+    	if(sb.length()>1) sb.append(',');
+    	if(stops!=null && stops.size()>0) {
+        	sb.append("\"stops\":[");    
+        	boolean isFirst = true;
+        	for(BusStop stop : stops.values()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(stop.toJSON());
+        	}
+        	sb.append(']');
+    	}
+
+    	
+    	sb.append('}');
+    	return sb.toString();
     }
 }

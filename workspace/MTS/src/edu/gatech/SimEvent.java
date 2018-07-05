@@ -13,6 +13,7 @@ public class SimEvent {
         this.eventID = inputID;
     }
 
+    
     public void setRank(int inputRank) { this.timeRank = inputRank; }
 
     public void setType(String inputType) { this.eventType = inputType; }
@@ -43,6 +44,20 @@ public class SimEvent {
             }
         }
         return result;
+    }
+    
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(eventID);
+    	sb.append(",\"time\":");
+    	sb.append(timeRank);
+    	sb.append(",\"type\":\"");
+    	sb.append(eventType);
+    	sb.append('\"');
+    	sb.append('}');
+    	return sb.toString();
     }
 
 }

@@ -2,6 +2,7 @@ package edu.gatech;
 
 import java.util.HashMap;
 
+
 public class BusRoute {
     private Integer ID;
     private Integer routeNumber;
@@ -65,7 +66,31 @@ public class BusRoute {
         }
         System.out.println("]");
     }
-
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(this.ID);
+    	sb.append(',');
+    	sb.append("\"routeNumber\":");
+    	sb.append(this.routeNumber);
+    	if(stopsOnRoute!=null && stopsOnRoute.size()>0) {
+        	sb.append(',');
+        	sb.append("\"stops\":[");    
+        	for(int key = 0; key<stopsOnRoute.size();key++) {
+        		if(key>0) {
+                	sb.append(',');        			
+        		}
+        		if(stopsOnRoute.containsKey(key)) {
+        	    	sb.append(stopsOnRoute.get(key));
+        		}	
+        	}
+        	sb.append(']');
+    	}
+    	sb.append('}');
+    	return sb.toString();
+    }
+    
     //Override the equals method to compare the object
     @Override
     public boolean equals(Object object) {
