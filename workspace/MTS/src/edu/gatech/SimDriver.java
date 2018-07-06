@@ -54,8 +54,8 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new bus: " + Integer.toString(busID) + " created");
                 break;
             case "extend_route":
-                martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
+                martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
             case "upload_real_data":
                 uploadMARTAData();

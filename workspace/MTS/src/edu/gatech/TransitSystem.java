@@ -76,7 +76,51 @@ public class TransitSystem {
     }
 
     public void appendStopToRoute(int routeID, int nextStopID) { 
-    	routes.get(routeID).addNewStop(nextStopID); 
+    	
+//    	routes.get(routeID).addNewStop(nextStopID);
+		BusRoute route = routes.get(routeID);
+		route.addNewStop(nextStopID);
+
+    	//if this is the second or subsequent stop being added, define a path between the new stop and the prior stop
+    	if(route.getLength()>1) {
+    		System.out.printf("Route %d-%s now has %d stops, adding paths ...\n", route.getID(),route.getName(),route.getLength());
+    		
+    		//create the path between tbe latest stop and the prior one
+    		//by construction, the latest stop will have index n-1, and the other one will have index n-2
+    		int latestStopRouteIndex = route.getLength()-1;
+    		int priorStopRouteIndex = route.getLength()-2;
+    		int latestStopID = route.getStopID(latestStopRouteIndex);
+    		int priorStopID = route.getStopID(priorStopRouteIndex);
+    		Stop latestStop = getStop(latestStopID);
+    		Stop priorStop = getStop(priorStopID);
+    		PathKey path1= new PathKey(priorStop, latestStop);
+    		paths.put(path1, new Path(this,path1));
+    		System.out.printf("Added path %s to route %d-%s\n", path1,route.getID(),route.getName());
+    		//the routes are such that they loop from the last stop to the beginning
+    		//add that path too
+    		int beginStopRouteIndex = 0;
+    		int beginStopID = route.getStopID(beginStopRouteIndex);
+    		Stop beginStop = getStop(beginStopID);
+    		PathKey path2= new PathKey(latestStop,beginStop);
+    		paths.put(path2, new Path(this,path2));
+    		System.out.printf("Added path %s to route %d-%s\n", path2,route.getID(),route.getName());
+    		//now the path from the prior stop to the begin stop is no longer valid.  remove it
+    		if(route.getLength()>2) {
+	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
+	    		System.out.printf("removing %s\n",pathToRemove);
+	    		for(PathKey pathKey : paths.keySet()) {
+	    			if(pathKey.equals(pathToRemove)) {
+	        			paths.remove(pathKey);
+	        			System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,route.getID(),route.getName());
+	        			break;
+	    			}
+	    		}
+	    		System.out.printf("paths:\n");
+	    		for(Path path:paths.values()) {
+	    			System.out.printf("\t%s\n",path);
+	    		}    		
+    		}
+    	}
     	listener.updateState();
     }
 
