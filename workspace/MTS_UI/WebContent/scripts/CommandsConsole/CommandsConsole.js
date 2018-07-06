@@ -11,9 +11,9 @@
             '<div class="mts-console" layout="column">'+
               '<div>Commands Console:</div>'+
               '<div layout="row">'+
-                 '<div layout="column" flex>'+
+                 '<md-content flex>'+
                  	'<command ng-repeat="c in commands | filter:isValidCommand track by $index" data-command="c" data-index="$index"></command>'+
-                 '</div>'+
+                 '</md-content>'+
                  '<mts-dashboard></mts-dashboard>'+
               '</div>'+
             '</div>'
@@ -29,12 +29,12 @@
 	    	    '<div class="mts-command" ng-class="{ \'current-command\': isCurrentCommand()}" layout="row" layout-align="center"><div flex="5"><md-button ng-click="execute()" ng-show="isCurrentCommand()"><md-icon>play_circle_outline</md-icon></md-button></div>'+
 	            '<div flex ng-switch="commandType">'+
 	               '<add-stop-command class="command-ct" ng-switch-when="add_stop" data-id="parameters[1]" data-name="parameters[2]" data-waiting="parameters[3]" data-x-coord="parameters[4]" data-y-coord="parameters[5]"></add-stop-command>'+
-	               '<add-route-command ng-switch-when="add_route" data-id="parameters[1]" data-number="parameters[2]" data-name="parameters[3]"></add-route-command>'+
-	               '<add-bus-command ng-switch-when="add_bus" data-id="parameters[1]" data-route="parameters[2]" data-location="parameters[3]" data-passengers="parameters[4]" data-capacity="parameters[5]" data-speed="parameters[6]"></add-bus-command>'+
-	               '<add-event-command ng-switch-when="add_event" data-id="parameters[3]" data-rank="parameters[1]" data-type="parameters[2]"></add-event-command>'+
-	               '<extend-route-command ng-switch-when="extend_route" data-route-id="parameters[1]" data-stop-id="parameters[2]"></extend-route-command>'+
-	               '<step-multi-command ng-switch-when="step_multi" data-count="parameters[1]"></step-multi-command>'+
-	               '<div ng-switch-default>{{command}}</div>'+
+	               '<add-route-command class="command-ct" ng-switch-when="add_route" data-id="parameters[1]" data-number="parameters[2]" data-name="parameters[3]"></add-route-command>'+
+	               '<add-bus-command class="command-ct" ng-switch-when="add_bus" data-id="parameters[1]" data-route="parameters[2]" data-location="parameters[3]" data-passengers="parameters[4]" data-capacity="parameters[5]" data-speed="parameters[6]"></add-bus-command>'+
+	               '<add-event-command class="command-ct" ng-switch-when="add_event" data-id="parameters[3]" data-rank="parameters[1]" data-type="parameters[2]"></add-event-command>'+
+	               '<extend-route-command class="command-ct" ng-switch-when="extend_route" data-route-id="parameters[1]" data-stop-id="parameters[2]"></extend-route-command>'+
+	               '<step-multi-command class="command-ct" ng-switch-when="step_multi" data-count="parameters[1]"></step-multi-command>'+
+	               '<div class="command-ct" ng-switch-default>{{command}}</div>'+
 	            '</div></div>'
 	  	}
   };
