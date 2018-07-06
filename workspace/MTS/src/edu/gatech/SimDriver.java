@@ -306,6 +306,7 @@ public class SimDriver implements StateChangeListener{
 
 	@Override
 	public void updateState() {
+		if(updateManager==null) return;
 		String message = toJSON();
 		//System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
 		try {
