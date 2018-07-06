@@ -107,17 +107,12 @@ public class TransitSystem {
     		//now the path from the prior stop to the begin stop is no longer valid.  remove it
     		if(route.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
-	    		System.out.printf("removing %s\n",pathToRemove);
 	    		for(PathKey pathKey : paths.keySet()) {
 	    			if(pathKey.equals(pathToRemove)) {
 	        			paths.remove(pathKey);
 	        			System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,route.getID(),route.getName());
 	        			break;
 	    			}
-	    		}
-	    		System.out.printf("paths:\n");
-	    		for(Path path:paths.values()) {
-	    			System.out.printf("\t%s\n",path);
 	    		}    		
     		}
     	}
