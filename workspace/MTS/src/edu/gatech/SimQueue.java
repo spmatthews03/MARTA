@@ -27,7 +27,7 @@ public class SimQueue {
     	return eventQueue.toArray(events);
     }
     
-    public void triggerNextEvent(BusSystem busModel) {
+    public void triggerNextEvent(TransitSystem busModel) {
         if (eventQueue.size() > 0) {
             SimEvent activeEvent = eventQueue.poll();
             time = activeEvent.getRank();
@@ -44,7 +44,7 @@ public class SimQueue {
 
                     int activeLocation = activeBus.getLocation();
                     int activeStopID = activeRoute.getStopID(activeLocation);
-                    BusStop activeStop = busModel.getStop(activeStopID);
+                    Stop activeStop = busModel.getStop(activeStopID);
                     System.out.println(" the bus is currently at stop: " + Integer.toString(activeStop.getID()) + " - " + activeStop.getName());
 
                     // drop off and pickup new passengers at current stop
@@ -56,7 +56,7 @@ public class SimQueue {
                     // determine next stop
                     int nextLocation = activeRoute.getNextLocation(activeLocation);
                     int nextStopID = activeRoute.getStopID(nextLocation);
-                    BusStop nextStop = busModel.getStop(nextStopID);
+                    Stop nextStop = busModel.getStop(nextStopID);
                     System.out.println(" the bus is heading to stop: " + Integer.toString(nextStopID) + " - " + nextStop.getName() + "\n");
 
                     // find distance to stop to determine next event time

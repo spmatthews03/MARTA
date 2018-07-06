@@ -1,9 +1,11 @@
 package edu.gatech;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 
-
-
+import group_a7_8.Hazard;
+import group_a7_8.Path;
+import group_a7_8.PathKey;
 import group_a7_8.server.StateChangeListener;
 
 import java.util.ArrayList;
@@ -12,24 +14,28 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-public class BusSystem {
-    private HashMap<Integer, BusStop> stops;
+public class TransitSystem {
+    private HashMap<Integer, Stop> stops;
     private HashMap<Integer, BusRoute> routes;
     private HashMap<Integer, Bus> buses;
+    private Hashtable<PathKey, Path> paths;
+    private Hashtable<PathKey, ArrayList<Hazard>> hazards;
     private StateChangeListener listener;
 
 
-    public BusSystem() {
-        stops = new HashMap<Integer, BusStop>();
+    public TransitSystem() {
+        stops = new HashMap<Integer, Stop>();
         routes = new HashMap<Integer, BusRoute>();
         buses = new HashMap<Integer, Bus>();
+        paths = new Hashtable<PathKey,Path>();
+        hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
     }
     
     public void setStateChangeListener(StateChangeListener listener) {
         this.listener = listener;
     }
 
-    public BusStop getStop(int stopID) {
+    public Stop getStop(int stopID) {
         if (stops.containsKey(stopID)) { return stops.get(stopID); }
         return null;
     }
@@ -43,10 +49,14 @@ public class BusSystem {
         if (buses.containsKey(busID)) { return buses.get(busID); }
         return null;
     }
+    public Path getPath(PathKey pathKey) {
+        if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
+        return null;
+    }
 
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
-        stops.put(uniqueID, new BusStop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
+        stops.put(uniqueID, new Stop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
         listener.updateState();
         return uniqueID;
     }
@@ -70,11 +80,51 @@ public class BusSystem {
     	listener.updateState();
     }
 
-    public HashMap<Integer, BusStop> getStops() { return stops; }
+    public void addHazard(PathKey pathKey,double delayFactor) {
+    	if(!hazards.contains(pathKey)) {
+    		hazards.put(pathKey, new ArrayList<Hazard>());
+    	}
+    	hazards.get(pathKey).add(new Hazard(pathKey,delayFactor));
+    }
+
+    public void clearHazard(PathKey pathKey,double delayFactor) {
+    	if(hazards.contains(pathKey)) {
+    		ArrayList<Hazard> pathHazards = hazards.get(pathKey);
+    		for(Hazard hazard : pathHazards) {
+    			if(hazard.getDelayFactor()==delayFactor) {
+    				pathHazards.remove(hazard);
+    			}
+    		}
+    	}
+    }
+    
+    public void setSpeedLimit(PathKey pathKey,int speedLimit) {
+    	if(paths.contains(pathKey)) {
+    		paths.get(pathKey).setSpeedLimit(speedLimit);
+    	}
+    }
+
+    public void clearSpeedLimit(PathKey pathKey) {
+    	if(paths.contains(pathKey)) {
+    		paths.get(pathKey).clearSpeedLimit();
+    	}
+    }
+
+    public HashMap<Integer, Stop> getStops() { return stops; }
 
     public HashMap<Integer, BusRoute> getRoutes() { return routes; }
 
     public HashMap<Integer, Bus> getBuses() { return buses; }
+
+    public Hashtable<PathKey, Path> getPaths() { return paths; }
+    
+    public ArrayList<Hazard> getHazards(PathKey pathKey){
+    	if(hazards.contains(pathKey)) {
+    		return hazards.get(pathKey);
+    	}
+    	return null;
+    }
+    
     
     public void displayModel() {
     	ArrayList<MiniPair> busNodes, stopNodes;
@@ -112,7 +162,7 @@ public class BusSystem {
             bw.newLine();
             
             stopNodes = new ArrayList<MiniPair>();
-            for (BusStop s: stops.values()) { stopNodes.add(new MiniPair(s.getID(), s.getWaiting())); }
+            for (Stop s: stops.values()) { stopNodes.add(new MiniPair(s.getID(), s.getWaiting())); }
             Collections.sort(stopNodes, compareEngine);
 
             colorSelector = 0;
@@ -174,7 +224,7 @@ public class BusSystem {
     	if(stops!=null && stops.size()>0) {
         	sb.append("\"stops\":[");    
         	boolean isFirst = true;
-        	for(BusStop stop : stops.values()) {
+        	for(Stop stop : stops.values()) {
         		if(isFirst) {
         			isFirst = !isFirst;
         		}
@@ -190,4 +240,5 @@ public class BusSystem {
     	sb.append('}');
     	return sb.toString();
     }
+    
 }

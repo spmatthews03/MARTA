@@ -7,6 +7,7 @@ import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.IOException;
@@ -15,13 +16,13 @@ import java.util.Properties;
 
 public class SimDriver implements StateChangeListener{
     private static SimQueue simEngine;
-    private static BusSystem martaModel;
+    private static TransitSystem martaModel;
     private static Random randGenerator;
 
     public SimDriver() {
         simEngine = new SimQueue();
         simEngine.setStateChangeListener(this);
-        martaModel = new BusSystem();
+        martaModel = new TransitSystem();
         martaModel.setStateChangeListener(this);
         randGenerator = new Random();
     }
@@ -87,7 +88,7 @@ public class SimDriver implements StateChangeListener{
                 break;
             case "system_report":
                 System.out.println(" system report - stops, buses and routes:");
-                for (BusStop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
+                for (Stop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
                 for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
                 for (BusRoute singleRoute: martaModel.getRoutes().values()) { singleRoute.displayInternalStatus(); }
                 break;

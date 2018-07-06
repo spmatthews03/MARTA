@@ -6,7 +6,7 @@ import javax.json.bind.annotation.JsonbProperty;
 
 import java.util.HashMap;
 
-public class BusStop {
+public class Stop {
 	private Integer ID;
 	private String stopName;
 	private Double xCoord;
@@ -16,11 +16,11 @@ public class BusStop {
     private HashMap<Integer, int[]> rateLeavingBus;
 	private Integer waiting;
 
-    public BusStop() {
+    public Stop() {
         this.ID = -1;
     }
 
-    public BusStop(int uniqueValue) {
+    public Stop(int uniqueValue) {
         this.ID = uniqueValue;
         this.stopName = "";
         this.xCoord = 0.0;
@@ -31,7 +31,7 @@ public class BusStop {
         this.waiting = 0;
     }
 
-    public BusStop(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
+    public Stop(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         this.ID = uniqueValue;
         this.stopName = inputName;
         this.xCoord = inputXCoord;
@@ -68,7 +68,7 @@ public class BusStop {
         System.out.println("get new people - exchange with bus when it passes by");
     }
 
-    public Double findDistance(BusStop destination) {
+    public Double findDistance(Stop destination) {
         // coordinates are measure in abstract units and conversion factor translates to statute miles
         final double distanceConversion = 70.0;
         return distanceConversion * Math.sqrt(Math.pow((this.xCoord - destination.getXCoord()), 2) + Math.pow((this.yCoord - destination.getYCoord()), 2));
@@ -159,7 +159,7 @@ public class BusStop {
         if (object == null || object.getClass() != getClass()) {
             result = false;
         } else {
-            BusStop me = (BusStop) object;
+            Stop me = (Stop) object;
             if (this.ID == me.getID()) {
                 result = true;
             }
