@@ -1,0 +1,40 @@
+.mts-command.current-command{
+    border-left: 6px solid red;
+    background-color: lightgrey;
+}
+
+.command-ct{
+	height:100%;
+}
+
+.mts-console{
+	width:100%;
+	height:450px;
+	overflow: scroll;
+    font-family: monospace;
+}
+
+.mts-console .mts-command .md-button{
+	margin:0px;
+	padding:0px;
+	min-width:0px;
+	min-height:0px;
+	line-height:24px;
+}
+
+.dashboard .tile .label{
+	font-size: 10pt;
+}
+
+.dashboard {
+	height:426px;
+}
+.dashboard .tile{
+	width:60px;
+	background-color: rgb(240,240,240);
+    padding: 6px;
+}
+
+.command-ct{
+	font-size:12pt;
+}

@@ -61,5 +61,32 @@ public class Path {
 		return pathKey.toString();
 	}
 	
+	public String toJSON() {
+		StringBuilder sb = new StringBuilder();
+		sb.append('{');
+		sb.append("\"pathKey\":");
+		sb.append(pathKey.toJSON());
+		if(getSpeedLimit()!=null) {
+			sb.append(",\"speedLimit\":");
+			sb.append(this.speedLimit);
+		}
+		ArrayList<Hazard> hazards = system.getHazards(pathKey);
+		if(hazards!=null && hazards.size()>0) {
+			sb.append(",\"hazards\":[");
+			boolean isFirst = true;
+			for(Hazard hazard : hazards) {
+				if(isFirst) {
+					isFirst = !isFirst;
+				}
+				else {
+					sb.append(',');
+				}
+				sb.append(hazard.toJSON());
+			}
+			sb.append("]");
+		}
+		sb.append('}');
+		return sb.toString();
+	}
 	
 }

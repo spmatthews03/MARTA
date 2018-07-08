@@ -10,8 +10,7 @@
 	        routes:[],
 	        stops:[],
 	        paths:[],
-	        events:[],
-	        commands:[]
+	        events:[]
 	    }
 	   var process = function(update){
 		  	  //$log.info(update);
@@ -56,8 +55,7 @@
 		    };
 		    // ws = new WebSocket('ws://127.0.0.1:5808');
 		    var onopen = function(){
-		  	  console.log('socket opened!');
-		  	  //$log.info('session: ');
+		  	  //console.log('socket opened!');
 		    };
 		    
 		    var onmessage = function(evt){

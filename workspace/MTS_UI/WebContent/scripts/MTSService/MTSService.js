@@ -9,7 +9,9 @@
 	    	vehicles:[],
 	        routes:[],
 	        stops:[],
-	        events:[]
+	        paths:[],
+	        events:[],
+	        commands:[]
 	    }
 	   var process = function(update){
 		  	  //$log.info(update);
@@ -36,6 +38,13 @@
 		  			state.stops.push(stop);
 		  		}
 		  	  }
+		  	  if(update.system.paths && update.system.paths.length>0){
+			  		$log.info('updating paths');
+			  		state.paths.splice(0, state.paths.length);
+			  		for(path in update.system.paths){
+			  			state.paths.push(path);
+			  		}
+			  }
 		  	  if(update.events && update.events.length>0){
 		  		 //$log.info('updating events');
 		  		state.events.splice(0, state.events.length);
@@ -47,7 +56,8 @@
 		    };
 		    // ws = new WebSocket('ws://127.0.0.1:5808');
 		    var onopen = function(){
-		  	  //console.log('socket opened!');
+		  	  console.log('socket opened!');
+		  	  //$log.info('session: ');
 		    };
 		    
 		    var onmessage = function(evt){

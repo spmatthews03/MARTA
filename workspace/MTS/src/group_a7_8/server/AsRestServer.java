@@ -46,6 +46,7 @@ public class AsRestServer {
 	    resource_handler.setDirectoriesListed(true);
 	    resource_handler.setWelcomeFiles(new String[]{ "index.html" });
 	    resource_handler.setResourceBase("WebContent");
+	    resource_handler.setCacheControl("max_age=0");
 	    
 	    
 	    //Create a REST API Context Handler

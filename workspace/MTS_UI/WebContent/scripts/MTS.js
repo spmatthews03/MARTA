@@ -4,6 +4,15 @@
 	//defining the application controller
 	var appController = function($scope, $log, $attrs, $mdSidenav, fileReader){
 		//$log.info('MTSController');
+		$scope.showMenu = true;
+		$scope.newSimulation = function(){
+			$scope.showMenu = false;
+			$log.info("new simulation ...");
+		};
+		$scope.resumeSimulation = function(){
+			$log.info("resuming ptiot simulation ...");
+			$scope.showMenu = false;
+		};
 
 		$scope.getFile = function(){
 			$log.info('reading file '+$scope.file.name);

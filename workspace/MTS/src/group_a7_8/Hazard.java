@@ -16,5 +16,14 @@ public class Hazard {
 	public PathKey getPathKey() {
 		return pathKey;
 	}
-	
+	public String toJSON() {
+		StringBuilder sb = new StringBuilder();
+		sb.append('{');
+		sb.append("\"pathKey\":");
+		sb.append(pathKey.toJSON());
+		sb.append(",\"delayFactor\":");
+		sb.append(delayFactor);
+		sb.append('}');
+		return sb.toString();
+	}
 }

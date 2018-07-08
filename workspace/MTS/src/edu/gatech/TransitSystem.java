@@ -124,6 +124,7 @@ public class TransitSystem {
     		hazards.put(pathKey, new ArrayList<Hazard>());
     	}
     	hazards.get(pathKey).add(new Hazard(pathKey,delayFactor));
+    	listener.updateState();
     }
 
     public void clearHazard(PathKey pathKey,double delayFactor) {
@@ -132,6 +133,8 @@ public class TransitSystem {
     		for(Hazard hazard : pathHazards) {
     			if(hazard.getDelayFactor()==delayFactor) {
     				pathHazards.remove(hazard);
+    				listener.updateState();
+    				break;
     			}
     		}
     	}
@@ -140,12 +143,14 @@ public class TransitSystem {
     public void setSpeedLimit(PathKey pathKey,int speedLimit) {
     	if(paths.contains(pathKey)) {
     		paths.get(pathKey).setSpeedLimit(speedLimit);
+			listener.updateState();
     	}
     }
 
     public void clearSpeedLimit(PathKey pathKey) {
     	if(paths.contains(pathKey)) {
     		paths.get(pathKey).clearSpeedLimit();
+			listener.updateState();
     	}
     }
 
@@ -244,8 +249,8 @@ public class TransitSystem {
         	}
         	sb.append(']');
     	}
-    	if(sb.length()>1) sb.append(',');
     	if(routes!=null && routes.size()>0) {
+        	if(sb.length()>1) sb.append(',');
         	sb.append("\"routes\":[");    
         	boolean isFirst = true;
         	for(BusRoute route : routes.values()) {
@@ -259,8 +264,8 @@ public class TransitSystem {
         	}
         	sb.append(']');
     	}
-    	if(sb.length()>1) sb.append(',');
     	if(stops!=null && stops.size()>0) {
+        	if(sb.length()>1) sb.append(',');
         	sb.append("\"stops\":[");    
         	boolean isFirst = true;
         	for(Stop stop : stops.values()) {
@@ -274,7 +279,21 @@ public class TransitSystem {
         	}
         	sb.append(']');
     	}
-
+    	if(paths!=null && paths.size()>0) {
+        	if(sb.length()>1) sb.append(',');
+        	sb.append("\"paths\":[");    
+        	boolean isFirst = true;
+        	for(Path path : paths.values()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(path.toJSON());
+        	}
+        	sb.append(']');
+    	}
     	
     	sb.append('}');
     	return sb.toString();

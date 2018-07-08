@@ -23,7 +23,8 @@ public class UpdateManagerImpl implements UpdateManager {
 	@Override
 	public void connected(WebClientWebSocket socket) {
 		this.socket=socket;
-		//System.out.printf("socket connected\n");
+		System.out.printf("socket connected\n");
+		
 	}
 
 	@Override

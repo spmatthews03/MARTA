@@ -8,7 +8,7 @@
   		controller: 'dashboardController',
   		replace: true,
       template: 
-            '<div class="dashboard" layout="column" layout-align="start stretch">'+
+            '<div class="dashboard" layout="column" layout-align="start stretch">'+'<div>BANANA</div>'+
               '<div class="tile" layout="column" layout-align="center center"><div class="label">time</div>  <div class="value">{{mts.time}}</div></div>'+
               '<div class="tile" layout="column" layout-align="center center"><div class="label">buses</div> <div class="value">{{mts.vehicles.length}}</div></div>'+
               '<div class="tile" layout="column" layout-align="center center"><div class="label">stops</div> <div class="value">{{mts.stops.length}}</div></div>'+
