@@ -51,7 +51,7 @@ public class TransitSystem {
     }
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
-        return null;
+		return null;
     }
 
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
@@ -120,16 +120,29 @@ public class TransitSystem {
     }
 
     public void addHazard(PathKey pathKey,double delayFactor) {
-    	if(!hazards.contains(pathKey)) {
+    	if(!hazards.containsKey(pathKey)) {
     		hazards.put(pathKey, new ArrayList<Hazard>());
+    		//System.out.printf("creating a new set o hazards for %s\n",pathKey);
     	}
     	hazards.get(pathKey).add(new Hazard(pathKey,delayFactor));
     	listener.updateState();
     }
 
+    public PathKey getBusPathKey(int originBusID, int destinationBusID) {
+    	PathKey pathKey = null;
+    	for(PathKey pk : paths.keySet()) {
+    		if(pk.getOrigin().getID()==originBusID && pk.getDestination().getID()==destinationBusID) {
+    			pathKey = pk;
+    			break;
+    		}
+    	}
+    	return pathKey;
+    }
+    
     public void clearHazard(PathKey pathKey,double delayFactor) {
-    	if(hazards.contains(pathKey)) {
-    		ArrayList<Hazard> pathHazards = hazards.get(pathKey);
+    	Path path = getPath(pathKey);
+    	if(hazards.contains(path.getPathKey())) {
+    		ArrayList<Hazard> pathHazards = hazards.get(path.getPathKey());
     		for(Hazard hazard : pathHazards) {
     			if(hazard.getDelayFactor()==delayFactor) {
     				pathHazards.remove(hazard);
@@ -163,7 +176,7 @@ public class TransitSystem {
     public Hashtable<PathKey, Path> getPaths() { return paths; }
     
     public ArrayList<Hazard> getHazards(PathKey pathKey){
-    	if(hazards.contains(pathKey)) {
+    	if(hazards.containsKey(pathKey)) {
     		return hazards.get(pathKey);
     	}
     	return null;

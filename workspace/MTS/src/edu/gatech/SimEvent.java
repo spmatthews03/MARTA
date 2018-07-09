@@ -7,11 +7,11 @@ public abstract class SimEvent {
     protected TransitSystem system;
     protected SimQueue eventQueue;
 
-    public SimEvent(TransitSystem system,int inputRank, String inputType, int inputID) {
+    public SimEvent(TransitSystem system,int timeRank, String inputType, int eventID) {
     	this.system = system;
-        this.timeRank= inputRank;
+        this.timeRank= timeRank;
         this.eventType = inputType;
-        this.eventID = inputID;
+        this.eventID = eventID;
     }
 
     public Integer getRank() { return this.timeRank; }

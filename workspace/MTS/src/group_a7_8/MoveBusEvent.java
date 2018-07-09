@@ -10,8 +10,8 @@ public class MoveBusEvent extends SimEvent{
 
     private Bus bus;
 
-	public MoveBusEvent(TransitSystem system, int inputID, int inputRank, Bus bus) {
-    	super(system,inputRank,"move_bus",inputID);
+	public MoveBusEvent(TransitSystem system, int eventID, int timeRank, Bus bus) {
+    	super(system,timeRank,"move_bus",eventID);
     	this.bus = bus;
 
     }

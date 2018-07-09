@@ -21,6 +21,12 @@ public class Path {
 	public Path(TransitSystem system,Stop origin, Stop destination) {
 		this(system, new PathKey(origin, destination));
 	}
+	
+	public void addDelay(double delayFactor) {
+		if(getHazards()==null) {
+			
+		}
+	}
 
 	public Integer getSpeedLimit() {
 		return speedLimit;
@@ -31,6 +37,8 @@ public class Path {
 	public void clearSpeedLimit() {
 		speedLimit = null;
 	}
+	
+	public PathKey getPathKey() { return pathKey;}
 	
 	public Stop getOrigin() {
 		return pathKey.getOrigin();
@@ -52,6 +60,9 @@ public class Path {
 			for(Hazard hazard : hazards) {
 				delayFactor = delayFactor*hazard.getDelayFactor();
 			}
+		}
+		else {
+			System.out.printf("hazard set for %s is null\n",pathKey);
 		}
 		return delayFactor;
 	}

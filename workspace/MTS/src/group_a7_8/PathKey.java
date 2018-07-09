@@ -1,6 +1,7 @@
 package group_a7_8;
 
-import edu.gatech.Bus;
+import java.util.Objects;
+
 import edu.gatech.Stop;
 
 public class PathKey {
@@ -63,4 +64,10 @@ public class PathKey {
         return result;
     }
 
+    @Override
+    public int hashCode() {
+    	int hash = Objects.hash(origin,destination);
+    	//System.out.printf("%s hash: %x\n", toString(),hash);
+    	return hash;
+    }
 }

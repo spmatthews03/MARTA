@@ -2,8 +2,11 @@ package edu.gatech;
 
 import java.util.Scanner;
 
+import group_a7_8.ClearPathDelayEvent;
 import group_a7_8.FileProps;
 import group_a7_8.MoveBusEvent;
+import group_a7_8.PathKey;
+import group_a7_8.SetPathDelayEvent;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 
@@ -11,6 +14,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
@@ -47,7 +51,7 @@ public class SimDriver implements StateChangeListener{
 	                    // tokens[2] is the event_type, in this case, move_bus
 	                    // tokens[3] is the event ID, it also doubles as the bus ID
 	                    Bus bus = martaModel.getbus(Integer.decode(tokens[3]));
-	                    MoveBusEvent event = new MoveBusEvent(martaModel, Integer.decode(tokens[3]), Integer.decode(tokens[1]), bus);
+	                    MoveBusEvent event = new MoveBusEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), bus);
 	                    simEngine.add(event);
 	//                    simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
 	                    break;
@@ -111,6 +115,20 @@ public class SimDriver implements StateChangeListener{
             	break;
             case "quit":
                 System.out.println(" stop the command loop");
+                return true;
+            case "path_delay":
+            	//sets the delay on the specified bus path
+            	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
+            	
+            	PathKey pathKey = martaModel.getBusPathKey(Integer.decode(tokens[3]), Integer.decode(tokens[4]));
+            	SetPathDelayEvent setEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), pathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", setEvent.toJSON());
+            	simEngine.add(setEvent);
+            	ClearPathDelayEvent clearEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), pathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", clearEvent.toJSON());
+            	simEngine.add(clearEvent);
                 return true;
             default:
                 System.out.println(" command not recognized");

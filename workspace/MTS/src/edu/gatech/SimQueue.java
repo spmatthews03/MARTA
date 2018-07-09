@@ -11,6 +11,7 @@ public class SimQueue {
     final static Integer passengerFrequency = 3;
     private StateChangeListener listener;
     private Integer time;
+    private int nextEventId=0;
 
     public SimQueue() {
         simComparator = new SimEventComparator();
@@ -18,6 +19,13 @@ public class SimQueue {
         time=0;
     }
 
+    public int getNextEventID() {
+    	//helper method to auto-increment event ID's
+    	int eventID = nextEventId;
+    	nextEventId++;
+    	return eventID;
+    	
+    }
     public boolean hasEvents() {
     	return eventQueue.size()>0;
     }

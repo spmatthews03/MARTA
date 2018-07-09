@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.json.bind.annotation.JsonbProperty;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Stop {
 	private Integer ID;
@@ -165,6 +166,10 @@ public class Stop {
             }
         }
         return result;
+    }
+    @Override
+    public int hashCode() {
+    	return Objects.hash(ID,stopName,xCoord,yCoord);
     }
 
 }
