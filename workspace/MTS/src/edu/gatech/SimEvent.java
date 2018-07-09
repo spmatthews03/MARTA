@@ -1,30 +1,30 @@
 package edu.gatech;
 
-public class SimEvent {
-    private Integer timeRank;
-    private String eventType;
-    private Integer eventID;
+public abstract class SimEvent {
+    protected Integer timeRank;
+    protected String eventType;
+    protected Integer eventID;
+    protected TransitSystem system;
+    protected SimQueue eventQueue;
 
-    public SimEvent() { this.timeRank = 0; }
-
-    public SimEvent(int inputRank, String inputType, int inputID) {
+    public SimEvent(TransitSystem system,int inputRank, String inputType, int inputID) {
+    	this.system = system;
         this.timeRank= inputRank;
         this.eventType = inputType;
         this.eventID = inputID;
     }
-
-    
-    public void setRank(int inputRank) { this.timeRank = inputRank; }
-
-    public void setType(String inputType) { this.eventType = inputType; }
-
-    public void setID(int inputID) { this.eventID = inputID; }
 
     public Integer getRank() { return this.timeRank; }
 
     public String getType() { return this.eventType; }
 
     public Integer getID() { return this.eventID; }
+    
+    public SimQueue getEventQueue() { return this.eventQueue; }
+
+    public void setEventQueue(SimQueue eventQueue) { this.eventQueue = eventQueue; }
+
+    public abstract void execute();
 
     public void displayEvent() {
         // System.out.println();
@@ -39,7 +39,7 @@ public class SimEvent {
             result = false;
         } else {
             SimEvent me = (SimEvent) object;
-            if (this.timeRank == me.getRank() && this.eventType == me.getType() && this.eventID == me.getID() ) {
+            if ((int)this.timeRank == (int)me.getRank() && this.eventType.equals(me.getType()) && (int)this.eventID == (int)me.getID() ) {
                 result = true;
             }
         }

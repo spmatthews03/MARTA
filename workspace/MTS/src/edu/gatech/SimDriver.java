@@ -3,6 +3,7 @@ package edu.gatech;
 import java.util.Scanner;
 
 import group_a7_8.FileProps;
+import group_a7_8.MoveBusEvent;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 
@@ -37,9 +38,22 @@ public class SimDriver implements StateChangeListener{
 
         switch (tokens[0]) {
             case "add_event":
-                simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
-                System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
-                System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
+            	switch(tokens[2]) {
+	            	case "move_bus":
+	                    System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
+	                    System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
+	                    // for this event type
+	                    // tokens[1] is the time rank of the event, when it is scheduled to execute
+	                    // tokens[2] is the event_type, in this case, move_bus
+	                    // tokens[3] is the event ID, it also doubles as the bus ID
+	                    Bus bus = martaModel.getbus(Integer.decode(tokens[3]));
+	                    MoveBusEvent event = new MoveBusEvent(martaModel, Integer.decode(tokens[3]), Integer.decode(tokens[1]), bus);
+	                    simEngine.add(event);
+	//                    simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
+	                    break;
+	                    default:
+	                    	System.out.printf("%s is an unrecognized event\n",tokens[2]);
+            	}
                 break;
             case "add_stop":
                 int stopID = martaModel.makeStop(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]));
@@ -241,7 +255,8 @@ public class SimDriver implements StateChangeListener{
                 int skip = Math.max(1, routeLength / busesOnRoute);
                 for (int i = 0; i < busesOnRoute; i++) {
                     martaModel.makeBus(busID, routeID, startingPosition + i * skip, 0, 10, 1);
-                    simEngine.addNewEvent(0,"move_bus", busID++);
+                    //TODO REFACTOR below line after create move_bus event command is working
+                    //simEngine.addNewEvent(0,"move_bus", busID++);
                     recordCounter++;
                 }
             }

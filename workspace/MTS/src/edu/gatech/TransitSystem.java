@@ -298,5 +298,9 @@ public class TransitSystem {
     	sb.append('}');
     	return sb.toString();
     }
+
+	public Bus getbus(Integer busID) {
+		return buses.get(busID);
+	}
     
 }
