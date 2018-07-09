@@ -10,8 +10,9 @@ public class UpdateManagerImpl implements UpdateManager {
 
 	@Override
 	public void process(String message) {
+		//System.out.printf("message received: %s\n",message);
 		//method to process updates that came fromt the websocket
-		System.out.printf("WARNING: Processing messages from web client to server via sockets is not yet supported.  Message ignored.\n");
+		//System.out.printf("WARNING: Processing messages from web client to server via sockets is not yet supported.  Message ignored.\n");
 	}
 
 	@Override
