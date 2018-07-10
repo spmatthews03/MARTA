@@ -16,7 +16,8 @@ import java.io.FileWriter;
 
 public class TransitSystem {
     private HashMap<Integer, Stop> stops;
-    private HashMap<Integer, BusRoute> routes;
+    private Hashtable<Integer, BusRoute> busRoutes;
+    private Hashtable<Integer, RailRoute> railRoutes;
     private HashMap<Integer, Bus> buses;
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
@@ -25,7 +26,8 @@ public class TransitSystem {
 
     public TransitSystem() {
         stops = new HashMap<Integer, Stop>();
-        routes = new HashMap<Integer, BusRoute>();
+        busRoutes = new Hashtable<Integer, BusRoute>();
+        railRoutes = new Hashtable<Integer, RailRoute>();
         buses = new HashMap<Integer, Bus>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
@@ -40,15 +42,21 @@ public class TransitSystem {
         return null;
     }
 
-    public BusRoute getRoute(int routeID) {
-        if (routes.containsKey(routeID)) { return routes.get(routeID); }
+    public RailRoute getRailRoute(int routeID) {
+        if (railRoutes.containsKey(routeID)) { return railRoutes.get(routeID); }
         return null;
     }
 
+    public BusRoute getBusRoute(int routeID) {
+        if (busRoutes.containsKey(routeID)) { return busRoutes.get(routeID); }
+        return null;
+    }
+    
     public Bus getBus(int busID) {
         if (buses.containsKey(busID)) { return buses.get(busID); }
         return null;
     }
+
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
 		return null;
@@ -61,9 +69,16 @@ public class TransitSystem {
         return uniqueID;
     }
 
-    public int makeRoute(int uniqueID, int inputNumber, String inputName) {
+    public int makeBusRoute(int uniqueID, int inputNumber, String inputName) {
         // int uniqueID = routes.size();
-        routes.put(uniqueID, new BusRoute(uniqueID, inputNumber, inputName));
+    	busRoutes.put(uniqueID, new BusRoute(uniqueID, inputNumber, inputName));
+        listener.updateState();
+        return uniqueID;
+    }
+    
+    public int makeRailRoute(int uniqueID, int inputNumber, String inputName) {
+        // int uniqueID = routes.size();
+    	railRoutes.put(uniqueID, new RailRoute(uniqueID, inputNumber, inputName));
         listener.updateState();
         return uniqueID;
     }
@@ -75,42 +90,43 @@ public class TransitSystem {
         return uniqueID;
     }
 
-    public void appendStopToRoute(int routeID, int nextStopID) { 
-    	
+    public void appendStopToRoute(int routeID, int nextStopID) { 	
 //    	routes.get(routeID).addNewStop(nextStopID);
-		BusRoute route = routes.get(routeID);
-		route.addNewStop(nextStopID);
+		BusRoute busRoute = busRoutes.get(routeID);
+		busRoute.addNewStop(nextStopID);
 
     	//if this is the second or subsequent stop being added, define a path between the new stop and the prior stop
-    	if(route.getLength()>1) {
-    		System.out.printf("Route %d-%s now has %d stops, adding paths ...\n", route.getID(),route.getName(),route.getLength());
+    	if(busRoute.getLength()>1) {
+    		System.out.printf("Route %d-%s now has %d stops, adding paths ...\n", busRoute.getID(),busRoute.getName(),busRoute.getLength());
     		
-    		//create the path between tbe latest stop and the prior one
+    		//create the path between the latest stop and the prior one
     		//by construction, the latest stop will have index n-1, and the other one will have index n-2
-    		int latestStopRouteIndex = route.getLength()-1;
-    		int priorStopRouteIndex = route.getLength()-2;
-    		int latestStopID = route.getStopID(latestStopRouteIndex);
-    		int priorStopID = route.getStopID(priorStopRouteIndex);
+    		int latestStopRouteIndex = busRoute.getLength()-1;
+    		int priorStopRouteIndex = busRoute.getLength()-2;
+    		int latestStopID = busRoute.getStopID(latestStopRouteIndex);
+    		int priorStopID = busRoute.getStopID(priorStopRouteIndex);
     		Stop latestStop = getStop(latestStopID);
     		Stop priorStop = getStop(priorStopID);
     		PathKey path1= new PathKey(priorStop, latestStop);
     		paths.put(path1, new Path(this,path1));
-    		System.out.printf("Added path %s to route %d-%s\n", path1,route.getID(),route.getName());
+    		System.out.printf("Added path %s to route %d-%s\n", path1,busRoute.getID(),busRoute.getName());
+    		
     		//the routes are such that they loop from the last stop to the beginning
     		//add that path too
     		int beginStopRouteIndex = 0;
-    		int beginStopID = route.getStopID(beginStopRouteIndex);
+    		int beginStopID = busRoute.getStopID(beginStopRouteIndex);
     		Stop beginStop = getStop(beginStopID);
     		PathKey path2= new PathKey(latestStop,beginStop);
     		paths.put(path2, new Path(this,path2));
-    		System.out.printf("Added path %s to route %d-%s\n", path2,route.getID(),route.getName());
+    		System.out.printf("Added path %s to route %d-%s\n", path2,busRoute.getID(),busRoute.getName());
+    		
     		//now the path from the prior stop to the begin stop is no longer valid.  remove it
-    		if(route.getLength()>2) {
+    		if(busRoute.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
 	    		for(PathKey pathKey : paths.keySet()) {
 	    			if(pathKey.equals(pathToRemove)) {
 	        			paths.remove(pathKey);
-	        			System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,route.getID(),route.getName());
+	        			System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,busRoute.getID(),busRoute.getName());
 	        			break;
 	    			}
 	    		}    		
@@ -118,7 +134,54 @@ public class TransitSystem {
     	}
     	listener.updateState();
     }
+    
+    // To be added after implementation of Station Class
+    /* 
+    public void appendStationToRoute(int routeID, int nextStationID) { 
+		RailRoute railRoute = railRoutes.get(routeID);
+		railRoute.addNewStation(nextStationID);
 
+    	//if this is the second or subsequent station being added, define a path between the new station and the prior station
+    	if(railRoute.getLength()>1) {
+    		System.out.printf("Route %d-%s now has %d stops, adding paths ...\n", railRoute.getID(),railRoute.getName(),railRoute.getLength());
+    		
+    		//create the path between the latest station and the prior one
+    		//by construction, the latest station will have index n-1, and the other one will have index n-2
+    		int latestStationRouteIndex = railRoute.getLength()-1;
+    		int priorStationRouteIndex = railRoute.getLength()-2;
+    		int latestStationID = railRoute.getStationID(latestStationRouteIndex);
+    		int priorStationID = railRoute.getStationID(priorStationRouteIndex);
+    		Station latestStation = getStation(latestStationID);
+    		Station priorStation = getStation(priorStationID);
+    		PathKey path1= new PathKey(priorStation, latestStation);
+    		paths.put(path1, new Path(this,path1));
+    		System.out.printf("Added path %s to route %d-%s\n", path1,railRoute.getID(),railRoute.getName());
+    		
+    		//the routes are such that they loop from the last station to the beginning
+    		//add that path too
+    		int beginStationRouteIndex = 0;
+    		int beginStationID = railRoute.getStationID(beginStationRouteIndex);
+    		Stop beginStation = getStation(beginStationID);
+    		PathKey path2= new PathKey(latestStation,beginStation);
+    		paths.put(path2, new Path(this,path2));
+    		System.out.printf("Added path %s to route %d-%s\n", path2,railRoute.getID(),railRoute.getName());
+    		
+    		//now the path from the prior station to the begin station is no longer valid.  remove it
+    		if(railRoute.getLength()>2) {
+	    		PathKey pathToRemove = new PathKey(priorStation,beginStation);
+	    		for(PathKey pathKey : paths.keySet()) {
+	    			if(pathKey.equals(pathToRemove)) {
+	        			paths.remove(pathKey);
+	        			System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,railRoute.getID(),railRoute.getName());
+	        			break;
+	    			}
+	    		}    		
+    		}
+    	}
+    	listener.updateState();
+    }
+    */
+    
     public void addHazard(PathKey pathKey,double delayFactor) {
     	if(!hazards.containsKey(pathKey)) {
     		hazards.put(pathKey, new ArrayList<Hazard>());
@@ -132,6 +195,17 @@ public class TransitSystem {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
     		if(pk.getOrigin().getID()==originBusID && pk.getDestination().getID()==destinationBusID) {
+    			pathKey = pk;
+    			break;
+    		}
+    	}
+    	return pathKey;
+    }
+    
+    public PathKey getRailPathKey(int originRailID, int destinationRailID) {
+    	PathKey pathKey = null;
+    	for(PathKey pk : paths.keySet()) {
+    		if(pk.getOrigin().getID()==originRailID && pk.getDestination().getID()==destinationRailID) {
     			pathKey = pk;
     			break;
     		}
@@ -169,7 +243,9 @@ public class TransitSystem {
 
     public HashMap<Integer, Stop> getStops() { return stops; }
 
-    public HashMap<Integer, BusRoute> getRoutes() { return routes; }
+    public Hashtable<Integer, BusRoute> getBusRoutes() { return busRoutes; }
+    
+    public Hashtable<Integer, RailRoute> getRailRoutes() { return railRoutes; }
 
     public HashMap<Integer, Bus> getBuses() { return buses; }
 
@@ -182,7 +258,8 @@ public class TransitSystem {
     	return null;
     }
     
-    
+    //Do we need a displayRailModel and a displayBusModel?
+    //Current implementation only contain busStops, railStations are not implemented
     public void displayModel() {
     	ArrayList<MiniPair> busNodes, stopNodes;
     	MiniPairComparator compareEngine = new MiniPairComparator();
@@ -232,8 +309,8 @@ public class TransitSystem {
             bw.newLine();
             
             for (Bus m: buses.values()) {
-            	Integer prevStop = routes.get(m.getRouteID()).getStopID(m.getPastLocation());
-            	Integer nextStop = routes.get(m.getRouteID()).getStopID(m.getLocation());
+            	Integer prevStop = busRoutes.get(m.getRouteID()).getStopID(m.getPastLocation());
+            	Integer nextStop = busRoutes.get(m.getRouteID()).getStopID(m.getLocation());
             	bw.write("  stop" + Integer.toString(prevStop) + " -> bus" + Integer.toString(m.getID()) + " [ label=\" dep\" ];\n");
             	bw.write("  bus" + Integer.toString(m.getID()) + " -> stop" + Integer.toString(nextStop) + " [ label=\" arr\" ];\n");
             }
@@ -244,6 +321,7 @@ public class TransitSystem {
     		System.out.println(e);
     	}
     }
+    
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
@@ -262,11 +340,26 @@ public class TransitSystem {
         	}
         	sb.append(']');
     	}
-    	if(routes!=null && routes.size()>0) {
+    	if(busRoutes!=null && busRoutes.size()>0) {
         	if(sb.length()>1) sb.append(',');
-        	sb.append("\"routes\":[");    
+        	sb.append("\"bus routes\":[");    
         	boolean isFirst = true;
-        	for(BusRoute route : routes.values()) {
+        	for(BusRoute route : busRoutes.values()) {
+        		if(isFirst) {
+        			isFirst = !isFirst;
+        		}
+        		else {
+        			sb.append(',');
+        		}
+        		sb.append(route.toJSON());
+        	}
+        	sb.append(']');
+    	}
+    	if(railRoutes!=null && railRoutes.size()>0) {
+        	if(sb.length()>1) sb.append(',');
+        	sb.append("\"rail routes\":[");    
+        	boolean isFirst = true;
+        	for(RailRoute route : railRoutes.values()) {
         		if(isFirst) {
         			isFirst = !isFirst;
         		}

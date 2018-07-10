@@ -64,8 +64,12 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new stop: " + Integer.toString(stopID) + " created");
                 break;
             case "add_route":
-                int routeID = martaModel.makeRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
-                System.out.println(" new route: " + Integer.toString(routeID) + " created");
+                int busRouteID = martaModel.makeBusRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
+                System.out.println(" new bus route: " + Integer.toString(busRouteID) + " created");
+                break;
+            case "add_train_route":
+                int railRouteID = martaModel.makeRailRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
+                System.out.println(" new rail route: " + Integer.toString(railRouteID) + " created");
                 break;
             case "add_bus":
                 int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
@@ -75,6 +79,13 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
                 martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
+            // To be added after implementation of Station Class and appendStationToRoute() in TransitSystem class
+            /*
+            case "extend_train_route":
+                System.out.println(" station: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
+                martaModel.appendStationToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                break;
+            */
             case "upload_real_data":
                 uploadMARTAData();
                 break;
@@ -108,7 +119,8 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" system report - stops, buses and routes:");
                 for (Stop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
                 for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
-                for (BusRoute singleRoute: martaModel.getRoutes().values()) { singleRoute.displayInternalStatus(); }
+                for (BusRoute singleBusRoute: martaModel.getBusRoutes().values()) { singleBusRoute.displayInternalStatus(); }
+                for (RailRoute singleRailRoute: martaModel.getRailRoutes().values()) { singleRailRoute.displayInternalStatus(); }
                 break;
             case "display_model":
             	martaModel.displayModel();
@@ -209,7 +221,7 @@ public class SimDriver implements StateChangeListener{
             }
             System.out.println(Integer.toString(recordCounter) + " added");
 
-            // create the routes
+            // create the bus routes
         	System.out.print(" extracting and adding the routes: ");
         	recordCounter = 0;
             rs = stmt.executeQuery("SELECT * FROM apcdata_routes");
@@ -217,7 +229,23 @@ public class SimDriver implements StateChangeListener{
                 routeID = rs.getInt("route");
                 routeName = rs.getString("route_name");
 
-                martaModel.makeRoute(routeID, routeID, routeName);
+                martaModel.makeBusRoute(routeID, routeID, routeName);
+                recordCounter++;
+
+                // initialize the list of stops for the route as needed
+                routeLists.putIfAbsent(routeID, new ArrayList<Integer>());
+            }
+            System.out.println(Integer.toString(recordCounter) + " added");
+            
+            // create the rail routes
+        	System.out.print(" extracting and adding the routes: ");
+        	recordCounter = 0;
+            rs = stmt.executeQuery("SELECT * FROM apcdata_railroutes"); //rail route table apcdata_railroutes
+            while (rs.next()) {
+                routeID = rs.getInt("route");
+                routeName = rs.getString("route_name");
+
+                martaModel.makeRailRoute(routeID, routeID, routeName);
                 recordCounter++;
 
                 // initialize the list of stops for the route as needed
@@ -253,6 +281,38 @@ public class SimDriver implements StateChangeListener{
                 }
             }
             System.out.println(Integer.toString(recordCounter) + " assigned");
+            
+            // To be added after implementation of Station Class and appendStationToRoute() in TransitSystem class
+            /*
+            // add the stations to all of the routes
+        	System.out.print(" extracting and assigning stations to the routes: ");
+        	recordCounter = 0;
+            rs = stmt.executeQuery("SELECT * FROM apcdata_railroutelist_oneway");
+            while (rs.next()) {
+                routeID = rs.getInt("route");
+                stationID = rs.getInt("min_station_id");
+                // direction = rs.getString("direction");
+
+                targetList = railrouteLists.get(routeID);
+                if (!targetList.contains(stationID)) {
+                    martaModel.appendStationToRoute(routeID, stationID);
+                    recordCounter++;
+                    targetList.add(stationID);
+                    // if (direction.equals("Clockwise")) { circularRouteList.add(routeID); }
+                }
+            }
+
+            // add the reverse "route back home" stations for two-way routes
+            for (Integer reverseRouteID : railrouteLists.keySet()) {
+                if (!circularRouteList.contains(reverseRouteID)) {
+                    targetList = railrouteLists.get(reverseRouteID);
+                    for (int i = targetList.size() - 1; i > 0; i--) {
+                        martaModel.appendStationToRoute(reverseRouteID, targetList.get(i));
+                    }
+                }
+            }
+            System.out.println(Integer.toString(recordCounter) + " assigned");
+            */
 
             // create the buses and related event(s)
         	System.out.print(" extracting and adding the buses and events: ");
@@ -265,7 +325,7 @@ public class SimDriver implements StateChangeListener{
                 int avgBuses  = rs.getInt("avg_buses");
                 int maxBuses = rs.getInt("max_buses");
 
-                int routeLength = martaModel.getRoute(routeID).getLength();
+                int routeLength = martaModel.getBusRoute(routeID).getLength();
                 int suggestedBuses = randomBiasedValue(minBuses, avgBuses, maxBuses);
                 int busesOnRoute = Math.max(1, Math.min(routeLength / 2, suggestedBuses));
 
