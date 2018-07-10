@@ -1,72 +1,33 @@
 package edu.gatech;
 
-import java.util.Hashtable;
-
-public class RailRoute {
+public class RailRoute extends VehicleRoute {
 	
-	private VehicleRoute route;
+   private VehicleRoute route;
 	
-    public RailRoute() {
-    	route.ID = -1;
-    }
+   public RailRoute() {
+	   super();
+   }
 
-    public RailRoute(int uniqueValue) {
-    	route.ID = uniqueValue;
-    	route.routeNumber = -1;
-    	route.routeName = "";
-    	route.exchangePointsOnRoute = new Hashtable<Integer, Integer>();
-    }
+   public RailRoute(int uniqueValue) {
+	   super(uniqueValue);
+   }
 
-    public RailRoute(int uniqueValue, int inputNumber, String inputName) {
-    	route.ID = uniqueValue;
-    	route.routeNumber = inputNumber;
-    	route.routeName = inputName;
-    	route.exchangePointsOnRoute = new Hashtable<Integer, Integer>();
+   public RailRoute(int uniqueValue, int inputNumber, String inputName) {
+	   super(uniqueValue, inputNumber, inputName);
    }
    
-   public VehicleRoute getVehicleRoute() { return route; }
+   public VehicleRoute getRailRoute() { return this.route; }
    
-   public void displayEvent() {
-       System.out.println(" rail route: " + Integer.toString(route.ID));
-   }
+   public void addNewStation(int stationID) { this.addNewExchangePoint(stationID); }
 
-   public void takeTurn() {
-       System.out.println("provide next station on route along with the distance");
-   }
+   public Integer getStationID(int routeLocation) { return this.getExchangePointID(routeLocation); }
+      
+   public void displayEvent() { this.displayEvent("rail"); }
 
-   public void displayInternalStatus() {
-       System.out.print("> route - ID: " + Integer.toString(route.ID));
-       System.out.print(" number: " + Integer.toString(route.routeNumber) + " name: " + route.routeName);
-       System.out.print(" station: [ ");
-       for (int i = 0; i < route.exchangePointsOnRoute.size(); i++) {
-           System.out.print(Integer.toString(i) + ":" + Integer.toString(route.exchangePointsOnRoute.get(i)) + " ");
-       }
-       System.out.println("]");
-   }
+   public void takeTurn() { this.takeTurn("station"); }
+
+   public void displayInternalStatus() { this.displayInternalStatus("stations"); }
    
-   public String toJSON() {
-   	StringBuilder sb = new StringBuilder();
-   	sb.append('{');
-   	sb.append("\"ID\":");
-   	sb.append(route.ID);
-   	sb.append(',');
-   	sb.append("\"routeNumber\":");
-   	sb.append(route.routeNumber);
-   	if(route.exchangePointsOnRoute!=null && route.exchangePointsOnRoute.size()>0) {
-       	sb.append(',');
-       	sb.append("\"stations\":[");    
-       	for(int key = 0; key<route.exchangePointsOnRoute.size();key++) {
-       		if(key>0) {
-               	sb.append(',');        			
-       		}
-       		if(route.exchangePointsOnRoute.containsKey(key)) {
-       	    	sb.append(route.exchangePointsOnRoute.get(key));
-       		}	
-       	}
-       	sb.append(']');
-   	}
-   	sb.append('}');
-   	return sb.toString();
-   }
+   public String toJSON() { return this.toJSON("stations"); }
    
 }
