@@ -42,7 +42,7 @@ public class MoveBusEvent extends SimEvent{
         System.out.println(" the bus being observed is: " + Integer.toString(activeBus.getID()));
 
         // identify the current stop
-        BusRoute activeRoute = system.getRoute(activeBus.getRouteID());
+        BusRoute activeRoute = system.getBusRoute(activeBus.getRouteID());
         System.out.println(" the bus is driving on route: " + Integer.toString(activeRoute.getID()));
 
         int activeLocation = activeBus.getLocation();
