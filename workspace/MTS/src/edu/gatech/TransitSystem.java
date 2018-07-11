@@ -92,22 +92,35 @@ public class TransitSystem {
 
     public void appendStopToRoute(int routeID, int nextStopID) { 	
 //    	routes.get(routeID).addNewStop(nextStopID);
+		System.out.printf("routeId: %d extended with stopId: %d\n", routeID,nextStopID);
 		BusRoute busRoute = busRoutes.get(routeID);
+		System.out.printf("busRoute: %s\n", busRoute);
 		busRoute.addNewStop(nextStopID);
+		System.out.printf("busRoute: %s\n", busRoute);
 
     	//if this is the second or subsequent stop being added, define a path between the new stop and the prior stop
     	if(busRoute.getLength()>1) {
+    		System.out.printf("busRoute id: %s\n", busRoute.getID());
+    		System.out.printf("busRoute name: %s\n", busRoute.getName());
+    		System.out.printf("busRoute length: %s\n", busRoute.getLength());
     		System.out.printf("Route %d-%s now has %d stops, adding paths ...\n", busRoute.getID(),busRoute.getName(),busRoute.getLength());
     		
     		//create the path between the latest stop and the prior one
     		//by construction, the latest stop will have index n-1, and the other one will have index n-2
     		int latestStopRouteIndex = busRoute.getLength()-1;
     		int priorStopRouteIndex = busRoute.getLength()-2;
+    		System.out.printf("latestStopRouteIndex : %s\n", latestStopRouteIndex);
+    		System.out.printf("priorStopRouteIndex : %s\n", priorStopRouteIndex);
     		int latestStopID = busRoute.getStopID(latestStopRouteIndex);
     		int priorStopID = busRoute.getStopID(priorStopRouteIndex);
+    		System.out.printf("latestStopID: %s\n", latestStopID);
+    		System.out.printf("priorStopID: %s\n", priorStopID);
     		Stop latestStop = getStop(latestStopID);
     		Stop priorStop = getStop(priorStopID);
+    		System.out.printf("latestStop: %s\n", latestStop);
+    		System.out.printf("priorStop: %s\n", priorStop);
     		PathKey path1= new PathKey(priorStop, latestStop);
+    		System.out.printf("path1: %s\n", path1);
     		paths.put(path1, new Path(this,path1));
     		System.out.printf("Added path %s to route %d-%s\n", path1,busRoute.getID(),busRoute.getName());
     		

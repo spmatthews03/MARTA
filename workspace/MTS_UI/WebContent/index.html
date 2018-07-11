@@ -7,8 +7,8 @@
     <meta name="MTS" content="A MARTA Simulator">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>MARTA Simulator</title>   
-    
-    <link rel="stylesheet" href="lib/fonts/material-icons.css">
+    <link rel="stylesheet" href="lib/css/all.css" > <!--load all fa styles -->
+    <link rel="stylesheet" href="lib/webfonts/material-icons.css">
     <link rel="stylesheet" href="lib/css/angular-material.min.css">
     <link rel="stylesheet" href="css/mts.css">
 </head>
@@ -28,17 +28,22 @@
 	          </md-card-actions>
 	        </md-card>
         </div>
-        <div ng-hide="showMenu">
+        <div ng-hide="showMenu" layout="column" class="mts-viewport">
+            <mts-dashboard></mts-dashboard>
 	    	<md-tabs md-dynamic-height md-border-bottom>
-	    	   <md-tab label="configure simulation"><md-content><sim-config></sim-config></md-content></md-tab> 
-	    	   <md-tab label="run simulation"><md-content>tab1 content</md-content></md-tab> 
+	    	   <md-tab>
+		    	   <md-tab-label>
+		    	       <div layout="row"><md-icon>build</md-icon><div>Configure</div></div>
+		    	   </md-tab-label>
+		    	   <md-tab-body><sim-config></sim-config></md-tab-body>
+	    	   </md-tab> 
+	    	   <md-tab>
+		    	   <md-tab-label>
+		    	       <div layout="row"><md-icon>update</md-icon><div>Run Simulation</div></div>
+		    	   </md-tab-label>
+		    	   <md-tab-body><sim-executor></sim-executor></md-tab-body>
+	    	   </md-tab> 
 	    	</md-tabs>
-		    <div layout="row" class="viewport">
-		         <input type="file" ng-file-select="onFileSelect($files)" >
-		    </div>
-		    <div layout="row" class="viewport">
-		         <commands-console data-commands="commands"></commands-console>
-		    </div>
         </div>
 	</md-content>
     <script src="lib/angular.min.js"></script>
@@ -50,6 +55,7 @@
     <script src="scripts/MTSService/MTSService.js"></script>
     <script src="scripts/CommandsConsole/CommandsConsole.js"></script>
     <script src="scripts/CommandsConsole/SimConfig.js"></script>
+    <script src="scripts/CommandsConsole/SimExecutor.js"></script>
     <script src="scripts/Dashboard/MtsDashboard.js"></script>
     <script src="scripts/MTS.js"></script>
     <script src="scripts/FileReader/FileReader.js"></script>

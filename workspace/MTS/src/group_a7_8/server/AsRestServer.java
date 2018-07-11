@@ -1,10 +1,10 @@
 package group_a7_8.server;
 
-import java.util.Hashtable;
+
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
+
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -17,8 +17,9 @@ import group_a7_8.FileProps;
 
 public class AsRestServer {
 
-	private static Hashtable<String, SimDriver> driverCache;
+	
 	private static UpdateManager updateManager;
+	private static SimDriver driver;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -86,22 +87,15 @@ public class AsRestServer {
 	    jettyServer.join();
 	}
 
-	public static SimDriver getDriver(String id) {
-		//System.out.printf("retrieving driver for session %s\n", id);
-		Hashtable<String, SimDriver> cache = getDriverCache();
-		if(!cache.containsKey(id)) {
-			//System.out.printf("creating SimDriver for session %s\n", id);
-			SimDriver driver = new SimDriver();
+	public static SimDriver getDriver() {
+		if(driver==null) {
+			driver = new SimDriver();
 			driver.setUpdateManager(getUpdateManager());
-			cache.put(id, driver);
 		}
-		return cache.get(id);
+		return driver;
 	}
 
-	private static Hashtable<String, SimDriver> getDriverCache() {
-		if(driverCache==null) driverCache= new Hashtable<String,SimDriver>();
-		return driverCache;
-	}
+
 	private static UpdateManager getUpdateManager() {
 		if(updateManager==null) updateManager= new UpdateManagerImpl();
 		return updateManager;
