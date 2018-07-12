@@ -23,7 +23,7 @@ public class TransitSystem {
     private HashMap<Integer, RailCar> trains;
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
-    private static Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumption;
+    private Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumption;
     private StateChangeListener listener;
 
 
@@ -42,12 +42,12 @@ public class TransitSystem {
         this.listener = listener;
     }
 
-    public static ArrayList<FuelConsumption> getFuelConsumptionList(Bus bus){
+    public ArrayList<FuelConsumption> getFuelConsumptionList(Bus bus){
     	if(fuelConsumption.containsKey(bus)) { return fuelConsumption.get(bus); }
     	return null;
 	}
 
-	public static double getTotalFuelConsumed(Bus bus){
+	public double getTotalFuelConsumed(Bus bus){
     	double sum = 0;
     	if(fuelConsumption.containsKey(bus)) {
     		for(FuelConsumption val : fuelConsumption.get(bus)){
@@ -110,13 +110,13 @@ public class TransitSystem {
 
     public int makeBus(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         // int uniqueID = buses.size();
-        buses.put(uniqueID, new Bus(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+        buses.put(uniqueID, new Bus(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
         listener.updateState();
         return uniqueID;
     }
 
     public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-    	trains.put(uniqueID, new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+    	trains.put(uniqueID, new RailCar(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
 		listener.updateState();
 		return uniqueID;
 	}
@@ -297,7 +297,7 @@ public class TransitSystem {
 
 	public Hashtable<PathKey, Path> getPaths() { return paths; }
 
-	public Hashtable<Bus, FuelConsumption> getFuelConsumption() {
+	public Hashtable<Bus, ArrayList<FuelConsumption>> getFuelConsumption() {
 		return fuelConsumption;
 	}
 
