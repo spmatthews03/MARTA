@@ -11,7 +11,9 @@ var service = function ($log, $timeout, $interval, $http){
 	        paths:[],
 	        events:[],
 	        commands:[],
-	        commandsQueue:[]
+	        commandsQueue:[],
+	  	  	editMode:false,
+	  		commandOption:""
    };
 	
    var ws;
@@ -53,10 +55,10 @@ var service = function ($log, $timeout, $interval, $http){
 		    state.vehicles.push(vehicle);
 		 }
 	  }
-	  if(update.system.routes && update.system.routes.length>0){
+	  if(update.system.busRoutes && update.system.busRoutes.length>0){
 	     //$log.info('updating routes');
 		 state.routes.splice(0, state.routes.length);
-		 for(route in update.system.routes){
+		 for(route in update.system.busRoutes){
 		    state.routes.push(route);
 		 }
 	  }

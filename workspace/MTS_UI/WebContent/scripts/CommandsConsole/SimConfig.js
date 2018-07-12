@@ -20,24 +20,33 @@
                     '</div>'+
                   '</md-button>'+
 	              '<div ng-show="!toggleOn" layout="column">'+
-	                 '<div ng-show="!editMode" layout="column">'+
+	                 '<div ng-show="!mts.editMode" layout="column">'+
+
 		                   '<div class="command-panel-label">Select command to add:</div>'+
-		                   '<md-button ng-click="addBusStop()">Add Bus Stop</md-button>'+
-		                   '<md-button ng-click="addBusRoute()">Add Bus Route</md-button>'+
-		                   '<md-button ng-click="extendBusRoute()">Extend Bus Route</md-button>'+
-		                   '<md-button ng-click="addBus()">Add Bus</md-button>'+
-		                   '<md-button ng-click="addBusPathDelay()">Add Bus Path Delay</md-button>'+
-		                   '<md-button ng-click="setBusSpeedLimit()">Set Bus Speed Limit</md-button>'+
-		                   '<md-button ng-click="addTrainStation()">Add Train Station</md-button>'+
-		                   '<md-button ng-click="addRailLine()">Add Rail Line</md-button>'+
-		                   '<md-button ng-click="extendRailLine()">Extend Rail Line</md-button>'+
-		                   '<md-button ng-click="addTrain()">Add Train</md-button>'+
-		                   '<md-button ng-click="addTrainPathDelay()">Add Train Path Delay</md-button>'+
-		                   '<md-button ng-click="setTrainSpeedLimit()">Set Train Speed Limit</md-button>'+
-		                   '<md-button ng-click="addEvent()">add Event</md-button>'+
+	                       '<md-content class="sim-config-controls-panel">'+
+	                           '<div layout="row" layout-wrap>'+
+			                   '<md-button flex="40" ng-click="addBusStop()">Add Bus Stop</md-button>'+
+			                   '<md-button flex="40" ng-click="addBusRoute()">Add Bus Route</md-button>'+
+			                   '<md-button flex="40" ng-click="extendBusRoute()">Extend Bus Route</md-button>'+
+			                   '<md-button flex="40" ng-click="addBus()">Add Bus</md-button>'+
+			                   '<md-button flex="40" ng-click="addBusPathDelay()">Add Bus Path Delay</md-button>'+
+			                   '<md-button flex="40" ng-click="setBusSpeedLimit()">Set Bus Speed Limit</md-button>'+
+			                   '<md-button flex="40" ng-click="addTrainStation()">Add Train Station</md-button>'+
+			                   '<md-button flex="40" ng-click="addRailLine()">Add Rail Line</md-button>'+
+			                   '<md-button flex="40" ng-click="extendRailLine()">Extend Rail Line</md-button>'+
+			                   '<md-button flex="40" ng-click="addTrain()">Add Train</md-button>'+
+			                   '<md-button flex="40" ng-click="addTrainPathDelay()">Add Train Path Delay</md-button>'+
+			                   '<md-button flex="40" ng-click="setTrainSpeedLimit()">Set Train Speed Limit</md-button>'+
+			                   '<md-button flex="40" ng-click="addEvent()">add Event</md-button>'+
+			                   '</div>'+
+	                       '</md-content">'+
 		              '</div>'+     
-		              '<div ng-show="editMode" layout="column">'+
-		                 '<command-entry></command-entry>'+
+		              '<div ng-show="mts.editMode" layout="column">'+
+		                 '<div ng-switch="mts.commandOption">'+
+			                 '<add-bus-stop-form ng-switch-when="addBusStop" data-command-option="commandOption"></add-bus-stop-form>'+
+			                 '<add-bus-route-form ng-switch-when="addBusRoute" data-command-option="commandOption"></add-bus-route-form>'+
+			                 '<command-entry ng-switch-default></command-entry>'+
+		                 '</div>'+
 		              '</div>'+
 
 	              '</div>'+
@@ -74,29 +83,34 @@
 	  $scope.switch = function(){
 	  	$scope.toggleOn = !$scope.toggleOn;
 	  };
-	  $scope.editMode=false;
-	  $scope.commandOption='';
+	  mtsService.state.editMode=false;
+	  mtsService.state.commandOption='';
+	  $scope.mts = mtsService.state;
+	  
+	  //panel controls
+	  $scope.panelsState={busPanel:false,trainPanel:false,eventPanel:false};
+	 
 
 	  //Bus methods 
 	  $scope.addBusStop = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='addBusStop';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='addBusStop';
 	  };
 	  $scope.addBusRoute = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='addBusRoute';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='addBusRoute';
 	  };
 	  $scope.extendBusRoute = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='extendBusRoute';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='extendBusRoute';
 	  };
 	  $scope.addBus = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='addBus';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='addBus';
 	  };
 	  $scope.addBusPathDelay = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='addBusPathDelay';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='addBusPathDelay';
 	  };
 	  $scope.setBusSpeedLimit = function(){
 		  $log.info('set bus speed limit');
@@ -123,8 +137,8 @@
 	  //	  
 	  //Sim Engine methods
 	  $scope.addEvent = function(){
-		  $scope.editMode=true;
-		  $scope.commandOption='addEvent';
+		  mtsService.state.editMode=true;
+		  mtsService.state.commandOption='addEvent';
 	  };
 	  
 	  //command entry form buttons
@@ -155,13 +169,13 @@
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:$scope.commandLine,processed:false});
 			  mtsService.executeCommand($scope.commandLine);
 		  }
-		  $scope.editMode=false;
-		  $scope.commandOption='';
+		  mtsService.state.editMode=false;
+		  mtsService.state.commandOption='';
 	  };
 	  $scope.cancelAddCommand = function(){
 		  $log.info('cancel add command');
-		  $scope.editMode=false;
-		  $scope.commandOption='';
+		  mtsService.state.editMode=false;
+		  mtsService.state.commandOption='';
 		  //TODO reset input fields
 	  };
 	  

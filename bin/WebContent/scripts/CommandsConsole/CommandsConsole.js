@@ -171,7 +171,7 @@ var stepMultiCommandDirective = function(){
 		}
 	};
   };
-  angular.module('CommandsConsole',['ngMaterial','MTSService'])
+  angular.module('CommandsConsole',['ngMaterial','ngMessages','MTSService'])
   .directive('addRouteCommand',[addRouteCommandDirective])
   .directive('addBusCommand',[addBusCommandDirective])
   .directive('addStopCommand',[addStopCommandDirective])

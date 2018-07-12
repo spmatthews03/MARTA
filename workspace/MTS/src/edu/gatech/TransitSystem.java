@@ -355,7 +355,7 @@ public class TransitSystem {
     	}
     	if(busRoutes!=null && busRoutes.size()>0) {
         	if(sb.length()>1) sb.append(',');
-        	sb.append("\"bus routes\":[");    
+        	sb.append("\"busRoutes\":[");    
         	boolean isFirst = true;
         	for(BusRoute route : busRoutes.values()) {
         		if(isFirst) {
@@ -370,7 +370,7 @@ public class TransitSystem {
     	}
     	if(railRoutes!=null && railRoutes.size()>0) {
         	if(sb.length()>1) sb.append(',');
-        	sb.append("\"rail routes\":[");    
+        	sb.append("\"railRoutes\":[");    
         	boolean isFirst = true;
         	for(RailRoute route : railRoutes.values()) {
         		if(isFirst) {

@@ -61,7 +61,13 @@
 }
 .sim-config-panel {
     border-bottom: 2pt solid rgb(224,224,224);
+    height:600px;
 	
+}
+
+.sim-config-panel .sim-config-controls-panel .md-button{
+	font-size: 11px;
+    border: 1pt solid rgb(225, 224, 225)
 }
 
 .toggle-option-selected{
@@ -127,3 +133,31 @@ border-radius: 4px;
 background-color: rgba(0,0,0,.5);
 -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
+
+.expansion-panel.active-panel{
+	background-color: rgb(250,220,220);
+}
+
+span:focus {
+    outline: none;
+    border: 0;
+ }
+ 
+div:focus {
+    outline: none;
+    border: 0;
+ }
+ 
+ .expansion-panel .panel-title{
+ font-size: 20pt;
+ font-weight: bolder;
+ }
+ 
+ .sim-config-controls-panel{
+    height:100%;
+    overflow: auto;
+ }
+ 
+ .expansion-panel .panel-description{
+ font-size: 12pt;
+ }
