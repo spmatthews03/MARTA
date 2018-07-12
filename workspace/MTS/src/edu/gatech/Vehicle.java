@@ -8,6 +8,8 @@ public abstract class Vehicle {
     protected Integer passengers;
     protected Integer capacity;
     protected Integer speed;
+    protected double fuelCapacity;
+    protected double fuelLevel;
 
     public Vehicle() {
         this.ID = -1;
@@ -60,48 +62,72 @@ public abstract class Vehicle {
 
     public Integer getSpeed() { return this.speed; }
 
-//    public void displayEvent() {
-//        System.out.println(" train: " + Integer.toString(this.ID));
-//    }
-//
-//    public void displayInternalStatus() {
-//        System.out.print("> Train - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
-//        System.out.print(" location from: " + Integer.toString(prevLocation) + " to: " + Integer.toString(nextLocation));
-//        System.out.print(" passengers: " + Integer.toString(passengers) + " capacity: " + Integer.toString(capacity));
-//        System.out.println(" speed: " + Integer.toString(speed));
-//    }
-//
-//    public String toJSON() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append('{');
-//        sb.append("\"ID\":");
-//        sb.append(this.ID);
-//        sb.append(',');
-//        sb.append("\"routeID\":");
-//        sb.append(this.route);
-//        sb.append(',');
-//        sb.append("\"capacity\":");
-//        sb.append(this.capacity);
-//        sb.append(',');
-//        sb.append("\"passengers\":");
-//        sb.append(this.passengers);
-//        sb.append(',');
-//        sb.append("\"nextLocation\":");
-//        sb.append(this.nextLocation);
-//        sb.append(',');
-//        sb.append("\"prevLocation\":");
-//        sb.append(this.prevLocation);
-//        sb.append(',');
-//        sb.append("\"speed\":");
-//        sb.append(this.speed);
-//        sb.append('}');
-//        return sb.toString();
-//    }
+    public void displayEvent(String vehicleType) {
+        System.out.println(" train: " + Integer.toString(this.ID));
+    }
+
+    public void displayInternalStatus(String vehicleType) {
+        System.out.print("> " + vehicleType + " - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
+        System.out.print(" location from: " + Integer.toString(prevLocation) + " to: " + Integer.toString(nextLocation));
+        System.out.print(" passengers: " + Integer.toString(passengers) + " capacity: " + Integer.toString(capacity));
+        System.out.println(" speed: " + Integer.toString(speed));
+    }
+
+    public String toJSON(String vehicleType) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        sb.append("\"ID\":");
+        sb.append(this.ID);
+        sb.append(',');
+        sb.append("\"routeID\":");
+        sb.append(this.route);
+        sb.append(',');
+        sb.append("\"capacity\":");
+        sb.append(this.capacity);
+        sb.append(',');
+        sb.append("\"passengers\":");
+        sb.append(this.passengers);
+        sb.append(',');
+        sb.append("\"nextLocation\":");
+        sb.append(this.nextLocation);
+        sb.append(',');
+        sb.append("\"prevLocation\":");
+        sb.append(this.prevLocation);
+        sb.append(',');
+        sb.append("\"speed\":");
+        sb.append(this.speed);
+        if (vehicleType == "bus"){
+            sb.append(',');
+            sb.append("\"fuelCapacity\":");
+            sb.append(this.fuelCapacity);
+            sb.append(',');
+            sb.append("\"fuelLevel\":");
+            sb.append(this.fuelLevel);
+        }
+        sb.append('}');
+        return sb.toString();
+    }
 
     public void takeTurn() {
         System.out.println("drop off passengers - pickup passengers to capacity - move to next stop");
     }
 
     public void adjustPassengers(int differential) { passengers = passengers + differential; }
+
+    //Override the equals method to compare the object
+    @Override
+    public boolean equals(Object object) {
+        boolean result = false;
+        if (object == null || object.getClass() != getClass()) {
+            result = false;
+        } else {
+            Vehicle me = (Vehicle) object;
+            if (this.ID == me.getID()) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
 
 }

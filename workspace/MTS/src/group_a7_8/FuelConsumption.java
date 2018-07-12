@@ -42,10 +42,12 @@ public class FuelConsumption {
         sb.append("\"bus\":");
         sb.append(bus.getID());
         sb.append(',');
-        //sb.append("\"pathKey\":");
-        //sb.append(pathKey);
+        sb.append("\"pathKey\":");
+        sb.append(pathKey.toJSON());
+        sb.append(',');
         sb.append("\"timeRank\":");
         sb.append(this.timeRank);
+        sb.append(',');
         sb.append("\"amount\":");
         sb.append(this.amount);
         sb.append('}');
