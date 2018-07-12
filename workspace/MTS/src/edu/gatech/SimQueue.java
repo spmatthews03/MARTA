@@ -38,6 +38,7 @@ public class SimQueue {
     public void triggerNextEvent(TransitSystem busModel) {
         if (eventQueue.size() > 0) {
             SimEvent activeEvent = eventQueue.poll();
+            time = activeEvent.getRank();
             activeEvent.execute();
             listener.updateState();
         } else {

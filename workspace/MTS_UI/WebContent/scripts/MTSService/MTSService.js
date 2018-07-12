@@ -10,7 +10,8 @@ var service = function ($log, $timeout, $interval, $http){
 	        stops:[],
 	        paths:[],
 	        events:[],
-	        commands:[]
+	        commands:[],
+	        commandsQueue:[]
    };
 	
    var ws;
@@ -22,7 +23,26 @@ var service = function ($log, $timeout, $interval, $http){
     	//$log.info('heartbeat' + Date.now());
     	post('{\"messageType\":\"heartbeat\"}')
    };
+   commandBlocked = false;
+
     
+   var sendCommands = function(){
+	   if(!commandBlocked && state.commandsQueue.length>0){
+		   $log.info(state.commandsQueue.length+" commands to send");
+		   var command = state.commandsQueue.shift();
+		   $log.info('sending :'+command);
+		   $log.info('url: '+'/api/MTS/command?line=' + command);
+	    	var promise = $http.get('/api/MTS/command?line=' + command);
+	    	promise.then(
+	    	          function(payload) { 
+	    	        	  //$log.info('service call returned:', payload);
+	    	          },
+	    	          function(errorPayload) {
+	    	              $log.error('failure error:', errorPayload);
+	    	          });
+		   commandBlocked = true;
+	   }
+   }
    var process = function(update){
       //$log.info(update);
 	  state.time = update.time;
@@ -63,11 +83,13 @@ var service = function ($log, $timeout, $interval, $http){
   		  }
   	   }
 	   //$log.info(state);
+  	   commandBlocked = false;
    };
    // ws = new WebSocket('ws://127.0.0.1:5808');
    var onopen = function(){
 	  $log.info('socket opened!');
 	  $interval(heartbeat,1000);
+	  $interval(sendCommands,100);
    };
 		    
    var onmessage = function(evt){
@@ -95,15 +117,8 @@ var service = function ($log, $timeout, $interval, $http){
 		    
     var executeCommand = function(command){
     	$log.info('executing command: '+command);
-    	//$log.info('url: '+'/api/MTS/command?line=' + command);
-    	var promise = $http.get('/api/MTS/command?line=' + command);
-    	promise.then(
-    	          function(payload) { 
-    	        	  //$log.info('service call returned:', payload);
-    	          },
-    	          function(errorPayload) {
-    	              $log.error('failure error:', errorPayload);
-    	          });
+    	state.commandsQueue.push(command);
+    	
     };
     connect();
    

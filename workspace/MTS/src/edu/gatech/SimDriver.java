@@ -20,6 +20,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public class SimDriver implements StateChangeListener{
+	private final static Object lock = new Object();
     private static SimQueue simEngine;
     private static TransitSystem martaModel;
     private static Random randGenerator;
@@ -36,6 +37,7 @@ public class SimDriver implements StateChangeListener{
 	private UpdateManager setUpdateManager;
 	private UpdateManager updateManager;
     public boolean processCommand(String userCommandLine){
+    	synchronized(lock) {
     	//System.out.printf("processing command `%s`\n", userCommandLine);
         String[] tokens;
         tokens = userCommandLine.split(DELIMITER);
@@ -147,6 +149,7 @@ public class SimDriver implements StateChangeListener{
                 return true;
         }
         return false;
+    	}
     }
 
     public void runInterpreter() {
@@ -373,6 +376,7 @@ public class SimDriver implements StateChangeListener{
     }
     
     public String toJSON() {
+    	synchronized(lock) {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
     	sb.append("\"time\":");
@@ -396,10 +400,12 @@ public class SimDriver implements StateChangeListener{
        	}
         sb.append('}');
     	return sb.toString();
+    	}
     }
 
 	@Override
 	public void updateState() {
+    	synchronized(lock) {
 		if(updateManager==null) return;
 		String message = toJSON();
 		System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
@@ -409,7 +415,7 @@ public class SimDriver implements StateChangeListener{
 			System.out.printf("Some error with posting message to socket");
 			e.printStackTrace();
 		}
-		
+    	}
 	}
 
 	public void setUpdateManager(UpdateManager updateManager) {

@@ -1,6 +1,6 @@
 package group_a7_8.server;
 
-import javax.inject.Inject;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +21,10 @@ public class CommandService {
     @Path("command")
     @Produces(MediaType.APPLICATION_JSON)
     public Result addCommandt(@QueryParam("line") String userCommandLine,@Context HttpServletRequest request){
-		SimDriver driver = AsRestServer.getDriver(request.getSession().getId());
+		SimDriver driver = AsRestServer.getDriver();
+		
+		System.out.printf("session id %s\n", request.getSession().getId());
+		System.out.printf("driver %s\n", driver);
     	System.out.printf("command %s\n", userCommandLine);
         Result result = new Result(userCommandLine);
         result.setQuit(driver.processCommand(userCommandLine));
@@ -42,7 +45,7 @@ public class CommandService {
             return quit;
         }
 
-        public void setQuit(boolean outcome) {
+        public void setQuit(boolean quit) {
             this.quit = quit;
         }
         public String getCommandLine() {

@@ -2,7 +2,7 @@
 (function(){
 	//console.log('bootstrapping angular');
 	//defining the application controller
-	var appController = function($scope, $log, $attrs, $mdSidenav, fileReader){
+	var appController = function($scope, $log, $attrs, $mdSidenav){
 		//$log.info('MTSController');
 		$scope.showMenu = true;
 		$scope.newSimulation = function(){
@@ -13,16 +13,6 @@
 			$log.info("resuming ptiot simulation ...");
 			$scope.showMenu = false;
 		};
-
-		$scope.getFile = function(){
-			$log.info('reading file '+$scope.file.name);
-			fileReader.readAsText($scope.file, $scope)
-            .then(function(result) {
-                 //$log.info(result);
-                 $scope.commands = result.split("\n");
-                 //$log.info($scope.commands);               
-             });			
-		}
 	};
 
 	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard'])
@@ -43,20 +33,6 @@
 			    .backgroundPalette('grey2')
 			    ; 	 	
 		})
-		.directive("ngFileSelect",['$log',function($log){
-		  return {
-		    link: function($scope,el){
-		      //$log.info('file select directive fired');
-		      el.bind("change", function(e){
-		      
-		        $scope.file = (e.srcElement || e.target).files[0];
-		        $scope.getFile();
-		      })
-		      
-		    }
-		    
-		  }
-		}])
-		.controller('MTSController',['$scope','$log', '$attrs', '$mdSidenav', 'FileReader', appController])
+		.controller('MTSController',['$scope','$log', '$attrs', '$mdSidenav', appController])
 		;
 }());
