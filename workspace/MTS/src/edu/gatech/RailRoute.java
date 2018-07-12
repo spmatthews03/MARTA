@@ -30,4 +30,10 @@ public class RailRoute extends VehicleRoute {
    
    public String toJSON() { return this.toJSON("stations"); }
    
+   //Require Station class and getStation method in TransitSystem class
+   /*
+   public Station getRailStation (TransitSystem system, int routeLocation) {
+	   return system.getStation(this.getExchangePointID(routeLocation));   
+   }
+   */
 }

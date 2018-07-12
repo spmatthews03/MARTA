@@ -98,7 +98,7 @@ public abstract class VehicleRoute {
         if (object == null || object.getClass() != getClass()) {
             result = false;
         } else {
-            BusRoute me = (BusRoute) object;
+        	VehicleRoute me = (VehicleRoute) object;
             if (this.ID == me.getID()) {
                 result = true;
             }
