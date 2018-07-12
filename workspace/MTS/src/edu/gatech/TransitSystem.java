@@ -22,6 +22,7 @@ public class TransitSystem {
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
     private StateChangeListener listener;
+    private HashMap<Integer, Depot> depots;
 
 
     public TransitSystem() {
@@ -31,8 +32,9 @@ public class TransitSystem {
         buses = new HashMap<Integer, Bus>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
+        depots = new HashMap<Integer, Depot>();
     }
-    
+
     public void setStateChangeListener(StateChangeListener listener) {
         this.listener = listener;
     }
@@ -89,6 +91,13 @@ public class TransitSystem {
         listener.updateState();
         return uniqueID;
     }
+
+	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
+	    // int uniqueID = buses.size();
+		depots.put(uniqueID, new Depot(uniqueID, name, x_coord, y_coord));
+		listener.updateState();
+	    return uniqueID;
+	}
 
     public void appendStopToRoute(int routeID, int nextStopID) { 	
 //    	routes.get(routeID).addNewStop(nextStopID);
