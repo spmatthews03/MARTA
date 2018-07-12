@@ -3,6 +3,7 @@ package edu.gatech;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import group_a7_8.FuelConsumption;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
@@ -19,8 +20,10 @@ public class TransitSystem {
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
     private HashMap<Integer, Bus> buses;
+    private HashMap<Integer, Train> trains;
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
+    private Hashtable<Bus, FuelConsumption> fuelConsumption;
     private StateChangeListener listener;
 
 
@@ -29,13 +32,20 @@ public class TransitSystem {
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
         buses = new HashMap<Integer, Bus>();
+        trains = new HashMap<Integer, Train>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
+        fuelConsumption = new Hashtable<Bus, FuelConsumption>();
     }
     
     public void setStateChangeListener(StateChangeListener listener) {
         this.listener = listener;
     }
+
+    public FuelConsumption getFuelConsumption(Bus bus){
+    	if(fuelConsumption.containsKey(bus)) { return fuelConsumption.get(bus); }
+    	return null;
+	}
 
     public Stop getStop(int stopID) {
         if (stops.containsKey(stopID)) { return stops.get(stopID); }
@@ -56,6 +66,11 @@ public class TransitSystem {
         if (buses.containsKey(busID)) { return buses.get(busID); }
         return null;
     }
+
+    public Train getTrain(int trainID) {
+    	if (trains.containsKey(trainID)) { return trains.get(trainID); }
+    	return null;
+	}
 
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
@@ -89,6 +104,12 @@ public class TransitSystem {
         listener.updateState();
         return uniqueID;
     }
+
+    public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+    	trains.put(uniqueID, new Train(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+		listener.updateState();
+		return uniqueID;
+	}
 
     public void appendStopToRoute(int routeID, int nextStopID) { 	
 //    	routes.get(routeID).addNewStop(nextStopID);
@@ -249,9 +270,15 @@ public class TransitSystem {
 
     public HashMap<Integer, Bus> getBuses() { return buses; }
 
-    public Hashtable<PathKey, Path> getPaths() { return paths; }
-    
-    public ArrayList<Hazard> getHazards(PathKey pathKey){
+	public HashMap<Integer, Train> getTrains() { return trains;	}
+
+	public Hashtable<PathKey, Path> getPaths() { return paths; }
+
+	public Hashtable<Bus, FuelConsumption> getFuelConsumption() {
+		return fuelConsumption;
+	}
+
+	public ArrayList<Hazard> getHazards(PathKey pathKey){
     	if(hazards.containsKey(pathKey)) {
     		return hazards.get(pathKey);
     	}

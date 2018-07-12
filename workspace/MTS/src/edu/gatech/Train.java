@@ -1,59 +1,33 @@
 package edu.gatech;
 
 
-import group_a7_8.FuelConsumption;
+public class Train extends Vehicle {
 
-public class Bus extends Vehicle{
-    private double fuelCapacity;
-    private double fuelLevel;
-
-    public Bus() {
+    public Train() {
         this.ID = -1;
     }
 
-    public Bus(int uniqueValue) {
-        this.ID = uniqueValue;
-        this.route = -1;
-        this.nextLocation = -1;
-        this.prevLocation = -1;
-        this.passengers = -1;
-        this.capacity = -1;
-        this.speed = -1;
+    public Train(int uniqueValue) {
+        super(uniqueValue);
     }
 
-    public Bus(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-        this.ID = uniqueValue;
-        this.route = inputRoute;
-        this.nextLocation = inputLocation;
-        this.prevLocation = inputLocation;
-        this.passengers = inputPassengers;
-        this.capacity = inputCapacity;
-        this.speed = inputSpeed;
-   }
+    public Train(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+        super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
+    }
 
 
-    public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
-
-    public void setFuelLevel(double inputFuelLevel) { this.fuelLevel = inputFuelLevel; }
-
-
-    public double getFuelCapacity() { return this.fuelCapacity; }
-
-    public double getFuelLevel() { return this.fuelLevel; }
-
-    //public double getFuelConsumed(){ return }
 
     public void displayEvent() {
-        System.out.println(" bus: " + Integer.toString(this.ID));
+        System.out.println(" train: " + Integer.toString(this.ID));
     }
 
     public void displayInternalStatus() {
-        System.out.print("> bus - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
+        System.out.print("> Train - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
         System.out.print(" location from: " + Integer.toString(prevLocation) + " to: " + Integer.toString(nextLocation));
         System.out.print(" passengers: " + Integer.toString(passengers) + " capacity: " + Integer.toString(capacity));
         System.out.println(" speed: " + Integer.toString(speed));
     }
-
+    
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
@@ -77,10 +51,6 @@ public class Bus extends Vehicle{
     	sb.append(',');
     	sb.append("\"speed\":");
     	sb.append(this.speed);
-    	sb.append("\"fuelCapacity\":");
-    	sb.append(this.fuelCapacity);
-    	sb.append("\"fuelLevel\":");
-    	sb.append(this.fuelLevel);
     	sb.append('}');
     	return sb.toString();
     }
@@ -98,7 +68,7 @@ public class Bus extends Vehicle{
         if (object == null || object.getClass() != getClass()) {
             result = false;
         } else {
-            Bus me = (Bus) object;
+            Train me = (Train) object;
             if (this.ID == me.getID()) {
                 result = true;
             }
