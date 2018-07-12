@@ -46,6 +46,9 @@
 			                 '<add-bus-stop-form ng-switch-when="addBusStop"></add-bus-stop-form>'+
 			                 '<add-bus-route-form ng-switch-when="addBusRoute"></add-bus-route-form>'+
 			                 '<extend-bus-route-form ng-switch-when="extendBusRoute"></extend-bus-route-form>'+
+			                 '<add-bus-form ng-switch-when="addBus"></add-bus-form>'+
+			                 '<add-event-form ng-switch-when="addEvent"></add-event-form>'+
+			                 '<add-bus-path-delay-form ng-switch-when="addBusPathDelay"></add-bus-path-delay-form>'+
 			                 '<command-entry ng-switch-default></command-entry>'+
 		                 '</div>'+
 		              '</div>'+

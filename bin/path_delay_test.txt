@@ -27,6 +27,3 @@ add_event,1,move_bus,7
 add_event,1,move_bus,11
 path_delay,20,30,5,7,1.2
 step_multi,20
-system_report
-display_model
-quit
