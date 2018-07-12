@@ -6,7 +6,7 @@
   var addBusStopInputFormDirective = function(){
   	return{
   		restrict:'E',
-  		scope:{commandOption:"="},
+  		scope:{},
   		controller: 'inputFormController',
   		replace: true,
       templateUrl:'scripts/CommandsConsole/AddBusStop.html'
@@ -15,13 +15,22 @@
   var addBusRouteInputFormDirective = function(){
 	  	return{
 	  		restrict:'E',
-	  		scope:{commandOption:"="},
+	  		scope:{},
 	  		controller: 'inputFormController',
 	  		replace: true,
 	      templateUrl:'scripts/CommandsConsole/AddBusRoute.html'
 	  	}
 	  };
-   //controllers
+  var extendBusRouteInputFormDirective = function(){
+	  	return{
+	  		restrict:'E',
+  		scope:{},
+  		controller: 'inputFormController',
+  		replace: true,
+      templateUrl:'scripts/CommandsConsole/ExtendBusRoute.html'
+  	}
+  };
+//controllers
   var inputFormController = function($scope, $log, mtsService){
 	  $log.info('inputFormController');
 	  $log.info('command option='+$scope.commandOption);
@@ -37,6 +46,9 @@
 			  break;
 		  case 'addBusRoute':
 			  command = 'add_route,'+$scope.item.id+','+$scope.item.number+','+$scope.item.name;
+			  break;
+		  case 'extendBusRoute':
+			  command = 'extend_route,'+$scope.item.routeId+','+$scope.item.stopId;
 			  break;
 		  }
 		  if(command && command.length>0){
@@ -54,5 +66,6 @@
   angular.module('CommandsConsole')
   .directive('addBusStopForm',[addBusStopInputFormDirective])
   .directive('addBusRouteForm',[addBusRouteInputFormDirective])
+  .directive('extendBusRouteForm',[extendBusRouteInputFormDirective])
   .controller('inputFormController',['$scope', '$log','MTSService', inputFormController]);
 }());

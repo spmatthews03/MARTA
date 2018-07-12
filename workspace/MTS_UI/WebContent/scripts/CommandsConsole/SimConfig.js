@@ -43,8 +43,9 @@
 		              '</div>'+     
 		              '<div ng-show="mts.editMode" layout="column">'+
 		                 '<div ng-switch="mts.commandOption">'+
-			                 '<add-bus-stop-form ng-switch-when="addBusStop" data-command-option="commandOption"></add-bus-stop-form>'+
-			                 '<add-bus-route-form ng-switch-when="addBusRoute" data-command-option="commandOption"></add-bus-route-form>'+
+			                 '<add-bus-stop-form ng-switch-when="addBusStop"></add-bus-stop-form>'+
+			                 '<add-bus-route-form ng-switch-when="addBusRoute"></add-bus-route-form>'+
+			                 '<extend-bus-route-form ng-switch-when="extendBusRoute"></extend-bus-route-form>'+
 			                 '<command-entry ng-switch-default></command-entry>'+
 		                 '</div>'+
 		              '</div>'+
