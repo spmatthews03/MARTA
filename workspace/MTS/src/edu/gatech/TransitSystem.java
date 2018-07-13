@@ -3,6 +3,7 @@ package edu.gatech;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import group_a7_8.FuelConsumption;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
@@ -19,8 +20,10 @@ public class TransitSystem {
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
     private HashMap<Integer, Bus> buses;
+    private HashMap<Integer, RailCar> trains;
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
+    private Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumption;
     private StateChangeListener listener;
     private HashMap<Integer, Depot> depots;
 
@@ -30,14 +33,31 @@ public class TransitSystem {
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
         buses = new HashMap<Integer, Bus>();
+        trains = new HashMap<Integer, RailCar>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
         depots = new HashMap<Integer, Depot>();
+        fuelConsumption = new Hashtable<Bus, ArrayList<FuelConsumption>>();
     }
 
     public void setStateChangeListener(StateChangeListener listener) {
         this.listener = listener;
     }
+
+    public ArrayList<FuelConsumption> getFuelConsumptionList(Bus bus){
+    	if(fuelConsumption.containsKey(bus)) { return fuelConsumption.get(bus); }
+    	return null;
+	}
+
+	public double getTotalFuelConsumed(Bus bus){
+    	double sum = 0;
+    	if(fuelConsumption.containsKey(bus)) {
+    		for(FuelConsumption val : fuelConsumption.get(bus)){
+    			sum += val.getFuelConsumed();
+			}
+		}
+		return sum;
+	}
 
     public Stop getStop(int stopID) {
         if (stops.containsKey(stopID)) { return stops.get(stopID); }
@@ -58,6 +78,11 @@ public class TransitSystem {
         if (buses.containsKey(busID)) { return buses.get(busID); }
         return null;
     }
+
+    public RailCar getTrain(int trainID) {
+    	if (trains.containsKey(trainID)) { return trains.get(trainID); }
+    	return null;
+	}
 
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
@@ -87,16 +112,23 @@ public class TransitSystem {
 
     public int makeBus(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         // int uniqueID = buses.size();
-        buses.put(uniqueID, new Bus(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+        buses.put(uniqueID, new Bus(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
         listener.updateState();
         return uniqueID;
     }
 
+<<<<<<< HEAD
 	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
 	    // int uniqueID = buses.size();
 		depots.put(uniqueID, new Depot(uniqueID, name, x_coord, y_coord));
 		listener.updateState();
 	    return uniqueID;
+=======
+    public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+    	trains.put(uniqueID, new RailCar(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+		listener.updateState();
+		return uniqueID;
+>>>>>>> seans_branch
 	}
 
     public void appendStopToRoute(int routeID, int nextStopID) { 	
@@ -271,9 +303,15 @@ public class TransitSystem {
 
     public HashMap<Integer, Bus> getBuses() { return buses; }
 
-    public Hashtable<PathKey, Path> getPaths() { return paths; }
-    
-    public ArrayList<Hazard> getHazards(PathKey pathKey){
+	public HashMap<Integer, RailCar> getTrains() { return trains;	}
+
+	public Hashtable<PathKey, Path> getPaths() { return paths; }
+
+	public Hashtable<Bus, ArrayList<FuelConsumption>> getFuelConsumption() {
+		return fuelConsumption;
+	}
+
+	public ArrayList<Hazard> getHazards(PathKey pathKey){
     	if(hazards.containsKey(pathKey)) {
     		return hazards.get(pathKey);
     	}
