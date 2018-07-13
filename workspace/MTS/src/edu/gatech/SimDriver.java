@@ -42,6 +42,8 @@ public class SimDriver implements StateChangeListener{
         String[] tokens;
         tokens = userCommandLine.split(DELIMITER);
 
+        System.out.println(tokens[0]);
+
         switch (tokens[0]) {
             case "add_event":
             	switch(tokens[2]) {
@@ -77,6 +79,14 @@ public class SimDriver implements StateChangeListener{
                 int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
                 System.out.println(" new bus: " + Integer.toString(busID) + " created");
                 break;
+            case "add_depot":
+                int uniqueID = Integer.parseInt(tokens[1].trim());
+                String name = tokens[2].trim();
+                int x_coord = Integer.parseInt(tokens[3].trim());
+                int y_coord = Integer.parseInt(tokens[4].trim());
+
+                martaModel.makeDepot(uniqueID, name, x_coord, y_coord);
+            	break;
             case "extend_route":
                 System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
                 martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
