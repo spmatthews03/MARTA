@@ -9,6 +9,7 @@ public abstract class Vehicle {
     protected Integer capacity;
     protected Integer speed;
     protected TransitSystem system;
+    protected String vehicleType;
 
 
     public Vehicle() {
@@ -62,12 +63,12 @@ public abstract class Vehicle {
 
     public Integer getSpeed() { return this.speed; }
 
-    public void displayEvent(String vehicleType) {
-        System.out.println(" train: " + Integer.toString(this.ID));
+    public void displayEvent() {
+        System.out.println(this.vehicleType + ": " + Integer.toString(this.ID));
     }
 
-    public void displayInternalStatus(String vehicleType) {
-        System.out.print("> " + vehicleType + " - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
+    public void displayInternalStatus() {
+        System.out.print("> " + this.vehicleType + " - ID: " + Integer.toString(ID) + " route: " + Integer.toString(route));
         System.out.print(" location from: " + Integer.toString(prevLocation) + " to: " + Integer.toString(nextLocation));
         System.out.print(" passengers: " + Integer.toString(passengers) + " capacity: " + Integer.toString(capacity));
         System.out.println(" speed: " + Integer.toString(speed));
