@@ -61,6 +61,12 @@ templateUrl:'scripts/CommandsConsole/BusPathDelay.html'
   var inputFormController = function($scope, $log, mtsService){
 	  $log.info('inputFormController');
 	  $scope.item= {};
+	  $scope.cancel = function(){
+		$log.info("cancelling form");  
+		  mtsService.state.editMode=false;
+		  mtsService.state.commandOption='';
+		  $scope.item={};
+	  };
 	  $scope.onSubmit=function() {
 		  $log.info("form submitted");
 		  $log.info("form: "+mtsService.state.commandOption);
@@ -94,6 +100,7 @@ templateUrl:'scripts/CommandsConsole/BusPathDelay.html'
 		  //$log.info(mtsService.state);
 		  mtsService.state.editMode=false;
 		  mtsService.state.commandOption='';
+		  $scope.item={};
 		  //$log.info(mtsService.state);
 	  };
   };

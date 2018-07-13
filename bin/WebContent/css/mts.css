@@ -161,3 +161,13 @@ div:focus {
  .expansion-panel .panel-description{
  font-size: 12pt;
  }
+ 
+ .input-form{
+  height: inherit;
+  min-height: 275px;
+  max-height: 600px;
+}
+
+ .input-form .md-content{
+	 overflow: auto
+}

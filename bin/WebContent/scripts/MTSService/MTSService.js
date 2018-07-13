@@ -91,7 +91,7 @@ var service = function ($log, $timeout, $interval, $http){
    var onopen = function(){
 	  $log.info('socket opened!');
 	  $interval(heartbeat,1000);
-	  $interval(sendCommands,100);
+	  $interval(sendCommands,10);
    };
 		    
    var onmessage = function(evt){
