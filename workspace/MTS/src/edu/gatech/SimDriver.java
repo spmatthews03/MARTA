@@ -91,8 +91,14 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new rail route: " + Integer.toString(railRouteID) + " created");
                 break;
             case "add_bus":
-                int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
+                int busID = martaModel.makeBus(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
+                        Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Double.parseDouble(tokens[6]),Double.parseDouble(tokens[7]), Integer.parseInt(tokens[8]));
                 System.out.println(" new bus: " + Integer.toString(busID) + " created");
+                break;
+            case "add_train":
+                int trainID = martaModel.makeTrain(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
+                        Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[8]));
+                System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
                 int uniqueID = Integer.parseInt(tokens[1].trim());
@@ -360,7 +366,7 @@ public class SimDriver implements StateChangeListener{
                 int startingPosition = 0;
                 int skip = Math.max(1, routeLength / busesOnRoute);
                 for (int i = 0; i < busesOnRoute; i++) {
-                    martaModel.makeBus(busID, routeID, startingPosition + i * skip, 0, 10, 1);
+                    martaModel.makeBus(busID, routeID, startingPosition + i * skip, 0, 10, 100, 100,60);
                     //TODO REFACTOR below line after create move_bus event command is working
                     //simEngine.addNewEvent(0,"move_bus", busID++);
                     recordCounter++;
