@@ -464,8 +464,6 @@ public class TransitSystem {
     	return sb.toString();
     }
 
-	public Bus getbus(Integer busID) {
-		return buses.get(busID);
-	}
+
     
 }
