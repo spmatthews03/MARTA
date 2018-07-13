@@ -5,6 +5,7 @@ import java.util.Scanner;
 import group_a7_8.ClearPathDelayEvent;
 import group_a7_8.FileProps;
 import group_a7_8.MoveBusEvent;
+import group_a7_8.MoveTrainEvent;
 import group_a7_8.PathKey;
 import group_a7_8.SetPathDelayEvent;
 import group_a7_8.server.StateChangeListener;
@@ -48,6 +49,7 @@ public class SimDriver implements StateChangeListener{
             case "add_event":
             	switch(tokens[2]) {
 	            	case "move_bus":
+	            	{
 	                    System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
 	                    System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
 	                    // for this event type
@@ -57,7 +59,20 @@ public class SimDriver implements StateChangeListener{
 	                    Bus bus = martaModel.getBus(Integer.decode(tokens[3]));
 	                    MoveBusEvent event = new MoveBusEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), bus);
 	                    simEngine.add(event);
-	//                    simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
+	            	}
+	                    break;
+	            	case "move_train":
+	            	{
+	                    System.out.print(" new event - rank: " + Integer.parseInt(tokens[1]));
+	                    System.out.println(" type: " + tokens[2] + " ID: " + Integer.parseInt(tokens[3]) + " created");
+	                    // for this event type
+	                    // tokens[1] is the time rank of the event, when it is scheduled to execute
+	                    // tokens[2] is the event_type, in this case, move_train
+	                    // tokens[3] is the event ID, it also doubles as the train ID
+	                    RailCar train = martaModel.getTrain(Integer.decode(tokens[3]));
+	                    MoveTrainEvent event = new MoveTrainEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), train);
+	                    simEngine.add(event);
+	            	}
 	                    break;
 	                    default:
 	                    	System.out.printf("%s is an unrecognized event\n",tokens[2]);
