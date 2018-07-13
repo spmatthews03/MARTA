@@ -9,14 +9,20 @@ public class Bus extends Vehicle{
 
     public Bus() {
         this.ID = -1;
+        this.vehicleType = "Bus";
     }
 
     public Bus(TransitSystem system, int uniqueValue) {
         super(system, uniqueValue);
+        this.vehicleType = "Bus";
     }
 
-    public Bus(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+    public Bus(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers,
+               int inputCapacity, double fuelLevel, double fuelCapacity, int inputSpeed) {
         super(system, uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
+        this.fuelCapacity = fuelCapacity;
+        this.fuelLevel = fuelLevel;
+        this.vehicleType = "Bus";
     }
 
     public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
@@ -29,9 +35,13 @@ public class Bus extends Vehicle{
 
     public double getFuelConsumed(){ return system.getTotalFuelConsumed(this); }
 
-    public void displayEvent() { this.displayEvent("bus"); }
+//    public boolean hasEnoughFuel(){
+//        if(fuelLevel < )
+//    }
 
-    public void displayInternalStatus(){ this.displayInternalStatus("bus"); }
+    public void displayEvent() { this.displayEvent(); }
+
+    public void displayInternalStatus(){ this.displayInternalStatus(); }
 
     public String toJSON() {
         StringBuilder sb = new StringBuilder();

@@ -5,19 +5,22 @@ public class RailCar extends Vehicle {
 
     public RailCar() {
         this.ID = -1;
+        this.vehicleType = "Train";
     }
 
     public RailCar(TransitSystem system, int uniqueValue) {
         super(system, uniqueValue);
+        this.vehicleType = "Train";
     }
 
     public RailCar(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         super(system, uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
+        this.vehicleType = "Train";
     }
 
-    public void displayEvent() { this.displayEvent("train"); }
+    public void displayEvent() { this.displayEvent(); }
 
-    public void displayInternalStatus(){ this.displayInternalStatus("train"); }
+    public void displayInternalStatus(){ this.displayInternalStatus(); }
 
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
