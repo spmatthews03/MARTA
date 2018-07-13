@@ -52,7 +52,7 @@ public class SimDriver implements StateChangeListener{
 	                    // tokens[1] is the time rank of the event, when it is scheduled to execute
 	                    // tokens[2] is the event_type, in this case, move_bus
 	                    // tokens[3] is the event ID, it also doubles as the bus ID
-	                    Bus bus = martaModel.getbus(Integer.decode(tokens[3]));
+	                    Bus bus = martaModel.getBus(Integer.decode(tokens[3]));
 	                    MoveBusEvent event = new MoveBusEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), bus);
 	                    simEngine.add(event);
 	//                    simEngine.addNewEvent(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]));
