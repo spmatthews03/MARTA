@@ -117,18 +117,17 @@ public class TransitSystem {
         return uniqueID;
     }
 
-<<<<<<< HEAD
 	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
-	    // int uniqueID = buses.size();
+		// int uniqueID = buses.size();
 		depots.put(uniqueID, new Depot(uniqueID, name, x_coord, y_coord));
 		listener.updateState();
-	    return uniqueID;
-=======
+		return uniqueID;
+	}
+
     public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
     	trains.put(uniqueID, new RailCar(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
 		listener.updateState();
 		return uniqueID;
->>>>>>> seans_branch
 	}
 
     public void appendStopToRoute(int routeID, int nextStopID) { 	

@@ -7,6 +7,10 @@ public class ExchangePoint extends Facility {
 	protected Integer waiting;
 	protected boolean exchangePointDown;
 
+	public ExchangePoint(){
+		//default constructor
+	}
+
 	public ExchangePoint(int uniqueID, String name, double x, double y) {
 		super(uniqueID, name, x, y);
 		waiting = 0;

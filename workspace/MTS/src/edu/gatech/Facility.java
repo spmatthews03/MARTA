@@ -7,6 +7,10 @@ public abstract class Facility {
 	protected Point coord;
 	protected String facilityName;
 
+	public Facility(){
+		//default
+	}
+
 	public Facility(int uniqueID, String name, double x, double y) {
 		this.uniqueID = uniqueID;
 		this.facilityName = name;
