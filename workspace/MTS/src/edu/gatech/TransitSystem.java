@@ -110,9 +110,10 @@ public class TransitSystem {
         return uniqueID;
     }
 
-    public int makeBus(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+    public int makeBus(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity,
+					   double fuelLevel, double fuelCapacity, int inputSpeed) {
         // int uniqueID = buses.size();
-        buses.put(uniqueID, new Bus(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+        buses.put(uniqueID, new Bus(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, fuelLevel, fuelCapacity, inputSpeed));
         listener.updateState();
         return uniqueID;
     }
