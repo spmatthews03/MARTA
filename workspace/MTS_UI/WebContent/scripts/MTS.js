@@ -19,11 +19,9 @@
 		$scope.setExecMode=function(mode){
 			$log.info('setting exec mode to '+mode);
 			$scope.execMode = false;
+			$scope.activeTab = ($scope.execMode ? 1 : 2);
 		};
-		$scope.getActiveTab=function(){
-			$log.info('getActiveTab returning' + (($scope.execMode ? 1 : 2)));
-			return ($scope.execMode ? 1 : 2);
-		};
+		$scope.activeTab = 1;
 	};
 
 	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec'])
