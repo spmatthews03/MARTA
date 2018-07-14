@@ -1,10 +1,10 @@
  <md-content layout-padding>
-    <form name="addBusStopForm" ng-submit="onSubmit()">
+    <form name="addTrainStopForm" ng-submit="onSubmit()">
 
       <md-input-container class="md-block">
         <label>Stop ID</label>
         <input required md-no-asterisk type="number" min="0" name="id" ng-model="item.id">
-        <div ng-messages="addBusStopForm.id.$error"  multiple md-auto-hide="false">
+        <div ng-messages="addTrainStopForm.id.$error"  multiple md-auto-hide="false">
           <div ng-message="required">This field is required.</div>
           <div ng-message="min">0 is the minimum ID value allowed</div>
         </div>
@@ -12,7 +12,7 @@
       <md-input-container  class="md-block">
         <label>Stop Name</label>
         <input required md-maxlength="30" required md-no-asterisk name="name" ng-model="item.name">
-        <div ng-messages="addBusStopForm.name.$error"  multiple md-auto-hide="false">
+        <div ng-messages="addTrainStopForm.name.$error"  multiple md-auto-hide="false">
           <div ng-message="required">This field is required.</div>
           <div ng-message="md-maxlength">The id must be less than 30 characters long.</div>
         </div>
@@ -20,7 +20,7 @@
       <md-input-container  class="md-block">
         <label>Riders</label>
         <input required md-no-asterisk type="number" min="0" name="riders" ng-model="item.riders">
-        <div ng-messages="addBusStopForm.riders.$error"  multiple md-auto-hide="false">
+        <div ng-messages="addTrainStopForm.riders.$error"  multiple md-auto-hide="false">
           <div ng-message="required">This field is required.</div>
           <div ng-message="min">0 is the minimum number of riders allowed</div>
         </div>
@@ -29,14 +29,13 @@
         <md-input-container flex="50">
           <label>X Coordinate</label>
           <input required md-no-asterisk type="number" step="any" name="xCoord" ng-model="item.xCoord">
-          <div ng-messages="addBusStopForm.xCoord.$error"  multiple md-auto-hide="false">
-            <div ng-message="required">This field is required.</div>
+          addTrainStopForm            <div ng-message="required">This field is required.</div>
           </div>
         </md-input-container>
         <md-input-container flex="50">
           <label>Y Coordinate</label>
           <input required md-no-asterisk type="number" step="any" name="yCoord" ng-model="item.yCoord">
-          <div ng-messages="addBusStopForm.yCoord.$error"  multiple md-auto-hide="false">
+          <div ng-messages="addTrainStopForm.yCoord.$error"  multiple md-auto-hide="false">
             <div ng-message="required">This field is required.</div>
           </div>
         </md-input-container>
