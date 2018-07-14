@@ -11,27 +11,40 @@ public class FileProps {
 	private static String fileName="marta.props";
 	private static String dirPath=".";
 	Properties props = new Properties();
-	
+	public static String configPath;
 	public FileProps() {
 		load();
 	}
 	
+
+	
 	private void load() {
+		
+		String configFilePath = null;
+		if(configPath!=null) {
+			File file = new File(configPath); 
+			if(file.exists() && file.isFile()) {
+				configFilePath = configPath;
+			}
+		}
+		if(configFilePath==null) {
+			configFilePath = dirPath+"/"+fileName;
+			File dir = new File(dirPath); 
+			if(!dir.exists() || !dir.isDirectory()) {
+				System.out.printf("Error with directory path %s\n",dirPath);
+				return;
+			};
+			File file = new File(configFilePath); 
+			if(!file.exists() || !file.isFile()) {
+				System.out.printf("Property file %s does not exist\n",configFilePath);
+				return;
+			}
+		}
+
 		InputStream input = null;
-		File dir = new File(dirPath); 
-		if(!dir.exists() || !dir.isDirectory()) {
-			System.out.printf("Error with directory path %s\n",dirPath);
-			return;
-		};
-		String filePath = dirPath+"/"+fileName;
-		File file = new File(filePath); 
-		if(!file.exists() || !file.isFile()) {
-			System.out.printf("Property file %s does not exist\n",filePath);
-			return;
-		};
 
 		try {
-			input = new FileInputStream(fileName);
+			input = new FileInputStream(configFilePath);
 
 			// load a properties file
 			props.load(input);
@@ -44,6 +57,8 @@ public class FileProps {
 	Properties getProps() {
 		return props;
 	}
+	
+	public static void SetConfigPath(String path) {configPath = path;}
 	
 	public static String get(String key) {
 		if(!contains(key)) return null;
