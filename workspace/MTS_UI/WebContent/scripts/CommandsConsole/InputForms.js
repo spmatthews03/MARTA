@@ -154,27 +154,27 @@ var setTrainSpeedLimitFormDirective = function(){
 		  case 'pathDelay':
 			  command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
 			  break;
-		  // case 'setBusSpeedLimit':
-			//   command = 'add_train,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'addTrainStation':
-			//   command = 'add_station,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'addRailLine':
-			//   command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'extendRailLine':
-			//   command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'addTrainPathDelay':
-			//   command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'addBusPathDelay':
-			//   command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
-		  // case 'setTrainSpeedLimit':
-			//   command = 'path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
-			//   break;
+		  case 'addTrain':
+			  command = 'add_train,'+$scope.item.id+','+$scope.item.routeId+','+$scope.item.location+','+$scope.item.passengers+','+$scope.item.capacity+','+$scope.item.speed;
+			  break;
+		  case 'addTrainStation':
+			  command = 'add_station,'+$scope.item.id+','+$scope.item.name+','+$scope.item.riders+','+$scope.item.xCoord+','+$scope.item.yCoord;
+			  break;
+		  case 'addRailLine':
+			  command = 'add_train_route,'+$scope.item.id+','+$scope.item.number+','+$scope.item.name;
+			  break;
+		  case 'extendRailLine':
+			  command = 'extend_train_route,'+$scope.item.routeId+','+$scope.item.stopId;
+			  break;
+		  case 'addTrainPathDelay':
+			  command = 'train_path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
+			  break;
+		  case 'setBusSpeedLimit':
+			  command = 'speed_limit,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.topSpeed;
+			  break;
+		  case 'setTrainSpeedLimit':
+              command = 'train_speed_limit,,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.topSpeed;
+			  break;
 		  }
 		  if(command && command.length>0){
 			  $log.info('command: '+command);
