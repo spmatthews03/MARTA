@@ -5,7 +5,7 @@ CREATE TABLE STOP(
   NAME              CHAR(50) NOT NULL,
   waiting          int NOT NULL,
   x          		numeric NOT NULL,
-  y          		numeric NOT NULL,
+  y          		numeric NOT NULL
 
 );
 
@@ -29,3 +29,7 @@ CREATE TABLE VEHICLE (
   fuelcapacity	  	numeric NOT NULL,
   speed			  	int NOT NULL
 );
+
+
+
+

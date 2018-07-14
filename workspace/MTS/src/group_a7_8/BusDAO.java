@@ -17,8 +17,8 @@ public class BusDAO extends GenericDAO<Bus>{
 	}
 
 	private String insert_format=
-			"insert into %s (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "+
-			"VALUES(%d,'%s',%d,%d,%d,%d,%d,%f,%f,%d)";
+			"insert into %s (%s,%s,%s,%s,%s,%s,%s,%s,%s) "+
+			"VALUES(%d,'%s',%d,%d,%d,%d,%f,%f,%d)";
 	
 	
 	@Override
@@ -27,18 +27,18 @@ public class BusDAO extends GenericDAO<Bus>{
 		System.out.println(String.format(insert_format,tableName,
 				"vehicleLogicalID","type","routeLogicalID","location",
 				"passengers","capacity","fuellevel","fuelcapacity","speed",
-				bus.getID(),bus.getType(),bus.getRouteID(),bus.getLocation(),bus.getPastLocation(),
-				bus.getPassengers(),bus.getCapacity(),bus.getFuelLevel(),bus.getFuelCapacity(),bus.getSpeed()));
+				bus.getID(),bus.getType(),bus.getRouteID(),(int)bus.getLocation(),
+				(int)bus.getPassengers(),(int)bus.getCapacity(),bus.getFuelLevel(),bus.getFuelCapacity(),(int)bus.getSpeed()));
 		
 		stmt.execute(String.format(insert_format,tableName,
 				"vehicleLogicalID","type","routeLogicalID","location",
 				"passengers","capacity","fuellevel","fuelcapacity","speed",
-				bus.getID(),bus.getType(),bus.getRouteID(),bus.getLocation(),bus.getPastLocation(),
+				bus.getID(),bus.getType(),bus.getRouteID(),bus.getLocation(),
 				bus.getPassengers(),bus.getCapacity(),bus.getFuelLevel(),bus.getFuelCapacity(),bus.getSpeed()));
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s,%s,%s,%s,%s,%s,%s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<Bus> find() throws SQLException {
