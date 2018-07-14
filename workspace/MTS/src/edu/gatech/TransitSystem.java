@@ -17,6 +17,7 @@ import java.io.FileWriter;
 
 public class TransitSystem {
     private HashMap<Integer, Stop> stops;
+    private HashMap<Integer, RailStation> railstations;
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
     private HashMap<Integer, Bus> buses;
@@ -30,6 +31,7 @@ public class TransitSystem {
 
     public TransitSystem() {
         stops = new HashMap<Integer, Stop>();
+        railstations = new HashMap<Integer, RailStation>();
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
         buses = new HashMap<Integer, Bus>();
@@ -64,6 +66,11 @@ public class TransitSystem {
         return null;
     }
 
+    public RailStation getRailStation(int railStationID) {
+        if (railstations.containsKey(railStationID)) { return railstations.get(railStationID); }
+        return null;
+    }
+
     public RailRoute getRailRoute(int routeID) {
         if (railRoutes.containsKey(routeID)) { return railRoutes.get(routeID); }
         return null;
@@ -92,6 +99,12 @@ public class TransitSystem {
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
         stops.put(uniqueID, new Stop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
+        listener.updateState();
+        return uniqueID;
+    }
+
+    public int makeRailStation(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
+        railstations.put(uniqueID, new RailStation(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
         listener.updateState();
         return uniqueID;
     }
