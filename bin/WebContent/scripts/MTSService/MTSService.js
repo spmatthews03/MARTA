@@ -48,15 +48,15 @@ var service = function ($log, $timeout, $interval, $http){
    var process = function(update){
       //$log.info(update);
 	  state.time = update.time;
-	  if(update.system.buses && update.system.buses.length>0){
+	  if(update.system.vehicles && update.system.vehicles.length>0){
 	     state.vehicles.splice(0, state.vehicles.length);
-	     update.system.buses.forEach(function(vehicle){
+	     update.system.vehicles.forEach(function(vehicle){
 			    state.vehicles.push(vehicle);
 	     });
 	  }
-	  if(update.system.busRoutes && update.system.busRoutes.length>0){
+	  if(update.system.routes && update.system.routes.length>0){
 	     state.routes.splice(0, state.routes.length);
-	     update.system.busRoutes.forEach(function(route){
+	     update.system.routes.forEach(function(route){
 			    state.routes.push(route);
 	     });
 	  }
