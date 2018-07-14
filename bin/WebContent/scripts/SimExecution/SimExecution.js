@@ -4,11 +4,12 @@
   var busDirective = function(){
       return{
 		 restrict:'E',
-		 scope:{},
+		 scope:{vehicle:"="},
 		 replace: true,
+		 controller: 'busController',
          template: 
-        '<div class="bus-dashboard tile" layout="row" layout-align="start center">'+
-          '<div layput="column" layout-align="center center"><div><span>Bus</span></div></div>'+
+        '<div class="bus">'+
+          '<div><span>{{vehicle}}</span></div>'+
         '</div>'
 	  }
    };
@@ -16,17 +17,18 @@
 	  	return{
 	  		restrict:'E',
 			scope:{},
+			controller: 'simController',
 	        replace: true,
-            template: 
-        '<div class="sim-exec-panel" layout="column">'+
-          '<div layout="column" layout-align="center center"><div><span>Simulation</span></div><bus></bus></div>'+
-        '</div>'
+            templateUrl: 'scripts/SimExecution/SimMain.html' 
+
         }
   };
   //controllers
   var simController = function($scope, $log, mtsService){
 		$log.info('simController');
 		$scope.mts = mtsService.state;
+
+
   };
   var busController = function($scope, $log){
 		$log.info('busController');
