@@ -47,7 +47,10 @@ public class Bus extends Vehicle{
 
     public void displayEvent() { this.displayEvent(); }
 
-    public void displayInternalStatus(){ this.displayInternalStatus(); }
+    public void displayInternalStatus(){
+    	//TODO:  fix infinite loop
+    	//this.displayInternalStatus();
+    	}
 
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
