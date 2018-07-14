@@ -202,7 +202,7 @@ public class TransitSystem {
     	listener.updateState();
     }
     
-    // To be added after implementation of Station Class
+    // Need to update path for Station
     /* 
     public void appendStationToRoute(int routeID, int nextStationID) { 
 		RailRoute railRoute = railRoutes.get(routeID);
@@ -218,8 +218,8 @@ public class TransitSystem {
     		int priorStationRouteIndex = railRoute.getLength()-2;
     		int latestStationID = railRoute.getStationID(latestStationRouteIndex);
     		int priorStationID = railRoute.getStationID(priorStationRouteIndex);
-    		Station latestStation = getStation(latestStationID);
-    		Station priorStation = getStation(priorStationID);
+    		RailStation latestStation = getRailStation(latestStationID);
+    		RailStation priorStation = getRailStation(priorStationID);
     		PathKey path1= new PathKey(priorStation, latestStation);
     		paths.put(path1, new Path(this,path1));
     		System.out.printf("Added path %s to route %d-%s\n", path1,railRoute.getID(),railRoute.getName());
@@ -228,7 +228,7 @@ public class TransitSystem {
     		//add that path too
     		int beginStationRouteIndex = 0;
     		int beginStationID = railRoute.getStationID(beginStationRouteIndex);
-    		Stop beginStation = getStation(beginStationID);
+    		RailStation beginStation = getRailStation(beginStationID);
     		PathKey path2= new PathKey(latestStation,beginStation);
     		paths.put(path2, new Path(this,path2));
     		System.out.printf("Added path %s to route %d-%s\n", path2,railRoute.getID(),railRoute.getName());
@@ -248,7 +248,6 @@ public class TransitSystem {
     	listener.updateState();
     }
     */
-    
     public void addHazard(PathKey pathKey,double delayFactor) {
     	if(!hazards.containsKey(pathKey)) {
     		hazards.put(pathKey, new ArrayList<Hazard>());
@@ -258,10 +257,12 @@ public class TransitSystem {
     	listener.updateState();
     }
 
+    //Replaced with getPathKey
+    /*
     public PathKey getBusPathKey(int originBusID, int destinationBusID) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin().getID()==originBusID && pk.getDestination().getID()==destinationBusID) {
+    		if(pk.getOrigin().get_uniqueID()==originBusID && pk.getDestination().get_uniqueID()==destinationBusID) {
     			pathKey = pk;
     			break;
     		}
@@ -272,7 +273,19 @@ public class TransitSystem {
     public PathKey getRailPathKey(int originRailID, int destinationRailID) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin().getID()==originRailID && pk.getDestination().getID()==destinationRailID) {
+    		if(pk.getOrigin().get_uniqueID()==originRailID && pk.getDestination().get_uniqueID()==destinationRailID) {
+    			pathKey = pk;
+    			break;
+    		}
+    	}
+    	return pathKey;
+    }
+    */    
+    
+    public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
+    	PathKey pathKey = null;
+    	for(PathKey pk : paths.keySet()) {
+    		if(pk.getOrigin()==origin && pk.getDestination()==destination) {
     			pathKey = pk;
     			break;
     		}

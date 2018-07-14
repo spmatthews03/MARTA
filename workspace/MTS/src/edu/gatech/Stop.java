@@ -7,7 +7,7 @@ import javax.json.bind.annotation.JsonbProperty;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class Stop {
+public class Stop extends ExchangePoint {
 	private Integer ID;
 	private String stopName;
 	private Double xCoord;
@@ -74,7 +74,9 @@ public class Stop {
         final double distanceConversion = 70.0;
         return distanceConversion * Math.sqrt(Math.pow((this.xCoord - destination.getXCoord()), 2) + Math.pow((this.yCoord - destination.getYCoord()), 2));
     }
-
+    
+    //temp fix, remove to avoid duplicate
+/*
     public Integer exchangeRiders(int rank, int initialPassengerCount, int capacity) {
         int hourOfTheDay = (rank / 60) % 24;
         int ableToBoard;
@@ -111,7 +113,7 @@ public class Stop {
         int finalPassengerCount = updatedPassengerCount + ableToBoard;
         return finalPassengerCount - initialPassengerCount;
     }
-
+*/
     public void addNewRiders(int moreRiders) { waiting = waiting + moreRiders; }
 
     public void displayInternalStatus() {

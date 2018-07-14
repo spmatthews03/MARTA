@@ -8,6 +8,12 @@ import group_a7_8.MoveBusEvent;
 import group_a7_8.MoveTrainEvent;
 import group_a7_8.PathKey;
 import group_a7_8.SetPathDelayEvent;
+import group_a7_8.SetSpeedLimitEvent;
+import group_a7_8.ClearSpeedLimitEvent;
+import group_a7_8.FacilityOutOfServiceEvent;
+import group_a7_8.FacilityResumeServiceEvent;
+import group_a7_8.VehicleOutOfServiceEvent;
+import group_a7_8.VehicleResumeServiceEvent;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 
@@ -171,37 +177,116 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
             	
-            	PathKey pathKey = martaModel.getBusPathKey(Integer.decode(tokens[3]), Integer.decode(tokens[4]));
-            	SetPathDelayEvent setEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), pathKey, Double.valueOf(tokens[5]));
-            	System.out.printf("%s\n", setEvent.toJSON());
-            	simEngine.add(setEvent);
-            	ClearPathDelayEvent clearEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), pathKey, Double.valueOf(tokens[5]));
-            	System.out.printf("%s\n", clearEvent.toJSON());
-            	simEngine.add(clearEvent);
+            	PathKey busDelayPathKey = martaModel.getPathKey(martaModel.getStop(Integer.decode(tokens[3])), martaModel.getStop(Integer.decode(tokens[4])));
+            	SetPathDelayEvent setBusDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busDelayPathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", setBusDelayEvent.toJSON());
+            	simEngine.add(setBusDelayEvent);
+            	ClearPathDelayEvent clearBusDelayEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), busDelayPathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", clearBusDelayEvent.toJSON());
+            	simEngine.add(clearBusDelayEvent);
                 return true;
             case "train_path_delay":
             	//sets the delay on the specified train path
             	//format: path_delay,<StartAt>,<Duration>,<Station_A>,<Station_B>,<DelayFactor>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
+            	
+            	PathKey railDelayPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
+            	SetPathDelayEvent setRailDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), railDelayPathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", setRailDelayEvent.toJSON());
+            	simEngine.add(setRailDelayEvent);
+            	ClearPathDelayEvent clearRailDelayEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), railDelayPathKey, Double.valueOf(tokens[5]));
+            	System.out.printf("%s\n", clearRailDelayEvent.toJSON());
+            	simEngine.add(clearRailDelayEvent);
             	return true;
             case "speed_limit":
             	//sets the speed limit on the specified bus path
             	//format: speed_limit,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<TopSpeed>
-                return true;
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
+            	
+            	PathKey busSpeedPathKey = martaModel.getPathKey(martaModel.getStop(Integer.decode(tokens[3])), martaModel.getStop(Integer.decode(tokens[4])));
+            	SetSpeedLimitEvent setBusSpeedEvent = new SetSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busSpeedPathKey, Integer.valueOf(tokens[5]));
+            	System.out.printf("%s\n", setBusSpeedEvent.toJSON());
+            	simEngine.add(setBusSpeedEvent);
+            	ClearSpeedLimitEvent clearBusSpeedEvent = new ClearSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), busSpeedPathKey);
+            	System.out.printf("%s\n", clearBusSpeedEvent.toJSON());
+            	simEngine.add(clearBusSpeedEvent);
+            	return true;
             case "train_speed_limit":
             	//sets the speed limit on the specified train path
             	//format: speed_limit,<StartAt>,<Duration>,<Station_A>,<Station_B>,<TopSpeed>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
+            	
+            	PathKey railSpeedPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
+            	SetSpeedLimitEvent setRailSpeedEvent = new SetSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), railSpeedPathKey, Integer.valueOf(tokens[5]));
+            	System.out.printf("%s\n", setRailSpeedEvent.toJSON());
+            	simEngine.add(setRailSpeedEvent);
+            	ClearSpeedLimitEvent clearRailSpeedEvent = new ClearSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), railSpeedPathKey);
+            	System.out.printf("%s\n", clearRailSpeedEvent.toJSON());
+            	simEngine.add(clearRailSpeedEvent);
+            	return true;
             case "stop_down":
             	//sets the down time on the specified bus stop
             	//format: stop_down,<StartAt>,<Duration>,<StopID>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tstopID: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]));
+            	
+            	Stop outOfServiceStop = martaModel.getStop(Integer.decode(tokens[3]));
+            	FacilityOutOfServiceEvent setStopOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStop);
+            	System.out.printf("%s\n", setStopOutOfServiceEvent.toJSON());
+            	simEngine.add(setStopOutOfServiceEvent);
+            	FacilityResumeServiceEvent clearStopOutOfServiceEvent = new FacilityResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), outOfServiceStop);
+            	System.out.printf("%s\n", clearStopOutOfServiceEvent.toJSON());
+            	simEngine.add(clearStopOutOfServiceEvent);
+            	return true;
             case "station_down":
             	//sets the down time on the specified rail station
             	//format: station_down,<StartAt>,<Duration>,<StationID>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tstationID: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]));
+            	
+            	RailStation outOfServiceStation = martaModel.getRailStation(Integer.decode(tokens[3]));
+            	FacilityOutOfServiceEvent setStationOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStation);
+            	System.out.printf("%s\n", setStationOutOfServiceEvent.toJSON());
+            	simEngine.add(setStationOutOfServiceEvent);
+            	FacilityResumeServiceEvent clearStationOutOfServiceEvent = new FacilityResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), outOfServiceStation);
+            	System.out.printf("%s\n", clearStationOutOfServiceEvent.toJSON());
+            	simEngine.add(clearStationOutOfServiceEvent);
+            	return true;
             case "bus_down":
             	//sets the down time on the specified bus
             	//format: bus_down,<StartAt>,<BusID>,<TowingDuration>,<RepairDuration>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tbusID: %d\n\trepairDuration: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            	
+            	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[3]));
+            	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus);
+            	System.out.printf("%s\n", setBusOutOfServiceEvent.toJSON());
+            	simEngine.add(setBusOutOfServiceEvent);
+            	VehicleResumeServiceEvent clearBusOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceBus);
+            	System.out.printf("%s\n", clearBusOutOfServiceEvent.toJSON());
+            	simEngine.add(clearBusOutOfServiceEvent);
+            	return true;
             case "train_down":
             	//sets the down time on the specified train
             	//format: train_down,<StartAt>,<TrainID><StallDuration>,<RepairDuration>
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\trailCarID: %d\n\trepairDuration: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            	
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tbusID: %d\n\trepairDuration: %d\n", 
+            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            	
+            	//ToDo: Update maybe needed to account for stalled train in station
+            	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[3]));
+            	VehicleOutOfServiceEvent setRailOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
+            	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
+            	simEngine.add(setRailOutOfServiceEvent);
+            	VehicleResumeServiceEvent clearRailOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceRailCar);
+            	System.out.printf("%s\n", clearRailOutOfServiceEvent.toJSON());
+            	simEngine.add(clearRailOutOfServiceEvent);
+            	return true;
             default:
                 System.out.println(" command not recognized");
                 return true;

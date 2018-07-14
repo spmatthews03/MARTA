@@ -33,5 +33,5 @@ public class ExchangePoint extends Facility {
 							   Integer minOff, Integer avgOff, Integer maxOff) {
 	}
 	
-	public int getWaiting() {return waiting;}
+	public Integer getWaiting() {return waiting;}
 }

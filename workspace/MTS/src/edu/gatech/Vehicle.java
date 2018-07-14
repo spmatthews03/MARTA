@@ -9,7 +9,7 @@ public abstract class Vehicle {
     protected Integer capacity;
     protected Integer speed;
     protected TransitSystem system;
-    protected String vehicleType;
+    public String vehicleType;
 
 
     public Vehicle() {

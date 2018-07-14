@@ -2,7 +2,7 @@ package group_a7_8;
 
 import java.util.ArrayList;
 
-import edu.gatech.Stop;
+import edu.gatech.Facility;
 import edu.gatech.TransitSystem;
 
 public class Path {
@@ -18,7 +18,7 @@ public class Path {
 		this.system = system;
 	}
 
-	public Path(TransitSystem system,Stop origin, Stop destination) {
+	public Path(TransitSystem system,Facility origin, Facility destination) {
 		this(system, new PathKey(origin, destination));
 	}
 	
@@ -40,15 +40,15 @@ public class Path {
 	
 	public PathKey getPathKey() { return pathKey;}
 	
-	public Stop getOrigin() {
+	public Facility getOrigin() {
 		return pathKey.getOrigin();
 	}
-	public Stop getDestination() {
+	public Facility getDestination() {
 		return pathKey.getDestination();
 	}
 	public double getDistance() {
-		return Math.sqrt(Math.pow(((double)getDestination().getYCoord()  - (double)getOrigin().getYCoord()),2.0) + 
-				Math.pow(((double)getDestination().getXCoord()  - (double)getOrigin().getXCoord()),2.0));
+		return Math.sqrt(Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getY()),2.0) + 
+				Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getX()),2.0));
 	}
 	public ArrayList<Hazard> getHazards(){
 		return system.getHazards(pathKey);
