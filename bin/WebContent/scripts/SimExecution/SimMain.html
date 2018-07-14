@@ -1,8 +1,14 @@
 <div class="sim-exec-panel" layout="column">
 	<div layout="column" layout-align="center center">
-		<div><span>Simulation</span></div>
-		<div>{{mts}}</div>
-		<div>Buses: {{mts.vehicles.length}}</div>
-		<div ng-repeat="vehicle in mts.vehicles">{{vehicle}}</div>
+	    <div>{{mts.stops.length}} stops:</div>
+		<stop ng-repeat="stop in mts.stops" data-stop="stop"></stop>
+	    <div>{{mts.routes.length}} routes:</div>
+		<route ng-repeat="route in mts.routes" data-route="route"></route>
+	    <div>{{mts.paths.length}} paths:</div>
+		<path ng-repeat="path in mts.paths" data-path="path"></path>
+	    <div>{{mts.vehicles.length}} vehicles:</div>
+		<vehicle ng-repeat="vehicle in mts.vehicles" data-vehicle="vehicle"></vehicle>
+	    <div>{{mts.events.length}} events:</div>
+		<event ng-repeat="event in mts.events" data-event="event"></event>
 	</div>
 </div>
