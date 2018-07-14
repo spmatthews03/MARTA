@@ -30,7 +30,7 @@ public class RailRoute extends VehicleRoute {
    
    public String toJSON() { return this.toJSON("stations"); }
    
-   public Station getRailStation (TransitSystem system, int routeLocation) {
-	   return system.getStation(this.getStationID(routeLocation));
+   public RailStation getRailStation (TransitSystem system, int routeLocation) {
+	   return system.getRailStation(this.getStationID(routeLocation));
    }
 }
