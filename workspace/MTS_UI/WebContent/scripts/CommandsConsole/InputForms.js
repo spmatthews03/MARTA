@@ -63,7 +63,7 @@ var setBusSpeedLimitFormDirective = function(){
 		scope:{},
 		controller: 'inputFormController',
 		replace: true,
-		templateUrl:'scripts/CommandsConsole/BusSpeedLimit.html'
+		templateUrl:'scripts/CommandsConsole/SetBusSpeed.html'
 	}
 };
 var addTrainStationFormDirective = function(){
@@ -90,7 +90,7 @@ var extendRailLineFormDirective = function(){
 		scope:{},
 		controller: 'inputFormController',
 		replace: true,
-		templateUrl:'scripts/CommandsConsole/ExtendTrainRoute.html'
+		templateUrl:'scripts/CommandsConsole/ExtendRailRoute.html'
 	}
 };
 var addTrainFormDirective = function(){
@@ -117,7 +117,7 @@ var setTrainSpeedLimitFormDirective = function(){
 		scope:{},
 		controller: 'inputFormController',
 		replace: true,
-		templateUrl:'scripts/CommandsConsole/TrainSpeedLimit.html'
+		templateUrl:'scripts/CommandsConsole/SetTrainSpeed.html'
 	}
 };
 //controllers
