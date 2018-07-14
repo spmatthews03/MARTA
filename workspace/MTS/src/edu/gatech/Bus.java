@@ -2,6 +2,7 @@ package edu.gatech;
 
 
 import group_a7_8.FuelConsumption;
+import group_a7_8.PathKey;
 
 public class Bus extends Vehicle{
     private double fuelCapacity;
@@ -35,19 +36,8 @@ public class Bus extends Vehicle{
 
     public double getFuelConsumed(){ return system.getTotalFuelConsumed(this); }
 
-    public boolean hasEnoughFuel(){
-    	//get bus route
-    	BusRoute route = system.getBusRoute(getRouteID());
-    	
-    	//first is get current stop
-    	// to get this get the current bust location
-    	int currentLocation  = this.getLocation();
-    	Stop currentStop = route.getBusStop(system, currentLocation);
-    	//next get the next location
-    	int nextLocation = route.getNextLocation(currentLocation);
-    	Stop nextStop = route.getBusStop(system, nextLocation);
-    	double distance = currentStop.findDistance(nextStop);
-    	
+    public boolean hasEnoughFuel(double distance){
+ 
     	return true;
     }
 

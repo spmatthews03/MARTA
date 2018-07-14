@@ -68,6 +68,24 @@ public class MoveBusEvent extends SimEvent{
         int travelTime = 1 + (travelDistance.intValue() * 60 / activeBus.getSpeed());
         activeBus.setLocation(nextLocation);
 
+        //check hasfuel
+        //fuel report
+        
+        /*
+   	//get bus route
+    	BusRoute route = system.getBusRoute(getRouteID());
+    	
+    	//first is get current stop
+    	// to get this get the current bust location
+    	int currentLocation  = this.getLocation();
+    	Stop currentStop = route.getBusStop(system, currentLocation);
+    	//next get the next location
+    	int nextLocation = route.getNextLocation(currentLocation);
+    	Stop nextStop = route.getBusStop(system, nextLocation);
+    	double distance = currentStop.findDistance(nextStop);
+    	FuelConsumption report = new FuelConsumption(this, new PathKey(currentStop, nextStop));
+    	system.getFuelConsumptionList(this).add(report);
+         */
         // generate next event for this bus
         eventQueue.add(new MoveBusEvent(system, eventID, getRank() + travelTime,bus));               
 		

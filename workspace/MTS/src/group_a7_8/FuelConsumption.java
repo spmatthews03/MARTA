@@ -10,10 +10,18 @@ public class FuelConsumption {
     private double amount;
 
 
-    public FuelConsumption(Bus bus, PathKey pathKey){
-        this.bus = bus;
-        this.pathKey = pathKey;
-    }
+    public FuelConsumption(Bus bus, PathKey pathKey, int timeRank, double distance) {
+		super();
+		this.bus = bus;
+		this.pathKey = pathKey;
+		this.timeRank = timeRank;
+		this.amount = distance;
+	}
+
+//	public FuelConsumption(Bus bus, PathKey pathKey){
+//        this.bus = bus;
+//        this.pathKey = pathKey;
+//    }
 
     public double getFuelConsumed(){ return amount; }
 
