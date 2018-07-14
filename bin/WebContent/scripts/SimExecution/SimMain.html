@@ -1,4 +1,5 @@
 <div class="sim-exec-panel" layout="column">
+    <md-content class="sim-exec-controls-panel">
 	<div layout="column" layout-align="center center">
 	    <div>{{mts.stops.length}} stops:</div>
 		<stop ng-repeat="stop in mts.stops" data-stop="stop"></stop>
@@ -11,4 +12,5 @@
 	    <div>{{mts.events.length}} events:</div>
 		<event ng-repeat="event in mts.events" data-event="event"></event>
 	</div>
+	</md-content>
 </div>
