@@ -21,8 +21,8 @@ extend_route,1,2
 extend_route,1,3
 extend_route,1,6
 extend_route,1,5
-add_bus,7,0,0,0,10,50
-add_bus,11,1,0,0,10,30
+add_bus,7,0,0,0,10,100,100,50
+add_bus,11,1,0,0,10,100,100,30
 add_event,1,move_bus,7
 add_event,1,move_bus,11
 step_multi,20

@@ -18,10 +18,6 @@ public class RailCar extends Vehicle {
         this.vehicleType = "Train";
     }
 
-    public void displayEvent() { this.displayEvent(); }
-
-    public void displayInternalStatus(){ this.displayInternalStatus(); }
-
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
         sb.append('{');

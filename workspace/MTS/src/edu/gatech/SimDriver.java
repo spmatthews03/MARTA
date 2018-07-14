@@ -107,7 +107,7 @@ public class SimDriver implements StateChangeListener{
                 break;
             case "add_train":
                 int trainID = martaModel.makeTrain(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
-                        Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[8]));
+                        Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
                 System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":

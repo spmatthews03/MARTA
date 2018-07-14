@@ -67,9 +67,9 @@
   };
   //controller
   var dashboardController = function($scope, $log, mtsService){
-		$log.info('dashboardController');
+		//$log.info('dashboardController');
 		$scope.mts = mtsService.state;
-		$log.info($scope.mts)
+		//$log.info($scope.mts)
 	
   };
   angular.module('MTSDashboard',['ngMaterial','MTSService'])
