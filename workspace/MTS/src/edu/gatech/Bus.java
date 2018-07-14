@@ -1,8 +1,6 @@
 package edu.gatech;
 
 
-import group_a7_8.FuelConsumption;
-import group_a7_8.PathKey;
 
 public class Bus extends Vehicle{
     private double fuelCapacity;
@@ -26,7 +24,13 @@ public class Bus extends Vehicle{
         this.vehicleType = "Bus";
     }
 
-    public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
+    public Bus(TransitSystem system, int uniqueValue, int routeId) {
+        super(system, uniqueValue);
+        this.vehicleType = "Bus";
+        this.route = routeId;
+	}
+
+	public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
 
     public void setFuelLevel(double inputFuelLevel) { this.fuelLevel = inputFuelLevel; }
 

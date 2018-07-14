@@ -7,8 +7,14 @@ public abstract class VehicleRoute {
     protected Integer routeNumber;
     protected String routeName;
     protected Hashtable<Integer, Integer> exchangePointsOnRoute;
+	private String type;
     
-    public VehicleRoute() {
+	
+    public String getType() {
+		return type;
+	}
+
+	public VehicleRoute() {
     	this.ID = -1;
     }
 
@@ -19,11 +25,12 @@ public abstract class VehicleRoute {
     	this.exchangePointsOnRoute = new Hashtable<Integer, Integer>();
     }
     
-    public VehicleRoute(int uniqueValue, int inputNumber, String inputName) {
+    public VehicleRoute(int uniqueValue, int inputNumber, String inputName,String type) {
     	this.ID = uniqueValue;
     	this.routeNumber = inputNumber;
     	this.routeName = inputName;
     	this.exchangePointsOnRoute = new Hashtable<Integer, Integer>();
+    	this.type = type;
    }
 
     public void setNumber(int inputNumber) { this.routeNumber = inputNumber; }

@@ -6,17 +6,19 @@ public abstract class Facility {
 	protected Integer uniqueID;
 	protected Point coord;
 	protected String facilityName;
+	private String type;
 
 	public Facility(){
 		//default
 	}
 
-	public Facility(int uniqueID, String name, double x, double y) {
+	public Facility(int uniqueID, String name, double x, double y, String type) {
 		this.uniqueID = uniqueID;
 		this.facilityName = name;
 		this.coord = new Point();
 		System.out.println(x + " " + y);
 		this.coord.setLocation(x, y);
+		this.type = type;
 	}
 	public Point getLocation() {
 		return coord.getLocation();
@@ -32,6 +34,10 @@ public abstract class Facility {
 	}
 	public void setFacilityName(String facilityName) {
 		this.facilityName = facilityName;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public void displayEvent() {

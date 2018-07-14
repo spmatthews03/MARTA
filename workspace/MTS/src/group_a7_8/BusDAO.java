@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.Bus;
+
 
 public class BusDAO extends GenericDAO<Bus>{
 
@@ -23,13 +25,13 @@ public class BusDAO extends GenericDAO<Bus>{
 	public void save(Bus bus) throws SQLException {
 		Statement stmt = con.createStatement();
 		System.out.println(String.format(insert_format,tableName,
-				"vehicleLogicalID","type","routeLogicalID","nextLocation","prevLocation",
+				"vehicleLogicalID","type","routeLogicalID","location",
 				"passengers","capacity","fuellevel","fuelcapacity","speed",
 				bus.getID(),bus.getType(),bus.getRouteID(),bus.getLocation(),bus.getPastLocation(),
 				bus.getPassengers(),bus.getCapacity(),bus.getFuelLevel(),bus.getFuelCapacity(),bus.getSpeed()));
 		
 		stmt.execute(String.format(insert_format,tableName,
-				"vehicleLogicalID","type","routeLogicalID","nextLocation","prevLocation",
+				"vehicleLogicalID","type","routeLogicalID","location",
 				"passengers","capacity","fuellevel","fuelcapacity","speed",
 				bus.getID(),bus.getType(),bus.getRouteID(),bus.getLocation(),bus.getPastLocation(),
 				bus.getPassengers(),bus.getCapacity(),bus.getFuelLevel(),bus.getFuelCapacity(),bus.getSpeed()));
@@ -43,13 +45,13 @@ public class BusDAO extends GenericDAO<Bus>{
 		ArrayList<Bus> buses = new ArrayList<Bus>();
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format(select_format,
-				"vehicleLogicalID","routeLogicalID","nextLocation","prevLocation","passengers",
+				"vehicleLogicalID","routeLogicalID","location","passengers",
 				"capacity","fuellevel","fuelcapacity","speed",
 				tableName,"type","bus"));
 		while(rs.next()) {
 			Bus vehicle = new Bus(null,
 					   rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),rs.getInt(5),
-					   rs.getInt(6),rs.getDouble(7),rs.getDouble(8),rs.getInt(9)
+					   rs.getDouble(6),rs.getDouble(7),rs.getInt(8)
 					   );
 		   buses.add(vehicle);
 		   System.out.printf("retrieved %s\n", vehicle);

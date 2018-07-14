@@ -12,7 +12,7 @@ public class BusRoute extends VehicleRoute {
 	   }
 
 	   public BusRoute(int uniqueValue, int inputNumber, String inputName) {
-		   super(uniqueValue, inputNumber, inputName);
+		   super(uniqueValue, inputNumber, inputName,"BusRoute");
 	   }
 	   
 	   public VehicleRoute getBusRoute() { return this.route; }

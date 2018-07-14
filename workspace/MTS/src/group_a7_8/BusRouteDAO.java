@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.BusRoute;
+
 
 public class BusRouteDAO  extends GenericDAO<BusRoute>{
 	protected BusRouteDAO(Connection con) {
@@ -22,10 +24,10 @@ public class BusRouteDAO  extends GenericDAO<BusRoute>{
 		Statement stmt = con.createStatement();
 		System.out.println(String.format(insert_format,tableName,
 				"routeLogicalID","type","name","routenumber",
-				route.getId(),route.getType(),route.getName(),route.getNumber()));
+				route.getID(),route.getType(),route.getName(),route.getNumber()));
 		stmt.execute(String.format(insert_format,tableName,
 				"routeLogicalID","type","name","routenumber",
-				route.getId(),route.getType(),route.getName(),route.getNumber()));
+				route.getID(),route.getType(),route.getName(),route.getNumber()));
 		stmt.close();
 	}
 

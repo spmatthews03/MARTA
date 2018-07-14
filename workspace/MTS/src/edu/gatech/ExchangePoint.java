@@ -11,8 +11,8 @@ public class ExchangePoint extends Facility {
 		//default constructor
 	}
 
-	public ExchangePoint(int uniqueID, String name, double x, double y) {
-		super(uniqueID, name, x, y);
+	public ExchangePoint(int uniqueID, String name, double x, double y, String type) {
+		super(uniqueID, name, x, y,type);
 		waiting = 0;
 		exchangePointDown = false;
 		randGenerator = new Random();
@@ -32,4 +32,6 @@ public class ExchangePoint extends Facility {
 	public void addArrivalInfo(Integer timeSlot, Integer minOn, Integer avgOn, Integer maxOn,
 							   Integer minOff, Integer avgOff, Integer maxOff) {
 	}
+	
+	public int getWaiting() {return waiting;}
 }

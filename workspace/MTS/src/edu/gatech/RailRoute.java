@@ -13,7 +13,7 @@ public class RailRoute extends VehicleRoute {
    }
 
    public RailRoute(int uniqueValue, int inputNumber, String inputName) {
-	   super(uniqueValue, inputNumber, inputName);
+	   super(uniqueValue, inputNumber, inputName,"RailRoute");
    }
    
    public VehicleRoute getRailRoute() { return this.route; }

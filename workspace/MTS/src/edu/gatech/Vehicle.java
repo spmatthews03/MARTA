@@ -62,8 +62,14 @@ public abstract class Vehicle {
     public Integer getCapacity() { return this.capacity; }
 
     public Integer getSpeed() { return this.speed; }
+    
+    
 
-    public void displayEvent() {
+    public String getType() {
+		return vehicleType;
+	}
+
+	public void displayEvent() {
         System.out.println(this.vehicleType + ": " + Integer.toString(this.ID));
     }
 

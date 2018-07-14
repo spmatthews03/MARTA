@@ -2,6 +2,9 @@ package group_a7_8;
 
 import java.util.Hashtable;
 
+import edu.gatech.Bus;
+import edu.gatech.BusRoute;
+import edu.gatech.BusStop;
 import group_a7_8.DAOManager.Table;
 
 public class DBTest {
@@ -30,10 +33,10 @@ public class DBTest {
 			busRoutes.put(i, new BusRoute(i,i,String.format("r%d", i)));
 		}
 		for(int i=0;i<8;i++) {
-			busStops.put(i, new BusStop(i,String.format("r%d.%d", i%2,i),i,i));
+			busStops.put(i, new BusStop(i,String.format("r%d.%d", i%2,i),i,(double)i,(double)i));
 		}
 		for(int i=0;i<5;i++) {
-			buses.put(i, new Bus(i,i%2));
+			buses.put(i, new Bus( null,i,i%2));
 		}
 		
 		//update state
@@ -63,10 +66,10 @@ public class DBTest {
 		
 		//retrieve the entries from the database
 		for(BusStop stop : busStopDao.find()) {
-			busStops.put(stop.getId(), stop);
+			busStops.put(stop.get_uniqueID(), stop);
 		}
 		for(BusRoute route : busRouteDao.find()) {
-			busRoutes.put(route.getId(), route);
+			busRoutes.put(route.getID(), route);
 		}
 		for(Bus bus : busDao.find()) {
 			buses.put(bus.getID(), bus);
