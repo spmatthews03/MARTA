@@ -45,10 +45,6 @@ public class Bus extends Vehicle{
     	return true;
     }
 
-    public void displayEvent() { this.displayEvent(); }
-
-    public void displayInternalStatus(){ this.displayInternalStatus(); }
-
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
