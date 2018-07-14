@@ -35,9 +35,21 @@ public class Bus extends Vehicle{
 
     public double getFuelConsumed(){ return system.getTotalFuelConsumed(this); }
 
-//    public boolean hasEnoughFuel(){
-//        if(fuelLevel < )
-//    }
+    public boolean hasEnoughFuel(){
+    	//get bus route
+    	BusRoute route = system.getBusRoute(getRouteID());
+    	
+    	//first is get current stop
+    	// to get this get the current bust location
+    	int currentLocation  = this.getLocation();
+    	Stop currentStop = route.getBusStop(system, currentLocation);
+    	//next get the next location
+    	int nextLocation = route.getNextLocation(currentLocation);
+    	Stop nextStop = route.getBusStop(system, nextLocation);
+    	double distance = currentStop.findDistance(nextStop);
+    	
+    	return true;
+    }
 
     public void displayEvent() { this.displayEvent(); }
 
