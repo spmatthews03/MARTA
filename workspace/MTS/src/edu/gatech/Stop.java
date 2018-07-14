@@ -123,6 +123,7 @@ public class Stop {
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
+       	sb.append("\"type\":\"busStop\",");
     	sb.append("\"ID\":");
     	sb.append(this.ID);
     	sb.append(',');
