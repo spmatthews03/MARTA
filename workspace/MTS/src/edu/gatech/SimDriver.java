@@ -175,6 +175,29 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s\n", clearEvent.toJSON());
             	simEngine.add(clearEvent);
                 return true;
+            case "train_path_delay":
+            	//sets the delay on the specified train path
+            	//format: path_delay,<StartAt>,<Duration>,<Station_A>,<Station_B>,<DelayFactor>
+            	return true;
+            case "speed_limit":
+            	//sets the speed limit on the specified bus path
+            	//format: speed_limit,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<TopSpeed>
+                return true;
+            case "train_speed_limit":
+            	//sets the speed limit on the specified train path
+            	//format: speed_limit,<StartAt>,<Duration>,<Station_A>,<Station_B>,<TopSpeed>
+            case "stop_down":
+            	//sets the down time on the specified bus stop
+            	//format: stop_down,<StartAt>,<Duration>,<StopID>
+            case "station_down":
+            	//sets the down time on the specified rail station
+            	//format: station_down,<StartAt>,<Duration>,<StationID>
+            case "bus_down":
+            	//sets the down time on the specified bus
+            	//format: bus_down,<StartAt>,<BusID>,<TowingDuration>,<RepairDuration>
+            case "train_down":
+            	//sets the down time on the specified train
+            	//format: train_down,<StartAt>,<TrainID><StallDuration>,<RepairDuration>
             default:
                 System.out.println(" command not recognized");
                 return true;
@@ -367,7 +390,6 @@ public class SimDriver implements StateChangeListener{
                 int skip = Math.max(1, routeLength / busesOnRoute);
                 for (int i = 0; i < busesOnRoute; i++) {
                     martaModel.makeBus(busID, routeID, startingPosition + i * skip, 0, 10, 100, 100,60);
-                    //TODO REFACTOR below line after create move_bus event command is working
                     //simEngine.addNewEvent(0,"move_bus", busID++);
                     recordCounter++;
                 }
