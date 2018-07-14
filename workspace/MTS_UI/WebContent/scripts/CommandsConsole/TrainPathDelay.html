@@ -41,8 +41,9 @@
             <div ng-message="min">0 is the minimum delay factor value allowed</div>
           </div>
         </md-input-container>
-      <div>
-        <md-button type="submit">Submit</md-button>
-      </div>
+        <div layout="row">
+            <md-button type="submit">Submit</md-button>
+            <md-button ng-click="cancel()">Cancel</md-button>
+        </div>
     </form>
   </md-content>
