@@ -5,13 +5,24 @@
 	var appController = function($scope, $log, $attrs, $mdSidenav){
 		//$log.info('MTSController');
 		$scope.showMenu = true;
+		$scope.execMode=true; //default
 		$scope.newSimulation = function(){
 			$scope.showMenu = false;
+			$scope.execMode = false;
 			$log.info("new simulation ...");
 		};
 		$scope.resumeSimulation = function(){
-			$log.info("resuming ptiot simulation ...");
+			$log.info("resuming prior simulation ...");
+			$scope.execMode=true; //default
 			$scope.showMenu = false;
+		};
+		$scope.setExecMode=function(mode){
+			$log.info('setting exec mode to '+mode);
+			$scope.execMode = false;
+		};
+		$scope.getActiveTab=function(){
+			$log.info('getActiveTab returning' + (($scope.execMode ? 1 : 2)));
+			return ($scope.execMode ? 1 : 2);
 		};
 	};
 

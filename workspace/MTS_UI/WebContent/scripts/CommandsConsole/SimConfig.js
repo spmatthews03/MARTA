@@ -82,7 +82,7 @@
   }; 
   //controllers
   var simConfigController = function($scope, $log, mtsService, fileReader){
-	  $log.info('simConfigController');
+	  //$log.info('simConfigController');
 	  $scope.toggleOn = false;
 	  $scope.switch = function(){
 	  	$scope.toggleOn = !$scope.toggleOn;

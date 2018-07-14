@@ -1,6 +1,6 @@
 (function(){
 
-var service = function ($log, $timeout, $interval, $http){
+var service = function ($log, $timeout, $interval, $http, $rootScope){
    //$log.info("MTS Service");
     
    var state = {
@@ -30,10 +30,10 @@ var service = function ($log, $timeout, $interval, $http){
     
    var sendCommands = function(){
 	   if(!commandBlocked && state.commandsQueue.length>0){
-		   $log.info(state.commandsQueue.length+" commands to send");
+		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
-		   $log.info('url: '+'/api/MTS/command?line=' + command);
+		   //$log.info('url: '+'/api/MTS/command?line=' + command);
 	    	var promise = $http.get('/api/MTS/command?line=' + command);
 	    	promise.then(
 	    	          function(payload) { 
@@ -82,7 +82,7 @@ var service = function ($log, $timeout, $interval, $http){
    };
    // ws = new WebSocket('ws://127.0.0.1:5808');
    var onopen = function(){
-	  $log.info('socket opened!');
+	  //$log.info('socket opened!');
 	  $interval(heartbeat,1000);
 	  $interval(sendCommands,10);
    };
@@ -112,6 +112,10 @@ var service = function ($log, $timeout, $interval, $http){
 		    
     var executeCommand = function(command){
     	$log.info('executing command: '+command);
+    	if(command.startsWith('step')){
+    		$log.info('need to switch to sim execution mode');
+    		$rootScope.setExecMode(true);
+    	}
     	state.commandsQueue.push(command);
     	
     };
@@ -128,5 +132,5 @@ var service = function ($log, $timeout, $interval, $http){
   
 
 angular.module('MTSService',[])
-  .factory ("MTSService", ['$log', '$timeout', '$interval', '$http', service]);  
+  .factory ("MTSService", ['$log', '$timeout', '$interval', '$http', '$rootScope',service]);  
 }());

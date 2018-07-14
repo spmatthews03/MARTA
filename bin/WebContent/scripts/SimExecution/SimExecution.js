@@ -75,23 +75,23 @@
   };
   //controllers
   var simController = function($scope, $log, mtsService){
-		$log.info('simController');
+		//$log.info('simController');
 		$scope.mts = mtsService.state;
   };
   var stopController = function($scope, $log){
-		$log.info('stopController');
+		//$log.info('stopController');
   };
   var routeController = function($scope, $log){
-		$log.info('routeController');
+		//$log.info('routeController');
   };
   var pathController = function($scope, $log){
-		$log.info('pathController');
+		//$log.info('pathController');
   };
   var vehicleController = function($scope, $log){
-		$log.info('vehicleController');
+		//$log.info('vehicleController');
   };
   var eventController = function($scope, $log){
-		$log.info('eventController');
+		//$log.info('eventController');
   };  
  
   angular.module('SimExec',['ngMaterial','MTSService'])
