@@ -1,4 +1,4 @@
-# MTS Appliction
+# MTS Application
 This project is seeded from the code from Assignment 2
 
 The only modification from the original code is the addition of support for a local property file that can change the default connection settings for the database connection.  This was done in order to facilitate running out of the VM.  The VM can be extremely slow.
