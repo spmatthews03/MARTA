@@ -15,7 +15,7 @@
 		};
 	};
 
-	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard'])
+	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec'])
 	.config(['$httpProvider', function ($httpProvider) {
 	            // enable http caching
 	           $httpProvider.defaults.cache = false;
