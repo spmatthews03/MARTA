@@ -48,43 +48,36 @@ var service = function ($log, $timeout, $interval, $http){
    var process = function(update){
       //$log.info(update);
 	  state.time = update.time;
-	  if(update.system.buses && update.system.buses.length>0){
-	     //$log.info('updating buses');
+	  if(update.system.vehicles && update.system.vehicles.length>0){
 	     state.vehicles.splice(0, state.vehicles.length);
-	     for(vehicle in update.system.buses){
-		    state.vehicles.push(vehicle);
-		 }
+	     update.system.vehicles.forEach(function(vehicle){
+			    state.vehicles.push(vehicle);
+	     });
 	  }
-	  if(update.system.busRoutes && update.system.busRoutes.length>0){
-	     //$log.info('updating routes');
-		 state.routes.splice(0, state.routes.length);
-		 for(route in update.system.busRoutes){
-		    state.routes.push(route);
-		 }
+	  if(update.system.routes && update.system.routes.length>0){
+	     state.routes.splice(0, state.routes.length);
+	     update.system.routes.forEach(function(route){
+			    state.routes.push(route);
+	     });
 	  }
 	  if(update.system.stops && update.system.stops.length>0){
-	     //$log.info('updating stops');
-	     //$log.info(update.system.stops.length+' stops to add');
 	   	 state.stops.splice(0, state.stops.length);
-		 for(stop in update.system.stops){
-		 	state.stops.push(stop);
-		 }
+	     update.system.stops.forEach(function(stop){
+			    state.stops.push(stop);
+	     });
 	   }
   	   if(update.system.paths && update.system.paths.length>0){
-	      $log.info('updating paths');
-	  	  state.paths.splice(0, state.paths.length);
-	  	  for(path in update.system.paths){
-	  	     state.paths.push(path);
-	  	  }
+	     state.paths.splice(0, state.paths.length);
+	     update.system.paths.forEach(function(path){
+			    state.paths.push(path);
+	     });
 	   }
   	   if(update.events && update.events.length>0){
-  	      //$log.info('updating events');
   		  state.events.splice(0, state.events.length);
-  		  for(event in update.events){
-  		     state.events.push(event);
-  		  }
+ 	      update.events.forEach(function(event){
+			    state.events.push(event);
+ 	      });
   	   }
-	   //$log.info(state);
   	   commandBlocked = false;
    };
    // ws = new WebSocket('ws://127.0.0.1:5808');

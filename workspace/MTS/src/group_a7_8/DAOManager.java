@@ -21,12 +21,15 @@ public class DAOManager {
     //Private
     private Connection con;
     PGSimpleDataSource ds = new PGSimpleDataSource();
-	// Create a variable for the connection string.  
+	// Create default  connection parameters  
     private String connectionUrl = "jdbc:postgresql://localhost:5432/martadb";
     private String userId = "mts";
     private String password = "mts";
 
-    public DAOManager() throws Exception {
+    public DAOManager() {
+    	if(FileProps.contains("connectionUrl")) connectionUrl = FileProps.get("connectionUrl");
+    	if(FileProps.contains("userId")) userId = FileProps.get("userId");
+    	if(FileProps.contains("password")) password = FileProps.get("password");
         ds.setURL(connectionUrl);
         ds.setUser(userId);
         ds.setPassword(password);
@@ -63,7 +66,7 @@ public class DAOManager {
     }
 
     public void createDB() throws SQLException, ClassNotFoundException, IOException {
-    	File sql = new File("t:\\db\\createDB.sql");
+    	File sql = new File(FileProps.get("createdb"));
     	if(sql.exists()&&sql.isFile()) {
     		System.out.print("found sql script file\n");
     	}

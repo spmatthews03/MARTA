@@ -62,7 +62,7 @@
 .sim-config-panel {
     border-bottom: 2pt solid rgb(224,224,224);
     height:600px;
-	
+	max-height: 600px;
 }
 
 .sim-config-panel .sim-config-controls-panel .md-button{
@@ -170,4 +170,13 @@ div:focus {
 
  .input-form .md-content{
 	 overflow: auto
+}
+
+.sim-exec-panel{
+	height:600px;
+	max-height: 600px;
+}
+
+.sim-exec-controls-panel {
+	overflow: auto;
 }

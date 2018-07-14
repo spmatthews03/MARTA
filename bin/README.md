@@ -2,6 +2,7 @@
 
 ### Script Files
 * __simple.sh__ - a script file to execute the simple_test.txt scenario
+* __path_delay.sh__ - a script file to execute a path_delay_test.txt scenario.  It tests path delay for buses  
 * __marta.sh__ - a script file to execute a simulation from the martadb.  The commands are in the marta.txt file  
 
 ### Configuration
@@ -10,7 +11,7 @@ The following parameters can be set in the _marta.props_ file:
 * __user__ - sets the user for the DB connection
 * __password__ - sets the password for the DB connection
 * __ssl__ - allows to set (true) or disable(false) the use of SSL in the DB connection
-* __url__ - to specify the DB connection URL
+* __connectionUrl__ - to specify the DB connection URL
 
 
 

@@ -76,6 +76,9 @@ public abstract class VehicleRoute {
     protected String toJSON(String exchangePointType) {
  	   StringBuilder sb = new StringBuilder();
  	   sb.append('{');
+ 	   sb.append("\"type\":\"");
+ 	   sb.append(this.type);
+ 	   sb.append("\",");
  	   sb.append("\"ID\":");
  	   sb.append(this.ID);
  	   sb.append(',');

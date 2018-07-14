@@ -17,6 +17,7 @@ import java.io.FileWriter;
 
 public class TransitSystem {
     private HashMap<Integer, Stop> stops;
+    private HashMap<Integer, RailStation> railstations;
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
     private HashMap<Integer, Bus> buses;
@@ -30,6 +31,7 @@ public class TransitSystem {
 
     public TransitSystem() {
         stops = new HashMap<Integer, Stop>();
+        railstations = new HashMap<Integer, RailStation>();
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
         buses = new HashMap<Integer, Bus>();
@@ -64,6 +66,11 @@ public class TransitSystem {
         return null;
     }
 
+    public RailStation getRailStation(int railStationID) {
+        if (railstations.containsKey(railStationID)) { return railstations.get(railStationID); }
+        return null;
+    }
+
     public RailRoute getRailRoute(int routeID) {
         if (railRoutes.containsKey(routeID)) { return railRoutes.get(routeID); }
         return null;
@@ -92,6 +99,12 @@ public class TransitSystem {
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
         stops.put(uniqueID, new Stop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
+        listener.updateState();
+        return uniqueID;
+    }
+
+    public int makeRailStation(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
+        railstations.put(uniqueID, new RailStation(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
         listener.updateState();
         return uniqueID;
     }
@@ -385,66 +398,22 @@ public class TransitSystem {
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
+    	
 
-    	if(buses!=null && buses.size()>0) {
-        	sb.append("\"buses\":[");    
-        	boolean isFirst = true;
-        	for(Bus bus : buses.values()) {
-        		if(isFirst) {
-        			isFirst = !isFirst;
-        		}
-        		else {
-        			sb.append(',');
-        		}
-        		sb.append(bus.toJSON());
-        	}
-        	sb.append(']');
+    	if((buses!=null && buses.size()>0) || (trains!=null && trains.size()>0)) {
+        	sb.append(serializeVehiclesJSON());
     	}
-    	if(busRoutes!=null && busRoutes.size()>0) {
+    	if((busRoutes!=null && busRoutes.size()>0) || (railRoutes!=null && railRoutes.size()>0)) {
         	if(sb.length()>1) sb.append(',');
-        	sb.append("\"busRoutes\":[");    
-        	boolean isFirst = true;
-        	for(BusRoute route : busRoutes.values()) {
-        		if(isFirst) {
-        			isFirst = !isFirst;
-        		}
-        		else {
-        			sb.append(',');
-        		}
-        		sb.append(route.toJSON());
-        	}
-        	sb.append(']');
+        	sb.append(serializeRoutesJSON());
     	}
-    	if(railRoutes!=null && railRoutes.size()>0) {
+    	if( (stops!=null && stops.size()>0) || 
+    		(railstations!=null && railstations.size()>0) ||
+    		(depots!=null && depots.size()>0)) {
         	if(sb.length()>1) sb.append(',');
-        	sb.append("\"railRoutes\":[");    
-        	boolean isFirst = true;
-        	for(RailRoute route : railRoutes.values()) {
-        		if(isFirst) {
-        			isFirst = !isFirst;
-        		}
-        		else {
-        			sb.append(',');
-        		}
-        		sb.append(route.toJSON());
-        	}
-        	sb.append(']');
+        	sb.append(serializeStopsJSON());
     	}
-    	if(stops!=null && stops.size()>0) {
-        	if(sb.length()>1) sb.append(',');
-        	sb.append("\"stops\":[");    
-        	boolean isFirst = true;
-        	for(Stop stop : stops.values()) {
-        		if(isFirst) {
-        			isFirst = !isFirst;
-        		}
-        		else {
-        			sb.append(',');
-        		}
-        		sb.append(stop.toJSON());
-        	}
-        	sb.append(']');
-    	}
+    	
     	if(paths!=null && paths.size()>0) {
         	if(sb.length()>1) sb.append(',');
         	sb.append("\"paths\":[");    
@@ -465,6 +434,92 @@ public class TransitSystem {
     	return sb.toString();
     }
 
+	private String serializeStopsJSON() {
+    	StringBuilder sb = new StringBuilder();
+		sb.append("\"stops\":[");    
+    	boolean isFirst = true;
+    	for(Stop stop : stops.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(stop.toJSON());
+    	}
+    	//TODO: restore once JSON methods implemented
+//    	for(RailStation stop : railstations.values()) {
+//    		if(isFirst) {
+//    			isFirst = !isFirst;
+//    		}
+//    		else {
+//    			sb.append(',');
+//    		}
+//    		sb.append(stop.toJSON());
+//    	}
+//    	for(Depot stop : depots.values()) {
+//    		if(isFirst) {
+//    			isFirst = !isFirst;
+//    		}
+//    		else {
+//    			sb.append(',');
+//    		}
+//    		sb.append(stop.toJSON());
+//    	}
+    	sb.append(']');
+    	return sb.toString();
+	}
 
+	private String serializeRoutesJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("\"routes\":[");    
+    	boolean isFirst = true;
+    	for(BusRoute route : busRoutes.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(route.toJSON());
+    	}
+    	for(RailRoute route : railRoutes.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(route.toJSON());
+    	}
+    	sb.append(']');
+    	return sb.toString();
+	}
+
+	private String serializeVehiclesJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("\"vehicles\":[");    
+    	boolean isFirst = true;
+    	for(Bus bus : buses.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(bus.toJSON());
+    	}
+    	for(RailCar train : trains.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(train.toJSON());
+    	}
+    	sb.append(']');
+    	return sb.toString();
+	}
     
 }

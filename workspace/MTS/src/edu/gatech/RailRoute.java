@@ -13,7 +13,7 @@ public class RailRoute extends VehicleRoute {
    }
 
    public RailRoute(int uniqueValue, int inputNumber, String inputName) {
-	   super(uniqueValue, inputNumber, inputName,"RailRoute");
+	   super(uniqueValue, inputNumber, inputName,"railRoute");
    }
    
    public VehicleRoute getRailRoute() { return this.route; }
@@ -30,10 +30,7 @@ public class RailRoute extends VehicleRoute {
    
    public String toJSON() { return this.toJSON("stations"); }
    
-   //Require Station class and getStation method in TransitSystem class
-   /*
-   public Station getRailStation (TransitSystem system, int routeLocation) {
-	   return system.getStation(this.getExchangePointID(routeLocation));   
+   public RailStation getRailStation (TransitSystem system, int routeLocation) {
+	   return system.getRailStation(this.getStationID(routeLocation));
    }
-   */
 }

@@ -8,8 +8,16 @@ import edu.gatech.BusStop;
 import group_a7_8.DAOManager.Table;
 
 public class DBTest {
+	private static final String CONFIG_PATH_TOKEN="-config:";
 
 	public static void main(String[] args) throws Exception {
+
+	  for(String arg:args) {
+		  if(arg.startsWith(CONFIG_PATH_TOKEN)) {
+			  FileProps.SetConfigPath(arg.substring(CONFIG_PATH_TOKEN.length()).trim());
+		  }
+	  }
+		
 		//at startup
 		DAOManager dao = DAOManager.getInstance();
 		System.out.println("got dao");
