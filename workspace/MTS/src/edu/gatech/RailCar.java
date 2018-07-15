@@ -41,6 +41,9 @@ public class RailCar extends Vehicle {
         sb.append(',');
         sb.append("\"speed\":");
         sb.append(this.speed);
+        sb.append(',');
+        sb.append("\"outOfService\":");
+        sb.append((this.getOutOfService()?"true":"false"));        
         sb.append('}');
         return sb.toString();
     }

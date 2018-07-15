@@ -34,6 +34,9 @@ public class BusStop extends ExchangePoint {
     	sb.append(',');
     	sb.append("\"waiting\":");
     	sb.append(this.get_riders());
+    	sb.append(',');
+    	sb.append("\"outOfService\":");
+    	sb.append((this.get_out_of_service()?"true":"false"));
     	sb.append('}');
     	return sb.toString();
     }
