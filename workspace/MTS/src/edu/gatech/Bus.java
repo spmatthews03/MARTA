@@ -5,29 +5,34 @@ package edu.gatech;
 public class Bus extends Vehicle{
     private double fuelCapacity;
     private double fuelLevel;
+    private TransitSystem system;
 
     public Bus() {
         this.ID = -1;
         this.vehicleType = "Bus";
+        this.system = system;
     }
 
     public Bus(TransitSystem system, int uniqueValue) {
-        super(system, uniqueValue);
+        super(uniqueValue);
         this.vehicleType = "Bus";
+        this.system = system;
     }
 
     public Bus(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers,
                int inputCapacity, double fuelLevel, double fuelCapacity, int inputSpeed) {
-        super(system, uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
+        super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
         this.fuelCapacity = fuelCapacity;
         this.fuelLevel = fuelLevel;
         this.vehicleType = "Bus";
+        this.system = system;
     }
 
     public Bus(TransitSystem system, int uniqueValue, int routeId) {
-        super(system, uniqueValue);
+        super(uniqueValue);
         this.vehicleType = "Bus";
         this.route = routeId;
+        this.system = system;
 	}
 
 	public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
@@ -41,8 +46,12 @@ public class Bus extends Vehicle{
     public double getFuelConsumed(){ return system.getTotalFuelConsumed(this); }
 
     public boolean hasEnoughFuel(double distance){
- 
-    	return true;
+        if(fuelLevel > distance) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String toJSON() {
