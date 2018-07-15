@@ -8,13 +8,13 @@ public class RailCar extends Vehicle {
         this.vehicleType = "Train";
     }
 
-    public RailCar(TransitSystem system, int uniqueValue) {
-        super(system, uniqueValue);
+    public RailCar(int uniqueValue) {
+        super(uniqueValue);
         this.vehicleType = "Train";
     }
 
-    public RailCar(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-        super(system, uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
+    public RailCar(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+        super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
         this.vehicleType = "Train";
     }
 

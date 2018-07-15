@@ -10,13 +10,14 @@ public abstract class Vehicle {
     protected Integer speed;
     protected TransitSystem system;
     protected String vehicleType;
+    protected Boolean outOfService;
 
 
     public Vehicle() {
         this.ID = -1;
     }
 
-    public Vehicle(TransitSystem system, int uniqueValue) {
+    public Vehicle(int uniqueValue) {
         this.ID = uniqueValue;
         this.route = -1;
         this.nextLocation = -1;
@@ -26,7 +27,7 @@ public abstract class Vehicle {
         this.speed = -1;
     }
 
-    public Vehicle(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
+    public Vehicle(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         this.ID = uniqueValue;
         this.route = inputRoute;
         this.nextLocation = inputLocation;
@@ -48,6 +49,12 @@ public abstract class Vehicle {
     public void setCapacity(int inputCapacity) { this.capacity = inputCapacity; }
 
     public void setSpeed(int inputSpeed) { this.speed = inputSpeed; }
+
+    public void setOutOfService(Boolean outOfService){ this.outOfService = outOfService; }
+
+    public boolean getOutOfService(){
+        return this.outOfService;
+    }
 
     public Integer getID() { return this.ID; }
 
