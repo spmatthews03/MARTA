@@ -6,7 +6,7 @@ public abstract class Facility {
 	protected Integer uniqueID;
 	protected Point coord;
 	protected String facilityName;
-	private String type;
+	public String type;
 
 	public Facility(){
 		//default

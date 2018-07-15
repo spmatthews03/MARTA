@@ -2,49 +2,49 @@ package group_a7_8;
 
 import java.util.Objects;
 
-import edu.gatech.Stop;
+import edu.gatech.Facility;
 
 public class PathKey {
-	private Stop origin;
-	private Stop destination;
+	private Facility origin;
+	private Facility destination;
 
 
-	public PathKey(Stop origin, Stop destination) {
+	public PathKey(Facility origin, Facility destination) {
 		super();
 		this.origin = origin;
 		this.destination = destination;
 	}
 
 
-	public Stop getOrigin() {
+	public Facility getOrigin() {
 		return origin;
 	}
 
 
-	public Stop getDestination() {
+	public Facility getDestination() {
 		return destination;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(origin.getID());
+		sb.append(origin.get_uniqueID());
 		sb.append('-');
-		sb.append(origin.getName());
+		sb.append(origin.getFacilityName());
 		sb.append(" --> ");
-		sb.append(destination.getID());
+		sb.append(destination.get_uniqueID());
 		sb.append('-');
-		sb.append(destination.getName());
+		sb.append(destination.getFacilityName());
 		return sb.toString();
 	}
 	public String toJSON() {
 		StringBuilder sb = new StringBuilder();
 		sb.append('{');
 		sb.append("\"origin\":");
-		sb.append(origin.getID());
+		sb.append(origin.get_uniqueID());
 		sb.append(',');
 		sb.append("\"destination\":");
-		sb.append(destination.getID());
+		sb.append(destination.get_uniqueID());
 		sb.append('}');
 		return sb.toString();
 	}
@@ -57,7 +57,7 @@ public class PathKey {
             result = false;
         } else {
             PathKey me = (PathKey) object;
-            if (this.getOrigin().getID() == me.getOrigin().getID() && this.getDestination().getID() == me.getDestination().getID()) {
+            if (this.getOrigin().get_uniqueID() == me.getOrigin().get_uniqueID() && this.getDestination().get_uniqueID() == me.getDestination().get_uniqueID()) {
                 result = true;
             }
         }
