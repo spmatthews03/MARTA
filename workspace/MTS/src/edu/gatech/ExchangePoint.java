@@ -24,7 +24,7 @@ public class ExchangePoint extends Facility {
 	}
 
 	public Integer randomBiasedValue(Integer lower, Integer middle, Integer upper) {
-		Random rand = new Random()
+		Random rand = new Random();
 		return lower + rand.nextInt(upper - lower);
 	}
 
@@ -75,7 +75,7 @@ public class ExchangePoint extends Facility {
         int updatedPassengerCount = Math.max(0, initialPassengerCount - leavingBus);
 
         // calculate expected number riders leaving the bus
-        if (rateCatchingBus.containsKey(hourOfTheDay)) { catchingBusRates = rateCatchingBus.get(hourOfTheDay); }
+        if (rateCatching.containsKey(hourOfTheDay)) { catchingBusRates = rateCatching.get(hourOfTheDay); }
         else { catchingBusRates = filler; }
         int catchingBus = randomBiasedValue(catchingBusRates[0], catchingBusRates[1], catchingBusRates[2]);
 
