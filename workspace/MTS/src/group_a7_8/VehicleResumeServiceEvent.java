@@ -23,11 +23,8 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
 		
-		//Need setter in vehicle class
-		/*
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());
-		*/
 	}
 	
 	public String toJSON() {

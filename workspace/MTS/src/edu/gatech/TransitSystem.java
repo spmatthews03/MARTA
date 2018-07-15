@@ -359,7 +359,7 @@ public class TransitSystem {
             bw.newLine();
             
             stopNodes = new ArrayList<MiniPair>();
-            for (BusStop s: busstops.values()) { stopNodes.add(new MiniPair(s.get_uniqueID(), s.getWaiting())); }
+            for (BusStop s: busstops.values()) { stopNodes.add(new MiniPair(s.get_uniqueID(), s.get_riders())); }
             Collections.sort(stopNodes, compareEngine);
 
             colorSelector = 0;

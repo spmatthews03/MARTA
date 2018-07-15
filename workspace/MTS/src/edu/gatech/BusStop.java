@@ -33,7 +33,7 @@ public class BusStop extends ExchangePoint {
     	sb.append(this.getLocation().getY());
     	sb.append(',');
     	sb.append("\"waiting\":");
-    	sb.append(this.waiting);
+    	sb.append(this.get_riders());
     	sb.append('}');
     	return sb.toString();
     }

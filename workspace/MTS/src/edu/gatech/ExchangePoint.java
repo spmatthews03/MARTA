@@ -24,17 +24,24 @@ public class ExchangePoint extends Facility {
 	}
 
 	public Integer randomBiasedValue(Integer lower, Integer middle, Integer upper) {
-		Random rand = new Random();
-		return lower + rand.nextInt(upper - lower);
+        int lowerRange = randGenerator.nextInt(middle - lower + 1) + lower;
+        int upperRange = randGenerator.nextInt(upper - middle + 1) + middle;
+        return (lowerRange + upperRange) / 2;
 	}
 
-    public void addNewRiders(int moreRiders) { waiting = waiting + moreRiders; }
+    public void set_riders(int num_riders) {
+    	waiting = num_riders;
+    }
+    public void add_riders(int moreRiders) {
+    	waiting = waiting + moreRiders;
+    }
+	public Integer get_riders() {
+		return waiting;
+	}
 
 	public void addArrivalInfo(Integer timeSlot, Integer minOn, Integer avgOn, Integer maxOn,
 							   Integer minOff, Integer avgOff, Integer maxOff) {
 	}
-	
-	public Integer getWaiting() {return waiting;}
 
     public boolean get_out_of_service() {
     	return out_of_service;

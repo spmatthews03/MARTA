@@ -1,6 +1,7 @@
 package edu.gatech;
 
 import java.awt.Point;
+import java.util.Objects;
 
 public abstract class Facility {
 	protected Integer uniqueID;
@@ -46,7 +47,12 @@ public abstract class Facility {
 	}
 
 	public void displayInternalStatus() {
+        System.out.print("> Facility " + this.getFacilityName());
+        System.out.print("  ID: " + this.get_uniqueID());
+        System.out.print("  X: " +  this.getLocation().getX() +
+        				 "Y: " + this.getLocation().getY());
 	}
+
 	public double findDistance(Facility destination) {
 		Double x_coord_sqrt;
 		Double y_coord_sqrt;
@@ -67,4 +73,10 @@ public abstract class Facility {
 	        return false;
 	    }
 	}
+
+    @Override
+    public int hashCode() {
+    	return Objects.hash(this.get_uniqueID(), this.getFacilityName(),
+    						this.getLocation().getX(), this.getLocation().getY());
+    }
 }
