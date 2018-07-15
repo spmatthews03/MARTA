@@ -46,7 +46,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	   }
    }
    var process = function(update){
-      //$log.info(update);
+      $log.info(update);
 	  state.time = update.time;
 	  if(update.system.vehicles && update.system.vehicles.length>0){
 	     state.vehicles.splice(0, state.vehicles.length);
