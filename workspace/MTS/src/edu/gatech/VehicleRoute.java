@@ -85,9 +85,10 @@ public abstract class VehicleRoute {
  	   sb.append("\"number\":");
  	   sb.append(this.routeNumber);
  	   sb.append(',');
- 	   sb.append("\"name\":");
+ 	   sb.append("\"name\":\"");
  	   sb.append(this.getName());
- 	   if(this.exchangePointsOnRoute!=null && this.exchangePointsOnRoute.size()>0) {
+ 	   sb.append('\"');
+	   if(this.exchangePointsOnRoute!=null && this.exchangePointsOnRoute.size()>0) {
  	      	sb.append(',');
  	      	sb.append("\"" + exchangePointType + "\":[");    
  	      	for(int key = 0; key<this.exchangePointsOnRoute.size();key++) {
