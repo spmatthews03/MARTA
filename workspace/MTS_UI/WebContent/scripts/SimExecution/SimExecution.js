@@ -7,10 +7,7 @@
 		 scope:{stop:"="},
 		 replace: true,
 		 controller: 'stopController',
-         template: 
-        '<div class="stop">'+
-          '<div><span>{{stop}}</span></div>'+
-        '</div>'
+         templateUrl: 'scripts/SimExecution/stop.html'
 	  }
    };
   var routeDirective = function(){
@@ -19,10 +16,7 @@
 			 scope:{route:"="},
 			 replace: true,
 			 controller: 'routeController',
-	         template: 
-	        '<div class="route">'+
-	          '<div><span>{{route}}</span></div>'+
-	        '</div>'
+	         templateUrl: 'scripts/SimExecution/route.html'
 		  }
   };   
   var pathDirective = function(){
@@ -31,10 +25,7 @@
 		 scope:{path:"="},
 		 replace: true,
 		 controller: 'pathController',
-         template: 
-        '<div class="path">'+
-          '<div><span>{{path}}</span></div>'+
-        '</div>'
+         templateUrl: 'scripts/SimExecution/path.html'
 	  }
   };
   var vehicleDirective = function(){
@@ -43,10 +34,7 @@
 		 scope:{vehicle:"="},
 		 replace: true,
 		 controller: 'vehicleController',
-         template: 
-        '<div class="vehicle">'+
-          '<div><span>{{vehicle}}</span></div>'+
-        '</div>'
+         templateUrl: 'scripts/SimExecution/vehicle.html' 
 	  }
   };
   var eventDirective = function(){
@@ -55,10 +43,7 @@
 		 scope:{event:"="},
 		 replace: true,
 		 controller: 'eventController',
-         template: 
-        '<div class="event">'+
-          '<div><span>{{event}}</span></div>'+
-        '</div>'
+         templateUrl: 'scripts/SimExecution/event.html' 
 	  }
 };   
   
@@ -79,16 +64,39 @@
 		$scope.mts = mtsService.state;
   };
   var stopController = function($scope, $log){
-		//$log.info('stopController');
+		$log.info('stopController');
+	  $scope.inService = function(){
+		  return true;
+	  };
   };
   var routeController = function($scope, $log){
 		//$log.info('routeController');
+	  $scope.getStopCount=function(){
+		  return -1;
+	  };
   };
   var pathController = function($scope, $log){
 		//$log.info('pathController');
+	  $scope.path.speedLimit=-1;
+	  $scope.path.delayFactor=-1;
+	  $scope.getOrigin=function(){
+		  return "origin";
+	  };
+	  $scope.getDestination=function(){
+		  return "destination";
+	  };
   };
   var vehicleController = function($scope, $log){
 		//$log.info('vehicleController');
+	  $scope.inService = function(){
+		  return true;
+	  };
+	  $scope.getStop=function(){
+		  return "stop";
+	  };
+	  $scope.getRoute=function(){
+		  return "route";
+	  };
   };
   var eventController = function($scope, $log){
 		//$log.info('eventController');

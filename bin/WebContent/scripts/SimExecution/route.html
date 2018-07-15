@@ -1,0 +1,18 @@
+<div class="entity-card">
+  <div layout="row">
+	  <div class="entity-card-icon-frame">
+	     <div>
+	     	<i ng-show="route.type=='busRoute'" class="fas fa-project-diagram"></i>
+	     	<i ng-show="route.type=='trainRoute'" class="fas fa-code-branch"></i>
+     	</div>
+	  </div>
+	  <div class="entity-card-details" layout="row">
+		  <div class="entity-details-frame" layout="column">
+		     <div layout="row"><div>{{route.routeNumber}}-{{route.name}}<div></div>
+		  </div>
+		  <div class="route-details-frame" layout="column">
+		     <div layout="row"><div>stops: </div><div>{{getStopCount()}}</div></div>
+		  </div>
+	  </div>
+  </div>
+</div>
