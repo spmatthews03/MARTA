@@ -2,7 +2,7 @@
 (function(){
 	//console.log('bootstrapping angular');
 	//defining the application controller
-	var appController = function($scope, $log, $attrs, $mdSidenav){
+	var appController = function($scope, $log, $attrs, $mdSidenav,$rootScope){
 		//$log.info('MTSController');
 		$scope.showMenu = true;
 		$scope.execMode=true; //default
@@ -16,12 +16,12 @@
 			$scope.execMode=true; //default
 			$scope.showMenu = false;
 		};
-		$scope.setExecMode=function(mode){
+		$rootScope.setExecMode=function(mode){
 			$log.info('setting exec mode to '+mode);
 			$scope.execMode = false;
-			$scope.activeTab = ($scope.execMode ? 1 : 2);
+			$scope.activeTab = ($scope.execMode ? 0 : 1);
 		};
-		$scope.activeTab = 1;
+		$scope.activeTab = 0;
 	};
 
 	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec'])
@@ -42,6 +42,6 @@
 			    .backgroundPalette('grey2')
 			    ; 	 	
 		})
-		.controller('MTSController',['$scope','$log', '$attrs', '$mdSidenav', appController])
+		.controller('MTSController',['$scope','$log', '$attrs', '$mdSidenav', '$rootScope', appController])
 		;
 }());
