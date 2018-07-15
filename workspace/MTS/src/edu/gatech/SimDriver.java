@@ -122,13 +122,12 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
                 martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
-            // To be added after implementation of Station Class and appendStationToRoute() in TransitSystem class
-            /*
+
             case "extend_train_route":
                 System.out.println(" station: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
                 martaModel.appendStationToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
-            */
+            
             case "upload_real_data":
                 uploadMARTAData();
                 break;

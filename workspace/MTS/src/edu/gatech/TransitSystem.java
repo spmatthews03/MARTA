@@ -1,6 +1,5 @@
 package edu.gatech;
 
-import java.util.HashMap;
 import java.util.Hashtable;
 
 import group_a7_8.FuelConsumption;
@@ -16,29 +15,29 @@ import java.io.File;
 import java.io.FileWriter;
 
 public class TransitSystem {
-    private HashMap<Integer, BusStop> busstops;
-    private HashMap<Integer, RailStation> railstations;
+    private Hashtable<Integer, BusStop> busstops;
+    private Hashtable<Integer, RailStation> railstations;
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
-    private HashMap<Integer, Bus> buses;
-    private HashMap<Integer, RailCar> trains;
+    private Hashtable<Integer, Bus> buses;
+    private Hashtable<Integer, RailCar> trains;
     private Hashtable<PathKey, Path> paths;
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
     private Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumption;
     private StateChangeListener listener;
-    private HashMap<Integer, Depot> depots;
+    private Hashtable<Integer, Depot> depots;
 
 
     public TransitSystem() {
-        busstops = new HashMap<Integer, BusStop>();
-        railstations = new HashMap<Integer, RailStation>();
+        busstops = new Hashtable<Integer, BusStop>();
+        railstations = new Hashtable<Integer, RailStation>();
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
-        buses = new HashMap<Integer, Bus>();
-        trains = new HashMap<Integer, RailCar>();
+        buses = new Hashtable<Integer, Bus>();
+        trains = new Hashtable<Integer, RailCar>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
-        depots = new HashMap<Integer, Depot>();
+        depots = new Hashtable<Integer, Depot>();
         fuelConsumption = new Hashtable<Bus, ArrayList<FuelConsumption>>();
     }
 
@@ -207,8 +206,6 @@ public class TransitSystem {
     	listener.updateState();
     }
     
-    // Need to update path for Station
-    /* 
     public void appendStationToRoute(int routeID, int nextStationID) { 
 		RailRoute railRoute = railRoutes.get(routeID);
 		railRoute.addNewStation(nextStationID);
@@ -252,7 +249,7 @@ public class TransitSystem {
     	}
     	listener.updateState();
     }
-    */
+    
     public void addHazard(PathKey pathKey,double delayFactor) {
     	if(!hazards.containsKey(pathKey)) {
     		hazards.put(pathKey, new ArrayList<Hazard>());
@@ -301,15 +298,15 @@ public class TransitSystem {
     	}
     }
 
-    public HashMap<Integer, BusStop> getStops() { return busstops; }
+    public Hashtable<Integer, BusStop> getStops() { return busstops; }
 
     public Hashtable<Integer, BusRoute> getBusRoutes() { return busRoutes; }
     
     public Hashtable<Integer, RailRoute> getRailRoutes() { return railRoutes; }
 
-    public HashMap<Integer, Bus> getBuses() { return buses; }
+    public Hashtable<Integer, Bus> getBuses() { return buses; }
 
-	public HashMap<Integer, RailCar> getTrains() { return trains;	}
+	public Hashtable<Integer, RailCar> getTrains() { return trains;	}
 
 	public Hashtable<PathKey, Path> getPaths() { return paths; }
 

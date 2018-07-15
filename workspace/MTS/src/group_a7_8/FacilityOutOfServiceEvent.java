@@ -2,18 +2,18 @@ package group_a7_8;
 
 import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
-import edu.gatech.Facility;
+import edu.gatech.ExchangePoint;
 
 public class FacilityOutOfServiceEvent extends SimEvent{
-	private Facility facility;
+	private ExchangePoint exchangePoint;
 	private boolean outOfService;
-	public FacilityOutOfServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, Facility facility) {
+	public FacilityOutOfServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, ExchangePoint exchangePoint) {
     	super(system,timeRank,"set_vehicle_outOfService",eventID);
-		this.facility = facility;
+		this.exchangePoint = exchangePoint;
 		this.outOfService = true;
 	}
-	public Facility getFacility() {
-		return facility;
+	public ExchangePoint getExchangePoint() {
+		return exchangePoint;
 	}
 	public boolean getOutOfService() {
 		return outOfService;
@@ -22,12 +22,9 @@ public class FacilityOutOfServiceEvent extends SimEvent{
 	public void execute() {
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
-		
-		//Need setter in facility class
-		/*
-		facility.setOutOfService(outOfService);
-		System.out.printf(" %s%d is out of service\n\n",facility.getType(),facility.get_uniqueID());
-		*/
+
+		exchangePoint.set_out_of_service(outOfService);
+		System.out.printf(" %s%d is out of service\n\n",exchangePoint.getType(),exchangePoint.get_uniqueID());
 	}
 	
 	public String toJSON() {
@@ -40,9 +37,9 @@ public class FacilityOutOfServiceEvent extends SimEvent{
 	    	sb.append(",\"type\":\"");
 	    	sb.append(eventType);
 	    	sb.append("\",\"facilityType\":");
-	    	sb.append(facility.getType());
+	    	sb.append(exchangePoint.getType());
 	    	sb.append(",\"facilityID\":");
-	    	sb.append(facility.get_uniqueID());
+	    	sb.append(exchangePoint.get_uniqueID());
 	    	sb.append(",\"outOfService\":");
 	    	sb.append(outOfService);
 	    	sb.append('}');
