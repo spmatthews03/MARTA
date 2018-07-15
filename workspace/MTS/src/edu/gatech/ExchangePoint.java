@@ -6,7 +6,7 @@ import java.util.Random;
 public class ExchangePoint extends Facility {
 	protected Random randGenerator;
 	protected Integer waiting;
-	protected boolean exchangePointDown;
+	protected boolean out_of_service;
     private HashMap<Integer, int[]> rateCatching;
     private HashMap<Integer, int[]> rateLeaving;
 
@@ -17,7 +17,7 @@ public class ExchangePoint extends Facility {
 	public ExchangePoint(int uniqueID, String name, double x, double y, String type) {
 		super(uniqueID, name, x, y,type);
 		waiting = 0;
-		exchangePointDown = false;
+		out_of_service = false;
 		randGenerator = new Random();
 		this.setRateCatching(new HashMap<Integer, int[]>());
         this.setRateLeaving(new HashMap<Integer, int[]>());
@@ -39,6 +39,13 @@ public class ExchangePoint extends Facility {
 	}
 	
 	public Integer getWaiting() {return waiting;}
+
+    public boolean get_out_of_service() {
+    	return out_of_service;
+    }
+    public void set_out_of_service(boolean value) {
+    	out_of_service = value;
+    }
 
 	public HashMap<Integer, int[]> getRateCatching() {
 		return rateCatching;
