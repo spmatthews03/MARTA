@@ -64,6 +64,16 @@ public class MoveBusEvent extends SimEvent{
 
         // find distance to stop to determine next event time
         Double travelDistance = activeStop.findDistance(nextStop);
+
+        if(activeBus.hasEnoughFuel(travelDistance)){
+            FuelConsumption report = new FuelConsumption(this, new PathKey(activeStop, nextStop));
+            system.getFuelConsumptionList(activeBus).add(report);
+        }
+        else{
+            FuelConsumption report = new FuelConsumption(this, new PathKey(activeStop, nextStop));
+            system.getFuelConsumptionList(activeBus).add(report);
+        }
+
         // conversion is used to translate time calculation from hours to minutes
         int travelTime = 1 + (travelDistance.intValue() * 60 / activeBus.getSpeed());
         activeBus.setLocation(nextLocation);
@@ -83,7 +93,6 @@ public class MoveBusEvent extends SimEvent{
     	int nextLocation = route.getNextLocation(currentLocation);
     	Stop nextStop = route.getBusStop(system, nextLocation);
     	double distance = currentStop.findDistance(nextStop);
-    	FuelConsumption report = new FuelConsumption(this, new PathKey(currentStop, nextStop));
     	system.getFuelConsumptionList(this).add(report);
          */
         // generate next event for this bus

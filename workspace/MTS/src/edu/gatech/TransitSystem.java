@@ -144,7 +144,7 @@ public class TransitSystem {
 	}
 
     public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-    	trains.put(uniqueID, new RailCar(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+    	trains.put(uniqueID, new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
 		listener.updateState();
 		return uniqueID;
 	}
