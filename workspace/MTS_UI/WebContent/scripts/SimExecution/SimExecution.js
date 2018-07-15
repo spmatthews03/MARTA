@@ -62,6 +62,12 @@
   var simController = function($scope, $log, mtsService){
 		//$log.info('simController');
 		$scope.mts = mtsService.state;
+		$scope.stepMulti = function(stepSize){
+			var command = 'step_multi,'+stepSize;
+			  //$log.info('command: '+command);
+			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
+			  mtsService.executeCommand(command);
+		};
   };
   var stopController = function($scope, $log){
 		//$log.info('stopController');

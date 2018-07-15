@@ -262,7 +262,7 @@ public class TransitSystem {
     	listener.updateState();
     }
 
-    public PathKey getBusPathKey(int originBusID, int destinationBusID) {
+    public PathKey gePathKey(int originBusID, int destinationBusID) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
     		if(pk.getOrigin().get_uniqueID()==originBusID && pk.getDestination().get_uniqueID()==destinationBusID) {

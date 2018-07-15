@@ -207,7 +207,7 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
             	
-            	PathKey busSpeedPathKey = martaModel.getPathKey(martaModel.getStop(Integer.decode(tokens[3])), martaModel.getStop(Integer.decode(tokens[4])));
+            	PathKey busSpeedPathKey = martaModel.getPathKey(martaModel.getBusStop(Integer.decode(tokens[3])), martaModel.getBusStop(Integer.decode(tokens[4])));
             	SetSpeedLimitEvent setBusSpeedEvent = new SetSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busSpeedPathKey, Integer.valueOf(tokens[5]));
             	System.out.printf("%s\n", setBusSpeedEvent.toJSON());
             	simEngine.add(setBusSpeedEvent);
@@ -235,7 +235,7 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tstopID: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]));
             	
-            	Stop outOfServiceStop = martaModel.getStop(Integer.decode(tokens[3]));
+            	BusStop outOfServiceStop = martaModel.getBusStop(Integer.decode(tokens[3]));
             	FacilityOutOfServiceEvent setStopOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStop);
             	System.out.printf("%s\n", setStopOutOfServiceEvent.toJSON());
             	simEngine.add(setStopOutOfServiceEvent);

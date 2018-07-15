@@ -180,3 +180,8 @@ div:focus {
 .sim-exec-controls-panel {
 	overflow: auto;
 }
+
+.sim-exec-control .material-icons{
+	font-size:28pt;
+	height:40px
+}
