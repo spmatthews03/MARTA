@@ -30,13 +30,7 @@ CREATE TABLE VEHICLE (
   speed			  	    int NOT NULL
 );
 
-CREATE TABLE DEPOT (
-  id              	SERIAL PRIMARY KEY,
-  depotLogicalID	  int NOT NULL,
-  name            	char(20),
-  x		  	          numeric NOT NULL,
-  y	  	            numeric NOT NULL
-);
+
 
 
 

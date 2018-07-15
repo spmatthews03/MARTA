@@ -16,7 +16,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DAOManager {
 	
 	
-	public static enum Table{BUS, BUSSTOP, BUSROUTE};
+	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR};
 	
     //Private
     private Connection con;
@@ -109,6 +109,7 @@ public class DAOManager {
     
     public void dropAll() throws SQLException, ClassNotFoundException {
     	for(Table t : Table.values()) {
+    		System.out.printf("dropping %s\n", t.toString());
     		getDAO(t).drop();
     	}
     }
@@ -132,6 +133,10 @@ public class DAOManager {
             case BUSSTOP: daoCache.put(t, new BusStopDAO(this.con));
             break;
             case BUSROUTE: daoCache.put(t, new BusRouteDAO(this.con));
+            break;
+            case RAILCAR: daoCache.put(t, new RailCarDAO(this.con));
+            break;
+            case DEPOT: daoCache.put(t, new DepotDAO(this.con));
             break;
             default:
                 throw new SQLException("Trying to link to an unexistant table.");
