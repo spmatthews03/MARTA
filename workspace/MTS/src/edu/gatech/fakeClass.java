@@ -7,9 +7,9 @@ import javax.json.bind.annotation.JsonbProperty;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class Stop extends ExchangePoint {
+public class fakeClass extends ExchangePoint {
 	private Integer ID;
-	private String stopName;
+	private String fakeClassName;
 	private Double xCoord;
 	private Double yCoord;
     private Random randGenerator;
@@ -17,13 +17,13 @@ public class Stop extends ExchangePoint {
     private HashMap<Integer, int[]> rateLeavingBus;
 	private Integer waiting;
 
-    public Stop() {
+    public fakeClass() {
         this.ID = -1;
     }
 
-    public Stop(int uniqueValue) {
+    public fakeClass(int uniqueValue) {
         this.ID = uniqueValue;
-        this.stopName = "";
+        this.fakeClassName = "";
         this.xCoord = 0.0;
         this.yCoord = 0.0;
         randGenerator = new Random();
@@ -32,9 +32,9 @@ public class Stop extends ExchangePoint {
         this.waiting = 0;
     }
 
-    public Stop(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
+    public fakeClass(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         this.ID = uniqueValue;
-        this.stopName = inputName;
+        this.fakeClassName = inputName;
         this.xCoord = inputXCoord;
         this.yCoord = inputYCoord;
         randGenerator = new Random();
@@ -43,7 +43,7 @@ public class Stop extends ExchangePoint {
         this.waiting = inputRiders;
    }
 
-    public void setName(String inputName) { this.stopName = inputName; }
+    public void setName(String inputName) { this.fakeClassName = inputName; }
 
     public void setRiders(int inputRiders) { this.waiting = inputRiders; }
 
@@ -53,7 +53,7 @@ public class Stop extends ExchangePoint {
 
     public Integer getID() { return this.ID; }
 
-    public String getName() { return this.stopName; }
+    public String getName() { return this.fakeClassName; }
 
     public Integer getWaiting() { return this.waiting; }
 
@@ -62,14 +62,14 @@ public class Stop extends ExchangePoint {
     public Double getYCoord() { return this.yCoord; }
 
     public void displayEvent() {
-        System.out.println(" bus stop: " + Integer.toString(this.ID));
+        System.out.println(" bus fakeClass: " + Integer.toString(this.ID));
     }
 
     public void takeTurn() {
         System.out.println("get new people - exchange with bus when it passes by");
     }
 
-    public Double findDistance(Stop destination) {
+    public Double findDistance(fakeClass destination) {
         // coordinates are measure in abstract units and conversion factor translates to statute miles
         final double distanceConversion = 70.0;
         return distanceConversion * Math.sqrt(Math.pow((this.xCoord - destination.getXCoord()), 2) + Math.pow((this.yCoord - destination.getYCoord()), 2));
@@ -117,20 +117,20 @@ public class Stop extends ExchangePoint {
     public void addNewRiders(int moreRiders) { waiting = waiting + moreRiders; }
 
     public void displayInternalStatus() {
-        System.out.print("> stop - ID: " + Integer.toString(ID));
-        System.out.print(" name: " + stopName + " waiting: " + Integer.toString(waiting));
+        System.out.print("> fakeClass - ID: " + Integer.toString(ID));
+        System.out.print(" name: " + fakeClassName + " waiting: " + Integer.toString(waiting));
         System.out.println(" xCoord: " + Double.toString(xCoord) + " yCoord: " + Double.toString(yCoord));
     }
     
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
-       	sb.append("\"type\":\"busStop\",");
+       	sb.append("\"type\":\"busfakeClass\",");
     	sb.append("\"ID\":");
     	sb.append(this.ID);
     	sb.append(',');
     	sb.append("\"name\":\"");
-    	sb.append(this.stopName);
+    	sb.append(this.fakeClassName);
     	sb.append('\"');
     	sb.append(',');
     	sb.append("\"xCoord\":");
@@ -163,7 +163,7 @@ public class Stop extends ExchangePoint {
         if (object == null || object.getClass() != getClass()) {
             result = false;
         } else {
-            Stop me = (Stop) object;
+            fakeClass me = (fakeClass) object;
             if (this.ID == me.getID()) {
                 result = true;
             }
@@ -172,7 +172,7 @@ public class Stop extends ExchangePoint {
     }
     @Override
     public int hashCode() {
-    	return Objects.hash(ID,stopName,xCoord,yCoord);
+    	return Objects.hash(ID,fakeClassName,xCoord,yCoord);
     }
 
 }
