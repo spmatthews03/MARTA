@@ -26,7 +26,7 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 		//Need setter in vehicle class
 		/*
 		vehicle.setOutOfService(outOfService);
-		System.out.printf(" %s%d is out of service\n\n",vehicle.vehicleType,vehicle.getID());
+		System.out.printf(" %s%d is out of service\n\n",vehicle.getType(),vehicle.getID());
 		*/
 	}
 	
@@ -40,7 +40,7 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 	    	sb.append(",\"type\":\"");
 	    	sb.append(eventType);
 	    	sb.append("\",\"vehicleType\":");
-	    	sb.append(vehicle.vehicleType);
+	    	sb.append(vehicle.getType());
 	    	sb.append(",\"vehicleID\":");
 	    	sb.append(vehicle.getID());
 	    	sb.append(",\"outOfService\":");
