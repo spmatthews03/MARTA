@@ -91,10 +91,10 @@ public class TransitSystem {
     	return null;
 	}
 
-    public Depot getDepot() {
-    	if (!depots.isEmpty()) { return depots.get(); }
-    	return null;
-	}
+//    public Depot getDepot() {
+//    	if (!depots.isEmpty()) { return depots.get(); }
+//    	return null;
+//	}
 
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
