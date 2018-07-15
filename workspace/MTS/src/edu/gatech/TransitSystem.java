@@ -91,8 +91,8 @@ public class TransitSystem {
     	return null;
 	}
 
-    public Depot getDepot(int depotID) {
-    	if (depots.containsKey(depotID)) { return depots.get(depotID); }
+    public Depot getDepot() {
+    	if (!depots.isEmpty()) { return depots.get(); }
     	return null;
 	}
 

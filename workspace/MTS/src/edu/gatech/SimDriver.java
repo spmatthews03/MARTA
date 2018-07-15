@@ -287,6 +287,8 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s\n", clearRailOutOfServiceEvent.toJSON());
             	simEngine.add(clearRailOutOfServiceEvent);
             	return true;
+            case "fuel_report":
+                break;
             default:
                 System.out.println(" command not recognized");
                 return true;
