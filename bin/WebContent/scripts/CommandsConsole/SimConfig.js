@@ -66,6 +66,7 @@
 	              '</div>'+
 	           '</div>'+
                '<div layout="column" flex>'+
+                  '<mts-dashboard></mts-dashboard>'+
 	              '<commands-console></commands-console>'+
 	           '</div>'+
             '</div>'
