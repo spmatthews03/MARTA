@@ -261,11 +261,11 @@ public class TransitSystem {
     	hazards.get(pathKey).add(new Hazard(pathKey,delayFactor));
     	listener.updateState();
     }
-
-    public PathKey getBusPathKey(int originBusID, int destinationBusID) {
+    
+    public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin().get_uniqueID()==originBusID && pk.getDestination().get_uniqueID()==destinationBusID) {
+    		if(pk.getOrigin()==origin && pk.getDestination()==destination) {
     			pathKey = pk;
     			break;
     		}
@@ -273,17 +273,6 @@ public class TransitSystem {
     	return pathKey;
     }
     
-    public PathKey getRailPathKey(int originRailID, int destinationRailID) {
-    	PathKey pathKey = null;
-    	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin().get_uniqueID()==originRailID && pk.getDestination().get_uniqueID()==destinationRailID) {
-    			pathKey = pk;
-    			break;
-    		}
-    	}
-    	return pathKey;
-    }
-
     public void clearHazard(PathKey pathKey,double delayFactor) {
     	Path path = getPath(pathKey);
     	if(hazards.contains(path.getPathKey())) {
