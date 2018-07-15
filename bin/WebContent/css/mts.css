@@ -173,10 +173,20 @@ div:focus {
 }
 
 .sim-exec-panel{
+	height:640px;
+	max-height: 640px;
+}
+.sim-exec-viewer-panel{
+	overflow: auto;
 	height:600px;
 	max-height: 600px;
 }
-
 .sim-exec-controls-panel {
-	overflow: auto;
+	height: 40px;
+}
+
+.sim-exec-control .md-button{
+	min-width:12px;
+	max-width: 40px;
+	margin: 0px;
 }

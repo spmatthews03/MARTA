@@ -9,7 +9,7 @@
   		replace: true,
       template: 
             '<div layout="column">'+
-              '<div layout="row"><div class="command-console-title" flex>Commands:</div><div ng-click="stepMulti(10)" flex="5"><md-icon>forward_10</md-icon></div></div>'+
+              '<div layout="row" layout-align="end center"><div class="command-console-title" flex>Commands:</div></div>'+
               '<md-content class="mts-console" >'+
                  	'<div layout="column"><command ng-repeat="c in commands track by $index" data-command="c" data-index="$index"></command></div>'+
               '</md-content>'+
@@ -114,12 +114,7 @@ var stepMultiCommandDirective = function(){
 		$scope.current = {id:0};  //default to 1st command
 		$scope.mts = mtsService;
 		$scope.commands = mtsService.state.commands;
-		$scope.stepMulti = function(stepSize){
-			var command = 'step_multi,'+stepSize;
-			  //$log.info('command: '+command);
-			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
-			  mtsService.executeCommand(command);
-		};
+
 		$scope.isValidCommand = function(item){
 			if(item.length<1) return false;
 			var tokens = item.split(',');
