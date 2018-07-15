@@ -1,11 +1,14 @@
 package edu.gatech;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class ExchangePoint extends Facility {
 	protected Random randGenerator;
 	protected Integer waiting;
 	protected boolean exchangePointDown;
+    private HashMap<Integer, int[]> rateCatching;
+    private HashMap<Integer, int[]> rateLeaving;
 
 	public ExchangePoint(){
 		//default constructor
@@ -16,6 +19,8 @@ public class ExchangePoint extends Facility {
 		waiting = 0;
 		exchangePointDown = false;
 		randGenerator = new Random();
+		this.setRateCatching(new HashMap<Integer, int[]>());
+        this.setRateLeaving(new HashMap<Integer, int[]>());
 	}
 
 	public Integer exchangeRiders(Integer rank, Integer initialPassangerCount, Integer capacity) {
@@ -34,4 +39,20 @@ public class ExchangePoint extends Facility {
 	}
 	
 	public Integer getWaiting() {return waiting;}
+
+	public HashMap<Integer, int[]> getRateCatching() {
+		return rateCatching;
+	}
+
+	public void setRateCatching(HashMap<Integer, int[]> rateCatching) {
+		this.rateCatching = rateCatching;
+	}
+
+	public HashMap<Integer, int[]> getRateLeaving() {
+		return rateLeaving;
+	}
+
+	public void setRateLeaving(HashMap<Integer, int[]> rateLeaving) {
+		this.rateLeaving = rateLeaving;
+	}
 }

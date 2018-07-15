@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.FileWriter;
 
 public class TransitSystem {
-    private HashMap<Integer, Stop> stops;
+    private HashMap<Integer, BusStop> busstops;
     private HashMap<Integer, RailStation> railstations;
     private Hashtable<Integer, BusRoute> busRoutes;
     private Hashtable<Integer, RailRoute> railRoutes;
@@ -30,7 +30,7 @@ public class TransitSystem {
 
 
     public TransitSystem() {
-        stops = new HashMap<Integer, Stop>();
+        busstops = new HashMap<Integer, BusStop>();
         railstations = new HashMap<Integer, RailStation>();
         busRoutes = new Hashtable<Integer, BusRoute>();
         railRoutes = new Hashtable<Integer, RailRoute>();
@@ -61,8 +61,8 @@ public class TransitSystem {
 		return sum;
 	}
 
-    public Stop getStop(int stopID) {
-        if (stops.containsKey(stopID)) { return stops.get(stopID); }
+    public BusStop getBusStop(int stopID) {
+        if (busstops.containsKey(stopID)) { return busstops.get(stopID); }
         return null;
     }
 
@@ -103,7 +103,7 @@ public class TransitSystem {
 
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
-        stops.put(uniqueID, new Stop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
+        busstops.put(uniqueID, new BusStop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
         listener.updateState();
         return uniqueID;
     }
@@ -174,8 +174,8 @@ public class TransitSystem {
     		int priorStopID = busRoute.getStopID(priorStopRouteIndex);
     		System.out.printf("latestStopID: %s\n", latestStopID);
     		System.out.printf("priorStopID: %s\n", priorStopID);
-    		Stop latestStop = getStop(latestStopID);
-    		Stop priorStop = getStop(priorStopID);
+    		BusStop latestStop = getBusStop(latestStopID);
+    		BusStop priorStop = getBusStop(priorStopID);
     		System.out.printf("latestStop: %s\n", latestStop);
     		System.out.printf("priorStop: %s\n", priorStop);
     		PathKey path1= new PathKey(priorStop, latestStop);
@@ -187,7 +187,7 @@ public class TransitSystem {
     		//add that path too
     		int beginStopRouteIndex = 0;
     		int beginStopID = busRoute.getStopID(beginStopRouteIndex);
-    		Stop beginStop = getStop(beginStopID);
+    		BusStop beginStop = getBusStop(beginStopID);
     		PathKey path2= new PathKey(latestStop,beginStop);
     		paths.put(path2, new Path(this,path2));
     		System.out.printf("Added path %s to route %d-%s\n", path2,busRoute.getID(),busRoute.getName());
@@ -262,8 +262,6 @@ public class TransitSystem {
     	listener.updateState();
     }
 
-    //Replaced with getPathKey
-    /*
     public PathKey getBusPathKey(int originBusID, int destinationBusID) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
@@ -285,19 +283,7 @@ public class TransitSystem {
     	}
     	return pathKey;
     }
-    */    
-    
-    public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
-    	PathKey pathKey = null;
-    	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin()==origin && pk.getDestination()==destination) {
-    			pathKey = pk;
-    			break;
-    		}
-    	}
-    	return pathKey;
-    }
-    
+
     public void clearHazard(PathKey pathKey,double delayFactor) {
     	Path path = getPath(pathKey);
     	if(hazards.contains(path.getPathKey())) {
@@ -326,7 +312,7 @@ public class TransitSystem {
     	}
     }
 
-    public HashMap<Integer, Stop> getStops() { return stops; }
+    public HashMap<Integer, BusStop> getStops() { return busstops; }
 
     public Hashtable<Integer, BusRoute> getBusRoutes() { return busRoutes; }
     
@@ -387,7 +373,7 @@ public class TransitSystem {
             bw.newLine();
             
             stopNodes = new ArrayList<MiniPair>();
-            for (Stop s: stops.values()) { stopNodes.add(new MiniPair(s.getID(), s.getWaiting())); }
+            for (BusStop s: busstops.values()) { stopNodes.add(new MiniPair(s.get_uniqueID(), s.getWaiting())); }
             Collections.sort(stopNodes, compareEngine);
 
             colorSelector = 0;
@@ -425,7 +411,7 @@ public class TransitSystem {
         	if(sb.length()>1) sb.append(',');
         	sb.append(serializeRoutesJSON());
     	}
-    	if( (stops!=null && stops.size()>0) || 
+    	if( (busstops!=null && busstops.size()>0) || 
     		(railstations!=null && railstations.size()>0) ||
     		(depots!=null && depots.size()>0)) {
         	if(sb.length()>1) sb.append(',');
@@ -456,7 +442,7 @@ public class TransitSystem {
     	StringBuilder sb = new StringBuilder();
 		sb.append("\"stops\":[");    
     	boolean isFirst = true;
-    	for(Stop stop : stops.values()) {
+    	for(BusStop stop : busstops.values()) {
     		if(isFirst) {
     			isFirst = !isFirst;
     		}

@@ -29,7 +29,7 @@ public class BusRoute extends VehicleRoute {
 	   
 	   public String toJSON() { return this.toJSON("stops"); }
 	   
-	   public Stop getBusStop(TransitSystem system, int routeLocation) {
-		   return system.getStop(this.getExchangePointID(routeLocation));   
+	   public BusStop getBusStop(TransitSystem system, int routeLocation) {
+		   return system.getBusStop(this.getExchangePointID(routeLocation));
 	   }
 	}

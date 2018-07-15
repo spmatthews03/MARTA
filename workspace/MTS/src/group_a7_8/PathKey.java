@@ -2,26 +2,27 @@ package group_a7_8;
 
 import java.util.Objects;
 
-import edu.gatech.Facility;
+import edu.gatech.BusStop;
+import edu.gatech.Stop;
 
 public class PathKey {
-	private Facility origin;
-	private Facility destination;
+	private BusStop origin;
+	private BusStop destination;
 
 
-	public PathKey(Facility origin, Facility destination) {
+	public PathKey(BusStop latestStop, BusStop beginStop) {
 		super();
-		this.origin = origin;
-		this.destination = destination;
+		this.origin = latestStop;
+		this.destination = beginStop;
 	}
 
 
-	public Facility getOrigin() {
+	public BusStop getOrigin() {
 		return origin;
 	}
 
 
-	public Facility getDestination() {
+	public BusStop getDestination() {
 		return destination;
 	}
 

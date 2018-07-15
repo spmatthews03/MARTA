@@ -160,7 +160,7 @@ public class SimDriver implements StateChangeListener{
                 break;
             case "system_report":
                 System.out.println(" system report - stops, buses and routes:");
-                for (Stop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
+                for (BusStop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
                 for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
                 for (BusRoute singleBusRoute: martaModel.getBusRoutes().values()) { singleBusRoute.displayInternalStatus(); }
                 for (RailRoute singleRailRoute: martaModel.getRailRoutes().values()) { singleRailRoute.displayInternalStatus(); }
@@ -177,7 +177,8 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
             	
-            	PathKey busDelayPathKey = martaModel.getPathKey(martaModel.getStop(Integer.decode(tokens[3])), martaModel.getStop(Integer.decode(tokens[4])));
+            	PathKey busDelayPathKey = martaModel.getBusPathKey(martaModel.getBusStop(Integer.decode(tokens[3])).get_uniqueID(),
+            													   martaModel.getBusStop(Integer.decode(tokens[4])).get_uniqueID());
             	SetPathDelayEvent setBusDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busDelayPathKey, Double.valueOf(tokens[5]));
             	System.out.printf("%s\n", setBusDelayEvent.toJSON());
             	simEngine.add(setBusDelayEvent);
@@ -191,7 +192,8 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
             	
-            	PathKey railDelayPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
+            	PathKey railDelayPathKey = martaModel.getRailPathKey(martaModel.getRailStation(Integer.decode(tokens[3])).get_uniqueID(),
+            														 martaModel.getRailStation(Integer.decode(tokens[4])).get_uniqueID());
             	SetPathDelayEvent setRailDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), railDelayPathKey, Double.valueOf(tokens[5]));
             	System.out.printf("%s\n", setRailDelayEvent.toJSON());
             	simEngine.add(setRailDelayEvent);
@@ -499,7 +501,7 @@ public class SimDriver implements StateChangeListener{
                 int avgOffs = rs.getInt("avg_offs");
                 int maxOffs = rs.getInt("max_offs");
 
-                martaModel.getStop(stopID).addArrivalInfo(timeSlot, minOns, avgOns, maxOns, minOffs, avgOffs, maxOffs);
+                martaModel.getBusStop(stopID).addArrivalInfo(timeSlot, minOns, avgOns, maxOns, minOffs, avgOffs, maxOffs);
                 recordCounter++;
             }
             System.out.println(Integer.toString(recordCounter) + " added");
