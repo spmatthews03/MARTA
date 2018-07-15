@@ -26,7 +26,7 @@ public class FacilityOutOfServiceEvent extends SimEvent{
 		//Need setter in facility class
 		/*
 		facility.setOutOfService(outOfService);
-		System.out.printf(" %s%d is out of service\n\n",facility.type,facility.get_uniqueID());
+		System.out.printf(" %s%d is out of service\n\n",facility.getType(),facility.get_uniqueID());
 		*/
 	}
 	
@@ -40,7 +40,7 @@ public class FacilityOutOfServiceEvent extends SimEvent{
 	    	sb.append(",\"type\":\"");
 	    	sb.append(eventType);
 	    	sb.append("\",\"facilityType\":");
-	    	sb.append(facility.type);
+	    	sb.append(facility.getType());
 	    	sb.append(",\"facilityID\":");
 	    	sb.append(facility.get_uniqueID());
 	    	sb.append(",\"outOfService\":");
