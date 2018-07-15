@@ -66,7 +66,7 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s,%s,%s,%s,%s,%s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<RailCar> find() throws SQLException {
@@ -78,14 +78,12 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"location",
 				"passengers",
 				"capacity",
-				"fuellevel",
-				"fuelcapacity",
 				"speed",
 				tableName, "type", "train"));
 		while(rs.next()) {
-			RailCar vehicle = new RailCar(null,
+			RailCar vehicle = new RailCar(
 					   rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5),
-					   rs.getDouble(6), rs.getDouble(7), rs.getInt(8)
+					   rs.getInt(6)
 					   );
 			railCars.add(vehicle);
 		    System.out.printf("retrieved %s\n", vehicle);

@@ -24,25 +24,25 @@ public class DepotDAO extends GenericDAO<Depot>{
     @Override
     public void save(Depot depot) throws SQLException {
         Statement stmt = con.createStatement();
-        System.out.println(String.format(insert_format,tableName,
+        System.out.printf(String.format(insert_format,tableName,
                 "depotLogicalID",
                 "name",
                 "x",
                 "y",
-                depot.getUniqueID(),
-                depot.getName(),
-                depot.getX(),
-                depot.getY()));
+                depot.get_uniqueID(),
+                depot.getFacilityName(),
+                depot.getLocation().getX(),
+                depot.getLocation().getY()));
 
         stmt.execute(String.format(insert_format,tableName,
                 "depotLogicalID",
                 "name",
                 "x",
                 "y",
-                depot.getUniqueID(),
-                depot.getName(),
-                depot.getX(),
-                depot.getY()));
+                depot.get_uniqueID(),
+                depot.getFacilityName(),
+                depot.getLocation().getX(),
+                depot.getLocation().getY()));
         stmt.close();
     }
 
@@ -59,8 +59,8 @@ public class DepotDAO extends GenericDAO<Depot>{
                 "y",
                 tableName, "type", "depot"));
         while(rs.next()) {
-            Depot depot = new Depot(null,
-                    rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4)
+            Depot depot = new Depot(
+                    rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4)
             );
             depots.add(depot);
             System.out.printf("retrieved %s\n", depot);
