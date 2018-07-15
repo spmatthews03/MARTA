@@ -116,7 +116,7 @@ var stepMultiCommandDirective = function(){
 		$scope.commands = mtsService.state.commands;
 		$scope.stepMulti = function(stepSize){
 			var command = 'step_multi,'+stepSize;
-			  $log.info('command: '+command);
+			  //$log.info('command: '+command);
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
 		};

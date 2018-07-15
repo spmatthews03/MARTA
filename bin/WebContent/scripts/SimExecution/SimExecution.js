@@ -64,7 +64,7 @@
 		$scope.mts = mtsService.state;
   };
   var stopController = function($scope, $log){
-		$log.info('stopController');
+		//$log.info('stopController');
 	  $scope.inService = function(){
 		  return true;
 	  };
