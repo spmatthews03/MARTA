@@ -23,10 +23,10 @@ public class BusStopDAO  extends GenericDAO<BusStop>{
 		Statement stmt = con.createStatement();
 		System.out.println(String.format(insert_format,tableName,
 				"stopLogicalID","type","x","y","name","waiting",
-				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.getWaiting()));
+				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
 		stmt.execute(String.format(insert_format,tableName,
 				"stopLogicalID","type","x","y","name","waiting",
-				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.getWaiting()));
+				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
 		stmt.close();
 	}
 	
