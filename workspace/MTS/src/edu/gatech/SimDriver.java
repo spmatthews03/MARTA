@@ -120,15 +120,36 @@ public class SimDriver implements StateChangeListener{
             	break;
             case "extend_route":
                 System.out.println(" stop: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
+            	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[2])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[2]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getBusRoute(Integer.parseInt(tokens[1])) == null){
+            		System.out.println(" bus route " + Integer.parseInt(tokens[1]) + " has not been created");
+                    return true;
+            	}
+            	
                 martaModel.appendStopToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
-            // To be added after implementation of Station Class and appendStationToRoute() in TransitSystem class
-            /*
+
             case "extend_train_route":
                 System.out.println(" station: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[2])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[2]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getRailRoute(Integer.parseInt(tokens[1])) == null){
+            		System.out.println(" rail route " + Integer.parseInt(tokens[1]) + " has not been created");
+                    return true;
+            	}
+            	
                 martaModel.appendStationToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                 break;
-            */
+            
             case "upload_real_data":
                 uploadMARTAData();
                 break;
@@ -173,9 +194,19 @@ public class SimDriver implements StateChangeListener{
                 return true;
             case "path_delay":
             	//sets the delay on the specified bus path
-            	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>
+            	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>         	            	
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
+            	          	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[4])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[4]) + " has not been created");
+                    return true;
+            	}
             	
             	PathKey busDelayPathKey = martaModel.getPathKey(martaModel.getBusStop(Integer.decode(tokens[3])), martaModel.getBusStop(Integer.decode(tokens[4])));
             	SetPathDelayEvent setBusDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busDelayPathKey, Double.valueOf(tokens[5]));
@@ -184,12 +215,22 @@ public class SimDriver implements StateChangeListener{
             	ClearPathDelayEvent clearBusDelayEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), busDelayPathKey, Double.valueOf(tokens[5]));
             	System.out.printf("%s\n", clearBusDelayEvent.toJSON());
             	simEngine.add(clearBusDelayEvent);
-                return true;
+            	break;
             case "train_path_delay":
             	//sets the delay on the specified train path
             	//format: path_delay,<StartAt>,<Duration>,<Station_A>,<Station_B>,<DelayFactor>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tdelay factor: %f\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Double.valueOf(tokens[5]));
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[4])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[4]) + " has not been created");
+                    return true;
+            	}
             	
             	PathKey railDelayPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
             	SetPathDelayEvent setRailDelayEvent = new SetPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), railDelayPathKey, Double.valueOf(tokens[5]));
@@ -198,12 +239,22 @@ public class SimDriver implements StateChangeListener{
             	ClearPathDelayEvent clearRailDelayEvent = new ClearPathDelayEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), railDelayPathKey, Double.valueOf(tokens[5]));
             	System.out.printf("%s\n", clearRailDelayEvent.toJSON());
             	simEngine.add(clearRailDelayEvent);
-            	return true;
+            	break;
             case "speed_limit":
             	//sets the speed limit on the specified bus path
             	//format: speed_limit,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<TopSpeed>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
+            	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[4])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[4]) + " has not been created");
+                    return true;
+            	}
             	
             	PathKey busSpeedPathKey = martaModel.getPathKey(martaModel.getBusStop(Integer.decode(tokens[3])), martaModel.getBusStop(Integer.decode(tokens[4])));
             	SetSpeedLimitEvent setBusSpeedEvent = new SetSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), busSpeedPathKey, Integer.valueOf(tokens[5]));
@@ -212,12 +263,22 @@ public class SimDriver implements StateChangeListener{
             	ClearSpeedLimitEvent clearBusSpeedEvent = new ClearSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), busSpeedPathKey);
             	System.out.printf("%s\n", clearBusSpeedEvent.toJSON());
             	simEngine.add(clearBusSpeedEvent);
-            	return true;
+            	break;
             case "train_speed_limit":
             	//sets the speed limit on the specified train path
             	//format: speed_limit,<StartAt>,<Duration>,<Station_A>,<Station_B>,<TopSpeed>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[4])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[4]) + " has not been created");
+                    return true;
+            	}
             	
             	PathKey railSpeedPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
             	SetSpeedLimitEvent setRailSpeedEvent = new SetSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), railSpeedPathKey, Integer.valueOf(tokens[5]));
@@ -226,12 +287,17 @@ public class SimDriver implements StateChangeListener{
             	ClearSpeedLimitEvent clearRailSpeedEvent = new ClearSpeedLimitEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), railSpeedPathKey);
             	System.out.printf("%s\n", clearRailSpeedEvent.toJSON());
             	simEngine.add(clearRailSpeedEvent);
-            	return true;
+            	break;
             case "stop_down":
             	//sets the down time on the specified bus stop
             	//format: stop_down,<StartAt>,<Duration>,<StopID>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tstopID: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]));
+            	
+            	if (martaModel.getBusStop(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
             	
             	BusStop outOfServiceStop = martaModel.getBusStop(Integer.decode(tokens[3]));
             	FacilityOutOfServiceEvent setStopOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStop);
@@ -240,12 +306,17 @@ public class SimDriver implements StateChangeListener{
             	FacilityResumeServiceEvent clearStopOutOfServiceEvent = new FacilityResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), outOfServiceStop);
             	System.out.printf("%s\n", clearStopOutOfServiceEvent.toJSON());
             	simEngine.add(clearStopOutOfServiceEvent);
-            	return true;
+            	break;
             case "station_down":
             	//sets the down time on the specified rail station
             	//format: station_down,<StartAt>,<Duration>,<StationID>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tstationID: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]));
+            	
+            	if (martaModel.getRailStation(Integer.parseInt(tokens[3])) == null){
+            		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
+                    return true;
+            	}
             	
             	RailStation outOfServiceStation = martaModel.getRailStation(Integer.decode(tokens[3]));
             	FacilityOutOfServiceEvent setStationOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStation);
@@ -254,12 +325,17 @@ public class SimDriver implements StateChangeListener{
             	FacilityResumeServiceEvent clearStationOutOfServiceEvent = new FacilityResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), outOfServiceStation);
             	System.out.printf("%s\n", clearStationOutOfServiceEvent.toJSON());
             	simEngine.add(clearStationOutOfServiceEvent);
-            	return true;
+            	break;
             case "bus_down":
             	//sets the down time on the specified bus
             	//format: bus_down,<StartAt>,<BusID>,<TowingDuration>,<RepairDuration>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tbusID: %d\n\trepairDuration: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            	
+            	if (martaModel.getBus(Integer.parseInt(tokens[2])) == null){
+            		System.out.println(" bus " + Integer.parseInt(tokens[2]) + " has not been created");
+                    return true;
+            	}
             	
             	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[3]));
             	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus);
@@ -268,15 +344,17 @@ public class SimDriver implements StateChangeListener{
             	VehicleResumeServiceEvent clearBusOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceBus);
             	System.out.printf("%s\n", clearBusOutOfServiceEvent.toJSON());
             	simEngine.add(clearBusOutOfServiceEvent);
-            	return true;
+            	break;
             case "train_down":
             	//sets the down time on the specified train
             	//format: train_down,<StartAt>,<TrainID><StallDuration>,<RepairDuration>
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\trailCarID: %d\n\trepairDuration: %d\n", 
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
             	
-            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tbusID: %d\n\trepairDuration: %d\n", 
-            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            	if (martaModel.getTrain(Integer.parseInt(tokens[2])) == null){
+            		System.out.println(" train " + Integer.parseInt(tokens[2]) + " has not been created");
+                    return true;
+            	}
             	
             	//ToDo: Update maybe needed to account for stalled train in station
             	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[3]));
@@ -289,6 +367,7 @@ public class SimDriver implements StateChangeListener{
             	return true;
             case "fuel_report":
                 break;
+
             default:
                 System.out.println(" command not recognized");
                 return true;

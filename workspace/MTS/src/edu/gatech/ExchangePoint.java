@@ -1,14 +1,14 @@
 package edu.gatech;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Random;
 
 public class ExchangePoint extends Facility {
 	protected Random randGenerator;
 	protected Integer waiting;
 	protected boolean out_of_service;
-    private HashMap<Integer, int[]> rateCatching;
-    private HashMap<Integer, int[]> rateLeaving;
+    private Hashtable<Integer, int[]> rateCatching;
+    private Hashtable<Integer, int[]> rateLeaving;
 
 	public ExchangePoint(){
 		//default constructor
@@ -19,23 +19,29 @@ public class ExchangePoint extends Facility {
 		waiting = 0;
 		out_of_service = false;
 		randGenerator = new Random();
-		this.setRateCatching(new HashMap<Integer, int[]>());
-        this.setRateLeaving(new HashMap<Integer, int[]>());
+		this.setRateCatching(new Hashtable<Integer, int[]>());
+        this.setRateLeaving(new Hashtable<Integer, int[]>());
 	}
 
 	public Integer randomBiasedValue(Integer lower, Integer middle, Integer upper) {
-		Random rand = new Random();
-		return lower + rand.nextInt(upper - lower);
+        int lowerRange = randGenerator.nextInt(middle - lower + 1) + lower;
+        int upperRange = randGenerator.nextInt(upper - middle + 1) + middle;
+        return (lowerRange + upperRange) / 2;
 	}
 
-	public void addNewRiders(Integer moreRiders) {
+    public void set_riders(int num_riders) {
+    	waiting = num_riders;
+    }
+    public void add_riders(int moreRiders) {
+    	waiting = waiting + moreRiders;
+    }
+	public Integer get_riders() {
+		return waiting;
 	}
 
 	public void addArrivalInfo(Integer timeSlot, Integer minOn, Integer avgOn, Integer maxOn,
 							   Integer minOff, Integer avgOff, Integer maxOff) {
 	}
-	
-	public Integer getWaiting() {return waiting;}
 
     public boolean get_out_of_service() {
     	return out_of_service;
@@ -44,19 +50,19 @@ public class ExchangePoint extends Facility {
     	out_of_service = value;
     }
 
-	public HashMap<Integer, int[]> getRateCatching() {
+	public Hashtable<Integer, int[]> getRateCatching() {
 		return rateCatching;
 	}
 
-	public void setRateCatching(HashMap<Integer, int[]> rateCatching) {
+	public void setRateCatching(Hashtable<Integer, int[]> rateCatching) {
 		this.rateCatching = rateCatching;
 	}
 
-	public HashMap<Integer, int[]> getRateLeaving() {
+	public Hashtable<Integer, int[]> getRateLeaving() {
 		return rateLeaving;
 	}
 
-	public void setRateLeaving(HashMap<Integer, int[]> rateLeaving) {
+	public void setRateLeaving(Hashtable<Integer, int[]> rateLeaving) {
 		this.rateLeaving = rateLeaving;
 	}
 

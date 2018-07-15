@@ -15,6 +15,7 @@ public abstract class Vehicle {
 
     public Vehicle() {
         this.ID = -1;
+        outOfService = false;
     }
 
     public Vehicle(int uniqueValue) {
@@ -25,6 +26,7 @@ public abstract class Vehicle {
         this.passengers = -1;
         this.capacity = -1;
         this.speed = -1;
+        outOfService = false;
     }
 
     public Vehicle(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
@@ -35,6 +37,7 @@ public abstract class Vehicle {
         this.passengers = inputPassengers;
         this.capacity = inputCapacity;
         this.speed = inputSpeed;
+        outOfService = false;
     }
 
     public void setRoute(int inputRoute) { this.route = inputRoute; }

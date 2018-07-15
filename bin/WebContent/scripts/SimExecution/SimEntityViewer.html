@@ -1,0 +1,23 @@
+<md-content class="sim-exec-viewer-panel">
+	<div layout="row" layout-align="start start">
+	   <div layout="column">
+	      <div>Events: {{mts.events.length}}</div>
+  		  <event ng-repeat="event in mts.events" data-event="event"></event>
+	   </div>
+	   <div layout="column">
+  	      <div>{{mts.stops.length}} stops:</div>
+		  <stop ng-repeat="stop in mts.stops" data-stop="stop"></stop>
+	   </div>
+	   <div layout="column">
+	      <div>{{mts.routes.length}} routes:</div>
+		  <route ng-repeat="route in mts.routes" data-route="route"></route>
+	   </div>
+	   <div layout="column">
+	      <div>{{mts.paths.length}} paths:</div>
+		  <path ng-repeat="path in mts.paths" data-path="path"></path>
+	   </div>
+	   <div layout="column">
+	      <div>{{mts.vehicles.length}} vehicles:</div>
+		  <vehicle ng-repeat="vehicle in mts.vehicles" data-vehicle="vehicle"></vehicle>
+	   </div>
+</md-content>
