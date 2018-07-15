@@ -28,8 +28,7 @@ public class ExchangePoint extends Facility {
 		return lower + rand.nextInt(upper - lower);
 	}
 
-	public void addNewRiders(Integer moreRiders) {
-	}
+    public void addNewRiders(int moreRiders) { waiting = waiting + moreRiders; }
 
 	public void addArrivalInfo(Integer timeSlot, Integer minOn, Integer avgOn, Integer maxOn,
 							   Integer minOff, Integer avgOff, Integer maxOff) {
