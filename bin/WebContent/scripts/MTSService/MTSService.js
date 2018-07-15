@@ -111,9 +111,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     };
 		    
     var executeCommand = function(command){
-    	$log.info('executing command: '+command);
+    	//$log.info('executing command: '+command);
     	if(command.startsWith('step')){
-    		$log.info('need to switch to sim execution mode');
+    		//$log.info('need to switch to sim execution mode');
     		$rootScope.setExecMode(true);
     	}
     	state.commandsQueue.push(command);

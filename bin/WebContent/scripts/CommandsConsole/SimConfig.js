@@ -224,12 +224,12 @@
 			$log.info('reading file '+$scope.file.name);
 			fileReader.readAsText($scope.file, $scope)
             .then(function(result) {
-                 $log.info(result);
+                 //$log.info(result);
                  var commands = result.split("\n"); 
-                 $log.info(commands);
+                 //$log.info(commands);
                  mtsService.state.commands.splice(0,mtsService.state.commands.length);
                  for(var i=0;i<commands.length;i++){
-                	 $log.info(commands[i]);
+                	 //$log.info(commands[i]);
                 	 if(commands[i] && commands[i].length>0){
                 		 mtsService.state.commands.push({index:mtsService.state.commands.length,line:commands[i],processed:false});
                 		 mtsService.executeCommand(commands[i]);
