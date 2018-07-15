@@ -14,18 +14,18 @@ public abstract class VehicleRoute {
 		return type;
 	}
 
-	public VehicleRoute() {
+    protected VehicleRoute() {
     	this.ID = -1;
     }
 
-    public VehicleRoute(int uniqueValue) {
+	protected VehicleRoute(int uniqueValue) {
     	this.ID = uniqueValue;
     	this.routeNumber = -1;
     	this.routeName = "";
     	this.exchangePointsOnRoute = new Hashtable<Integer, Integer>();
     }
     
-    public VehicleRoute(int uniqueValue, int inputNumber, String inputName,String type) {
+    protected VehicleRoute(int uniqueValue, int inputNumber, String inputName,String type) {
     	this.ID = uniqueValue;
     	this.routeNumber = inputNumber;
     	this.routeName = inputName;
