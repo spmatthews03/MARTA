@@ -133,38 +133,66 @@
   
   var stopController = function($scope, $log,mtsService){
 		//$log.info('stopController');
-	  $scope.inService = function(){
-		  return true;
-	  };
+	  $scope.showStopOrder = true;
 	  $scope.time = mtsService.state.time;
-	  $scope.bus;
+
 	  $scope.$watch('time',function(){
-		  $log.info('stop noticed time changed');
-		  $log.info($scope.stop);
-		  
+		  //$log.info('stop '+$scope.stop.name+' noticed time changed');
+		  //$log.info('time: ',$scope.time);
+		  //$log.info($scope.stop);
+
+		  if(!(typeof $scope.stop === "undefined") && !(typeof $scope.stop.stop === "undefined") ){
+			  $scope.stop.vehicleAtStop.splice(0,$scope.stop.vehicleAtStop);
+			  var vehicle = mtsService.getStopVehicle($scope.stop.stop.type,$scope.stop.stop.ID,$scope.stop.route);
+			  if(!(typeof vehicle === "undefined")){
+				  //$log.info('stop vehicle');
+				  //$log.info(vehicle);
+				  var vehicleEvent = mtsService.getVehicleEvent(vehicle.type,vehicle.ID);
+				  if(!(typeof vehicleEvent === "undefined") ){
+					  $log.info('vehicleEvent');
+					  $log.info(vehicleEvent);
+					  if(vehicle.prevLocation == $scope.stop.location && vehicleEvent.time == $scope.time ){
+						  $log.info($scope.stop);
+						  $log.info(vehicle);
+						  $log.info(vehicleEvent);
+						  $scope.stop.vehicleAtStop.push(vehicle);
+						  $log.info($scope.stop);
+					  }
+					  else{
+						  $scope.stop.vehicleAtStop.splice(0,$scope.stop.vehicleAtStop);
+					  }
+				  }
+			  }
+		  }
 	  });
   };
   var routeController = function($scope, $log,mtsService){
 		//$log.info('routeController');
 	  $scope.routeStops = [];
 	  $scope.routePaths = [];
+	  $scope.routeID = $scope.route.id;
 	  $scope.getStopCount=function(){
 		  return -1;
 	  };
 	  $scope.$watch('stops',function(){
-		  if($scope.route.stops){
+		  if(!(typeof $scope.route.stops === "undefined")){
 			  $scope.routeStops.splice(0,$scope.routeStops.length);
+			  var route = $scope.route;
+			  //$log.info('route:'+route);
 			  $scope.route.stops.forEach(function(stopID,index,arr){
 				 var stop = mtsService.getStop(($scope.route.type=='busRoute'?'busStop':'trainStop'), stopID);
 				 if(stop){
-					 $scope.routeStops.push(stop);
+					 $scope.routeStops.push({location:index,stop:stop,route:route,vehicleAtStop:[]});
 					 //need to interleave the correct paths
 					 //the paths need to have the right origin and destination locations
 					 var origin=stop;
 					 var destinationLocation = ((index+1<arr.length)?index+1:0);
 					 var destinationStopId = $scope.route.stops[destinationLocation];
 					 var destination = mtsService.getStop(origin.type, destinationStopId);
-					 $scope.routePaths.push(mtsService.getPath(origin,destination));
+					 var path = mtsService.getPath(origin,destination);
+					 if(path){
+						 $scope.routePaths.push({path:path,route:route,startLocation:index,endLocation:destinationLocation,vehicleAtPath:[]});
+					 }
 				 }
 				 else{
 					 $log.info('could not find stop with ID='+stopID);
@@ -173,11 +201,42 @@
 		  }
 	  });
   };
-  var pathController = function($scope, $log){
-	  //$log.info('pathController');
-	  //$log.info($scope.path);
-	  $scope.bus;
-	  $scope.$watch('time',function(){$log.info('path noticed time changed');});
+  var pathController = function($scope, $log,mtsService){
+	  $scope.time = mtsService.state.time;
+	  $scope.$watch('time',function(){
+		  if(!(typeof $scope.path === "undefined") && !(typeof $scope.path.path === "undefined")){
+			  $log.info('path noticed time changed');
+			  $log.info('time: ',$scope.time);
+			  $log.info($scope.path);
+			  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
+			  var vehicle = mtsService.getStopVehicle($scope.path.path.origin.type,$scope.path.path.origin.ID,$scope.path.route);
+			  if(!(typeof vehicle === "undefined")){
+				  $log.info('path vehicle');
+				  $log.info(vehicle);
+				  if(vehicle.prevLocation == $scope.path.startLocation){
+					  $log.info('here! prevLocation: '+vehicle.prevLocation+', startLocation: '+$scope.path.startLocation);
+					  var vehicleEvent = mtsService.getVehicleEvent(vehicle.type,vehicle.ID);
+					  if(!(typeof vehicleEvent === "undefined") ){
+						  $log.info('vehicleEvent');
+						  $log.info(vehicleEvent);
+						  if(vehicleEvent.time >= $scope.time){
+							  $log.info($scope.path);
+							  $log.info(vehicle);
+							  $log.info(vehicleEvent);
+							  $scope.path.vehicleAtPath.push(vehicle);
+							  $log.info($scope.path);
+						  }
+						  else{
+							  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
+						  }
+					  }
+				  }
+				  else{
+					  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
+				  }
+			  }
+		  }
+	  });
 	  //$scope.path.speedLimit=-1;
 	  //$scope.path.delayFactor=-1;
 	 
@@ -213,7 +272,7 @@
   .directive('sim',[simDirective])
   .controller('stopController',['$scope', '$log',  'MTSService', stopController])  
   .controller('routeController',['$scope', '$log', 'MTSService', routeController])  
-  .controller('pathController',['$scope', '$log', pathController])  
+  .controller('pathController',['$scope', '$log', 'MTSService', pathController])  
   .controller('vehicleController',['$scope', '$log', vehicleController])  
   .controller('eventController',['$scope', '$log', eventController])  
   .controller('simController',['$scope', '$log','MTSService', simController]);  

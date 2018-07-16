@@ -1,6 +1,6 @@
 (function(){
 
-var service = function ($log, $timeout, $interval, $http){
+var service = function ($log, $timeout, $interval, $http, $rootScope){
    //$log.info("MTS Service");
     
    var state = {
@@ -30,10 +30,10 @@ var service = function ($log, $timeout, $interval, $http){
     
    var sendCommands = function(){
 	   if(!commandBlocked && state.commandsQueue.length>0){
-		   $log.info(state.commandsQueue.length+" commands to send");
+		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
-		   $log.info('url: '+'/api/MTS/command?line=' + command);
+		   //$log.info('url: '+'/api/MTS/command?line=' + command);
 	    	var promise = $http.get('/api/MTS/command?line=' + command);
 	    	promise.then(
 	    	          function(payload) { 
@@ -46,50 +46,45 @@ var service = function ($log, $timeout, $interval, $http){
 	   }
    }
    var process = function(update){
-      //$log.info(update);
+      $log.info(update);
 	  state.time = update.time;
-	  if(update.system.buses && update.system.buses.length>0){
-	     //$log.info('updating buses');
+	  if(update.system.vehicles && update.system.vehicles.length>0){
 	     state.vehicles.splice(0, state.vehicles.length);
-	     for(vehicle in update.system.buses){
-		    state.vehicles.push(vehicle);
-		 }
+	     update.system.vehicles.forEach(function(vehicle){
+			    state.vehicles.push(vehicle);
+	     });
 	  }
-	  if(update.system.busRoutes && update.system.busRoutes.length>0){
-	     //$log.info('updating routes');
-		 state.routes.splice(0, state.routes.length);
-		 for(route in update.system.busRoutes){
-		    state.routes.push(route);
-		 }
+	  if(update.system.routes && update.system.routes.length>0){
+	     state.routes.splice(0, state.routes.length);
+	     update.system.routes.forEach(function(route){
+			    state.routes.push(route);
+	     });
 	  }
 	  if(update.system.stops && update.system.stops.length>0){
-	     //$log.info('updating stops');
-	     //$log.info(update.system.stops.length+' stops to add');
 	   	 state.stops.splice(0, state.stops.length);
-		 for(stop in update.system.stops){
-		 	state.stops.push(stop);
-		 }
+	     update.system.stops.forEach(function(stop){
+			    state.stops.push(stop);
+	     });
 	   }
   	   if(update.system.paths && update.system.paths.length>0){
-	      $log.info('updating paths');
-	  	  state.paths.splice(0, state.paths.length);
-	  	  for(path in update.system.paths){
-	  	     state.paths.push(path);
-	  	  }
+	     state.paths.splice(0, state.paths.length);
+	     update.system.paths.forEach(function(path){
+	    	    path.origin = getStop(path.pathKey.originType,path.pathKey.origin);
+	    	    path.destination = getStop(path.pathKey.destinationType,path.pathKey.destination);
+			    state.paths.push(path);
+	     });
 	   }
   	   if(update.events && update.events.length>0){
-  	      //$log.info('updating events');
   		  state.events.splice(0, state.events.length);
-  		  for(event in update.events){
-  		     state.events.push(event);
-  		  }
+ 	      update.events.forEach(function(event){
+			    state.events.push(event);
+ 	      });
   	   }
-	   //$log.info(state);
   	   commandBlocked = false;
    };
    // ws = new WebSocket('ws://127.0.0.1:5808');
    var onopen = function(){
-	  $log.info('socket opened!');
+	  //$log.info('socket opened!');
 	  $interval(heartbeat,1000);
 	  $interval(sendCommands,10);
    };
@@ -97,7 +92,8 @@ var service = function ($log, $timeout, $interval, $http){
    var onmessage = function(evt){
   	  //console.log('received socket message: '+evt.data);
         $timeout(function(){
-            //$log.info('processing '+evt.data);
+            //$log.info('processing: ');
+            //$log.info(evt.data);
         	process(JSON.parse(evt.data));
         });
     };
@@ -118,15 +114,62 @@ var service = function ($log, $timeout, $interval, $http){
     };
 		    
     var executeCommand = function(command){
-    	$log.info('executing command: '+command);
+    	//$log.info('executing command: '+command);
+    	if(command.startsWith('step')){
+    		//$log.info('need to switch to sim execution mode');
+    		$rootScope.setExecMode(true);
+    	}
     	state.commandsQueue.push(command);
     	
     };
+    var getStop = function(stopType,stopID){
+    	var result = state.stops.find(function(stop){
+    		return (stopType==stop.type && stopID==stop.ID);
+    	});
+    	return result;
+    };
+    var getPath = function(origin,destination){
+
+    	var result = state.paths.find(function(path){
+    		return (path.pathKey.origin==origin.ID && path.pathKey.originType==origin.type &&
+    				path.pathKey.destination==destination.ID && path.pathKey.destinationType==destination.type);
+    	});
+    	return result;
+    };
+    var getStopVehicle=function(stopType,stopID,route){
+    	$log.info(route);
+    	$log.info("stopType: "+stopType +", stopID: "+stopID);
+    	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
+    	var result;
+    	result = state.vehicles.find(function(vehicle){
+    		$log.info(vehicle);
+    		var locationID = vehicle.prevLocation;
+    		var vehicleStopID = route.stops[vehicleStopID];
+    		var vehicleStop = getStop(stopType,vehicleStopID);
+    		$log.info(vehicleStop);
+    		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
+    	});
+    	return result;
+    };
+    var getVehicleEvent=function(vehicleType,vehicleID){
+    	$log.info("vehicleType: "+vehicleType, +", vehicleID: "+vehicleID);
+    	var result;
+    	result = state.events.find(function(event){
+    		$log.info(event);
+    		return false;
+    	});
+    	return result;
+    };
+    
     connect();
    
     return {
     	state: state,
-    	executeCommand: executeCommand
+    	executeCommand: executeCommand,
+    	getStop:getStop,
+    	getPath:getPath,
+    	getStopVehicle:getStopVehicle,
+    	getVehicleEvent:getVehicleEvent
     };
     
   };
@@ -135,5 +178,5 @@ var service = function ($log, $timeout, $interval, $http){
   
 
 angular.module('MTSService',[])
-  .factory ("MTSService", ['$log', '$timeout', '$interval', '$http', service]);  
+  .factory ("MTSService", ['$log', '$timeout', '$interval', '$http', '$rootScope',service]);  
 }());

@@ -136,7 +136,35 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    
+    var getStopVehicle=function(stopType,stopID,route){
+    	$log.info(route);
+    	$log.info("stopType: "+stopType +", stopID: "+stopID);
+    	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
+    	var result;
+    	result = state.vehicles.find(function(vehicle){
+    		if(vehicle.routeID!=route.ID) return false;
+    		$log.info(vehicle);
+    		var locationID = vehicle.prevLocation;
+    		var vehicleStopID = route.stops[locationID];
+    		var vehicleStop = getStop(stopType,vehicleStopID);
+    		$log.info(vehicleStop);
+    		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
+    	});
+    	return result;
+    };
+    var getVehicleEvent=function(vehicleType,vehicleID){
+    	//$log.info("vehicleType: "+vehicleType +", vehicleID: "+vehicleID);
+    	var result;
+    	result = state.events.find(function(event){
+    		if ( !event.hasOwnProperty('vehicle') ) {
+    		    return false;
+    		}
+    		if(event.vehicle.type!=vehicleType) return false;
+    		//$log.info(event);
+    		return event.vehicle.ID == vehicleID;
+    	});
+    	return result;
+    };
     
     connect();
    
@@ -144,7 +172,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	state: state,
     	executeCommand: executeCommand,
     	getStop:getStop,
-    	getPath:getPath
+    	getPath:getPath,
+    	getStopVehicle:getStopVehicle,
+    	getVehicleEvent:getVehicleEvent
     };
     
   };

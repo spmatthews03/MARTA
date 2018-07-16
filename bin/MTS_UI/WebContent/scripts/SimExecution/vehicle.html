@@ -1,0 +1,27 @@
+<div class="entity-card">
+  <div layout="row">
+	  <div class="entity-card-icon-frame">
+	     <div>
+	       <i ng-show="vehicle.type=='Bus'" class="fas fa-bus"></i>
+	       <i ng-show="vehicle.type=='Train'" class="fas fa-train"></i>
+         </div>
+	  </div>
+	  <div class="entity-card-details" layout="row">
+		  <div class="entity-details-frame" layout="column">
+		     <div ng-show="inService()">In Service</div>
+		     <div ng-hide="inService()">Out of Service</div>
+		     <div layout="row">
+		     	<span ng-show="vehicle.type=='Bus'">Bus #</span>
+		     	<span ng-show="vehicle.type=='Train'">Train #</span>
+		     	<span>{{vehicle.ID}}</span>
+		     </div>
+		     <div>on {{getRoute()}} route</div>
+		     <div>heading to stop {{getStop()}}</div>
+		  </div>
+		  <div class="vehicle-details-frame" layout="column">
+		     <div layout="row"><div>passengers: </div><div>{{vehicle.passengers}} / {{vehicle.capacity}}</div></div>
+		     <div layout="row" ng-show='vehicle.type=="Bus"'><div>fuel: </div><div>{{vehicle.fuelLevel}}</div></div>
+		  </div>
+	  </div>
+  </div>
+</div>

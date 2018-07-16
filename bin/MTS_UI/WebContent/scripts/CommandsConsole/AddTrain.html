@@ -1,0 +1,58 @@
+ <div  class="input-form"><md-content layout-padding>
+    <form name="addTrainForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Train ID</label>
+        <input required md-no-asterisk type="number" min="0" name="id" ng-model="item.id">
+        <div ng-messages="addTrainForm.id.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum ID value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Train Route ID</label>
+        <input required md-no-asterisk type="number" min="0" name="routeId" ng-model="item.routeId">
+        <div ng-messages="addTrainForm.routeId.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum train route ID value allowed</div>
+        </div>
+      </md-input-container>     
+      <md-input-container class="md-block">
+        <label>Location</label>
+        <input required md-no-asterisk type="number" min="0" name="location" ng-model="item.location">
+        <div ng-messages="addTrainForm.location.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum location value allowed</div>
+        </div>
+      </md-input-container>     
+      <md-input-container class="md-block">
+        <label>Passengers</label>
+        <input required md-no-asterisk type="number" min="0" name="passengers" ng-model="item.passengers">
+        <div ng-messages="addTrainForm.passengers.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum passengers value allowed</div>
+        </div>
+      </md-input-container>     
+      <md-input-container class="md-block">
+        <label>Capacity</label>
+        <input required md-no-asterisk type="number" min="0" name="capacity" ng-model="item.capacity">
+        <div ng-messages="addTrainForm.capacity.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum capacity value allowed</div>
+        </div>
+      </md-input-container>     
+      <md-input-container class="md-block">
+        <label>Speed</label>
+        <input required md-no-asterisk type="number" min="0" name="speed" ng-model="item.speed">
+        <div ng-messages="addTrainForm.speed.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum speed value allowed</div>
+        </div>
+      </md-input-container>     
+
+      <div layout="row">
+        <md-button type="submit">Submit</md-button>
+        <md-button ng-click="cancel()">Cancel</md-button>
+      </div>
+    </form>
+  </md-content></div>

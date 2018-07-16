@@ -1,0 +1,1414 @@
+# event rank: 1 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 1 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 4 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 8 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 10 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 0 post-stop: 5
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 15 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 17 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 5 post-stop: 4
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 22 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 26 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 28 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 29 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 32 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 36 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 43 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 43 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 50 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 54 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 57 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 58 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 4 post-stop: 5
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 60 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 64 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 67 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 5 post-stop: 6
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 71 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 72 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 6 post-stop: 5
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 78 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 81 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 5 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 82 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 85 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 88 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 88 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 92 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 99 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 99 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 106 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 110 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 113 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 114 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 116 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 120 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 127 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 129 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 4 post-stop: 5
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 134 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 138 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 5 post-stop: 6
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 138 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 141 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 143 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 6 post-stop: 5
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 144 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 148 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 152 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 5 post-stop: 5
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 155 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 159 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 5 post-stop: 4
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 162 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 166 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 169 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 170 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 172 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 176 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 183 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 185 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 190 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 194 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 197 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 200 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 200 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 204 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 209 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 211 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 214 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 218 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 222 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 223 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 225 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 228 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 230 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 232 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 239 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 241 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 246 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 250 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 253 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 256 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 256 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 260 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 267 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 271 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 274 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 278 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 280 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 281 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 284 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 285 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 288 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 294 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 295 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 301 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 302 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 306 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 309 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 312 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 312 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 316 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 323 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 327 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 330 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 334 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 337 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 340 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 342 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 344 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 351 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 351 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 356 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 358 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 362 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 365 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 365 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 368 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 372 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 372 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 379 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 383 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 386 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 390 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 393 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 396 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 398 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 400 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 407 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 413 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 414 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 418 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 421 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 422 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 424 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 427 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 4 post-stop: 5
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 428 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 435 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 436 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 5 post-stop: 4
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 442 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 4
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 443 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 4 post-stop: 5
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 446 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 4 post-stop: 3
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 449 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 452 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 454 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 5 post-stop: 5
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 456 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 463 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 469 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 5 post-stop: 6
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 470 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 474 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 477 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 480 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 484 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 6 post-stop: 7
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 484 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 491 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 493 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 7 post-stop: 7
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 498 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 498 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 7 post-stop: 8
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 502 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 505 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 507 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 508 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 512 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 514 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 8 post-stop: 9
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 519 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 525 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 9 post-stop: 9
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 526 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 530 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 533 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 536 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 540 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 9 post-stop: 9
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 540 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 547 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 554 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 555 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 9 post-stop: 9
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 558 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 561 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 2 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 564 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 9 post-stop: 9
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 564 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 568 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 569 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 4 - West Side
+ passengers pre-stop: 9 post-stop: 8
+ the bus is heading to stop: 0 - Appleville
+
+# event rank: 575 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 578 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 0 - Appleville
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 582 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 585 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 586 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 0
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 589 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 0 post-stop: 0
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 592 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 0 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 596 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 3 - Cherry City
+
+# event rank: 596 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 603 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 610 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 611 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 3 - Cherry City
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 6 - East Side
+
+# event rank: 614 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 2 post-stop: 1
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 617 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 1 post-stop: 1
+ the bus is heading to stop: 7 - Central City
+
+# event rank: 620 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 7 - Central City
+ passengers pre-stop: 1 post-stop: 2
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 624 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 2 post-stop: 3
+ the bus is heading to stop: 2 - Star City
+
+# event rank: 626 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 6 - East Side
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 5 - South Side
+
+# event rank: 631 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 2 - Star City
+ passengers pre-stop: 3 post-stop: 3
+ the bus is heading to stop: 1 - Banana Bayou
+
+# event rank: 635 type: move_bus ID: 11
+ the bus being observed is: 11
+ the bus is driving on route: 1
+ the bus is currently at stop: 5 - South Side
+ passengers pre-stop: 8 post-stop: 8
+ the bus is heading to stop: 4 - West Side
+
+# event rank: 638 type: move_bus ID: 7
+ the bus being observed is: 7
+ the bus is driving on route: 0
+ the bus is currently at stop: 1 - Banana Bayou
+ passengers pre-stop: 3 post-stop: 2
+ the bus is heading to stop: 7 - Central City
+
+# main:  system report - stops, buses and routes:
+> stop - ID: 0 name: Appleville waiting: 0 xCoord: 0.0 yCoord: 0.08
+> stop - ID: 1 name: Banana Bayou waiting: 0 xCoord: 0.04 yCoord: 0.1
+> stop - ID: 2 name: Star City waiting: 0 xCoord: 0.08 yCoord: 0.16
+> stop - ID: 3 name: Cherry City waiting: 0 xCoord: 0.16 yCoord: 0.1
+> stop - ID: 4 name: West Side waiting: 0 xCoord: 0.01 yCoord: 0.01
+> stop - ID: 5 name: South Side waiting: 0 xCoord: 0.04 yCoord: 0.01
+> stop - ID: 6 name: East Side waiting: 0 xCoord: 0.1 yCoord: 0.02
+> stop - ID: 7 name: Central City waiting: 0 xCoord: 0.04 yCoord: 0.05
+> bus - ID: 7 route: 0 location from: 4 to: 5 passengers: 2 capacity: 10 speed: 50
+> bus - ID: 11 route: 1 location from: 6 to: 0 passengers: 8 capacity: 10 speed: 30
+> route - ID: 0 number: 10 name: Express stops: [ 0:5 1:7 2:1 3:2 4:1 5:7 ]
+> route - ID: 1 number: 16 name: Perimeter stops: [ 0:4 1:0 2:1 3:2 4:3 5:6 6:5 ]
+# main: # main:  stop the command loop

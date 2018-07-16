@@ -190,3 +190,62 @@ div:focus {
 	max-width: 40px;
 	margin: 0px;
 }
+
+.entity-card.route-viewer>.entity-card-icon-frame{
+	background-color: rgb(224,224,224);
+	padding: 2px;
+}
+
+.route-label{
+	font-size:1.1em;
+}
+
+.entity-card.route-viewer .entity-card-icon-frame .fas{
+	font-size: 12pt;
+}
+
+.entity-card.route-viewer .entity-card-icon-frame{
+	margin-right:8px;
+}
+
+.vehicle-positions-container{
+	width:350px;
+	max-width:350px;
+	max-height: 50px;
+}
+
+.stop-index{
+	font-size:8pt;
+}
+.vehicle-positions-container .fas{
+	font-size: 24pt;
+}
+
+.vehicle-positions-container .entity-card-icon-frame{
+	margin-right:8px;
+}
+
+.entity-card-details .fas{
+	font-size:16px;
+}
+.entity-card-details .value{
+	font-size:18px;
+}
+
+.vehicle-lable{
+	font-size:14pt;
+}
+
+.path-label{
+	font-size:12px;
+}
+
+
+.vehicle .entity-card-details .fas{
+	font-size:12pt;
+}
+
+.vehicle .entity-card-details .value{
+	font-size:14px;
+	padding-left:4px;
+}

@@ -64,7 +64,7 @@ public abstract class VehicleRoute {
     }
 
     protected void displayInternalStatus(String exchangePointType) {
-        System.out.print("> route - ID: " + Integer.toString(this.ID));
+        System.out.print("> " + this.type + " - ID: " + Integer.toString(this.ID));
         System.out.print(" number: " + Integer.toString(this.routeNumber) + " name: " + this.routeName);
         System.out.print(" " + exchangePointType +": [ ");
         for (int i = 0; i < this.exchangePointsOnRoute.size(); i++) {

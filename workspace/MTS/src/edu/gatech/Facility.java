@@ -1,6 +1,7 @@
 package edu.gatech;
 
-import java.awt.Point;
+
+
 import java.util.Objects;
 
 public abstract class Facility {
@@ -16,16 +17,11 @@ public abstract class Facility {
 	public Facility(int uniqueID, String name, double x, double y, String type) {
 		this.uniqueID = uniqueID;
 		this.facilityName = name;
-		this.coord = new Point();
-		System.out.println(x + " " + y);
-		this.coord.setLocation(x, y);
+		this.coord = new Point(x,y);
 		this.type = type;
 	}
 	public Point getLocation() {
-		return coord.getLocation();
-	}
-	public void setLocation(double x, double y) {
-		coord.setLocation(x, y);
+		return coord;
 	}
 	public Integer get_uniqueID() {
 		return uniqueID;
@@ -47,23 +43,29 @@ public abstract class Facility {
 	}
 
 	public void displayInternalStatus() {
-        System.out.print("> Facility " + this.getFacilityName());
-        System.out.print("  ID: " + this.get_uniqueID());
-        System.out.print("  X: " +  this.getLocation().getX() +
-        				 "Y: " + this.getLocation().getY());
+      
+        System.out.print("> " + this.type + " - ID: " + Integer.toString(uniqueID) + " name: " + facilityName);
+        System.out.println(" xCoord: " + Double.toString(coord.getX()) + " yCoord: " + Double.toString(coord.getY()));
+        
 	}
 
 	public double findDistance(Facility destination) {
+		/*
 		Double x_coord_sqrt;
 		Double y_coord_sqrt;
-		
+
 		x_coord_sqrt = (destination.getLocation().getX() - this.getLocation().getX());
 		x_coord_sqrt = x_coord_sqrt * x_coord_sqrt;
 
 		y_coord_sqrt = (destination.getLocation().getY() - this.getLocation().getY());
 		y_coord_sqrt = y_coord_sqrt * y_coord_sqrt;
-
+		
 		return Math.sqrt(x_coord_sqrt + y_coord_sqrt);
+		*/
+		
+        final double distanceConversion = 70.0;
+        
+        return distanceConversion * Math.sqrt(Math.pow((this.getLocation().getX() - destination.getLocation().getX()), 2) + Math.pow((this.getLocation().getY() - destination.getLocation().getY()), 2));
 	}
 
 	public boolean equals(Object object) {

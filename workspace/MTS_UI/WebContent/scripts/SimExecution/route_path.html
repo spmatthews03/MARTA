@@ -1,19 +1,13 @@
-<div class="entity-card">
-  <div layout="row">
-	  <div class="entity-card-icon-frame">
-	     <div>
-	     	<i class="fas fa-road"></i>
-     	</div>
-	  </div>
-	  <div class="entity-card-details" layout="row">
-		  <div class="entity-details-frame" layout="column">
-		     <div>origin: {{path.origin.name}}</div>
-		     <div>destination: {{path.destination.name}}</div>
-		  </div>
-		  <div class="path-details-frame" layout="column">
-		     <div layout="row"><div>speed limit: </div><div>{{path.speedLimit}}</div></div>
-		     <div layout="row"><div>delay factor: </div><div>{{path.delayFactor}}</div></div>
-		  </div>
-	  </div>
+<div class="entity-card route"  ng-show="{'out-of-service':path.path.isBlocked}">
+  <div layout="row" layout-wrap>
+    <div class="location" flex><div layout="row">
+	  <div class="entity-card-icon-frame"><i class="fas fa-road"></i></div>
+	  <div class="path-label" layout="row">{{path.path.origin.name}}</div>
+	  <div class="path-label" layout="row"> --> </div>
+	  <div class="path-label" layout="row">{{path.path.destination.name}}</div>
+    </div></div>
+    <div flex="33">
+	  <div ng-repeat="vehicle in path.vehicleAtPath track by $index"><route-vehicle data-vehicle="vehicle"></route-vehicle></div>
+    </div>
   </div>
 </div>

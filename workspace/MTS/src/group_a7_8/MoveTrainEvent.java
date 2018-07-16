@@ -30,7 +30,7 @@ public class MoveTrainEvent extends SimEvent{
     	sb.append(timeRank);
     	sb.append(",\"type\":\"");
     	sb.append(eventType);
-    	sb.append("\",\"train\":");
+    	sb.append("\",\"vehicle\":");
     	sb.append(train.toJSON());
     	sb.append('}');
     	return sb.toString();
