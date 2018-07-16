@@ -90,10 +90,10 @@ public class TransitSystem {
     	return null;
 	}
 
-//    public Depot getDepot() {
-//    	if (!depots.isEmpty()) { return depots.get(); }
-//    	return null;
-//	}
+    public Depot getDepot() {
+    	if (!depots.isEmpty()) { return depots.get(0); }
+    	return null;
+	}
 
     public Path getPath(PathKey pathKey) {
         if (paths.containsKey(pathKey)) { return paths.get(pathKey); }
@@ -137,7 +137,7 @@ public class TransitSystem {
 
 	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
 		// int uniqueID = buses.size();
-		depots.put(uniqueID, new Depot(uniqueID, name, x_coord, y_coord));
+		depots.put(uniqueID, new Depot(0, name, x_coord, y_coord));
 		listener.updateState();
 		return uniqueID;
 	}

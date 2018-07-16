@@ -173,8 +173,7 @@
 				  $scope.commandLine='extend_route,0,5';
 				  break;
 			  case 'addBus':
-			  	// TODO: changed for two fuel parameters, not sure if it would break if changed
-				  $scope.commandLine='add_bus,7,0,0,0,10,50';
+				  $scope.commandLine='add_bus,7,0,0,0,10,5,25,50';
 				  break;
 			  case 'addBusPathDelay':
 				  $scope.commandLine='path_delay,20,30,5,7,1.2';

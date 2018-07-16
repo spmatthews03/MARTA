@@ -40,7 +40,23 @@
           <div ng-message="required">This field is required.</div>
           <div ng-message="min">0 is the minimum capacity value allowed</div>
         </div>
-      </md-input-container>     
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Fuel Level</label>
+        <input required md-no-asterisk type="number" min="0" name="fuelLevel" ng-model="item.fuelLevel">
+        <div ng-messages="addBusForm.fuelLevel.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum initial fuel level</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Fuel Capacity</label>
+        <input required md-no-asterisk type="number" min="0" name="fuelCapacity" ng-model="item.fuelCapacity">
+        <div ng-messages="addBusForm.fuelCapacity.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">5 is the minimum fuel capacity allowed</div>
+        </div>
+      </md-input-container>
       <md-input-container class="md-block">
         <label>Speed</label>
         <input required md-no-asterisk type="number" min="0" name="speed" ng-model="item.speed">

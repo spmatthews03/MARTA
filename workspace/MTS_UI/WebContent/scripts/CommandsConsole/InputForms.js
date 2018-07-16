@@ -146,7 +146,7 @@ var setTrainSpeedLimitFormDirective = function(){
 			  command = 'extend_route,'+$scope.item.routeId+','+$scope.item.stopId;
 			  break;
 		  case 'addBus':
-			  command = 'add_bus,'+$scope.item.id+','+$scope.item.routeId+','+$scope.item.location+','+$scope.item.passengers+','+$scope.item.capacity+','+$scope.item.speed;
+			  command = 'add_bus,'+$scope.item.id+','+$scope.item.routeId+','+$scope.item.location+','+$scope.item.passengers+','+$scope.item.capacity+','+$scope.item.fuelLevel+','+$scope.item.fuelCapacity+','+$scope.item.speed;
 			  break;
 		  case 'addEvent':
 			  command = 'add_event,'+$scope.item.time+','+$scope.item.type+','+$scope.item.id;
