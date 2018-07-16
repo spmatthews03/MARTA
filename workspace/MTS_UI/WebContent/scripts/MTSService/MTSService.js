@@ -136,25 +136,35 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    var getStopVehicle=function(stopType,stopID){
-    	$log.info("stopType: "+stopType, +", stopID: "+stopID);
+    var getStopVehicle=function(stopType,stopID,route){
+    	//$log.info(route);
+    	//$log.info("stopType: "+stopType +", stopID: "+stopID);
+    	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
     	var result;
     	result = state.vehicles.find(function(vehicle){
-    		$log.event(vehicle);
-    		return false;
+    		if(vehicle.routeID!=route.ID) return false;
+    		//$log.info(vehicle);
+    		var locationID = vehicle.prevLocation;
+    		var vehicleStopID = route.stops[locationID];
+    		var vehicleStop = getStop(stopType,vehicleStopID);
+    		//$log.info(vehicleStop);
+    		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
     	});
     	return result;
     };
     var getVehicleEvent=function(vehicleType,vehicleID){
-    	$log.info("vehicleType: "+vehicleType, +", vehicleID: "+vehicleID);
+    	//$log.info("vehicleType: "+vehicleType +", vehicleID: "+vehicleID);
     	var result;
     	result = state.events.find(function(event){
-    		$log.event(event);
-    		return false;
+    		if ( !event.hasOwnProperty('vehicle') ) {
+    		    return false;
+    		}
+    		if(event.vehicle.type!=vehicleType) return false;
+    		//$log.info(event);
+    		return event.vehicle.ID == vehicleID;
     	});
     	return result;
     };
-    
     
     connect();
    

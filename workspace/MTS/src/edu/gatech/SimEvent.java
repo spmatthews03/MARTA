@@ -46,18 +46,5 @@ public abstract class SimEvent {
         return result;
     }
     
-    public String toJSON() {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append('{');
-    	sb.append("\"ID\":");
-    	sb.append(eventID);
-    	sb.append(",\"time\":");
-    	sb.append(timeRank);
-    	sb.append(",\"type\":\"");
-    	sb.append(eventType);
-    	sb.append('\"');
-    	sb.append('}');
-    	return sb.toString();
-    }
-
+    abstract public String toJSON();
 }

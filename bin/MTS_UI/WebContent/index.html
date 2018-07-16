@@ -29,8 +29,7 @@
 	        </md-card>
         </div>
         <div ng-hide="showMenu" layout="column" class="mts-viewport">
-            <mts-dashboard></mts-dashboard>
-	    	<md-tabs md-dynamic-height md-border-bottom>
+	    	<md-tabs md-selected="activeTab" md-dynamic-height md-border-bottom>
 	    	   <md-tab>
 		    	   <md-tab-label>
 		    	       <div layout="row"><md-icon>build</md-icon><div>Configure</div></div>
@@ -41,7 +40,7 @@
 		    	   <md-tab-label>
 		    	       <div layout="row"><md-icon>update</md-icon><div>Run Simulation</div></div>
 		    	   </md-tab-label>
-		    	   <md-tab-body><sim-executor></sim-executor></md-tab-body>
+		    	   <md-tab-body><sim></sim></md-tab-body>
 	    	   </md-tab> 
 	    	</md-tabs>
         </div>
@@ -56,8 +55,8 @@
     <script src="scripts/CommandsConsole/CommandsConsole.js"></script>
     <script src="scripts/CommandsConsole/SimConfig.js"></script>
     <script src="scripts/CommandsConsole/InputForms.js"></script>
-    <script src="scripts/CommandsConsole/SimExecutor.js"></script>
     <script src="scripts/Dashboard/MtsDashboard.js"></script>
+    <script src="scripts/SimExecution/SimExecution.js"></script>
     <script src="scripts/MTS.js"></script>
     <script src="scripts/FileReader/FileReader.js"></script>
 </body>

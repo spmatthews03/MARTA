@@ -1,13 +1,19 @@
 <div class="entity-card" ng-show="{'out-of-service':stop.outOfService}">
-  <div layout="row">
+  <div layout="row" layout-wrap>
+    <div class="location" flex layout="row">
 	  <div class="entity-card-icon-frame">
      	<i ng-show="stop.type=='busStop'" class="fas fa-map-signs"></i>
      	<i ng-show="stop.type=='trainStop'" class="fas fa-archway"></i>
      	<i ng-show="stop.type=='depot'" class="fas fa-hospital"></i>
+     	<div class="stop-index" ng-show="showStopOrder">{{order}}</div>
 	  </div>
 	  <div class="entity-card-details" layout="column">
-	      <div class="stop-name">{{order}}){{stop.name}}</div>
-	      <div layout="row"><i class="fas fa-user"></i><div>{{stop.waiting}}</div></div>
+	      <div class="stop-name">{{stop.name}}</div>
+	      <div layout="row"><i class="fas fa-user"></i><div class="value">{{stop.waiting}}</div></div>
 	  </div>
+    </div>
+    <div flex="33">
+	  <div ng-repeat="vehicle in vehicleAtStop track by $index"><route-vehicle data-vehicle="vehicle"></route-vehicle></div>
+    </div>
   </div>
 </div>

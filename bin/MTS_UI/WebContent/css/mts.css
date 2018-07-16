@@ -62,7 +62,7 @@
 .sim-config-panel {
     border-bottom: 2pt solid rgb(224,224,224);
     height:600px;
-	
+	max-height: 600px;
 }
 
 .sim-config-panel .sim-config-controls-panel .md-button{
@@ -161,3 +161,32 @@ div:focus {
  .expansion-panel .panel-description{
  font-size: 12pt;
  }
+ 
+ .input-form{
+  height: inherit;
+  min-height: 275px;
+  max-height: 600px;
+}
+
+ .input-form .md-content{
+	 overflow: auto
+}
+
+.sim-exec-panel{
+	height:640px;
+	max-height: 640px;
+}
+.sim-exec-viewer-panel{
+	overflow: auto;
+	height:600px;
+	max-height: 600px;
+}
+.sim-exec-controls-panel {
+	height: 40px;
+}
+
+.sim-exec-control .md-button{
+	min-width:12px;
+	max-width: 40px;
+	margin: 0px;
+}

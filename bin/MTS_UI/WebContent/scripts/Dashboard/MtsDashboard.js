@@ -22,7 +22,7 @@
 		 replace: true,
          template: 
         '<div class="bus-dashboard tile" layout="row" layout-align="start center">'+
-          '<div layput="column" layout-align="center center"><div class="dashboard-tile-label"><md-icon>directions_bus</md-icon></div><div class="dashboard-tile-label"><span>Buses</span></div></div>'+
+          '<div layout="column" layout-align="center center"><div class="dashboard-tile-label"><md-icon>directions_bus</md-icon></div><div class="dashboard-tile-label"><span>Buses</span></div></div>'+
           '<div layout="row" layout-align="space-around stretch" layout-wrap>'+
           '<div layout="column" flex="50" layout-align="center center"><div class="label">buses</div> <div class="value">{{mts.vehicles.length}}</div></div>'+
           '<div layout="column" flex="50" layout-align="center center"><div class="label">stops</div> <div class="value">{{mts.stops.length}}</div></div>'+
@@ -67,9 +67,9 @@
   };
   //controller
   var dashboardController = function($scope, $log, mtsService){
-		$log.info('dashboardController');
+		//$log.info('dashboardController');
 		$scope.mts = mtsService.state;
-		$log.info($scope.mts)
+		//$log.info($scope.mts)
 	
   };
   angular.module('MTSDashboard',['ngMaterial','MTSService'])
