@@ -11,9 +11,9 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 
-import group_a7_8.BlockPathEvent;
+//import group_a7_8.BlockPathEvent;
 import group_a7_8.ClearPathDelayEvent;
-import group_a7_8.ClearPathEvent;
+//import group_a7_8.ClearPathEvent;
 import group_a7_8.ClearSpeedLimitEvent;
 import group_a7_8.FacilityOutOfServiceEvent;
 import group_a7_8.FacilityResumeServiceEvent;
@@ -369,13 +369,13 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
             	
-            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
-            	System.out.printf("%s\n", setBlockPathEvent.toJSON());
-            	simEngine.add(setBlockPathEvent);
-            	
-            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3]), outOfServiceRailCar);
-            	System.out.printf("%s\n", clearBlockPathEvent.toJSON());
-            	simEngine.add(clearBlockPathEvent);            	
+//            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
+//            	System.out.printf("%s\n", setBlockPathEvent.toJSON());
+//            	simEngine.add(setBlockPathEvent);
+//            	
+//            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3]), outOfServiceRailCar);
+//            	System.out.printf("%s\n", clearBlockPathEvent.toJSON());
+//            	simEngine.add(clearBlockPathEvent);            	
             	
             	VehicleResumeServiceEvent clearRailOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3])+Integer.decode(tokens[4]), outOfServiceRailCar);
             	System.out.printf("%s\n", clearRailOutOfServiceEvent.toJSON());
