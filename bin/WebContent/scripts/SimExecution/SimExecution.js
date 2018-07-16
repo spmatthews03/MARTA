@@ -58,7 +58,7 @@
   var routeStopDirective = function(){
       return{
 		 restrict:'E',
-		 scope:{stop:"="},
+		 scope:{stop:"=",order:"="},
 		 replace: true,
 		 controller: 'stopController',
          templateUrl: 'scripts/SimExecution/route_stop.html'
@@ -131,28 +131,56 @@
 		};		
   };
   
-  var stopController = function($scope, $log){
+  var stopController = function($scope, $log,mtsService){
 		//$log.info('stopController');
 	  $scope.inService = function(){
 		  return true;
 	  };
+	  $scope.time = mtsService.state.time;
+	  $scope.bus;
+	  $scope.$watch('time',function(){
+		  $log.info('stop noticed time changed');
+		  $log.info($scope.stop);
+		  
+	  });
   };
-  var routeController = function($scope, $log){
+  var routeController = function($scope, $log,mtsService){
 		//$log.info('routeController');
+	  $scope.routeStops = [];
+	  $scope.routePaths = [];
 	  $scope.getStopCount=function(){
 		  return -1;
 	  };
+	  $scope.$watch('stops',function(){
+		  if($scope.route.stops){
+			  $scope.routeStops.splice(0,$scope.routeStops.length);
+			  $scope.route.stops.forEach(function(stopID,index,arr){
+				 var stop = mtsService.getStop(($scope.route.type=='busRoute'?'busStop':'trainStop'), stopID);
+				 if(stop){
+					 $scope.routeStops.push(stop);
+					 //need to interleave the correct paths
+					 //the paths need to have the right origin and destination locations
+					 var origin=stop;
+					 var destinationLocation = ((index+1<arr.length)?index+1:0);
+					 var destinationStopId = $scope.route.stops[destinationLocation];
+					 var destination = mtsService.getStop(origin.type, destinationStopId);
+					 $scope.routePaths.push(mtsService.getPath(origin,destination));
+				 }
+				 else{
+					 $log.info('could not find stop with ID='+stopID);
+				 }				 
+			  });
+		  }
+	  });
   };
   var pathController = function($scope, $log){
-		//$log.info('pathController');
-	  $scope.path.speedLimit=-1;
-	  $scope.path.delayFactor=-1;
-	  $scope.getOrigin=function(){
-		  return "origin";
-	  };
-	  $scope.getDestination=function(){
-		  return "destination";
-	  };
+	  //$log.info('pathController');
+	  //$log.info($scope.path);
+	  $scope.bus;
+	  $scope.$watch('time',function(){$log.info('path noticed time changed');});
+	  //$scope.path.speedLimit=-1;
+	  //$scope.path.delayFactor=-1;
+	 
   };
   var vehicleController = function($scope, $log){
 		//$log.info('vehicleController');
@@ -183,8 +211,8 @@
   .directive('simRouteViewer',[simRouteViewerDirective])
   .directive('simEntityViewer',[simEntityViewerDirective])
   .directive('sim',[simDirective])
-  .controller('stopController',['$scope', '$log', stopController])  
-  .controller('routeController',['$scope', '$log', routeController])  
+  .controller('stopController',['$scope', '$log',  'MTSService', stopController])  
+  .controller('routeController',['$scope', '$log', 'MTSService', routeController])  
   .controller('pathController',['$scope', '$log', pathController])  
   .controller('vehicleController',['$scope', '$log', vehicleController])  
   .controller('eventController',['$scope', '$log', eventController])  

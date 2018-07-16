@@ -69,6 +69,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   if(update.system.paths && update.system.paths.length>0){
 	     state.paths.splice(0, state.paths.length);
 	     update.system.paths.forEach(function(path){
+	    	    path.origin = getStop(path.pathKey.originType,path.pathKey.origin);
+	    	    path.destination = getStop(path.pathKey.destinationType,path.pathKey.destination);
 			    state.paths.push(path);
 	     });
 	   }
@@ -90,7 +92,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
    var onmessage = function(evt){
   	  //console.log('received socket message: '+evt.data);
         $timeout(function(){
-            //$log.info('processing '+evt.data);
+            //$log.info('processing: ');
+            //$log.info(evt.data);
         	process(JSON.parse(evt.data));
         });
     };
@@ -119,11 +122,29 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	state.commandsQueue.push(command);
     	
     };
+    var getStop = function(stopType,stopID){
+    	var result = state.stops.find(function(stop){
+    		return (stopType==stop.type && stopID==stop.ID);
+    	});
+    	return result;
+    };
+    var getPath = function(origin,destination){
+
+    	var result = state.paths.find(function(path){
+    		return (path.pathKey.origin==origin.ID && path.pathKey.originType==origin.type &&
+    				path.pathKey.destination==destination.ID && path.pathKey.destinationType==destination.type);
+    	});
+    	return result;
+    };
+    
+    
     connect();
    
     return {
     	state: state,
-    	executeCommand: executeCommand
+    	executeCommand: executeCommand,
+    	getStop:getStop,
+    	getPath:getPath
     };
     
   };

@@ -1,4 +1,4 @@
-<div class="entity-card" ng-class="{'out-of-service',vehicle.}">
+<div class="entity-card" ng-class="{'out-of-service':vehicle.outOfService}">
   <div layout="row">
 	  <div class="entity-card-icon-frame" layout="row">
 	       <i ng-show="vehicle.type=='Bus'" class="fas fa-bus"></i>
@@ -9,20 +9,6 @@
 	  	   <div layout="row"><i class="fas fa-tachometer"></i><div>{{vehicle.speed}}</div></div>
 	  	   <div layout="row"><i class="fas fa-user"></i><div>{{vehicle.passengers}}/{{vehicle.capacity}}</div></div>
 	  	   <div ng-show="vehicle.type=='Bus'" layout="row"><md-icon>local_gas_station</md-icon><div>{{vehicle.fuelLevel}}/{{vehicle.fuelCapacity}}</div></div>
-	  </div>
-	  <div class="entity-card-details" layout="row">
-		  <div class="entity-details-frame" layout="column">
-		     <div ng-show="inService()">In Service</div>
-		     <div ng-hide="inService()">Out of Service</div>
-		     	
-		     </div>
-		     <div>on {{getRoute()}} route</div>
-		     <div>heading to stop {{getStop()}}</div>
-		  </div>
-		  <div class="vehicle-details-frame" layout="column">
-		     <div layout="row"><div>passengers: </div><div>{{vehicle.passengers}} / {{vehicle.capacity}}</div></div>
-		     <div layout="row" ng-show='vehicle.type=="Bus"'><div>fuel: </div><div>{{vehicle.fuelLevel}}</div></div>
-		  </div>
 	  </div>
   </div>
 </div>
