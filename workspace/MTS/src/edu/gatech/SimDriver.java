@@ -1,30 +1,32 @@
 package edu.gatech;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Random;
 import java.util.Scanner;
 
+import group_a7_8.BlockPathEvent;
 import group_a7_8.ClearPathDelayEvent;
+import group_a7_8.ClearPathEvent;
+import group_a7_8.ClearSpeedLimitEvent;
+import group_a7_8.FacilityOutOfServiceEvent;
+import group_a7_8.FacilityResumeServiceEvent;
 import group_a7_8.FileProps;
 import group_a7_8.MoveBusEvent;
 import group_a7_8.MoveTrainEvent;
 import group_a7_8.PathKey;
 import group_a7_8.SetPathDelayEvent;
 import group_a7_8.SetSpeedLimitEvent;
-import group_a7_8.ClearSpeedLimitEvent;
-import group_a7_8.FacilityOutOfServiceEvent;
-import group_a7_8.FacilityResumeServiceEvent;
 import group_a7_8.VehicleOutOfServiceEvent;
 import group_a7_8.VehicleResumeServiceEvent;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
-
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.ArrayList;
-import java.util.Random;
-import java.awt.EventQueue;
-import java.io.IOException;
-import java.sql.*;
-import java.util.Properties;
 
 public class SimDriver implements StateChangeListener{
 	private final static Object lock = new Object();
@@ -49,7 +51,7 @@ public class SimDriver implements StateChangeListener{
         String[] tokens;
         tokens = userCommandLine.split(DELIMITER);
 
-        System.out.println(tokens[0]);
+        //System.out.println(tokens[0]);
 
         switch (tokens[0]) {
             case "add_event":
@@ -63,7 +65,8 @@ public class SimDriver implements StateChangeListener{
 	                    // tokens[2] is the event_type, in this case, move_bus
 	                    // tokens[3] is the event ID, it also doubles as the bus ID
 	                    Bus bus = martaModel.getBus(Integer.decode(tokens[3]));
-	                    MoveBusEvent event = new MoveBusEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), bus);
+	                    //MoveBusEvent event = new MoveBusEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), bus);
+	                    MoveBusEvent event = new MoveBusEvent(martaModel, Integer.parseInt(tokens[3]), Integer.decode(tokens[1]), bus);
 	                    simEngine.add(event);
 	            	}
 	                    break;
@@ -76,7 +79,8 @@ public class SimDriver implements StateChangeListener{
 	                    // tokens[2] is the event_type, in this case, move_train
 	                    // tokens[3] is the event ID, it also doubles as the train ID
 	                    RailCar train = martaModel.getTrain(Integer.decode(tokens[3]));
-	                    MoveTrainEvent event = new MoveTrainEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), train);
+	                    //MoveTrainEvent event = new MoveTrainEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), train);
+	                    MoveTrainEvent event = new MoveTrainEvent(martaModel, Integer.parseInt(tokens[3]), Integer.decode(tokens[1]), train);
 	                    simEngine.add(event);
 	            	}
 	                    break;
@@ -185,6 +189,8 @@ public class SimDriver implements StateChangeListener{
                 for (BusStop singleStop: martaModel.getStops().values()) { singleStop.displayInternalStatus(); }
                 for (Bus singleBus: martaModel.getBuses().values()) { singleBus.displayInternalStatus(); }
                 for (BusRoute singleBusRoute: martaModel.getBusRoutes().values()) { singleBusRoute.displayInternalStatus(); }
+                for (RailStation singleStation: martaModel.getRailStations().values()) { singleStation.displayInternalStatus(); }
+                for (RailCar singleTrain: martaModel.getTrains().values()) { singleTrain.displayInternalStatus(); }
                 for (RailRoute singleRailRoute: martaModel.getRailRoutes().values()) { singleRailRoute.displayInternalStatus(); }
                 break;
             case "display_model":
@@ -357,12 +363,21 @@ public class SimDriver implements StateChangeListener{
                     return true;
             	}
             	
-            	//ToDo: Update maybe needed to account for stalled train in station
             	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[3]));
+            	
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
-            	VehicleResumeServiceEvent clearRailOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceRailCar);
+            	
+            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
+            	System.out.printf("%s\n", setBlockPathEvent.toJSON());
+            	simEngine.add(setBlockPathEvent);
+            	
+            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3]), outOfServiceRailCar);
+            	System.out.printf("%s\n", clearBlockPathEvent.toJSON());
+            	simEngine.add(clearBlockPathEvent);            	
+            	
+            	VehicleResumeServiceEvent clearRailOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3])+Integer.decode(tokens[4]), outOfServiceRailCar);
             	System.out.printf("%s\n", clearRailOutOfServiceEvent.toJSON());
             	simEngine.add(clearRailOutOfServiceEvent);
             	return true;

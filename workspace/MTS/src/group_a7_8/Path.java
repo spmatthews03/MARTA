@@ -9,6 +9,7 @@ public class Path {
 
 	private PathKey pathKey;
 	private Integer speedLimit;
+	private boolean isBlocked;
 	private TransitSystem system;
 
 	
@@ -16,6 +17,7 @@ public class Path {
 		super();
 		this.pathKey = pathKey;
 		this.system = system;
+		this.isBlocked = false;
 	}
 
 	public Path(TransitSystem system,Facility origin, Facility destination) {
@@ -36,6 +38,16 @@ public class Path {
 	}
 	public void clearSpeedLimit() {
 		speedLimit = null;
+	}
+	
+	public Boolean getIsBlocked() {
+		return this.isBlocked;
+	}
+	public void setIsBlocked() {
+		this.isBlocked = true;
+	}
+	public void clearIsBlocked() {
+		this.isBlocked = false;
 	}
 	
 	public PathKey getPathKey() { return pathKey;}
