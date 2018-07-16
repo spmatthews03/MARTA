@@ -65,6 +65,15 @@ public class ExchangePoint extends Facility {
 	public void setRateLeaving(Hashtable<Integer, int[]> rateLeaving) {
 		this.rateLeaving = rateLeaving;
 	}
+	
+    @Override
+	public void displayInternalStatus() {
+	      
+        System.out.print("> " + this.getType() + " - ID: " + Integer.toString(this.uniqueID) + " name: " + this.facilityName);
+        System.out.print(" waiting: " + Integer.toString(waiting));
+        System.out.println(" xCoord: " + Integer.toString(this.coord.x) + " yCoord: " + Integer.toString(this.coord.y));
+        
+	}
 
     public Integer exchangeRiders(int rank, int initialPassengerCount, int capacity) {
         int hourOfTheDay = (rank / 60) % 24;
