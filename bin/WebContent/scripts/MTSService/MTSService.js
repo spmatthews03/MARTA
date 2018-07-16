@@ -137,17 +137,17 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	return result;
     };
     var getStopVehicle=function(stopType,stopID,route){
-    	//$log.info(route);
-    	//$log.info("stopType: "+stopType +", stopID: "+stopID);
+    	$log.info(route);
+    	$log.info("stopType: "+stopType +", stopID: "+stopID);
     	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
     	var result;
     	result = state.vehicles.find(function(vehicle){
     		if(vehicle.routeID!=route.ID) return false;
-    		//$log.info(vehicle);
+    		$log.info(vehicle);
     		var locationID = vehicle.prevLocation;
     		var vehicleStopID = route.stops[locationID];
     		var vehicleStop = getStop(stopType,vehicleStopID);
-    		//$log.info(vehicleStop);
+    		$log.info(vehicleStop);
     		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
     	});
     	return result;
