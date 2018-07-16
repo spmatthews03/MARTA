@@ -1,6 +1,7 @@
 package edu.gatech;
 
-import java.awt.Point;
+
+
 import java.util.Objects;
 
 public abstract class Facility {
@@ -16,16 +17,11 @@ public abstract class Facility {
 	public Facility(int uniqueID, String name, double x, double y, String type) {
 		this.uniqueID = uniqueID;
 		this.facilityName = name;
-		this.coord = new Point();
-		//System.out.println(x + " " + y);
-		this.coord.setLocation(x, y);
+		this.coord = new Point(x,y);
 		this.type = type;
 	}
 	public Point getLocation() {
-		return coord.getLocation();
-	}
-	public void setLocation(double x, double y) {
-		coord.setLocation(x, y);
+		return coord;
 	}
 	public Integer get_uniqueID() {
 		return uniqueID;
@@ -49,7 +45,7 @@ public abstract class Facility {
 	public void displayInternalStatus() {
       
         System.out.print("> " + this.type + " - ID: " + Integer.toString(uniqueID) + " name: " + facilityName);
-        System.out.println(" xCoord: " + Integer.toString(coord.x) + " yCoord: " + Integer.toString(coord.y));
+        System.out.println(" xCoord: " + Double.toString(coord.getX()) + " yCoord: " + Double.toString(coord.getY()));
         
 	}
 

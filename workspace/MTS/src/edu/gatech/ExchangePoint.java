@@ -71,7 +71,7 @@ public class ExchangePoint extends Facility {
 	      
         System.out.print("> " + this.getType() + " - ID: " + Integer.toString(this.uniqueID) + " name: " + this.facilityName);
         System.out.print(" waiting: " + Integer.toString(waiting));
-        System.out.println(" xCoord: " + Integer.toString(this.coord.x) + " yCoord: " + Integer.toString(this.coord.y));
+        System.out.println(" xCoord: " + Double.toString(this.coord.getX()) + " yCoord: " + Double.toString(this.coord.getY()));
         
 	}
 
