@@ -3,9 +3,8 @@
 	<md-content class="sim-exec-viewer-panel">
 	   <div layout="row" layout-wrap>
 	       <div ng-repeat="route in mts.routes" flex="50">
-			  <route-route data-route="route"></route-route>
-			  <div>{{route}}</div>
-			  <div ng-repeat="stop in route.stops track by $index">stop {{stop}}</div>
+	          <route-route data-route="route"></route-route>
+			  <!-- <div ng-repeat="stop in route.stops track by $index">stop {{stop}}</div> -->
 	       </div>
 	   </div>
 <!-- 		<div layout="row" layout-align="start start"> -->

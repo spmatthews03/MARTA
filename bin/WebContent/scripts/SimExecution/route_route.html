@@ -1,10 +1,15 @@
 <div class="entity-card route-viewer">
-  <div class="entity-card-icon-frame" layout="row">
+	<div layout="column">
+     <div class="entity-card-icon-frame" layout="row">
 	     <div>
 	     	<i ng-show="route.type=='busRoute'" class="fas fa-project-diagram"></i>
 	     	<i ng-show="route.type=='trainRoute'" class="fas fa-code-branch"></i>
      	</div>
-     	<div layout="row"><div>{{route.number}}-{{route.name}}<div></div>
-	  </div>
-  </div>
+     	<div layout="row"><div>{{route.number}}-{{route.name}}</div></div>
+     </div>
+     <div  ng-repeat="stop in routeStops track by $index">
+     	<route-stop data-order="$index" data-stop="stop"></route-stop>
+     	<route-path data-path="routePaths[$index]"></route-path> 
+     </div>
+	</div>
 </div>

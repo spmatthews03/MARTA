@@ -43,8 +43,15 @@ public class PathKey {
 		sb.append("\"origin\":");
 		sb.append(origin.get_uniqueID());
 		sb.append(',');
+		sb.append("\"originType\":\"");
+		sb.append(origin.getType());
+		sb.append("\",");
 		sb.append("\"destination\":");
 		sb.append(destination.get_uniqueID());
+		sb.append(',');
+		sb.append("\"destinationType\":\"");
+		sb.append(destination.getType());
+		sb.append('\"');
 		sb.append('}');
 		return sb.toString();
 	}

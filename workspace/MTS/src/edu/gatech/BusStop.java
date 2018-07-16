@@ -3,7 +3,7 @@ package edu.gatech;
 public class BusStop extends ExchangePoint {
 
 	public BusStop(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
-			super(uniqueValue, inputName, inputXCoord, inputYCoord,"BusStop");
+			super(uniqueValue, inputName, inputXCoord, inputYCoord,"busStop");
 	        this.waiting = inputRiders;
 	}
 
@@ -18,7 +18,9 @@ public class BusStop extends ExchangePoint {
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
-       	sb.append("\"type\":\"busStop\",");
+       	sb.append("\"type\":\"");
+       	sb.append(getType());
+       	sb.append("\",");
     	sb.append("\"ID\":");
     	sb.append(this.get_uniqueID());
     	sb.append(',');
