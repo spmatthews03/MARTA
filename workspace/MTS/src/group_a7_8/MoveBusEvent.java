@@ -63,38 +63,25 @@ public class MoveBusEvent extends SimEvent{
         System.out.println(" the bus is heading to stop: " + Integer.toString(nextStopID) + " - " + nextStop.getFacilityName() + "\n");
 
         // find distance to stop to determine next event time
-        Double travelDistance = activeStop.findDistance(nextStop);
-        int travelTime = 1 + (travelDistance.intValue() * 60 / activeBus.getSpeed());
+        Double distanceToNextStopThenDepot = activeStop.findDistance(nextStop) + nextStop.findDistance(system.getDepot());
+        int travelTime = 1 + (distanceToNextStopThenDepot.intValue() * 60 / activeBus.getSpeed());
 
-//        if(activeBus.hasEnoughFuel(travelDistance)){
-//            FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop), travelTime, travelDistance);
-//            system.getFuelConsumptionList(activeBus).add(report);
-//        }
-//        else{
-//            FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop), travelTime, travelDistance);
-//            system.getFuelConsumptionList(activeBus).add(report);
-//        }
+        // check if bus has enough fuel to go to next stop then depot, if not, go directly to depot
+        if(activeBus.hasEnoughFuel(distanceToNextStopThenDepot)){
+            FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
+                    travelTime, activeStop.findDistance(nextStop));
+            system.getFuelConsumptionList(activeBus).add(report);
+        }
+        else{
+            FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
+                    travelTime, activeStop.findDistance(system.getDepot()));
+            system.getFuelConsumptionList(activeBus).add(report);
+        }
 
         // conversion is used to translate time calculation from hours to minutes
         activeBus.setLocation(nextLocation);
 
-        //check hasfuel
-        //fuel report
-        
-        /*
-   	//get bus route
-    	BusRoute route = system.getBusRoute(getRouteID());
-    	
-    	//first is get current stop
-    	// to get this get the current bust location
-    	int currentLocation  = this.getLocation();
-    	Stop currentStop = route.getBusStop(system, currentLocation);
-    	//next get the next location
-    	int nextLocation = route.getNextLocation(currentLocation);
-    	Stop nextStop = route.getBusStop(system, nextLocation);
-    	double distance = currentStop.findDistance(nextStop);
-    	system.getFuelConsumptionList(this).add(report);
-         */
+
         // generate next event for this bus
         eventQueue.add(new MoveBusEvent(system, eventID, getRank() + travelTime,bus));               
 		
