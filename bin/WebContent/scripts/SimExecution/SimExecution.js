@@ -137,10 +137,16 @@
 		  return true;
 	  };
 	  $scope.time = mtsService.state.time;
-	  $scope.bus;
+	  $scope.vehicle;
 	  $scope.$watch('time',function(){
 		  $log.info('stop noticed time changed');
 		  $log.info($scope.stop);
+		  var vehicle = mtsService.getStopVehicle(stop.type,stop.ID);
+		  var vehicleEvent = mtsService.getVehicleEvent(vehicle.type,vehicle.ID);
+		  $log.info('vehicle');
+		  $log.info(vehicle);
+		  $log.info('vehicleEvent');
+		  $log.info(vehicleEvent);
 		  
 	  });
   };

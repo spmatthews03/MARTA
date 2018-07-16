@@ -136,6 +136,24 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
+    var getStopVehicle=function(stopType,stopID){
+    	$log.info("stopType: "+stopType, +", stopID: "+stopID);
+    	var result;
+    	result = state.vehicles.find(function(vehicle){
+    		$log.event(vehicle);
+    		return false;
+    	});
+    	return result;
+    };
+    var getVehicleEvent=function(vehicleType,vehicleID){
+    	$log.info("vehicleType: "+vehicleType, +", vehicleID: "+vehicleID);
+    	var result;
+    	result = state.events.find(function(event){
+    		$log.event(event);
+    		return false;
+    	});
+    	return result;
+    };
     
     
     connect();
@@ -144,7 +162,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	state: state,
     	executeCommand: executeCommand,
     	getStop:getStop,
-    	getPath:getPath
+    	getPath:getPath,
+    	getStopVehicle:getStopVehicle,
+    	getVehicleEvent:getVehicleEvent
     };
     
   };
