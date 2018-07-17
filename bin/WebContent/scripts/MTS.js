@@ -24,7 +24,7 @@
 		$scope.activeTab = 0;
 	};
 
-	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec'])
+	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module'])
 	.config(['$httpProvider', function ($httpProvider) {
 	            // enable http caching
 	           $httpProvider.defaults.cache = false;

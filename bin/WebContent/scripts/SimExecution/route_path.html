@@ -1,13 +1,14 @@
-<div class="entity-card route"  ng-show="{'out-of-service':path.path.isBlocked}">
-  <div layout="row" layout-wrap>
-    <div class="location" flex><div layout="row">
-	  <div class="entity-card-icon-frame"><i class="fas fa-road"></i></div>
-	  <div class="path-label" layout="row">{{path.path.origin.name}}</div>
-	  <div class="path-label" layout="row"> --> </div>
-	  <div class="path-label" layout="row">{{path.path.destination.name}}</div>
-    </div></div>
-    <div flex="33">
+<div class="path"  ng-show="{'out-of-service':path.path.isBlocked}">
+  <div layout="row" layout-align="center center">
+    <div class="gutter" flex="15" layout="column" layout-align="start space-around">
+      <div ng-show="debug" class="debug-label">R{{path.route.ID}} L{{path.startLocation}}</div>
+      <div ng-show="debug" class="debug-label">to</div>
+      <div ng-show="debug" class="debug-label">R{{path.route.ID}} L{{path.endLocation}}</div>
+    </div>
+    <md-icon flex class="path-icon">arrow_downward</md-icon>
+    <div flex="65">
 	  <div ng-repeat="vehicle in path.vehicleAtPath track by $index"><route-vehicle data-vehicle="vehicle"></route-vehicle></div>
     </div>
+    <div flex="5"></div>
   </div>
 </div>

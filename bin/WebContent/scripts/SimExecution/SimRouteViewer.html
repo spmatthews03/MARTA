@@ -1,8 +1,8 @@
 <div layout="row" layout-wrap>
   <div flex>
 	<md-content class="sim-exec-viewer-panel">
-	   <div layout="row" layout-wrap>
-	       <div ng-repeat="route in mts.routes" flex="50">
+	   <div layout="row" layout-wrap  layout-align="space-around start">
+	       <div ng-repeat="route in mts.routes" flex="30">
 	          <route-route data-route="route"></route-route>
 			  <!-- <div ng-repeat="stop in route.stops track by $index">stop {{stop}}</div> -->
 	       </div>
@@ -37,7 +37,7 @@
 	<md-content class="sim-exec-viewer-panel">
 	   <div layout="column">
 	      <div>Events: {{mts.events.length}}</div>
-  		  <event ng-repeat="event in mts.events" data-event="event"></event>
+  		  <event ng-repeat="event in mts.events | orderBy:'time'" data-event="event"></event>
 	   </div>
 	</md-content>
     </div>

@@ -191,28 +191,14 @@ div:focus {
 	margin: 0px;
 }
 
-.entity-card.route-viewer>.entity-card-icon-frame{
-	background-color: rgb(224,224,224);
-	padding: 2px;
-}
 
 .route-label{
 	font-size:1.1em;
+	padding-left:18px;
 }
 
-.entity-card.route-viewer .entity-card-icon-frame .fas{
-	font-size: 12pt;
-}
 
-.entity-card.route-viewer .entity-card-icon-frame{
-	margin-right:8px;
-}
 
-.vehicle-positions-container{
-	width:350px;
-	max-width:350px;
-	max-height: 50px;
-}
 
 .stop-index{
 	font-size:8pt;
@@ -232,20 +218,118 @@ div:focus {
 	font-size:18px;
 }
 
-.vehicle-lable{
+.vehicle-container{
+	height:50px;
+	margin-bottom:5px;
+}
+
+.stop{
+	background-color:rgb(228,232,232);
+	height:50px;
+	width:180px;
+	padding-right:4px;
+	
+}
+
+.stop-icon-panel{
+	padding-left:2px;
+	padding-top:4px;
+}
+
+.stop-icon{
+	font-size:20pt;
+	margin:0px;
+	width:36px;
+	padding-left:2px;
+}
+
+.stop .passenger-icon{
+	font-size:16pt;
+	margin:0px;
+}
+
+.stop.value{
+	width:20px;
+}
+
+.debug-label{
+	font-size:10px;
+}
+
+
+
+
+.path-icon{
+    font-size: 28pt;
+    margin-top: 3px;
+    font-weight: 600;
+}
+
+.route-id{
+    height: 36px;
+    padding-top: 5px;
+    padding-left: 4px;	
+    background-color: rgb(97,97,97);
+    color:white;
+}
+
+.route{
+	background-color: rgb(97,97,97);
+	border-radius:4px;
+	padding:3px
+}
+.route-icon{
+	font-size:20pt;
+	margin:0px;
+	color:white;
+}
+
+.vehicle{
+	border:solid 1pt rgb(173,173,173);
+	background-color: white;
+	border-radius: 8px;
+}
+
+.vehicle-label{
 	font-size:14pt;
+	padding-left:6px;
+	padding-right:2px;
+}
+.vehicle-icon{
+	font-size:20pt;
+	margin:0px;
 }
 
-.path-label{
-	font-size:12px;
+.vehicle-details{
+	padding-left:2px;
+	max-width:40px;
 }
 
-
-.vehicle .entity-card-details .fas{
-	font-size:12pt;
+.vehicle .passenger-icon{
+	font-size:16pt;
+	margin:0px;
 }
 
-.vehicle .entity-card-details .value{
-	font-size:14px;
-	padding-left:4px;
+.vehicle-details .value{
+	font-size:16px;
+}
+.vehicle-details .capacity{
+	margin-left:0px;
+	border-top:solid 1pt black;
+	font-size:10px;
+}
+
+.vehicle .gauge{
+	min-width: 20px;
+	padding-left:0px;
+}
+.vehicle .gauge-label{
+	font-size:10px;
+}
+
+.vehicle .gauge-display{
+	width:10px;
+	height:30px;
+	background-color: red;
+	margin-left:6px;
 }

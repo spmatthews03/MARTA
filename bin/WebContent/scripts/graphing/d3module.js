@@ -6,6 +6,9 @@
  * All rights reserved.
  *
  * Liquid Fill Gauge v1.1
+ * 
+ * adapted for v4 of D3 and for working as an Angular Service
+ * by Martin Smith July 2018
  */
  var liquidFillGaugeDefaultSettings = function(){
     return {

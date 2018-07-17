@@ -1,4 +1,14 @@
 <div class="entity-card" ng-class="{'out-of-service':inService()}">
+  <div layout="row">
+	  <div layout="column">
+	     <div class="vehicle.label">#{{vehicle.ID}}</div>
+	     <i ng-show="vehicle.type=='Bus'" class="fas fa-bus vehicle-icon"></i>
+	     <i ng-show="vehicle.type=='Train'" class="fas fa-train vehicle-icon"></i>
+	  </div>
+	  <div layout="row">
+	    <div></div>
+	  </div>
+  </div>
   <div layout="column">
      <div layout="row">
 	  <div class="entity-card-icon-frame">
@@ -10,7 +20,6 @@
 	  <div class="vehicle-lable">
 		     	<span ng-show="vehicle.type=='Bus'">Bus #</span>
 		     	<span ng-show="vehicle.type=='Train'">Train #<span>
-		     	<span>{{vehicle.ID}}</span>
 	  </div>
      </div>
 
