@@ -1,21 +1,17 @@
-<div class="entity-card route-viewer stop" >
+<div class="route" >
 	<div layout="column">
-     <div class="entity-card-icon-frame" layout="row">
-	     <div>
-	     	<i ng-show="route.type=='busRoute'" class="fas fa-project-diagram"></i>
-	     	<i ng-show="route.type=='trainRoute'" class="fas fa-code-branch"></i>
-     	</div>
-     	<div layout="row"><div class="route-label">{{route.number}}-{{route.name}}</div></div>
+     <div class="route-id" layout="row">
+	     	<md-icon ng-show="route.type=='busRoute'" class="route-icon" md-font-set="fa">&#xf542</md-icon>
+	     	<md-icon ng-show="route.type=='trainRoute'" class="route-icon" md-font-set="fa">&#xf126</md-icon>
+            <div class="route-label">{{route.number}}-{{route.name}}</div>
      </div>
-     <div layout="row">
-       <div class="gutter">
-       </div>
        <div class="vehicle-positions-container" layout="column">
-	     <div ng-repeat="stop in routeStops track by $index">
-	     	<route-stop class="vehicle-container" data-order="$index" data-stop="stop"></route-stop>
+     <md-content>
+	     <div ng-repeat="rstop in routeStops track by $index">
+	     	<route-stop class="vehicle-container" data-order="$index" data-stop="rstop"></route-stop>
 	     	<route-path class="vehicle-container" data-path="routePaths[$index]"></route-path> 
 	     </div>
+ 	</md-content>
        </div>
-     </div>
 	</div>
 </div>

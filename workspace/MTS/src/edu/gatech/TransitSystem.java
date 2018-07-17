@@ -25,8 +25,7 @@ public class TransitSystem {
     private Hashtable<PathKey, ArrayList<Hazard>> hazards;
     private Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumption;
     private StateChangeListener listener;
-    private Hashtable<Integer, Depot> depots;
-
+    private Depot depot;
 
     public TransitSystem() {
         busstops = new Hashtable<Integer, BusStop>();
@@ -37,7 +36,7 @@ public class TransitSystem {
         trains = new Hashtable<Integer, RailCar>();
         paths = new Hashtable<PathKey,Path>();
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
-        depots = new Hashtable<Integer, Depot>();
+        depot = null;
         fuelConsumption = new Hashtable<Bus, ArrayList<FuelConsumption>>();
     }
 
@@ -91,8 +90,7 @@ public class TransitSystem {
 	}
 
     public Depot getDepot() {
-    	if (!depots.isEmpty()) { return depots.get(0); }
-    	return null;
+    	return this.depot;
 	}
 
     public Path getPath(PathKey pathKey) {
@@ -136,8 +134,7 @@ public class TransitSystem {
     }
 
 	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
-		// int uniqueID = buses.size();
-		depots.put(uniqueID, new Depot(0, name, x_coord, y_coord));
+		depot = new Depot(uniqueID, name, x_coord, y_coord);
 		listener.updateState();
 		return uniqueID;
 	}
@@ -401,7 +398,7 @@ public class TransitSystem {
     	}
     	if( (busstops!=null && busstops.size()>0) || 
     		(railstations!=null && railstations.size()>0) ||
-    		(depots!=null && depots.size()>0)) {
+    		depot != null) {
         	if(sb.length()>1) sb.append(',');
         	sb.append(serializeStopsJSON());
     	}
