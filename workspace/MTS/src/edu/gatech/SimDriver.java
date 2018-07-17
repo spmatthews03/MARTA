@@ -718,8 +718,9 @@ public class SimDriver implements StateChangeListener{
 				}
 				sb.append("}");
 			}
-			sb.append("]}");
+			sb.append("]");
 		}
+		sb.append("}");
 		return sb.toString();
 	}
 	

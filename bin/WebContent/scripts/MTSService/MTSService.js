@@ -12,6 +12,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        events:[],
 	        commands:[],
 	        commandsQueue:[],
+	        reports:[],
 	  	  	editMode:false,
 	  		commandOption:""
    };
@@ -47,38 +48,48 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
    }
    var process = function(update){
       $log.info(update);
-	  state.time = update.time;
-	  if(update.system.vehicles && update.system.vehicles.length>0){
-	     state.vehicles.splice(0, state.vehicles.length);
-	     update.system.vehicles.forEach(function(vehicle){
-			    state.vehicles.push(vehicle);
-	     });
+	  if(update.hasOwnProperty('time')){
+		  state.time = update.time;
 	  }
-	  if(update.system.routes && update.system.routes.length>0){
-	     state.routes.splice(0, state.routes.length);
-	     update.system.routes.forEach(function(route){
-			    state.routes.push(route);
-	     });
-	  }
-	  if(update.system.stops && update.system.stops.length>0){
-	   	 state.stops.splice(0, state.stops.length);
-	     update.system.stops.forEach(function(stop){
-			    state.stops.push(stop);
-	     });
+	  if(update.hasOwnProperty('system')){
+		  if(update.system.hasOwnProperty('vehicles') && update.system.vehicles.length>0){
+		     state.vehicles.splice(0, state.vehicles.length);
+		     update.system.vehicles.forEach(function(vehicle){
+				    state.vehicles.push(vehicle);
+		     });
+		  }
+		  if(update.system.hasOwnProperty('routes') && update.system.routes.length>0){
+		     state.routes.splice(0, state.routes.length);
+		     update.system.routes.forEach(function(route){
+				    state.routes.push(route);
+		     });
+		  }
+		  if(update.system.hasOwnProperty('stops') && update.system.stops.length>0){
+		   	 state.stops.splice(0, state.stops.length);
+		     update.system.stops.forEach(function(stop){
+				    state.stops.push(stop);
+		     });
+		   }
+	  	   if(update.system.hasOwnProperty('paths') && update.system.paths.length>0){
+		     state.paths.splice(0, state.paths.length);
+		     update.system.paths.forEach(function(path){
+		    	    path.origin = getStop(path.pathKey.originType,path.pathKey.origin);
+		    	    path.destination = getStop(path.pathKey.destinationType,path.pathKey.destination);
+				    state.paths.push(path);
+		     });
+		   }
 	   }
-  	   if(update.system.paths && update.system.paths.length>0){
-	     state.paths.splice(0, state.paths.length);
-	     update.system.paths.forEach(function(path){
-	    	    path.origin = getStop(path.pathKey.originType,path.pathKey.origin);
-	    	    path.destination = getStop(path.pathKey.destinationType,path.pathKey.destination);
-			    state.paths.push(path);
-	     });
-	   }
-  	   if(update.events && update.events.length>0){
+  	   if(update.hasOwnProperty('events') && update.events.length>0){
   		  state.events.splice(0, state.events.length);
  	      update.events.forEach(function(event){
 			    state.events.push(event);
  	      });
+  	   }
+  	   if(update.hasOwnProperty('reports') && update.reports.length>0){
+  		   state.reports.splice(0,state.reports.length);
+  		   update.reports.forEach(function(report){
+  			   state.reports.push(report);
+  		   });
   	   }
   	   commandBlocked = false;
    };
@@ -93,7 +104,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	  //console.log('received socket message: '+evt.data);
         $timeout(function(){
             //$log.info('processing: ');
-            //$log.info(evt.data);
+            $log.info(evt.data);
         	process(JSON.parse(evt.data));
         });
     };
