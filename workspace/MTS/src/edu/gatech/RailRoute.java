@@ -12,8 +12,8 @@ public class RailRoute extends VehicleRoute {
 	   super(uniqueValue);
    }
 
-   public RailRoute(int uniqueValue, int inputNumber, String inputName) {
-	   super(uniqueValue, inputNumber, inputName,"railRoute");
+   public RailRoute(int uniqueValue, int routeNumber, String inputName) {
+	   super(uniqueValue, routeNumber, inputName,"railRoute");
    }
    
    public VehicleRoute getRailRoute() { return this.route; }

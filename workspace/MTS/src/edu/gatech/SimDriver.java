@@ -108,10 +108,10 @@ public class SimDriver implements StateChangeListener{
                 break;
             case "add_train_route":
             	int train_route_uniqueID = Integer.parseInt(tokens[1].trim());
-            	int train_route_inputNumber = Integer.parseInt(tokens[2].trim());
+            	int train_route_number = Integer.parseInt(tokens[2].trim());
             	String train_route_inputName = tokens[3].trim();
             	
-            	int railRouteID = martaModel.makeRailRoute(train_route_uniqueID, train_route_inputNumber, train_route_inputName);
+            	int railRouteID = martaModel.makeRailRoute(train_route_uniqueID, train_route_number, train_route_inputName);
                 System.out.println(" new rail route: " + Integer.toString(railRouteID) + " created");
                 break;
             case "add_bus":
