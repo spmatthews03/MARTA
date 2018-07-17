@@ -114,7 +114,7 @@ public class MoveBusEvent extends SimEvent{
             // TODO: create fuel report for traveling FROM Depot TO next stop
 
             // create event to set vehicle out of service to refuel
-            eventQueue.add(new VehicleOutOfServiceEvent(system,eventID,getRank() + travelTime,bus));
+            eventQueue.add(new VehicleOutOfServiceEvent(system,eventID,getRank(),bus));
 
             // create event to resume service after refueling
             eventQueue.add(new VehicleResumeServiceEvent(system,eventID,getRank()+travelTime,bus));
