@@ -375,3 +375,12 @@ div:focus {
 	width:50px;
 	margin-left:4px;
 }
+
+.report-header{
+	font-size:18px;
+	border-bottom:solid 1pt rgb(228,228,228);
+}
+.report-field{
+	padding-right:8px;
+	font-size:14px;
+}
