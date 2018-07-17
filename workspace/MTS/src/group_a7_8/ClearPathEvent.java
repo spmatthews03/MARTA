@@ -47,7 +47,7 @@ public class ClearPathEvent extends SimEvent{
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
 		
-		path.clearIsBlocked();;
+		path.clearIsBlocked();
 		System.out.printf(" %s path is blocked\n\n",pathKey);
 	}
 	

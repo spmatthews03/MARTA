@@ -10,6 +10,7 @@ public class Path {
 	private PathKey pathKey;
 	private Integer speedLimit;
 	private boolean isBlocked;
+	private int stallDuration;
 	private TransitSystem system;
 
 	
@@ -18,6 +19,7 @@ public class Path {
 		this.pathKey = pathKey;
 		this.system = system;
 		this.isBlocked = false;
+		this.stallDuration = 0;
 	}
 
 	public Path(TransitSystem system,Facility origin, Facility destination) {
@@ -43,8 +45,12 @@ public class Path {
 	public Boolean getIsBlocked() {
 		return this.isBlocked;
 	}
-	public void setIsBlocked() {
+	public int get_stallDuration() {
+		return this.stallDuration;
+	}
+	public void setIsBlocked(int stallDuration) {
 		this.isBlocked = true;
+		this.stallDuration = stallDuration;
 	}
 	public void clearIsBlocked() {
 		this.isBlocked = false;
