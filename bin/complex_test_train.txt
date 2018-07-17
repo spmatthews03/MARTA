@@ -1,0 +1,42 @@
+add_station,0,Appleville Station,5,0.0,0.08
+add_station,1,Banana Bayou Station,0,0.04,0.1
+add_station,2,Star City Station,0,0.08,0.16
+add_station,3,Cherry City Station,0,0.16,0.1
+add_station,4,West Station,0,0.01,0.01
+add_station,5,South Station,0,0.04,0.01
+add_station,6,East Station,0,0.1,0.02
+add_station,7,Central City Station,0,0.04,0.05
+add_depot,90,North Depot,0.03,0.16
+add_train_route,0,90,Northbound
+add_train_route,1,60,Westbound
+extend_train_route,0,5
+extend_train_route,0,7
+extend_train_route,0,1
+extend_train_route,0,2
+extend_train_route,0,1
+extend_train_route,0,7
+extend_train_route,1,4
+extend_train_route,1,0
+extend_train_route,1,1
+extend_train_route,1,2
+extend_train_route,1,3
+extend_train_route,1,6
+extend_train_route,1,5
+train_speed_limit,5,15,6,7,1
+train_path_delay,90,10,0,3,100.0
+train_speed_limit,10,20,2,1,10
+train_path_delay,12,20,2,1,1.2
+train_path_delay,25,50,2,3,3.0
+station_down,85,30,6
+train_speed_limit,85,30,6,5,15
+add_train,7,0,0,0,10,50
+add_train,11,1,0,0,10,30
+add_train,20,0,0,0,10,50
+train_down,66,7,30,10
+add_event,1,move_train,7
+add_event,1,move_train,11
+add_event,5,move_train,20
+step_multi,200
+system_report
+display_model
+quit
