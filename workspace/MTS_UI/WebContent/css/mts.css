@@ -411,3 +411,54 @@ body{
 .config-toggle{
 	padding-top:4px;
 }
+
+.report-menu{
+	background-color:rgb(228,228,228);
+	min-height:500px;
+	padding-top:12px;
+	margin-top:6px;
+}
+.report-menu .menu-item{
+	width:100%;
+	height:28px;
+}
+
+.report-menu .menu-label{
+	font-size:16pt;
+}
+
+.report-menu .item-label{
+	font-size:14pt;
+}
+.report-menu .item-label.selected{
+	font-weight: 500;
+}
+
+.menu-item .material-icons{
+	margin:0px;
+	padding:0px;
+	font-size:24px;
+}
+
+.menu-item .material-icons.selected{
+	font-weight: 600;
+}
+
+.report-section{
+	margin:6px;
+}
+.report-panel{
+	margin-top:6px;
+	padding:8px;
+}
+
+.report-section .sim-exec-controls-panel .sim-clock{
+	width:200px;
+}
+
+.report-field{
+	font-size:13pt;
+}
+.report-row{
+	border-bottom: solid 1px rgb(228,228,228);
+}
