@@ -93,7 +93,13 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new stop: " + Integer.toString(stopID) + " created");
                 break;
             case "add_station":
-                int railStationID = martaModel.makeRailStation(Integer.parseInt(tokens[1]), tokens[2], Integer.parseInt(tokens[3]), Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5]));
+            	int station_uniqueID = Integer.parseInt(tokens[1].trim()); 
+            	String inputName 	 = tokens[2].trim();
+            	int inputRiders 	 = Integer.parseInt(tokens[3].trim());
+            	double inputXCoord	 = Double.parseDouble(tokens[4].trim());
+            	double inputYCoord	 = Double.parseDouble(tokens[5].trim());
+            	
+            	int railStationID = martaModel.makeRailStation(station_uniqueID, inputName, inputRiders, inputXCoord, inputXCoord);
                 System.out.println(" New Rail Station: " + Integer.toString(railStationID) + " created");
                 break;
             case "add_route":
@@ -101,7 +107,11 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new bus route: " + Integer.toString(busRouteID) + " created");
                 break;
             case "add_train_route":
-                int railRouteID = martaModel.makeRailRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
+            	int train_route_uniqueID = Integer.parseInt(tokens[1].trim());
+            	int train_route_inputNumber = Integer.parseInt(tokens[2].trim());
+            	String train_route_inputName = tokens[3].trim();
+            	
+            	int railRouteID = martaModel.makeRailRoute(train_route_uniqueID, train_route_inputNumber, train_route_inputName);
                 System.out.println(" new rail route: " + Integer.toString(railRouteID) + " created");
                 break;
             case "add_bus":
@@ -110,8 +120,16 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new bus: " + Integer.toString(busID) + " created");
                 break;
             case "add_train":
-                int trainID = martaModel.makeTrain(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]),
-                        Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]));
+            	int train_uniqueID = Integer.parseInt(tokens[1].trim());
+            	int train_inputRoute = Integer.parseInt(tokens[2].trim());
+            	int train_inputLocation = Integer.parseInt(tokens[3].trim());
+            	int train_inputPassengers = Integer.parseInt(tokens[4].trim());
+            	int train_inputCapacity = Integer.parseInt(tokens[5].trim());
+            	int train_inputSpeed = Integer.parseInt(tokens[6].trim());
+            	
+                int trainID = martaModel.makeTrain(train_uniqueID, train_inputRoute,
+                								   train_inputLocation, train_inputPassengers,
+                								   train_inputCapacity, train_inputSpeed);
                 System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
@@ -139,19 +157,22 @@ public class SimDriver implements StateChangeListener{
                 break;
 
             case "extend_train_route":
-                System.out.println(" station: " + Integer.parseInt(tokens[2]) + " appended to route " + Integer.parseInt(tokens[1]));
-            	
-            	if (martaModel.getRailStation(Integer.parseInt(tokens[2])) == null){
-            		System.out.println(" station " + Integer.parseInt(tokens[2]) + " has not been created");
+                int ext_train_route_railStationID = Integer.parseInt(tokens[2].trim());
+                int ext_train_route_routeID = Integer.parseInt(tokens[1].trim());
+
+            	System.out.println(" station: " + ext_train_route_railStationID + " appended to route " + ext_train_route_routeID);
+                
+            	if (martaModel.getRailStation(ext_train_route_railStationID) == null){
+            		System.out.println(" station " + ext_train_route_railStationID + " has not been created");
                     return true;
             	}
             	
-            	if (martaModel.getRailRoute(Integer.parseInt(tokens[1])) == null){
-            		System.out.println(" rail route " + Integer.parseInt(tokens[1]) + " has not been created");
+            	if (martaModel.getRailRoute(ext_train_route_routeID) == null){
+            		System.out.println(" rail route " + ext_train_route_routeID + " has not been created");
                     return true;
             	}
             	
-                martaModel.appendStationToRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                martaModel.appendStationToRoute(ext_train_route_routeID, ext_train_route_railStationID);
                 break;
             
             case "upload_real_data":
