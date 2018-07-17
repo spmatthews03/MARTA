@@ -27,4 +27,4 @@ add_bus,11,1,0,0,10,100,100,30
 add_event,1,move_bus,7
 add_event,1,move_bus,11
 path_delay,20,30,5,7,1.2
-step_multi,20
+step_multi,1

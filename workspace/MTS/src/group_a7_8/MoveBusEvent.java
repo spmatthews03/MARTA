@@ -18,10 +18,32 @@ public class MoveBusEvent extends SimEvent{
 
     public Bus getBus() { return this.bus; }
     
-
+    @Override
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(eventID);
+    	sb.append(",\"time\":");
+    	sb.append(timeRank);
+    	sb.append(",\"type\":\"");
+    	sb.append(eventType);
+    	sb.append("\",\"description\":\"");
+    	sb.append(getDescription());
+    	sb.append("\",");
+    	sb.append("\"vehicle\":{");
+    	  sb.append("\"type\":\"");
+    	  sb.append(getBus().getType());
+    	  sb.append("\",\"ID\":");
+    	  sb.append(getBus().getID());
+    	sb.append('}');
+    	sb.append('}');
+    	return sb.toString();    	
+    }
+    
 	public String getDescription() {
     	StringBuilder sb = new StringBuilder();
-    	sb.append(" moving");
+    	sb.append("moving ");
     	sb.append(bus.getType());
     	sb.append(" ");
     	sb.append(bus.getID());

@@ -62,5 +62,5 @@ public abstract class SimEvent {
     	sb.append("\"");
     	sb.append('}');
     	return sb.toString();    	
-    };
+    }
 }

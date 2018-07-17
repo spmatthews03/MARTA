@@ -209,7 +209,7 @@
 			  //$log.info('path noticed time changed');
 			  //$log.info('time: ',$scope.time);
 			  //$log.info($scope.path);
-			  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
+			  //$scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
 			  var vehicle = mtsService.getStopVehicle($scope.path.path.origin.type,$scope.path.path.origin.ID,$scope.path.route);
 			  if(!(typeof vehicle === "undefined")){
 				  //$log.info('path vehicle');

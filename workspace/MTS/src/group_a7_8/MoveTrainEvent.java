@@ -20,6 +20,28 @@ public class MoveTrainEvent extends SimEvent{
     }
 
     public RailCar getTrain() { return this.train; }
+    @Override
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(eventID);
+    	sb.append(",\"time\":");
+    	sb.append(timeRank);
+    	sb.append(",\"type\":\"");
+    	sb.append(eventType);
+    	sb.append("\",\"description\":\"");
+    	sb.append(getDescription());
+    	sb.append("\",");
+    	sb.append("\"vehicle\":{");
+    	  sb.append("\"type\":\"");
+    	  sb.append(getTrain().getType());
+    	  sb.append("\",\"ID\":");
+    	  sb.append(getTrain().getID());
+    	sb.append('}');
+    	sb.append('}');
+    	return sb.toString();    	
+    }
     
 	public String getDescription() {
     	StringBuilder sb = new StringBuilder();
