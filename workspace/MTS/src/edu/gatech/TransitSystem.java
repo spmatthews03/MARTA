@@ -45,8 +45,9 @@ public class TransitSystem {
     }
 
     public ArrayList<FuelConsumption> getFuelConsumptionList(Bus bus){
-    	if(fuelConsumption.containsKey(bus)) { return fuelConsumption.get(bus); }
-    	return null;
+    	if(!fuelConsumption.containsKey(bus)) { fuelConsumption.put(bus, new ArrayList<FuelConsumption>());} 
+    		return fuelConsumption.get(bus);
+    	
 	}
 
 	public double getTotalFuelConsumed(Bus bus){

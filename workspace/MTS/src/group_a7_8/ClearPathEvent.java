@@ -51,21 +51,11 @@ public class ClearPathEvent extends SimEvent{
 		System.out.printf(" %s path is blocked\n\n",pathKey);
 	}
 	
-	public String toJSON() {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"pathKey\":");
-	    	sb.append(pathKey);
-	    	sb.append(",\"blockStatus\":");
-	    	sb.append(false);
-	    	sb.append('}');
-	    	return sb.toString();
-	}	
+	public String getDescription() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("clearing ");
+    	sb.append(pathKey);
+    	return sb.toString();
+    }	
 }
 

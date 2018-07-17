@@ -26,6 +26,8 @@ public abstract class SimEvent {
 
     public abstract void execute();
 
+    public abstract String getDescription();
+    
     public void displayEvent() {
         // System.out.println();
         System.out.println("# event rank: " + Integer.toString(timeRank) + " type: " + eventType + " ID: " + Integer.toString(eventID));
@@ -46,5 +48,19 @@ public abstract class SimEvent {
         return result;
     }
     
-    abstract public String toJSON();
+    public String toJSON() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append('{');
+    	sb.append("\"ID\":");
+    	sb.append(eventID);
+    	sb.append(",\"time\":");
+    	sb.append(timeRank);
+    	sb.append(",\"type\":\"");
+    	sb.append(eventType);
+    	sb.append("\",\"description\":\"");
+    	sb.append(getDescription());
+    	sb.append("\"");
+    	sb.append('}');
+    	return sb.toString();    	
+    };
 }

@@ -27,22 +27,14 @@ public class FacilityResumeServiceEvent extends SimEvent{
 		System.out.printf(" %s%d resumed service\n\n",exchangePoint.getType(),exchangePoint.get_uniqueID());
 	}
 	
-	public String toJSON() {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"facilityType\":");
-	    	sb.append(exchangePoint.getType());
-	    	sb.append(",\"facilityID\":");
-	    	sb.append(exchangePoint.get_uniqueID());
-	    	sb.append(",\"outOfService\":");
-	    	sb.append(outOfService);
-	    	sb.append('}');
-	    	return sb.toString();
+
+	public String getDescription() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(exchangePoint.getType());
+    	sb.append(" ");
+    	sb.append(exchangePoint.get_uniqueID());
+    	sb.append(" is back in service");
+    	return sb.toString();	
 	}	
+	
 }

@@ -93,6 +93,9 @@ public class Bus extends Vehicle{
         return sb.toString();
     }
 
-    public boolean equals(Object object){ return this.equals(object); }
+    
+    //this is an invalid equals implementation, causes stack overflow
+//    public boolean equals(Object object){ 
+//    	return this.equals(object); }
 
 }

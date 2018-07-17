@@ -33,21 +33,14 @@ public class ClearPathDelayEvent extends SimEvent{
 		System.out.printf(" %s path delay: %f\n\n",pathKey,system.getPath(pathKey).getDelayFactor());		
 	}
 	
-	public String toJSON() {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"pathKey\":");
-	    	sb.append(pathKey.toJSON());
-	    	sb.append(",\"delayfactor\":");
-	    	sb.append(delayFactor);
-	    	sb.append('}');
-	    	return sb.toString();
-	}	
+
+	public String getDescription() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("clearing delay of ");
+    	sb.append(delayFactor);
+    	sb.append(" for path ");
+    	sb.append(pathKey);
+    	return sb.toString();
+}	
 	
 }

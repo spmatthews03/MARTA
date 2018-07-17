@@ -23,19 +23,11 @@ public class ClearSpeedLimitEvent extends SimEvent{
 		System.out.printf(" %s speed limit: %f\n\n",pathKey,system.getPath(pathKey).getSpeedLimit());
 	}
 	
-	public String toJSON() {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"pathKey\":");
-	    	sb.append(pathKey.toJSON());
-	    	sb.append('}');
-	    	return sb.toString();
-	}	
 	
+	public String getDescription() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("removing speed limit for ");
+    	sb.append(pathKey);
+    	return sb.toString();
+	}		
 }

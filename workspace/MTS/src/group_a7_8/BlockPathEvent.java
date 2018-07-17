@@ -51,20 +51,10 @@ public class BlockPathEvent extends SimEvent{
 		System.out.printf(" %s path is blocked\n\n",pathKey);
 	}
 	
-	public String toJSON() {
+	public String getDescription() {
 	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"pathKey\":");
+	    	sb.append("blocking ");
 	    	sb.append(pathKey);
-	    	sb.append(",\"blockStatus\":");
-	    	sb.append(true);
-	    	sb.append('}');
 	    	return sb.toString();
 	}	
 }

@@ -6,6 +6,7 @@ add_stop,4,West Side,0,0.01,0.01
 add_stop,5,South Side,0,0.04,0.01
 add_stop,6,East Side,0,0.1,0.02
 add_stop,7,Central City,0,0.04,0.05
+add_depot,8,depot,0,0
 add_route,0,10,Express
 add_route,1,16,Perimeter
 extend_route,0,5
@@ -26,4 +27,4 @@ add_bus,11,1,0,0,10,100,100,30
 add_event,1,move_bus,7
 add_event,1,move_bus,11
 path_delay,20,30,5,7,1.2
-step_multi,1
+step_multi,20

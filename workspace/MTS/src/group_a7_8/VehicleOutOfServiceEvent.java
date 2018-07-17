@@ -27,22 +27,14 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 		System.out.printf(" %s%d is out of service\n\n",vehicle.getType(),vehicle.getID());
 	}
 	
-	public String toJSON() {
-	    	StringBuilder sb = new StringBuilder();
-	    	sb.append('{');
-	    	sb.append("\"ID\":");
-	    	sb.append(eventID);
-	    	sb.append(",\"time\":");
-	    	sb.append(timeRank);
-	    	sb.append(",\"type\":\"");
-	    	sb.append(eventType);
-	    	sb.append("\",\"vehicleType\":");
-	    	sb.append(vehicle.getType());
-	    	sb.append(",\"vehicleID\":");
-	    	sb.append(vehicle.getID());
-	    	sb.append(",\"outOfService\":");
-	    	sb.append(outOfService);
-	    	sb.append('}');
-	    	return sb.toString();
+
+	public String getDescription() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(vehicle.getType());
+    	sb.append(" ");
+    	sb.append(vehicle.getID());
+    	sb.append(" is out of service");
+    	return sb.toString();	
 	}	
+	
 }
