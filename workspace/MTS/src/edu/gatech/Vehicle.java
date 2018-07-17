@@ -111,5 +111,5 @@ public abstract class Vehicle {
         return result;
     }
 
-
+    abstract public String toJSON();
 }

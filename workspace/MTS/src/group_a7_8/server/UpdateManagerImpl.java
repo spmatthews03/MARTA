@@ -4,13 +4,24 @@ import java.io.IOException;
 
 import org.eclipse.jetty.websocket.api.Session;
 
+import edu.gatech.SimDriver;
+
 
 public class UpdateManagerImpl implements UpdateManager {
 	private WebClientWebSocket socket;
+	private SimDriver driver;
 
 	@Override
 	public void process(String message) {
 		//System.out.printf("message received: %s\n",message);
+		if(driver!=null) {
+			try {
+				post(driver.serializeFuelConsumptionToJSON());
+			} catch (IOException e) {
+				System.out.printf("unable to post fuelconsumption report due to error: %s\n",e.getMessage());
+			}
+			
+		}
 		//method to process updates that came fromt the websocket
 		//System.out.printf("WARNING: Processing messages from web client to server via sockets is not yet supported.  Message ignored.\n");
 	}
@@ -28,6 +39,7 @@ public class UpdateManagerImpl implements UpdateManager {
 		
 	}
 
+
 	@Override
 	public void post(String message) throws IOException {
 		if(socket==null) {
@@ -41,6 +53,12 @@ public class UpdateManagerImpl implements UpdateManager {
 		}
 		//System.out.printf("posting message:\n---------------------\n%s\n---------------------\\n", message);
 		session.getRemote().sendString(message);
+		
+	}
+
+	@Override
+	public void setDriver(SimDriver driver) {
+		this.driver=driver;
 		
 	}
 }

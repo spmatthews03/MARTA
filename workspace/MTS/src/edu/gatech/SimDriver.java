@@ -18,6 +18,7 @@ import group_a7_8.ClearSpeedLimitEvent;
 import group_a7_8.FacilityOutOfServiceEvent;
 import group_a7_8.FacilityResumeServiceEvent;
 import group_a7_8.FileProps;
+import group_a7_8.FuelConsumption;
 import group_a7_8.MoveBusEvent;
 import group_a7_8.MoveTrainEvent;
 import group_a7_8.PathKey;
@@ -43,7 +44,7 @@ public class SimDriver implements StateChangeListener{
     }
     
     private final String DELIMITER = ",";
-	private UpdateManager setUpdateManager;
+	
 	private UpdateManager updateManager;
     public boolean processCommand(String userCommandLine){
     	synchronized(lock) {
@@ -680,4 +681,46 @@ public class SimDriver implements StateChangeListener{
 	public void setUpdateManager(UpdateManager updateManager) {
 		this.updateManager= updateManager;
 	}
+
+	public int getTime() {return simEngine.getTime();}
+	
+	public String serializeFuelConsumptionToJSON() {
+		StringBuilder sb = new StringBuilder();
+		sb.append('{');
+		sb.append("\"time\":");
+		sb.append(getTime());
+		if(martaModel.getFuelConsumption().size()>0) {
+			sb.append(",\"reports\":[");
+			boolean firstVehicle=true;
+			for(Vehicle vehicle : martaModel.getFuelConsumption().keySet()) {			
+				if(firstVehicle) {
+					firstVehicle = false;
+				}
+				else{
+					sb.append(",");
+				}
+				sb.append("{\"vehicle\":");
+				sb.append(vehicle.toJSON());
+				ArrayList<FuelConsumption> busConsumption = martaModel.getFuelConsumption().get(vehicle);
+				if(busConsumption!=null && busConsumption.size()>0) {
+					sb.append(",\"reports\":[");
+					boolean isFirst = true;
+					for(FuelConsumption report : busConsumption) {
+						if(isFirst) {
+							isFirst = false;
+						}
+						else{
+							sb.append(",");
+						}
+						sb.append(report.toJSON());
+					}
+					sb.append("]");
+				}
+				sb.append("}");
+			}
+			sb.append("]}");
+		}
+		return sb.toString();
+	}
+	
 }

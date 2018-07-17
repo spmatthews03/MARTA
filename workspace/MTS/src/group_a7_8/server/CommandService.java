@@ -23,9 +23,9 @@ public class CommandService {
     public Result addCommandt(@QueryParam("line") String userCommandLine,@Context HttpServletRequest request){
 		SimDriver driver = AsRestServer.getDriver();
 		
-		System.out.printf("session id %s\n", request.getSession().getId());
-		System.out.printf("driver %s\n", driver);
-    	System.out.printf("command %s\n", userCommandLine);
+		//System.out.printf("session id %s\n", request.getSession().getId());
+		//System.out.printf("driver %s\n", driver);
+    	System.out.printf("executing command: %s\n", userCommandLine);
         Result result = new Result(userCommandLine);
         result.setQuit(driver.processCommand(userCommandLine));
         return result;

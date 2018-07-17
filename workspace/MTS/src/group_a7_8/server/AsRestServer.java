@@ -91,6 +91,7 @@ public class AsRestServer {
 		if(driver==null) {
 			driver = new SimDriver();
 			driver.setUpdateManager(getUpdateManager());
+			getUpdateManager().setDriver(driver);
 		}
 		return driver;
 	}
