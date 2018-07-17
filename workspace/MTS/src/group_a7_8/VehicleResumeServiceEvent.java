@@ -1,5 +1,9 @@
 package group_a7_8;
 
+import edu.gatech.Bus;
+import edu.gatech.BusStop;
+import edu.gatech.RailCar;
+import edu.gatech.RailStation;
 import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
 import edu.gatech.Vehicle;
@@ -28,18 +32,20 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());
 		
-		if (vehicle.type == "Bus"){
+		if (vehicle.getType().equals("Bus")){
 			BusStop stop = system.getBusRoute(vehicle.getRouteID()).getBusStop(system, 0);
 			double distanceFromDepot = system.getDepot().findDistance(stop);
-			int travelTime = 1 + (distanceFromDepot.intValue() * 60 / vehicle.getSpeed());
-			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), this.getRank() + travelTime, vehicle);
-			this.getEventQueue().add(moveEvent)
-		} else if (vehicle.type == "Train"){
+			int travelTime = 1 + (int) (distanceFromDepot * 60 / vehicle.getSpeed());
+			
+			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime), (Bus)vehicle);
+			this.getEventQueue().add(moveEvent);
+		} else if (vehicle.getType().equals("Train")){
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);
 			double distanceFromDepot = system.getDepot().findDistance(station);
-			int travelTime = 1 + (distanceFromDepot.intValue() * 60 / vehicle.getSpeed());
-			MoveTrainEvent moveEvent = new MoveTrainEvent(system, this.getID(), this.getRank() + travelTime, vehicle);
-			his.getEventQueue().add(moveEvent)
+			int travelTime = 1 + (int)(distanceFromDepot * 60 / vehicle.getSpeed());
+			MoveTrainEvent moveEvent = new MoveTrainEvent(system, this.getID(), this.getRank() + travelTime, (RailCar
+					)vehicle);
+			this.getEventQueue().add(moveEvent);
 		}		
 	}
 	
