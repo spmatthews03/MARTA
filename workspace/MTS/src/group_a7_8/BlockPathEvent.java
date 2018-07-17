@@ -12,14 +12,16 @@ public class BlockPathEvent extends SimEvent{
 	private RailStation destination;
 	private PathKey pathKey;
 	private Path path;
+	private int stallDuration;
 	
-	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train) {
+	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train, int stallDuration) {
     	super(system,timeRank,"set_path_block",eventID);
 		this.route = system.getRailRoute(train.getRouteID());
 		this.origin = system.getRailStation(this.route.getStationID(train.getPastLocation()));
 		this.destination = system.getRailStation(this.route.getStationID(train.getLocation()));
 		this.pathKey = system.getPathKey(origin, destination);
 		this.path = system.getPath(pathKey);
+		this.stallDuration = stallDuration; 
 	}
 
 	public RailRoute getRoute() {
@@ -47,7 +49,7 @@ public class BlockPathEvent extends SimEvent{
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
 		
-		path.setIsBlocked();
+		path.setIsBlocked(this.stallDuration);
 		System.out.printf(" %s path is blocked\n\n",pathKey);
 	}
 	

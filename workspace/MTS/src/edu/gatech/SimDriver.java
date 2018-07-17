@@ -390,11 +390,13 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
             	
-            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
+            	Integer stallDuration = Integer.decode(tokens[1])+Integer.decode(tokens[3]);
+
+            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar, stallDuration);
             	System.out.printf("%s\n", setBlockPathEvent.toJSON());
             	simEngine.add(setBlockPathEvent);
             	
-            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3]), outOfServiceRailCar);
+            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), stallDuration, outOfServiceRailCar);
             	System.out.printf("%s\n", clearBlockPathEvent.toJSON());
             	simEngine.add(clearBlockPathEvent);            	
             	
