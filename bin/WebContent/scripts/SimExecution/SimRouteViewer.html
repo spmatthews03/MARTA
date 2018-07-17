@@ -27,16 +27,17 @@
   </div>
   <div flex="25">
     <div layout="column">
-	    <div  class="sim-exec-controls-panel" layout="row" layout-align="start space-around">
-	       <div layout="row"><div>Time:</div><div>{{mts.time}}</div></div>
+	    <div  class="sim-exec-controls-panel" layout="row" layout-wrap>
+	       <div flex="5"></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepOnce()"><md-icon>play_arrow</md-icon></md-button></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(5)"><md-icon>forward_5</md-icon></md-button></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(10)"><md-icon>forward_10</md-icon></md-button></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(30)"><md-icon>forward_30</md-icon></md-button></div>
+	       <div flex></div>
+	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">Time:</div><div class="time-value">{{mts.time}}</div></div>
 	    </div>
 	<md-content class="sim-exec-viewer-panel">
 	   <div layout="column">
-	      <div>Events: {{mts.events.length}}</div>
   		  <event ng-repeat="event in mts.events | orderBy:'time'" data-event="event"></event>
 	   </div>
 	</md-content>

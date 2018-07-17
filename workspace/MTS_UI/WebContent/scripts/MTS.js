@@ -22,6 +22,7 @@
 			$scope.activeTab = ($scope.execMode ? 0 : 1);
 		};
 		$scope.activeTab = 0;
+
 	};
 
 	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module'])

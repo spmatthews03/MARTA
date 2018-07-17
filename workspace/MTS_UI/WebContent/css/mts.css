@@ -180,15 +180,18 @@ div:focus {
 	overflow: auto;
 	height:600px;
 	max-height: 600px;
+	padding-top: 6px;
 }
 .sim-exec-controls-panel {
-	height: 40px;
+    background-color: rgb(228, 228, 228);
+    border: solid 3px rgb(228, 228, 228);
 }
 
 .sim-exec-control .md-button{
 	min-width:12px;
 	max-width: 40px;
 	margin: 0px;
+	font-size: 30px;
 }
 
 
@@ -224,7 +227,7 @@ div:focus {
 }
 
 .stop{
-	background-color:rgb(228,232,232);
+	background-color:rgb(228,228,228);
 	height:50px;
 	width:180px;
 	padding-right:4px;
@@ -332,4 +335,38 @@ div:focus {
 	height:30px;
 	background-color: red;
 	margin-left:6px;
+}
+
+.time-label{
+	font-size:10px;
+}
+.time-value{
+	font-size:18pt;
+}
+
+.sim-clock{
+	padding-left:6px;
+	padding-right:6px;
+	background-color:white;
+}
+
+.event-time-icon{
+    font-size: 14pt;
+    padding-top: 3px;
+    margin: 0px;
+    padding-left: 6px;
+}
+
+.event-label{
+	font-size:20px;
+}
+
+.event{
+	border-bottom: solid 1px rgb(228,228,228);
+}
+
+.event .time-value{
+	font-size:14pt;
+	width:50px;
+	margin-left:4px;
 }

@@ -1,18 +1,15 @@
-<div class="entity-card">
-  <div layout="row">
-	  <div class="entity-card-icon-frame">
-	     <div>
-	     	<i class="fas fa-sync-alt"></i>
-     	</div>
+<div class="event">
+  <div layout="row" layout-align="start start">
+	  <div layout="column" layout-align="start center">
+	       <md-icon class="event-time-icon" md-font-set="fa">&#xf1fa</md-icon>
+	       <div class="debug-label">ID{{event.ID}}</div>
 	  </div>
-	  <div class="entity-card-details" layout="row">
-		  <div class="entity-details-frame" layout="column">
-		     <div layout="row"><div>#{{event.ID}}<div></div>
-		     <div>type {{event.type}}</div>
-		     <div>scheduled for {{event.time}}</div>
-		  </div>
-		  <div class="event-details-frame" layout="column">
-		  </div>
+	  <div layout="column" layout-align=""start start >
+	    <div layout="row">
+	       <div class="time-value">{{event.time}}</div>
+	       <div class="event-label">{{event.type}}</div>
+	    </div>
+	    <div class="event-description">{{event.description}}</div>
 	  </div>
   </div>
 </div>
