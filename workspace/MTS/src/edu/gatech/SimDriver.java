@@ -115,8 +115,7 @@ public class SimDriver implements StateChangeListener{
                 System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
-//                int uniqueID = Integer.parseInt(tokens[1].trim());
-				int uniqueID = 0;
+            	int uniqueID = Integer.parseInt(tokens[1].trim());
                 String name = tokens[2].trim();
                 int x_coord = Integer.parseInt(tokens[3].trim());
                 int y_coord = Integer.parseInt(tokens[4].trim());
