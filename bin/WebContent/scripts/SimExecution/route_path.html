@@ -6,7 +6,7 @@
       <div ng-show="debug" class="debug-label">R{{path.route.ID}} L{{path.endLocation}}</div>
     </div>
     <md-icon flex class="path-icon">arrow_downward</md-icon>
-    <div flex="65">
+    <div>
 	  <div ng-repeat="vehicle in path.vehicleAtPath track by $index"><route-vehicle data-vehicle="vehicle"></route-vehicle></div>
     </div>
     <div flex="5"></div>

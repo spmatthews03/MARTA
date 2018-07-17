@@ -14,7 +14,7 @@
 </head>
 <body ng-app="MTS" ng-controller="MTSController as mts" ng-cloak >
 
-    <md-content class="md-padding">
+    <div class="mts-main">
         <div ng-show="showMenu" layout="column">
 	        <md-card>
 	          <md-card-title>
@@ -30,7 +30,7 @@
 	        </md-card>
         </div>
         <div ng-hide="showMenu" layout="column" class="mts-viewport">
-	    	<md-tabs md-selected="activeTab" md-dynamic-height md-border-bottom>
+	    	<md-tabs md-selected="activeTab" md-dynamic-height="true">
 	    	   <md-tab>
 		    	   <md-tab-label>
 		    	       <div layout="row"><md-icon>build</md-icon><div>Configure</div></div>
@@ -51,7 +51,7 @@
 	    	   </md-tab> 
 	    	</md-tabs>
         </div>
-	</md-content>
+	</div>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-animate.min.js"></script>
     <script src="lib/angular-aria.min.js"></script>

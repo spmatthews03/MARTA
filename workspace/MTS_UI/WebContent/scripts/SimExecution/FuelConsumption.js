@@ -13,22 +13,22 @@
 
   //controllers
   var fuelConsumptionController = function($scope, $log, mtsService){
-		$log.info('fuelConsumptionController');
+		//$log.info('fuelConsumptionController');
 		$scope.reports = mtsService.state.reports;
 		$scope.getTotal = function(vehicle){
 			var totalAmount=0;
 			
-				$log.info('fuel report for ');
-				$log.info(vehicle);
+				//$log.info('fuel report for ');
+				//$log.info(vehicle);
 				for(var i=0;i<mtsService.state.reports.length;i++){
 					var vehicleReport = mtsService.state.reports[i];
-					$log.info(vehicleReport);
+					//$log.info(vehicleReport);
 					if(vehicleReport.vehicle.type==vehicle.type && vehicleReport.vehicle.ID == vehicle.ID){
 						for(var j=0;j<vehicleReport.reports.length;j++){
 							var report = vehicleReport.reports[j];
-							$log.info(vehicleReport);
+							//$log.info(vehicleReport);
 							totalAmount = totalAmount+report.amount;
-							$log.info('totalAmount: '+totalAmount);
+							//$log.info('totalAmount: '+totalAmount);
 						}
 					}
 				}

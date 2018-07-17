@@ -10,9 +10,9 @@
       template: 
             '<div class="sim-config-panel" layout="row">'+
                '<div layout="column" class="config-panel">'+
-                  '<div><span class="sim-configmode-toggle-label">configuration mode:</span></div>'+
-                  '<md-button ng-click="switch()">'+
-                    '<div layout="row">'+
+                  '<div><span class="sim-configmode-toggle-title">configuration mode:</span></div>'+
+                  '<md-button ng-click="switch()" class="config-toggle">'+
+                    '<div layout="row" layout-align="space-between end">'+
                       '<div layout="column"><md-icon ng-class="{\'toggle-option-selected\':!toggleOn}" class="manual-config-option-icon">playlist_add</md-icon><div><span class="sim-configmode-toggle-label" ng-class="{\'toggle-option-selected\':!toggleOn}">manual</span></div></div>'+
                       '<md-icon class="toggle" md-font-set="fa" ng-hide="toggleOn">&#xf204</md-icon>'+
                       '<md-icon class="toggle" md-font-set="fa" ng-show="toggleOn">&#xf205</md-icon>'+

@@ -13,6 +13,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        commands:[],
 	        commandsQueue:[],
 	        reports:[],
+	        depotVehicles:[],
 	  	  	editMode:false,
 	  		commandOption:""
    };
@@ -47,7 +48,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	   }
    }
    var process = function(update){
-      $log.info(update);
+      //$log.info(update);
 	  if(update.hasOwnProperty('time')){
 		  state.time = update.time;
 	  }
@@ -86,6 +87,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
  	      });
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
+  		   $log.info(update);
   		   state.reports.splice(0,state.reports.length);
   		   update.reports.forEach(function(report){
   			   state.reports.push(report);
@@ -104,7 +106,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	  //console.log('received socket message: '+evt.data);
         $timeout(function(){
             //$log.info('processing: ');
-            $log.info(evt.data);
+            //$log.info(evt.data);
         	process(JSON.parse(evt.data));
         });
     };
@@ -176,7 +178,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    
+
+
     connect();
    
     return {

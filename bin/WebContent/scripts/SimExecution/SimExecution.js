@@ -117,6 +117,13 @@
 		//$log.info('simController');
 		$scope.mts = mtsService.state;
 		
+		$scope.depotFill = function(){
+			//$log.info('depoFill');
+			for(var i=0;i<10;i++){
+				mtsService.state.depotVehicles.push(mtsService.state.vehicles[0]);
+			}
+		};
+		
 		$scope.stepOnce=function(){
 			var command = 'step_once';
 			  $log.info('command: '+command);
