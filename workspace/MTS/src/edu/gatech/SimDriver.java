@@ -99,7 +99,7 @@ public class SimDriver implements StateChangeListener{
             	double inputXCoord	 = Double.parseDouble(tokens[4].trim());
             	double inputYCoord	 = Double.parseDouble(tokens[5].trim());
             	
-            	int railStationID = martaModel.makeRailStation(station_uniqueID, inputName, inputRiders, inputXCoord, inputXCoord);
+            	int railStationID = martaModel.makeRailStation(station_uniqueID, inputName, inputRiders, inputXCoord, inputYCoord);
                 System.out.println(" New Rail Station: " + Integer.toString(railStationID) + " created");
                 break;
             case "add_route":
