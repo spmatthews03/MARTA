@@ -95,19 +95,12 @@ public class Path {
 		sb.append('{');
 		sb.append("\"pathKey\":");
 		sb.append(pathKey.toJSON());
-		if(isBlocked) {
-			sb.append(",\"blocked\":");
-			sb.append(this.isBlocked);
-		}
-		if(getSpeedLimit()!=null) {
-			sb.append(",\"speedLimit\":");
-			sb.append(this.speedLimit);
-		}
-		double delayFactor = getDelayFactor();
-		if(delayFactor!=1) {
-			sb.append(",\"delayfactor\":");
-			sb.append(delayFactor);
-		}
+		sb.append(",\"blocked\":");
+		sb.append((this.isBlocked?"true":"false"));
+		sb.append(",\"speedLimit\":");
+	    sb.append((this.speedLimit==null?-1:this.speedLimit));
+		sb.append(",\"delayfactor\":");
+		sb.append(getDelayFactor());
 		sb.append('}');
 		return sb.toString();
 	}

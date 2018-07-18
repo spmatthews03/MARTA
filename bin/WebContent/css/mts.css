@@ -209,8 +209,9 @@ body{
 }
 
 
-
-
+.vehicle-positions-container{
+	background-color:white;
+}
 .stop-index{
 	font-size:8pt;
 }
@@ -490,13 +491,14 @@ body{
     left: -15px;
     font-size: 26px;
 }
-.path .hazard-indicator{
-	margin: 0px;
-    padding: 0px;
-    position: relative;
-    top: -11px;
-    left: -15px;
-    font-size: 26px;
+.path .path-hazard-indicator{
+    font-size: 37px;
+    color: #fbb009;
+}
+
+
+.path .path-icon.blocked{
+    color: red;
 }
 
 .depot-icon{
@@ -510,4 +512,46 @@ body{
 }
 .hazard-indicator.warning{
     color: #fbb009;
+}
+
+.speed-limit{
+	margin:0px;
+	padding:0px;
+	border:solid 3px black;
+	border-radius:3px;
+	margin-left:4px;
+}
+.speed-limit .label{
+	margin:0px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:3px;
+	font-size:12px;	
+	text-align: center;
+}
+.speed-limit .value{
+	font-size:18px;
+	font-weight:600;	
+	text-align:center;
+}
+
+
+
+.delay-factor .material-icons{
+	font-size:16px;
+	width:16px;
+	height:16px;
+	min-width:16px;
+	min-height:16px;
+	    margin: 0px;
+    padding: 0px;
+}
+.delay-factor .label{
+	font-size:14px;
+}
+.delay-factor{
+	height: 12px;
+    position: relative;
+    top: -2px;
+    left: 10px;
 }

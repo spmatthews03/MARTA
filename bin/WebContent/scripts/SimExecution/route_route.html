@@ -6,12 +6,12 @@
             <div class="route-label">{{route.number}}-{{route.name}}</div>
      </div>
        <div class="vehicle-positions-container" layout="column">
-     <md-content>
+     <div>
 	     <div ng-repeat="rstop in routeStops track by $index">
 	     	<route-stop class="vehicle-container" data-order="$index" data-stop="rstop"></route-stop>
 	     	<route-path class="vehicle-container" data-path="routePaths[$index]"></route-path> 
 	     </div>
- 	</md-content>
+ 	</div>
        </div>
 	</div>
 </div>
