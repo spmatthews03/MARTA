@@ -18,8 +18,9 @@
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(5)"><md-icon>forward_5</md-icon></md-button></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(10)"><md-icon>forward_10</md-icon></md-button></div>
 	       <div class="sim-exec-control"><md-button ng-click="stepMulti(30)"><md-icon>forward_30</md-icon></md-button></div>
+	       <div class="sim-exec-control"><md-button ng-click="stop()"><md-icon>stop</md-icon></md-button></div>
 	       <div flex></div>
-	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">Time:</div><div class="time-value">{{mts.time}}</div></div>
+	       <div layout="column" layout-align="start center" class="sim-clock wide"><div class="time-label">Time:</div><div class="time-value">{{mts.time}}</div></div>
 	    </div>
 	    <div  class="sim-exec-viewer-panel">
 			<md-content>
@@ -35,7 +36,7 @@
 	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">vehicles:</div><div class="time-value">{{mts.depotVehicles.length}}</div></div>
 	    </div>
 	    <div layout="column">
-	      <div ng-repeat="vehicle in mts.depotVehicles track by $index" layout="row" layout-wrap>
+	      <div ng-repeat="vehicle in mts.vehicles | filter : {outOfService:true} track by $index" layout="row" layout-wrap>
 	        <div flex></div>
      	    <route-vehicle data-vehicle="vehicle"></route-vehicle>
 	      </div>

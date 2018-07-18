@@ -118,14 +118,8 @@
 		$scope.mts = mtsService.state;
 		
 		$scope.depotFill = function(){
-			$log.info('depoFill');
-			for(var i=0;i<3;i++){
-				$log.info(mtsService.state.vehicles[0]);
-				$log.info(mtsService.state.routes[0]);
-				$log.info(mtsService.state.stops[0]);
-				$log.info(mtsService.state.paths[0]);
-				mtsService.state.depotVehicles.push(mtsService.state.vehicles[0]);
-			}
+			//$log.info('depoFill');
+			$log.info(mtsService.state);
 		};
 		
 		$scope.stepOnce=function(){
@@ -140,6 +134,15 @@
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
 		};		
+		$scope.stop = function(){
+			var command = 'quit';
+			  //$log.info('command: '+command);
+			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
+			  mtsService.executeCommand(command);
+		};	
+		  $scope.time = mtsService.state.time;
+
+
   };
   
   var stopController = function($scope, $log,mtsService){
