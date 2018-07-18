@@ -36,7 +36,7 @@
 	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">vehicles:</div><div class="time-value">{{mts.depotVehicles.length}}</div></div>
 	    </div>
 	    <div layout="column">
-	      <div ng-repeat="vehicle in mts.depotVehicles track by $index" layout="row" layout-wrap>
+	      <div ng-repeat="vehicle in mts.vehicles | filter : {outOfService:true} track by $index" layout="row" layout-wrap>
 	        <div flex></div>
      	    <route-vehicle data-vehicle="vehicle"></route-vehicle>
 	      </div>
