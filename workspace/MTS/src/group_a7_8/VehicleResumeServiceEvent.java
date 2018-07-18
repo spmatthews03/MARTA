@@ -33,12 +33,30 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());
 		
 		if (vehicle.getType().equals("Bus")){
-			BusStop stop = system.getBusRoute(vehicle.getRouteID()).getBusStop(system, 0);
+
+			// get bus
+			Bus bus = system.getBus(vehicle.getID());
+
+			// refuel and unset refueling flag
+			bus.refuel();
+			bus.setRefueling(false);
+
+			// set stop
+			BusStop stop = system.getBusRoute(vehicle.getRouteID()).getBusStop(system, vehicle.getLocation());
+
+			// find distance from depot
 			double distanceFromDepot = system.getDepot().findDistance(stop);
 			int travelTime = 1 + (int) (distanceFromDepot * 60 / vehicle.getSpeed());
-			
+
+			// create fuel report from depot to next stop
+			FuelConsumption report = new FuelConsumption(bus, new PathKey(system.getDepot(), stop),
+					travelTime, distanceFromDepot);
+			system.getFuelConsumptionList(bus).add(report);
+
+			// create move bus event
 			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime), (Bus)vehicle);
 			this.getEventQueue().add(moveEvent);
+
 		} else if (vehicle.getType().equals("Train")){
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);
 			double distanceFromDepot = system.getDepot().findDistance(station);

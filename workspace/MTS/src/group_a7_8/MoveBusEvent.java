@@ -76,15 +76,18 @@ public class MoveBusEvent extends SimEvent{
         // find distance to stop to determine next event time
         Double distanceToNextStopThenDepot = activeStop.findDistance(nextStop) + nextStop.findDistance(system.getDepot());
 
+
+        // check if bus has enough fuel to go to next stop then depot, if not, go directly to depot
         if(!activeBus.getOutOfService() && activeBus.hasEnoughFuel(distanceToNextStopThenDepot)) {
 
-            // check if bus has enough fuel to go to next stop then depot, if not, go directly to depot
-            int travelTime = 1 + (distanceToNextStopThenDepot.intValue() * 60 / activeBus.getSpeed());
+            Double distanceToNextStop = activeStop.findDistance(nextStop);
+            int travelTime = 1 + (distanceToNextStop.intValue() * 60 / activeBus.getSpeed());
 
             // Create a fuel report to next stop
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
                     travelTime, activeStop.findDistance(nextStop));
             system.getFuelConsumptionList(activeBus).add(report);
+            activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToNextStop);
 
             // drop off and pickup new passengers at current stop
             int currentPassengers = activeBus.getPassengers();
@@ -107,6 +110,8 @@ public class MoveBusEvent extends SimEvent{
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, system.getDepot()),
                     travelTime, distanceToDepot);
             system.getFuelConsumptionList(activeBus).add(report);
+            activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToDepot);
+
 
             // drop all passengers before moving to depot
             int dropAllPassengers = activeBus.getPassengers();
@@ -117,6 +122,9 @@ public class MoveBusEvent extends SimEvent{
             activeRoute.getNextLocation(1);
         }
         else{
+            // set bus to refueling state
+            activeBus.setRefueling(true);
+
             // calculate distance to depot
             Double distanceToDepot = activeStop.findDistance(system.getDepot());
             int travelTime = 1 + (distanceToDepot.intValue() * 60 / activeBus.getSpeed());
@@ -125,6 +133,7 @@ public class MoveBusEvent extends SimEvent{
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, system.getDepot()),
                     travelTime, distanceToDepot);
             system.getFuelConsumptionList(activeBus).add(report);
+            activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToDepot);
 
             // drop all passengers before moving to depot
             int dropAllPassengers = activeBus.getPassengers();

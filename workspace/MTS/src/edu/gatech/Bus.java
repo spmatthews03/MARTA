@@ -6,6 +6,7 @@ public class Bus extends Vehicle{
     private double fuelCapacity;
     private double fuelLevel;
     private TransitSystem system;
+    private boolean refueling;
 
     public Bus() {
         this.ID = -1;
@@ -17,6 +18,7 @@ public class Bus extends Vehicle{
         super(uniqueValue);
         this.vehicleType = "Bus";
         this.system = system;
+        this.refueling = false;
     }
 
     public Bus(TransitSystem system, int uniqueValue, int inputRoute, int inputLocation, int inputPassengers,
@@ -26,6 +28,7 @@ public class Bus extends Vehicle{
         this.fuelLevel = fuelLevel;
         this.vehicleType = "Bus";
         this.system = system;
+        this.refueling = false;
     }
 
     public Bus(TransitSystem system, int uniqueValue, int routeId) {
@@ -33,17 +36,24 @@ public class Bus extends Vehicle{
         this.vehicleType = "Bus";
         this.route = routeId;
         this.system = system;
+        this.refueling = false;
 	}
+
+	public void setRefueling(boolean refueling){ this.refueling = refueling; }
 
 	public void setFuelCapacity(double inputFuelCapacity) { this.fuelCapacity = inputFuelCapacity; }
 
     public void setFuelLevel(double inputFuelLevel) { this.fuelLevel = inputFuelLevel; }
+
+    public boolean isRefueling(){ return this.refueling; }
 
     public double getFuelCapacity() { return this.fuelCapacity; }
 
     public double getFuelLevel() { return this.fuelLevel; }
 
     public double getFuelConsumed(){ return system.getTotalFuelConsumed(this); }
+
+    public void refuel(){ this.fuelLevel = fuelCapacity; }
 
     public boolean hasEnoughFuel(double distance){
         if(fuelLevel > distance) {
