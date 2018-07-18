@@ -2,6 +2,7 @@ package group_a7_8;
 
 import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
+import edu.gatech.Vehicle;
 import edu.gatech.RailCar;
 import edu.gatech.RailRoute;
 import edu.gatech.RailStation;;
@@ -12,16 +13,16 @@ public class BlockPathEvent extends SimEvent{
 	private RailStation destination;
 	private PathKey pathKey;
 	private Path path;
-	private int stallDuration;
+	private RailCar train;
 	
-	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train, int stallDuration) {
+	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train) {
     	super(system,timeRank,"set_path_block",eventID);
 		this.route = system.getRailRoute(train.getRouteID());
 		this.origin = system.getRailStation(this.route.getStationID(train.getPastLocation()));
 		this.destination = system.getRailStation(this.route.getStationID(train.getLocation()));
 		this.pathKey = system.getPathKey(origin, destination);
 		this.path = system.getPath(pathKey);
-		this.stallDuration = stallDuration; 
+		this.train = train;
 	}
 
 	public RailRoute getRoute() {
@@ -48,9 +49,15 @@ public class BlockPathEvent extends SimEvent{
 	public void execute() {
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
+
+		this.path.clearIsBlocked();
+
+		int time_trigger_resume = this.getRank() + 1;
+		VehicleResumeServiceEvent train_repaired_event =
+				new VehicleResumeServiceEvent(this.system, this.getEventQueue().getNextEventID(),
+											  time_trigger_resume , train);
 		
-		path.setIsBlocked(this.stallDuration);
-		System.out.printf(" %s path is blocked\n\n",pathKey);
+		this.getEventQueue().add(train_repaired_event);
 	}
 	
 	public String getDescription() {

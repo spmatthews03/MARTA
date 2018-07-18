@@ -11,7 +11,7 @@ public abstract class Vehicle {
     protected TransitSystem system;
     protected String vehicleType;
     protected Boolean outOfService;
-
+    protected Integer delta_stall_duration;
 
     public Vehicle() {
         this.ID = -1;
@@ -47,6 +47,14 @@ public abstract class Vehicle {
         this.nextLocation = inputLocation;
     }
 
+    public void set_prevLocation(int inputLocation) {
+        this.prevLocation = inputLocation;
+    }
+
+    public void set_nextLocation(int inputLocation) {
+        this.nextLocation = inputLocation;
+    }
+
     public void setPassengers(int inputPassengers) { this.passengers = inputPassengers; }
 
     public void setCapacity(int inputCapacity) { this.capacity = inputCapacity; }
@@ -58,6 +66,10 @@ public abstract class Vehicle {
     public boolean getOutOfService(){
         return this.outOfService;
     }
+    
+    public void set_delta_stall_duration(int stall_duration) {
+    	this.delta_stall_duration = stall_duration;
+	}
 
     public Integer getID() { return this.ID; }
 
@@ -73,7 +85,9 @@ public abstract class Vehicle {
 
     public Integer getSpeed() { return this.speed; }
     
-    
+    public Integer get_delta_stall_duration() {
+    	return this.delta_stall_duration;
+	}
 
     public String getType() {
 		return vehicleType;

@@ -48,7 +48,13 @@ public abstract class VehicleRoute {
         if (routeSize > 0) { return (routeLocation + 1) % routeSize; }
         return -1;
     }
-    
+   
+    public Integer get_next_next_location(int routeLocation) {
+        int routeSize = this.exchangePointsOnRoute.size();
+        if (routeSize > 0) { return (routeLocation + 2) % routeSize; }
+        return -1;
+    }
+
     public Integer getLength() { return this.exchangePointsOnRoute.size(); }
 
     protected void addNewExchangePoint(int exchangePointID) { this.exchangePointsOnRoute.put(exchangePointsOnRoute.size(), exchangePointID); }
