@@ -49,7 +49,7 @@
 			                 '<add-bus-form ng-switch-when="addBus"></add-bus-form>'+
 			                 '<add-event-form ng-switch-when="addEvent"></add-event-form>'+
 			                 '<add-bus-path-delay-form ng-switch-when="addBusPathDelay"></add-bus-path-delay-form>'+
-				             '<set-bus-speed-lilmit-form ng-switch-when="setBusSpeedLimit"></set-bus-speed-lilmit-form>'+
+				             '<set-bus-speed-limit-form ng-switch-when="setBusSpeedLimit"></set-bus-speed-limit-form>'+
 							 '<add-train-station-form ng-switch-when="addTrainStation"></add-train-station-form>'+
 							 '<add-rail-line-form ng-switch-when="addRailLine"></add-rail-line-form>'+
 							 '<extend-rail-line-form ng-switch-when="extendRailLine"></extend-rail-line-form>'+
