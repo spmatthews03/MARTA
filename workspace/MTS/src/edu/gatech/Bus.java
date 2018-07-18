@@ -99,6 +99,9 @@ public class Bus extends Vehicle{
         sb.append(',');
         sb.append("\"outOfService\":");
         sb.append((this.getOutOfService()?"true":"false"));
+        sb.append(',');
+        sb.append("\"refueling\":");
+        sb.append(this.refueling);
         sb.append('}');
         return sb.toString();
     }
