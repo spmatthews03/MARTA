@@ -95,27 +95,20 @@ public class Path {
 		sb.append('{');
 		sb.append("\"pathKey\":");
 		sb.append(pathKey.toJSON());
+		if(isBlocked) {
+			sb.append(",\"blocked\":");
+			sb.append(this.isBlocked);
+		}
 		if(getSpeedLimit()!=null) {
 			sb.append(",\"speedLimit\":");
 			sb.append(this.speedLimit);
 		}
-		ArrayList<Hazard> hazards = system.getHazards(pathKey);
-		if(hazards!=null && hazards.size()>0) {
-			sb.append(",\"hazards\":[");
-			boolean isFirst = true;
-			for(Hazard hazard : hazards) {
-				if(isFirst) {
-					isFirst = !isFirst;
-				}
-				else {
-					sb.append(',');
-				}
-				sb.append(hazard.toJSON());
-			}
-			sb.append("]");
+		double delayFactor = getDelayFactor();
+		if(delayFactor!=1) {
+			sb.append(",\"delayfactor\":");
+			sb.append(delayFactor);
 		}
 		sb.append('}');
 		return sb.toString();
 	}
-	
 }
