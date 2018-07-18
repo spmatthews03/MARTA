@@ -50,7 +50,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 
 			// create fuel report from depot to next stop
 			FuelConsumption report = new FuelConsumption(bus, new PathKey(system.getDepot(), stop),
-					travelTime, distanceFromDepot);
+					(timeRank + travelTime), distanceFromDepot);
 			system.getFuelConsumptionList(bus).add(report);
 
 			// create move bus event
