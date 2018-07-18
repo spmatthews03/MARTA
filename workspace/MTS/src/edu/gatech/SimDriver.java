@@ -384,7 +384,7 @@ public class SimDriver implements StateChangeListener{
                     return true;
             	}
             	
-            	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[3]));
+            	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[2]));
             	
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
