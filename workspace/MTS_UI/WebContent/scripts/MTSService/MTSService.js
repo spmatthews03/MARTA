@@ -87,7 +87,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
  	      });
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
-  		   $log.info(update);
+  		   //$log.info(update);
   		   state.reports.splice(0,state.reports.length);
   		   update.reports.forEach(function(report){
   			   state.reports.push(report);

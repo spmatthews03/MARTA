@@ -17,7 +17,7 @@
 			$scope.showMenu = false;
 		};
 		$rootScope.setExecMode=function(mode){
-			$log.info('setting exec mode to '+mode);
+			//$log.info('setting exec mode to '+mode);
 			$scope.execMode = false;
 			$scope.activeTab = ($scope.execMode ? 0 : 1);
 		};
