@@ -305,7 +305,7 @@ body{
 
 .vehicle-label{
 	font-size:14pt;
-	padding-left:6px;
+	padding-left:2px;
 	padding-right:2px;
 }
 .vehicle-icon{
@@ -469,4 +469,45 @@ body{
 .report-section .sim-exec-controls-panel .vehicle-icon{
 	margin-left:4px;
 	margin-right:6px;
+}
+
+.vehicle .vehicle-icon{
+}
+
+.vehicle .hazard-indicator{
+	margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: -11px;
+    left: -15px;
+    font-size: 26px;
+}
+.stop .hazard-indicator{
+	margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: 18px;
+    left: -15px;
+    font-size: 26px;
+}
+.path .hazard-indicator{
+	margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: -11px;
+    left: -15px;
+    font-size: 26px;
+}
+
+.depot-icon{
+	color:red;
+	background-color:white;
+}
+
+
+.hazard-indicator{
+    color: red;
+}
+.hazard-indicator.warning{
+    color: #fbb009;
 }

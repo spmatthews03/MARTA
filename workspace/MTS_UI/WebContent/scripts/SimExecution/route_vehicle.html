@@ -2,8 +2,14 @@
   <div layout="row" layout-align="center center" >
 	  <!-- <i ng-show="vehicle.type=='Bus'" class="fas fa-bus vehicle-icon"></i>   
 	  <i ng-show="vehicle.type=='Train'" class="fas fa-train vehicle-icon"></i>  -->
-	  <md-icon ng-show="vehicle.type=='Bus'" class="vehicle-icon" md-font-set="fa">&#xf55e</md-icon>
-	  <md-icon ng-show="vehicle.type=='Train'" class="vehicle-icon" md-font-set="fa">&#xf238</md-icon>
+	  <div style="width:30px">
+		  <md-icon ng-show="vehicle.type=='Bus'" class="vehicle-icon" md-font-set="fa">&#xf55e</md-icon>
+		  <md-icon ng-show="vehicle.type=='Train'" class="vehicle-icon" md-font-set="fa">&#xf238</md-icon>
+	  </div>
+	  <div style="width:2px">
+		  <md-icon ng-show="vehicle.type=='Bus' && vehicle.refueling" class="hazard-indicator warning">local_gas_station</md-icon>
+		  <md-icon ng-show="vehicle.outOfService && !vehicle.refueling" class="hazard-indicator">error</md-icon>
+	  </div>
 	  <div class="vehicle-label"><span>#{{vehicle.ID}}<span></div>
 	  
         <md-icon ng-show="vehicle.type=='Bus'" class="passenger-icon" md-font-set="fa">&#xf007</md-icon>

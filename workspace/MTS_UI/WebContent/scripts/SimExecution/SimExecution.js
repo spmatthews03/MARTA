@@ -116,10 +116,40 @@
   var simController = function($scope, $log, mtsService){
 		//$log.info('simController');
 		$scope.mts = mtsService.state;
-		
+		var x=0;
 		$scope.depotFill = function(){
 			//$log.info('depoFill');
 			$log.info(mtsService.state);
+			switch(x){
+			case 0:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].outOfService = true;
+				}
+				if(mtsService.state.stops.length>0){
+					mtsService.state.stops[0].outOfService = true;
+				}
+				x++;
+				if(x>2) x=0;
+				break;
+			case 1:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].refueling = true;
+				}
+				if(mtsService.state.stops.length>0){
+					mtsService.state.stops[0].outOfService = false;
+				}
+				x++;
+				if(x>2) x=0;
+				break;
+			case 2:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].outOfService = false;
+					mtsService.state.vehicles[0].refueling = false;
+				}
+				x++;
+				if(x>2) x=0;
+				break;
+			}
 		};
 		
 		$scope.stepOnce=function(){
@@ -142,7 +172,13 @@
 		};	
 		  $scope.time = mtsService.state.time;
 
-
+       $scope.getDepotCount = function(){
+    	   var c = 0;
+    	   for(var i=0;i<mtsService.state.vehicles.length;i++){
+    		   if(mtsService.state.vehicles[i].outOfService) c++;
+    	   }
+    	   return c;
+       };
   };
   
   var stopController = function($scope, $log,mtsService){
