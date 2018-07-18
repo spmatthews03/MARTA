@@ -140,6 +140,12 @@
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
 		};		
+		$scope.stop = function(){
+			var command = 'quit';
+			  //$log.info('command: '+command);
+			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
+			  mtsService.executeCommand(command);
+		};		
   };
   
   var stopController = function($scope, $log,mtsService){

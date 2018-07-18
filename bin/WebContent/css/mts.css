@@ -358,7 +358,10 @@ body{
 	padding-left:6px;
 	padding-right:6px;
 	background-color:white;
-	width:66px;
+	width:46px;
+}
+.sim-clock.wide{
+	width:70px;
 }
 
 .event-time-icon{
