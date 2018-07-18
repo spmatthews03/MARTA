@@ -462,3 +462,8 @@ body{
 .report-row{
 	border-bottom: solid 1px rgb(228,228,228);
 }
+
+.report-section .sim-exec-controls-panel .vehicle-icon{
+	margin-left:4px;
+	margin-right:6px;
+}
