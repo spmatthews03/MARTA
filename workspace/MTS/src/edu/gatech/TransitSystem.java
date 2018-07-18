@@ -438,24 +438,24 @@ public class TransitSystem {
     		sb.append(stop.toJSON());
     	}
     	//TODO: restore once JSON methods implemented
-//    	for(RailStation stop : railstations.values()) {
-//    		if(isFirst) {
-//    			isFirst = !isFirst;
-//    		}
-//    		else {
-//    			sb.append(',');
-//    		}
-//    		sb.append(stop.toJSON());
-//    	}
-//    	for(Depot stop : depots.values()) {
-//    		if(isFirst) {
-//    			isFirst = !isFirst;
-//    		}
-//    		else {
-//    			sb.append(',');
-//    		}
-//    		sb.append(stop.toJSON());
-//    	}
+    	for(RailStation stop : railstations.values()) {
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(stop.toJSON());
+    	}
+    	if (depot!=null){
+    		if(isFirst) {
+    			isFirst = !isFirst;
+    		}
+    		else {
+    			sb.append(',');
+    		}
+    		sb.append(depot.toJSON());
+    	}
     	sb.append(']');
     	return sb.toString();
 	}

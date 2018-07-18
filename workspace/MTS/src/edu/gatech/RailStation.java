@@ -10,7 +10,9 @@ public class RailStation extends ExchangePoint {
     public String toJSON() {
     	StringBuilder sb = new StringBuilder();
     	sb.append('{');
-       	sb.append("\"type\":\"RailStation\",");
+       	sb.append("\"type\":\"");
+       	sb.append(getType());
+       	sb.append("\",");
     	sb.append("\"ID\":");
     	sb.append(this.get_uniqueID());
     	sb.append(',');

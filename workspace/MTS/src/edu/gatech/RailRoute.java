@@ -28,7 +28,7 @@ public class RailRoute extends VehicleRoute {
 
    public void displayInternalStatus() { this.displayInternalStatus("stations"); }
    
-   public String toJSON() { return this.toJSON("stations"); }
+   public String toJSON() { return this.toJSON("stops"); }
    
    public RailStation getRailStation (TransitSystem system, int routeLocation) {
 	   return system.getRailStation(this.getStationID(routeLocation));

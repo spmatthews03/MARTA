@@ -118,21 +118,25 @@
 		$scope.mts = mtsService.state;
 		
 		$scope.depotFill = function(){
-			//$log.info('depoFill');
-			for(var i=0;i<10;i++){
+			$log.info('depoFill');
+			for(var i=0;i<3;i++){
+				$log.info(mtsService.state.vehicles[0]);
+				$log.info(mtsService.state.routes[0]);
+				$log.info(mtsService.state.stops[0]);
+				$log.info(mtsService.state.paths[0]);
 				mtsService.state.depotVehicles.push(mtsService.state.vehicles[0]);
 			}
 		};
 		
 		$scope.stepOnce=function(){
 			var command = 'step_once';
-			  $log.info('command: '+command);
+			  //$log.info('command: '+command);
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
 		};
 		$scope.stepMulti = function(stepSize){
 			var command = 'step_multi,'+stepSize;
-			  $log.info('command: '+command);
+			  //$log.info('command: '+command);
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
 		};		
@@ -187,7 +191,7 @@
 			  var route = $scope.route;
 			  //$log.info('route:'+route);
 			  $scope.route.stops.forEach(function(stopID,index,arr){
-				 var stop = mtsService.getStop(($scope.route.type=='busRoute'?'busStop':'trainStop'), stopID);
+				 var stop = mtsService.getStop(($scope.route.type==='busRoute'?'busStop':'railStop'), stopID);
 				 if(stop){
 					 $scope.routeStops.push({location:index,stop:stop,route:route,vehicleAtStop:[]});
 					 //need to interleave the correct paths
@@ -216,7 +220,7 @@
 			  //$log.info('path noticed time changed');
 			  //$log.info('time: ',$scope.time);
 			  //$log.info($scope.path);
-			  //$scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
+			  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
 			  var vehicle = mtsService.getStopVehicle($scope.path.path.origin.type,$scope.path.path.origin.ID,$scope.path.route);
 			  if(!(typeof vehicle === "undefined")){
 				  //$log.info('path vehicle');

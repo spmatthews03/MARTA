@@ -12,6 +12,6 @@
 	       <div class="capacity">cap. {{vehicle.capacity}}</div>
 	    </div>
 	 
-	  <fuel-gauge class="gauge" data-level="vehicle.fuelLevel" data-capacity="vehicle.fuelCapacity" vehicleid="(vehicle.type+'-'+vehicle.ID)"></fuel-gauge>
+	  <fuel-gauge class="gauge" ng-show="vehicle.type=='Bus'" data-level="vehicle.fuelLevel" data-capacity="vehicle.fuelCapacity" vehicleid="(vehicle.type+'-'+vehicle.ID)"></fuel-gauge>
   </div>
 </div>

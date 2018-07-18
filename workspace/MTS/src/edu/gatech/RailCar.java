@@ -21,6 +21,9 @@ public class RailCar extends Vehicle {
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
+        sb.append("\"type\":\"");
+        sb.append(this.vehicleType);
+        sb.append("\",");
         sb.append("\"ID\":");
         sb.append(this.ID);
         sb.append(',');
