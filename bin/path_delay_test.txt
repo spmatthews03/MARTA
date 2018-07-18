@@ -30,4 +30,4 @@ path_delay,20,30,5,7,1.2
 path_delay,25,70,1,2,1.3
 path_delay,120,30,1,7,1.4
 path_delay,130,30,3,6,1.5
-step_multi,1
+step_multi,200
