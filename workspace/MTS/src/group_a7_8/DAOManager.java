@@ -16,7 +16,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DAOManager {
 	
 	
-	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR};
+	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION};
 	
     //Private
     private Connection con;
@@ -135,6 +135,10 @@ public class DAOManager {
             case BUSROUTE: daoCache.put(t, new BusRouteDAO(this.con));
             break;
             case RAILCAR: daoCache.put(t, new RailCarDAO(this.con));
+            break;
+            case RAILROUTE: daoCache.put(t, new RailRouteDAO(this.con));
+            break;
+            case RAILSTATION: daoCache.put(t, new RailStationDAO(this.con));
             break;
             case DEPOT: daoCache.put(t, new DepotDAO(this.con));
             break;
