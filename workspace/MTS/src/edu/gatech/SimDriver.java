@@ -415,6 +415,11 @@ public class SimDriver implements StateChangeListener{
         do {
             System.out.print("# main: ");
             String userCommandLine = takeCommand.nextLine();
+
+            int comment_position = userCommandLine.indexOf("#");
+            if (comment_position != -1) {
+            	userCommandLine = userCommandLine.substring(0, comment_position);
+            }
             done = processCommand(userCommandLine);
 
         } while (!done);
