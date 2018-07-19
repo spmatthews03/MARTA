@@ -28,6 +28,9 @@
 	    	$scope.selected=selection;
 	    };
 		$scope.reports = mtsService.state.reports;
+		$scope.roundAmount = function(amount){
+			return (Math.round(amount*100)/100);
+		};
 		$scope.getTotal = function(vehicle){
 			var totalAmount=0;
 			
@@ -54,6 +57,9 @@
   var fuelConsumptionLogController = function($scope, $log, mtsService){
 		$log.info('fuelConsumptionLogController');
 		$scope.reports = mtsService.state.reports;
+		$scope.roundAmount = function(amount){
+			return (Math.round(amount*100)/100);
+		};
 		$scope.getTotal = function(vehicle){
 			var totalAmount=0;
 			

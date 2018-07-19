@@ -274,8 +274,8 @@
 					 var destination = mtsService.getStop(origin.type, destinationStopId);
 					 var path = mtsService.getPath(origin,destination);
 					 if(path){
-						 $log.info('route path:');
-						 $log.info(path);
+						 //$log.info('route path:');
+						 //$log.info(path);
 						 $scope.routePaths.push({path:path,route:route,startLocation:index,endLocation:destinationLocation,vehicleAtPath:[]});
 					 }
 				 }

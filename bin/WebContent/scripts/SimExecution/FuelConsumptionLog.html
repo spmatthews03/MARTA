@@ -12,7 +12,7 @@
           <div layout="row" layout-align="center center" class="report-row" layout-wrap>
            <div class="report-field" flex="15">Time {{report.timeRank}}</div>
            <div class="report-field" flex="35">Path: stop ID {{report.pathKey.origin}} --> stop ID {{report.pathKey.destination}}</div>
-           <div class="report-field" flex="45">amount: {{report.amount}}</div>
+           <div class="report-field" flex="45">amount: {{roundAmount(report.amount)}}</div>
            <div flex></div>
           </div>
         </div>
