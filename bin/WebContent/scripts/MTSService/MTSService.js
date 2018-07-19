@@ -13,7 +13,6 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        commands:[],
 	        commandsQueue:[],
 	        reports:[],
-	        depotVehicles:[],
 	  	  	editMode:false,
 	  		commandOption:""
    };

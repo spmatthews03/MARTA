@@ -116,10 +116,73 @@
   var simController = function($scope, $log, mtsService){
 		//$log.info('simController');
 		$scope.mts = mtsService.state;
-		
+		var x=0;
 		$scope.depotFill = function(){
 			//$log.info('depoFill');
-			$log.info(mtsService.state);
+			$log.info("x="+x);
+			switch(x){
+			case 0:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].outOfService = true;
+				}
+				if(mtsService.state.stops.length>0){
+					mtsService.state.stops[0].outOfService = true;
+				}
+				if(mtsService.state.paths.length>0){
+					mtsService.state.paths[0].blocked=true;
+				}
+				x++;
+				if(x>4) x=0;
+				break;
+			case 1:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].refueling = true;
+				}
+				if(mtsService.state.stops.length>0){
+					mtsService.state.stops[0].outOfService = false;
+				}
+				if(mtsService.state.paths.length>0){
+					mtsService.state.paths[0].blocked=false;
+					mtsService.state.paths[0].speedLimit=20;
+				}
+				x++;
+				if(x>4) x=0;
+				break;
+			case 2:
+				if(mtsService.state.vehicles.length>0){
+					mtsService.state.vehicles[0].outOfService = false;
+					mtsService.state.vehicles[0].refueling = false;
+				}
+				if(mtsService.state.paths.length>0){
+					mtsService.state.paths[0].blocked=false;
+					mtsService.state.paths[0].speedLimit=-1;
+					mtsService.state.paths[0].delayfactor=1.3;
+				}
+				x++;
+				if(x>4) x=0;
+				break;
+			case 3:
+				if(mtsService.state.paths.length>0){
+					mtsService.state.paths[0].delayfactor=1.3;
+					mtsService.state.paths[0].speedLimit=20;
+					mtsService.state.paths[0].blocked=true;
+				}
+				x++;
+				if(x>4) x=0;
+				break;
+			case 4:
+				if(mtsService.state.paths.length>0){
+					mtsService.state.paths[0].delayfactor=1;
+					mtsService.state.paths[0].speedLimit=-1;
+					mtsService.state.paths[0].blocked=false;
+				}
+				x++;
+				if(x>4) x=0;
+				break;
+			}
+			if(mtsService.state.paths.length>0){
+				$log.info(mtsService.state.paths[0]);
+			}
 		};
 		
 		$scope.stepOnce=function(){
@@ -142,12 +205,18 @@
 		};	
 		  $scope.time = mtsService.state.time;
 
-
+       $scope.getDepotCount = function(){
+    	   var c = 0;
+    	   for(var i=0;i<mtsService.state.vehicles.length;i++){
+    		   if(mtsService.state.vehicles[i].outOfService) c++;
+    	   }
+    	   return c;
+       };
   };
   
   var stopController = function($scope, $log,mtsService){
 		//$log.info('stopController');
-	  $scope.debug = true;
+	  $scope.debug = false;
 	  $scope.time = mtsService.state.time;
 
 	  $scope.$watch('time',function(){
@@ -205,6 +274,8 @@
 					 var destination = mtsService.getStop(origin.type, destinationStopId);
 					 var path = mtsService.getPath(origin,destination);
 					 if(path){
+						 //$log.info('route path:');
+						 //$log.info(path);
 						 $scope.routePaths.push({path:path,route:route,startLocation:index,endLocation:destinationLocation,vehicleAtPath:[]});
 					 }
 				 }
@@ -217,7 +288,17 @@
   };
   var pathController = function($scope, $log,mtsService){
 	  $scope.time = mtsService.state.time;
-	  $scope.debug=true;
+	  $scope.debug=false;
+	  
+	  $scope.pathBlocked=function(){
+		  if($scope.path) return $scope.path.blocked;
+		  return false;
+	  };
+	  
+	  $scope.pathHasHazard=function(){
+		  return true;
+	  };
+	  
 	  $scope.$watch('time',function(){
 		  if(!(typeof $scope.path === "undefined") && !(typeof $scope.path.path === "undefined")){
 			  //$log.info('path noticed time changed');

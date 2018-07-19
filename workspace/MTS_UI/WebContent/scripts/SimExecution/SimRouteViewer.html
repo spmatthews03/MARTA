@@ -30,10 +30,10 @@
 			</md-content>
 		</div>
 	    <div  class="sim-exec-controls-panel" layout="row" layout-wrap layout-align="center center" ng-click="depotFill()">
-	       <md-icon>local_hospital</md-icon>
+	       <md-icon class="depot-icon">local_hospital</md-icon>
 	       <div class="title-label">Depot</div>
 	       <div flex></div>
-	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">vehicles:</div><div class="time-value">{{mts.depotVehicles.length}}</div></div>
+	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">vehicles:</div><div class="time-value">{{getDepotCount()}}</div></div>
 	    </div>
 	    <div layout="column">
 	      <div ng-repeat="vehicle in mts.vehicles | filter : {outOfService:true} track by $index" layout="row" layout-wrap>

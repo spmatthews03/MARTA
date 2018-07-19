@@ -19,7 +19,7 @@
 		           <div layout="row" layout-align="start start">
 			           <div class="report-field">Time {{report.timeRank}}</div>
 			           <div class="report-field">Path: stop ID {{report.pathKey.origin}} --> stop ID {{report.pathKey.destination}}</div>
-			           <div class="report-field">amount: {{report.amount}}</div>
+			           <div class="report-field">amount: {{roundAmount(report.amount)}}</div>
 		           </div>
 		         </div>
 		     </div>

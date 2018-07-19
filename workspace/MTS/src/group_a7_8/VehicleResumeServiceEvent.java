@@ -57,7 +57,12 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime), (Bus)vehicle);
 			this.getEventQueue().add(moveEvent);
 
-		} else if (vehicle.getType().equals("Train")){
+		} else if (vehicle.getType().equals("Train")) {
+			
+			vehicle.setOutOfService(false); /* Train is in service */
+			
+			vehicle.set_prevLocation(0);
+			vehicle.set_nextLocation(1);
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);
 			double distanceFromDepot = system.getDepot().findDistance(station);
 			int travelTime = 1 + (int)(distanceFromDepot * 60 / vehicle.getSpeed());

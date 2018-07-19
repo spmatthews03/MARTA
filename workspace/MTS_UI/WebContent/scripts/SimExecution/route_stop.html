@@ -1,14 +1,15 @@
 <div ng-show="{'out-of-service':stop.stop.outOfService}">
   <div layout="row" layout-wrap>
     <div class="stop">
-      <div layout="row" layout-wrap layout-align="space-between center"">
+      <div layout="row" layout-wrap>
          <div layout="column" class="stop-icon-panel">
 	     	<md-icon ng-show="stop.stop.type=='busStop'" class="stop-icon" md-font-set="fa">&#xf018</md-icon>
 	     	<md-icon ng-show="stop.stop.type=='railStop'" class="stop-icon" md-font-set="fa">&#xf557</md-icon>
 	     	<md-icon ng-show="stop.stop.type=='depot'" class="stop-icon" md-font-set="fa">&#xf0f8</md-icon>
-	     	<div class="debug-label" ng-show="debug">L{{order}} ID{{stop.ID}}</div>
+	     	<div class="debug-label" ng-show="debug">L{{order}} ID{{stop.stop.ID}}</div>
          </div>
-         <div layout="column" layout-align="center end">
+         <div style="width:2px"><md-icon ng-show="stop.stop.outOfService" class="hazard-indicator">warning</md-icon></div>
+         <div flex layout="column" layout-align="center end">
 		      <div class="stop-name">{{stop.stop.name}}</div>
 		      <div layout="row" layout-align="center center">
 		      	<md-icon ng-show="stop.stop.type=='railStop' || stop.stop.type=='busStop'" class="passenger-icon" md-font-set="fa">&#xf007</md-icon>

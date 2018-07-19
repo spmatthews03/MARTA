@@ -11,9 +11,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 
-import group_a7_8.BlockPathEvent;
 import group_a7_8.ClearPathDelayEvent;
-import group_a7_8.ClearPathEvent;
 import group_a7_8.ClearSpeedLimitEvent;
 import group_a7_8.FacilityOutOfServiceEvent;
 import group_a7_8.FacilityResumeServiceEvent;
@@ -366,7 +364,8 @@ public class SimDriver implements StateChangeListener{
             	}
             	
             	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[3]));
-            	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus);
+            	int train_stall_duration = 0;
+            	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus, train_stall_duration);
             	System.out.printf("%s\n", setBusOutOfServiceEvent.toJSON());
             	simEngine.add(setBusOutOfServiceEvent);
             	VehicleResumeServiceEvent clearBusOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceBus);
@@ -376,33 +375,28 @@ public class SimDriver implements StateChangeListener{
             case "train_down":
             	//sets the down time on the specified train
             	//format: train_down,<StartAt>,<TrainID><StallDuration>,<RepairDuration>
+            	String  cmd 					= tokens[0].trim();
+            	Integer start_time 				= Integer.decode(tokens[1].trim());
+            	Integer my_trainID  			= Integer.decode(tokens[2].trim());
+            	Integer delta_stall_period		= Integer.decode(tokens[3].trim());
+            	Integer repairDuration          = Integer.decode(tokens[4].trim());
+
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\trailCarID: %d\n\trepairDuration: %d\n", 
-            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            					  cmd, start_time, my_trainID, delta_stall_period, repairDuration);
             	
-            	if (martaModel.getTrain(Integer.parseInt(tokens[2])) == null){
-            		System.out.println(" train " + Integer.parseInt(tokens[2]) + " has not been created");
+            	RailCar tran_broken_down = martaModel.getTrain(my_trainID);
+            	if (tran_broken_down == null) {
+            		System.out.println(" train " + my_trainID + " has not been created");
                     return true;
             	}
-            	
-            	RailCar outOfServiceRailCar= martaModel.getTrain(Integer.decode(tokens[2]));
-            	
-            	VehicleOutOfServiceEvent setRailOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar);
+            	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
+            			new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(),
+            										 start_time, tran_broken_down,
+            										 delta_stall_period);
+
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
-            	
-            	Integer stallDuration = Integer.decode(tokens[1])+Integer.decode(tokens[3]);
 
-            	BlockPathEvent setBlockPathEvent = new BlockPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceRailCar, stallDuration);
-            	System.out.printf("%s\n", setBlockPathEvent.toJSON());
-            	simEngine.add(setBlockPathEvent);
-            	
-            	ClearPathEvent clearBlockPathEvent = new ClearPathEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]) + stallDuration, outOfServiceRailCar);
-            	System.out.printf("%s\n", clearBlockPathEvent.toJSON());
-            	simEngine.add(clearBlockPathEvent);            	
-            	
-            	VehicleResumeServiceEvent clearRailOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[3])+Integer.decode(tokens[4]), outOfServiceRailCar);
-            	System.out.printf("%s\n", clearRailOutOfServiceEvent.toJSON());
-            	simEngine.add(clearRailOutOfServiceEvent);
             	return true;
             case "fuel_report":
                 break;
