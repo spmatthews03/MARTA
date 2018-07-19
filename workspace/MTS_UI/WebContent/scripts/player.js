@@ -18,6 +18,23 @@
             '</div>'
   	}
   };
+  var paletteDirective = function(){
+    return{
+      restrict:'E',
+      scope:{},
+      controller: 'paletteController',
+      replace: true,
+      template: 
+            '<div class="palette-panel" layout="row" layout-wrap>'+
+              '<div ng-repeat="color in colors track by $index" class="color-tile" >'+
+                 '<div class="color-swatch {{colors[$index]}}-background-color"></div>'+
+                 '<div class="name">{{colors[$index]}}</div>'+
+              '</div>'+
+              '<div flex></div>'+
+            '</div>'
+    }
+  };
+
   var teamDirective = function(){
   	return{
   		restrict:'E',
@@ -61,6 +78,11 @@
 		$log.info('videoController');
 			
   };
+  var paletteController = function($scope, $log,gtColors){
+    $log.info('paletteController');
+    $scope.colors = gtColors.getColorNames();
+  };
+
   var teamController = function($scope, $log, $interval){
 		$log.info('teamController');
 		$scope.delay = 30000; // 3 seconds
@@ -96,6 +118,8 @@
   angular.module('Video',['ngMaterial'])
   .directive('a78Video',[videoDirective])
   .directive('team',[teamDirective])
+  .directive('palette',[paletteDirective])
+  .controller('paletteController',['$scope', '$log', 'GTColorsService', paletteController])  
   .controller('teamController',['$scope', '$log', '$interval', teamController])  
   .controller('videoController',['$scope', '$log', videoController]);  
 		
