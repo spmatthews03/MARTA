@@ -4,7 +4,7 @@
   var reportDirective = function(){
   	return{
   		restrict:'E',
-  		scope:{reportdata:"=",title:"@",summarylabel:"@"},
+  		scope:{reportdata:"=",title:"@",summarylabel:"@",colorservice:"="},
   		controller: 'reportController',
   		replace: true,
       template: '<div layout="column">'+
@@ -37,17 +37,23 @@
                     '<div class="bar-chart-item"  layout="row" layout-wrap>'+
                         '<div class="item-label" layout="column" layout-align="center center">{{item.name}}</div>'+
                         '<div flex layout="column">'+
-                          '<div class="item-element color-{{(index%colorCount+1)}}" style="width:{{getWidth()}}%;" ng-class=""></div>'+
+                          '<div class="item-element {{getColor(index)}}" style="width:{{getWidth()}}%;" ng-class=""></div>'+
                         '</div>'+
                         '<div flex="5"></div>'+
                    '</div>'+
                 '</div>' 
     }
   };
+
+  colorService = {};
   //controller
   var barItemController = function($scope, $log){
     //$log.info('barItemController');
-    $scope.colorCount=6; //unfortunately color count is hard coded to match the paletted in the css
+    $scope.colorCount=colorService.getPaletteSize(); 
+    $scope.getColor=function(index){
+      $log.info('class for '+index+" is "+ colorService.getBackgroundColorClass(index));
+      return colorService.getBackgroundColorClass(index);
+    };
 
     $scope.getWidth=function(){
       var width=0;
@@ -64,6 +70,7 @@
   };
   var reportController = function($scope, $log){
 		$log.info('reportController');
+    colorService = $scope.colorservice;
   };
   angular.module('Report',['ngMaterial'])
   .directive('reportSummaryHeader',[reportSummaryHeaderDirective])
