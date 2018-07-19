@@ -77,10 +77,15 @@ public class AsRestServer {
                 org.glassfish.jersey.servlet.ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(0);
 
+        StringBuilder restImplementationClassNames = new StringBuilder();
+        restImplementationClassNames.append(CommandService.class.getCanonicalName());
+        restImplementationClassNames.append(";");
+        restImplementationClassNames.append(StateService.class.getCanonicalName());
+        
         jerseyServlet.setInitParameter(
                 "jersey.config.server.provider.classnames",
-                CommandService.class.getCanonicalName());	    
-	    
+                restImplementationClassNames.toString());
+        
 	    // Start things up! By using the server.join() the server thread will join with the current thread.
 	    // See "http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Thread.html#join()" for more details.
 	    jettyServer.start();

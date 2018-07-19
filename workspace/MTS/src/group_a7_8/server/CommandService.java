@@ -17,6 +17,13 @@ public class CommandService {
 	public CommandService() {
 	}
 	
+//you can call this endpoint by using url:
+//  http://localhost:6310/api/MTS/command?line=add_stop,0,Appleville,5,0.0,0.08
+// sample response    {"commandLine":"add_stop,0,Appleville,5,0.0,0.08","quit":false}
+//  http://localhost:6310/api/MTS/command?line=quit
+// sample response    {"commandLine":"quit","quit":true}
+// the response may change as the implementation gets refactored
+	
 	@GET
     @Path("command")
     @Produces(MediaType.APPLICATION_JSON)
