@@ -85,7 +85,7 @@ public class MoveBusEvent extends SimEvent{
 
             // Create a fuel report to next stop
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
-                    (timeRank + travelTime), activeStop.findDistance(nextStop));
+                    (timeRank + travelTime), activeStop.findDistance(nextStop), activeBus.getPassengers());
             system.getFuelConsumptionList(activeBus).add(report);
             activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToNextStop);
 
@@ -131,7 +131,7 @@ public class MoveBusEvent extends SimEvent{
 
             // create fuel report for traveling to depot
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, system.getDepot()),
-                    (timeRank + travelTime), distanceToDepot);
+                    (timeRank + travelTime), distanceToDepot, activeBus.getPassengers());
             system.getFuelConsumptionList(activeBus).add(report);
             activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToDepot);
 

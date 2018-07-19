@@ -8,20 +8,16 @@ public class FuelConsumption {
     private PathKey pathKey;
     private int timeRank;
     private double amount;
+    private int passengers;
 
-
-    public FuelConsumption(Bus bus, PathKey pathKey, int timeRank, double distance) {
+    public FuelConsumption(Bus bus, PathKey pathKey, int timeRank, double distance, int passengers) {
 		super();
 		this.bus = bus;
 		this.pathKey = pathKey;
 		this.timeRank = timeRank;
 		this.amount = distance;
+		this.passengers = passengers;
 	}
-
-//	public FuelConsumption(Bus bus, PathKey pathKey){
-//        this.bus = bus;
-//        this.pathKey = pathKey;
-//    }
 
     public double getFuelConsumed(){ return amount; }
 
@@ -31,6 +27,12 @@ public class FuelConsumption {
 
     public int getTimeRank(){ return timeRank; }
 
+    public int getPassengers() { return passengers; }
+
+    public void setPassengers(int passengers){
+        this.passengers = passengers;
+    }
+
     public void setBus(Bus bus) { this.bus = bus; }
 
     public void setPathKey(PathKey pathKey) { this.pathKey = pathKey; }
@@ -38,11 +40,6 @@ public class FuelConsumption {
     public void setTimeRank(int timeRank) { this.timeRank = timeRank; }
 
     public void setAmount(double amount) { this.amount = amount; }
-
-    // Helper method to update the amount of fuel consumed
-    private void updateFuelConsumption(){
-        // TODO: populate method
-    }
 
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
@@ -58,6 +55,9 @@ public class FuelConsumption {
         sb.append(',');
         sb.append("\"amount\":");
         sb.append(this.amount);
+        sb.append(',');
+        sb.append("\"passengers\":");
+        sb.append(this.passengers);
         sb.append('}');
         return sb.toString();
     }
