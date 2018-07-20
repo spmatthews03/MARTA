@@ -75,6 +75,10 @@ public class MoveBusEvent extends SimEvent{
         BusStop nextStop = system.getBusStop(nextStopID);
         System.out.println(" the bus is heading to stop: " + Integer.toString(nextStopID) + " - " + nextStop.getFacilityName() + "\n");
 
+        if(nextStop.get_out_of_service()){
+            System.out.println("bus stop " + Integer.toString(nextStopID) + " is out of service moving on...");
+        }
+
         // find distance to stop to determine next event time
         Double distanceToNextStopThenDepot = activeStop.findDistance(nextStop) + nextStop.findDistance(system.getDepot());
 
