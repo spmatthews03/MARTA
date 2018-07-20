@@ -98,7 +98,7 @@ public class MoveBusEvent extends SimEvent{
             	}
             }
             
-            int travelTime = 1 + (int)((distanceToNextStop.intValue() * 60 / true_speed) * delayfactor) ;
+            int travelTime = (int)((1 + (distanceToNextStop.intValue() * 60 / true_speed)) * delayfactor) ;
 
             // Create a fuel report to next stop
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
