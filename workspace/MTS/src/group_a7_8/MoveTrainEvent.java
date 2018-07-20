@@ -19,7 +19,9 @@ public class MoveTrainEvent extends SimEvent{
     
     private RailRoute get_current_route() {
         RailCar activeTrain = get_current_train();
-        RailRoute activeRoute = system.getRailRoute(activeTrain.getRouteID());
+        Integer train_route_id = activeTrain.getRouteID();
+        System.out.println("train_route_id: " + train_route_id);
+        RailRoute activeRoute = system.getRailRoute(train_route_id);
     	return activeRoute;
 	}
 
@@ -147,13 +149,25 @@ public class MoveTrainEvent extends SimEvent{
 
         // identify the train that will move
         RailCar activeTrain = get_current_train();
+        if (activeTrain == null) {
+        	System.out.println("Error MoveTrain Event " + this.eventID + ": No train available");
+        	return;
+        }
         System.out.println(" the train being observed is: " + Integer.toString(activeTrain.getID()));
 
         // identify the current station
         RailRoute activeRoute = this.get_current_route();
+        if (activeRoute == null) {
+        	System.out.println("Error MoveTrain Event " + this.eventID + ": No train route available");
+        	return;
+        }
         System.out.println(" the train is moving on rail: " + Integer.toString(activeRoute.getID()));
 
         RailStation activeStation = this.get_current_station();
+        if (activeStation == null) {
+        	System.out.println("Error MoveTrain Event " + this.eventID + ": No station available");
+        	return;
+        }
         System.out.println(" the Train is currently at station: " + Integer.toString(activeStation.get_uniqueID()) + " - " + activeStation.getFacilityName());
 
         RailStation nextStation = this.get_next_station(); /* Determine next station */
