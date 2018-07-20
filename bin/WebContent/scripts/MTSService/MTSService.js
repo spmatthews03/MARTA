@@ -14,6 +14,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        commandsQueue:[],
 	        reports:[],
 	  	  	editMode:false,
+	  	  	priorSim:false,
+	  	  	holdCommands:false,
 	  		commandOption:""
    };
 	
@@ -30,7 +32,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 
     
    var sendCommands = function(){
-	   if(!commandBlocked && state.commandsQueue.length>0){
+	   if(!state.holdCommands && !commandBlocked && state.commandsQueue.length>0){
 		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
@@ -178,8 +180,97 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	return result;
     };
 
+    var reset = function(){
+    	//$log.info('resetting system');
+    	/*
+    	 * 			time:0,
+	    	vehicles:[],
+	        routes:[],
+	        stops:[],
+	        paths:[],
+	        events:[],
+	        commands:[],
+	        commandsQueue:[],
+	        reports:[],
+	  	  	editMode:false,
+	  	  	priorSim:false,
+	  		commandOption:""
+    	 */
+    	state.time=0;
+    	state.vehicles.splice(0,state.vehicles.length);
+    	state.routes.splice(0,state.routes.length);
+    	state.stops.splice(0,state.stops.length);
+    	state.paths.splice(0,state.paths.length);
+    	state.events.splice(0,state.events.length);
+    	state.commands.splice(0,state.commands.length);
+    	state.commandsQueue.splice(0,state.commandsQueue.length);
+    	state.reports.splice(0,state.reports.length);
+  	  	editMode:false;
+  	  	priorSim:false;
+  		commandOption:"";
+    	//$log.info('reset completed')
+    	//$log.info(state);
+    };
 
     connect();
+    
+    var countBus = function(){
+    	var c=0;
+       for(var i=0;i<state.vehicles.length;i++){
+    	   if(state.vehicles[i].type=='Bus')  c++;
+       }	
+       return c;
+    };
+    var countBusStop = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='busStop')  c++;
+       }	
+       return c;
+    };
+    var countBusRoute = function(){
+    	var c=0;
+       for(var i=0;i<state.routes.length;i++){
+    	   if(state.routes[i].type=='busRoute')  c++;
+       }	
+       return c;
+    };
+    var countTrain = function(){
+    	var c=0;
+       for(var i=0;i<state.vehicles.length;i++){
+    	   if(state.vehicles[i].type=='Train')  c++;
+       }	
+       return c;
+    };
+    var countTrainStop = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='railStop')  c++;
+       }	
+       return c;
+    };
+    var countTrainRoute = function(){
+    	var c=0;
+       for(var i=0;i<state.routes.length;i++){
+    	   if(state.routes[i].type=='railRoute')  c++;
+       }	
+       return c;
+    };
+    var countDepot = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='Depot')  c++;
+       }	
+       return c;
+    };
+    var countMoveEvent = function(){
+    	var c=0;
+       for(var i=0;i<state.events.length;i++){
+    	   if(state.events[i].type=='move_bus' || state.events[i].type=='move_train')  c++;
+       }	
+       return c;
+    };
+    
    
     return {
     	state: state,
@@ -187,7 +278,16 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	getStop:getStop,
     	getPath:getPath,
     	getStopVehicle:getStopVehicle,
-    	getVehicleEvent:getVehicleEvent
+    	getVehicleEvent:getVehicleEvent,
+    	reset:reset,
+    	countBus:countBus,
+    	countBusStop:countBusStop,
+    	countBusRoute:countBusRoute,
+    	countTrain:countTrain,
+    	countTrainStop:countTrainStop,
+    	countTrainRoute:countTrainRoute,
+    	countDepot:countDepot,
+    	countMoveEvent:countMoveEvent
     };
     
   };

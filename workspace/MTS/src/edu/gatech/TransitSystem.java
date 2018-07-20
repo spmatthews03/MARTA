@@ -511,5 +511,19 @@ public class TransitSystem {
     	sb.append(']');
     	return sb.toString();
 	}
+
+	public void reset() {
+		this.fuelConsumption.clear();
+		this.hazards.clear();
+		this.paths.clear();
+		this.buses.clear();
+		this.busRoutes.clear();
+		this.busstops.clear();
+		this.trains.clear();
+		this.railRoutes.clear();
+		this.railstations.clear();
+		this.depot=null;
+		
+	}
     
 }

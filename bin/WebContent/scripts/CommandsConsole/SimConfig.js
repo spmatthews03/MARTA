@@ -45,7 +45,7 @@
 		                 '<div ng-switch="mts.commandOption">'+
 			                 '<add-bus-stop-form ng-switch-when="addBusStop"></add-bus-stop-form>'+
 			                 '<add-bus-route-form ng-switch-when="addBusRoute"></add-bus-route-form>'+
-			                 '<extend-bus-route-form ng-switch-when="extendBusRoute"></extend-bus-route-form>'+
+			                 '<extend-bus-route-form ng-switch-when="extendBusRoute" ></extend-bus-route-form>'+
 			                 '<add-bus-form ng-switch-when="addBus"></add-bus-form>'+
 			                 '<add-event-form ng-switch-when="addEvent"></add-event-form>'+
 			                 '<add-bus-path-delay-form ng-switch-when="addBusPathDelay"></add-bus-path-delay-form>'+
@@ -56,7 +56,7 @@
 							 '<add-train-form ng-switch-when="addTrain"></add-train-form>'+
 							 '<add-train-path-delay-form ng-switch-when="addTrainPathDelay"></add-train-path-delay-form>'+
 							 '<set-train-speed-limit-form ng-switch-when="setTrainSpeedLimit"></set-train-speed-limit-form>'+
-				            '<command-entry ng-switch-default></command-entry>'+
+				            '<div ng-switch-default><h1 style="color:red;">should not be here!!!</h1></div>'+
 		                 '</div>'+
 		              '</div>'+
 
@@ -89,7 +89,7 @@
   	}
   }; 
   //controllers
-  var simConfigController = function($scope, $log, mtsService, fileReader){
+  var simConfigController = function($scope, $log, $http, mtsService, fileReader){
 	  //$log.info('simConfigController');
 	  $scope.toggleOn = false;
 	  $scope.switch = function(){
@@ -222,6 +222,18 @@
 
 	  $scope.getFile = function(){
 			$log.info('reading file '+$scope.file.name);
+			mtsService.reset();
+			var promise = $http.get('/api/MTS/reset');
+			mtsService.state.holdCommands = true;
+	    	promise.then(
+	    	          function(payload) { 
+	    	        	  //$log.info('service call returned:', payload);
+	    	        	  mtsService.state.holdCommands = false;
+	    	          },
+	    	          function(errorPayload) {
+	    	              $log.error('failure error:', errorPayload);
+	    	          });
+			
 			fileReader.readAsText($scope.file, $scope)
             .then(function(result) {
                  //$log.info(result);
@@ -246,7 +258,7 @@
   .directive("ngFileSelect",['$log',function($log){
 	  return {
 	    link: function($scope,el){
-	      //$log.info('file select directive fired');
+	      $log.info('file select directive fired');
 	      el.bind("change", function(e){
 	      
 	        $scope.file = (e.srcElement || e.target).files[0];
@@ -257,5 +269,5 @@
 	    
 	  }
   }])
-  .controller('simConfigController',['$scope', '$log','MTSService', 'FileReader', simConfigController]);
+  .controller('simConfigController',['$scope', '$log','$http', 'MTSService', 'FileReader', simConfigController]);
 }());

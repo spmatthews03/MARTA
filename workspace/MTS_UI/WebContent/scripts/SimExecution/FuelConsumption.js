@@ -55,7 +55,7 @@
 		
   };
   var fuelConsumptionLogController = function($scope, $log, mtsService){
-		$log.info('fuelConsumptionLogController');
+		//$log.info('fuelConsumptionLogController');
 		$scope.reports = mtsService.state.reports;
 		$scope.roundAmount = function(amount){
 			return (Math.round(amount*100)/100);

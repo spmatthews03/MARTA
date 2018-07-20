@@ -1,0 +1,32 @@
+.member-panel .md-card-image{
+    width:200px;
+    border: solid 1px lightgrey;
+}
+
+.indicator.selected{
+	color:orange;
+}
+
+.team-panel md-card-avatar{
+	width:120px;
+	height:120px;
+}
+
+.team-panel .md-user-avatar{
+	width:120px;
+}
+
+.team-panel md-card-header{
+	width:380px;
+}
+
+.team-panel md-card-title-text{
+	text-align: center;
+}
+
+.team-panel md-card-header-text .md-title{
+	padding:25px 0px 0px 8px;
+}
+.team-panel md-card-header-text .md-subhead{
+	padding:0px 0px 0px 8px;
+}

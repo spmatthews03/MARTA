@@ -719,5 +719,10 @@ public class SimDriver implements StateChangeListener{
 		sb.append("}");
 		return sb.toString();
 	}
+
+	public void reset() {
+		martaModel.reset();
+		simEngine.reset();
+	}
 	
 }

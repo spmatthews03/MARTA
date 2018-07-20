@@ -60,4 +60,10 @@ public class SimQueue {
 	public Integer getTime() {
 		return time;
 	}
+
+	public void reset() {
+		eventQueue.clear();
+		time=0;
+		nextEventId=0;
+	}
 }
