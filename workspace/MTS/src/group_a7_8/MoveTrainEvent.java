@@ -218,7 +218,7 @@ public class MoveTrainEvent extends SimEvent{
                 System.out.println(" MoveTrainEvent: \t" + current_path.toJSON());
 
         		int delta_stall_period = activeTrain.get_delta_stall_duration();
-        		Integer absolute_stall_period = getRank() + delta_stall_period;
+        		Integer absolute_stall_period = getRank() + 1;//delta_stall_period;
 
                 eventQueue.add(
                 		new MoveTrainEvent(system, eventID,
@@ -253,10 +253,25 @@ public class MoveTrainEvent extends SimEvent{
 		RailStation activeStation = this.get_current_station();
         RailStation nextStation = this.get_next_station();
 
+        Path currentPath = system.getPath(system.getPathKey(activeStation, nextStation));
+        
+        // get delay factor
+        Double delayfactor = currentPath.getDelayFactor();
+        
+        // calculate the effect of speed limit
+        Integer speedlimit = currentPath.getSpeedLimit();
+        Integer true_speed = activeTrain.getSpeed();
+        if (speedlimit != null) {
+        	if (speedlimit < true_speed) {
+        		true_speed = speedlimit;
+        	}
+        }
+        
         // Find distance to station to determine next event time
-        Double travelDistance = activeStation.findDistance(nextStation);
+        Double travelDistance = activeStation.findDistance(nextStation);    
+       
         // conversion is used to translate time calculation from hours to minutes
-        int travelTime = 1 + (travelDistance.intValue() * 60 / activeTrain.getSpeed());
+        int travelTime = (int)((1 + (travelDistance.intValue() * 60 / true_speed)) * delayfactor) ;
         int nextLocation = this.get_next_location();
         activeTrain.setLocation(nextLocation);
         
@@ -274,12 +289,39 @@ public class MoveTrainEvent extends SimEvent{
 
         RailCar activeTrain = this.get_current_train();
 		RailStation activeStation = this.get_current_station();
-        RailStation nextStation = this.get_next_next_station();
+		RailStation nextStation = this.get_next_station();
+        RailStation nextNextStation = this.get_next_next_station();
 
+        Path currentPath = system.getPath(system.getPathKey(activeStation, nextStation));
+        Path nextPath = system.getPath(system.getPathKey(nextStation, nextNextStation));
+        
+        // get delay factor
+        Double currentdelayfactor = currentPath.getDelayFactor();
+        Double nextdelayfactor = nextPath.getDelayFactor();
+        
+        // calculate the effect of speed limit
+        Integer currentspeedlimit = currentPath.getSpeedLimit();
+        Integer current_true_speed = activeTrain.getSpeed();
+        if (currentspeedlimit != null) {
+        	if (currentspeedlimit < current_true_speed) {
+        		current_true_speed = currentspeedlimit;
+        	}
+        }
+        Integer nextcurrentspeedlimit = nextPath.getSpeedLimit();
+        Integer next_true_speed = activeTrain.getSpeed();
+        if (nextcurrentspeedlimit != null) {
+        	if (nextcurrentspeedlimit < next_true_speed) {
+        		next_true_speed = nextcurrentspeedlimit;
+        	}
+        }
+        
         // Find distance to station to determine next event time
-        Double travelDistance = activeStation.findDistance(nextStation);
+        Double currentTravelDistance = activeStation.findDistance(nextStation);
+        Double nextTravelDistance = nextStation.findDistance(nextNextStation);
+       
         // conversion is used to translate time calculation from hours to minutes
-        int travelTime = 1 + (travelDistance.intValue() * 60 / activeTrain.getSpeed());
+        int travelTime = (int)(((1 + (currentTravelDistance.intValue() * 60 / current_true_speed)) * currentdelayfactor) 
+        		+ ((1 + (nextTravelDistance.intValue() * 60 / next_true_speed)) * nextdelayfactor)) ;
         int nextLocation = this.get_next_next_location();
         activeTrain.setLocation(nextLocation);
         
