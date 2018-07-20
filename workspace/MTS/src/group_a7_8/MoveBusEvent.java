@@ -1,5 +1,7 @@
 package group_a7_8;
 
+import javax.validation.constraints.Min;
+
 import edu.gatech.Bus;
 import edu.gatech.BusRoute;
 import edu.gatech.SimEvent;
@@ -81,7 +83,22 @@ public class MoveBusEvent extends SimEvent{
         if(!activeBus.getOutOfService() && activeBus.hasEnoughFuel(distanceToNextStopThenDepot)) {
 
             Double distanceToNextStop = activeStop.findDistance(nextStop);
-            int travelTime = 1 + (distanceToNextStop.intValue() * 60 / activeBus.getSpeed());
+            
+            Path currentPath = system.getPath(system.getPathKey(activeStop, nextStop));
+            
+            // get delay factor
+            Double delayfactor = currentPath.getDelayFactor();
+            
+            // calculate the effect of speed limit
+            Integer speedlimit = currentPath.getSpeedLimit();
+            Integer true_speed = activeBus.getSpeed();
+            if (speedlimit != null) {
+            	if (speedlimit < true_speed) {
+            		true_speed = speedlimit;
+            	}
+            }
+            
+            int travelTime = 1 + (int)((distanceToNextStop.intValue() * 60 / true_speed) * delayfactor) ;
 
             // Create a fuel report to next stop
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
@@ -89,12 +106,14 @@ public class MoveBusEvent extends SimEvent{
             system.getFuelConsumptionList(activeBus).add(report);
             activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToNextStop);
 
-            // drop off and pickup new passengers at current stop
-            int currentPassengers = activeBus.getPassengers();
-            int passengerDifferential = activeStop.exchangeRiders(getRank(), currentPassengers, activeBus.getCapacity());
-            System.out.println(" passengers pre-stop: " + Integer.toString(currentPassengers) + " post-stop: " + (currentPassengers + passengerDifferential));
-            activeBus.adjustPassengers(passengerDifferential);
-
+            if (activeStop.get_out_of_service() == false) {
+	            // drop off and pickup new passengers at current stop
+	            int currentPassengers = activeBus.getPassengers();
+	            int passengerDifferential = activeStop.exchangeRiders(getRank(), currentPassengers, activeBus.getCapacity());
+	            System.out.println(" passengers pre-stop: " + Integer.toString(currentPassengers) + " post-stop: " + (currentPassengers + passengerDifferential));
+	            activeBus.adjustPassengers(passengerDifferential);
+            }
+            
             // conversion is used to translate time calculation from hours to minutes
             activeBus.setLocation(nextLocation);
 
@@ -102,10 +121,6 @@ public class MoveBusEvent extends SimEvent{
             eventQueue.add(new MoveBusEvent(system, eventID, getRank() + travelTime,bus));
         }
         else if(activeBus.getOutOfService()){
-            // calculate distance to depot
-            Double distanceToDepot = activeStop.findDistance(system.getDepot());
-            int travelTime = 1 + (distanceToDepot.intValue() * 60 / activeBus.getSpeed());
-
             // create fuel report for traveling to depot
 //            FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, system.getDepot()),
 //                    (timeRank + travelTime), distanceToDepot);

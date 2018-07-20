@@ -100,7 +100,7 @@ public class SimDriver implements StateChangeListener{
             	double inputYCoord	 = Double.parseDouble(tokens[5].trim());
             	
             	int railStationID = martaModel.makeRailStation(station_uniqueID, inputName, inputRiders, inputXCoord, inputYCoord);
-                System.out.println(" New Rail Station: " + Integer.toString(railStationID) + " created");
+                System.out.println(" new rail station: " + Integer.toString(railStationID) + " created");
                 break;
             case "add_route":
                 int busRouteID = martaModel.makeBusRoute(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
@@ -419,7 +419,7 @@ public class SimDriver implements StateChangeListener{
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
 
-            	return true;
+            	break;
             case "fuel_report":
                 break;
 
