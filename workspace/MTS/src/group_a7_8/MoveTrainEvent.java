@@ -271,8 +271,11 @@ public class MoveTrainEvent extends SimEvent{
         Double travelDistance = activeStation.findDistance(nextStation);    
        
         // conversion is used to translate time calculation from hours to minutes
-        int travelTime = (int)((1 + (travelDistance.intValue() * 60 / true_speed)) * delayfactor) ;
-        int nextLocation = this.get_next_location();
+        int travelTime = (int)((1 + (travelDistance.intValue() * 60 / true_speed)) * delayfactor);
+        
+        RailRoute activeRoute = system.getRailRoute(train.getRouteID());
+        int activeLocation = train.getLocation();
+        int nextLocation = activeRoute.getNextLocation(activeLocation);
         activeTrain.setLocation(nextLocation);
         
         MoveTrainEvent my_move_event = new MoveTrainEvent(system, eventID, getRank() + travelTime, train);
@@ -322,7 +325,10 @@ public class MoveTrainEvent extends SimEvent{
         // conversion is used to translate time calculation from hours to minutes
         int travelTime = (int)(((1 + (currentTravelDistance.intValue() * 60 / current_true_speed)) * currentdelayfactor) 
         		+ ((1 + (nextTravelDistance.intValue() * 60 / next_true_speed)) * nextdelayfactor)) ;
-        int nextLocation = this.get_next_next_location();
+        
+        RailRoute activeRoute = system.getRailRoute(train.getRouteID());
+        int activeLocation = train.getLocation();
+        int nextLocation = activeRoute.getNextLocation(activeLocation);
         activeTrain.setLocation(nextLocation);
         
 		eventQueue.add(new MoveTrainEvent(system, eventID, getRank() + travelTime, train));

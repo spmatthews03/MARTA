@@ -137,8 +137,6 @@ public class MoveBusEvent extends SimEvent{
             activeBus.adjustPassengers(-(dropAllPassengers));
 
             // set destination to first stop         
-			Integer lastStopLocation = system.getBusRoute(activeBus.getRouteID()).getLength() - 1;
-			activeBus.set_prevLocation(lastStopLocation);
 			activeBus.set_nextLocation(0);
             
             int towingDuration = activeBus.get_delta_stall_duration();
