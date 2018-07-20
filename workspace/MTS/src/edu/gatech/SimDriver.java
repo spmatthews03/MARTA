@@ -366,11 +366,13 @@ public class SimDriver implements StateChangeListener{
             	FacilityOutOfServiceEvent setStationOutOfServiceEvent = new FacilityOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceStation);
             	System.out.printf("%s\n", setStationOutOfServiceEvent.toJSON());
             	simEngine.add(setStationOutOfServiceEvent);
+            	
+
             	FacilityResumeServiceEvent clearStationOutOfServiceEvent = new FacilityResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2]), outOfServiceStation);
             	System.out.printf("%s\n", clearStationOutOfServiceEvent.toJSON());
             	simEngine.add(clearStationOutOfServiceEvent);
             	
-            	return true;
+            	break;
             case "bus_down":
             	//sets the down time on the specified bus
             	//format: bus_down,<StartAt>,<BusID>,<TowingDuration>,<RepairDuration>

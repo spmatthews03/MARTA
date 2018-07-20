@@ -9,12 +9,18 @@ import edu.gatech.TransitSystem;
 public class MoveTrainEvent extends SimEvent{
 
     private RailCar train;
+    public boolean skip_station;
 
 	public MoveTrainEvent(TransitSystem system, int eventID, int timeRank, RailCar train) {
     	super(system,timeRank,"move_train",eventID);
     	this.train = train;
+    	this.skip_station = false;
     	this.debug_print();
     }
+	
+	public void skip_next_station() {
+		this.skip_station = true;
+	}
 
 	protected void debug_print () {
 		System.out.println(" " + this.getClass().getName() + " Instantiated");
@@ -221,23 +227,28 @@ public class MoveTrainEvent extends SimEvent{
                 System.out.println(" MoveTrainEvent: Path is NOT blocked");
                 System.out.println(" MoveTrainEvent: \t" + current_path.toJSON());
 
-            	if (activeStation.get_out_of_service()) { /* Station is out of service */
+            	if (nextStation.get_out_of_service() && !this.skip_station) { /* Station is out of service && 
+            																	moveStation is not suppose to skip a station */
                     System.out.println(" MoveTrainEvent: Station out of service");
                     System.out.println(" MoveTrainEvent: \t" + activeStation.toJSON());
 
             		this.move_train_skip_station();
             	} else { /* Station is in service */
-                    System.out.println(" MoveTrainEvent: Station in service");
-                    System.out.println(" MoveTrainEvent: \t" + activeStation.toJSON());
+            		if (this.skip_station) {
+                        System.out.println(" MoveTrainEvent: Skipping stations");
+            		} else {
+                        System.out.println(" MoveTrainEvent: Station in service");
+                    	this.drop_off_and_pick_up_passengers();
+            		}
 
-                	this.drop_off_and_pick_up_passengers();
-                	this.move_train_next_station();
+                    System.out.println(" MoveTrainEvent: \t" + activeStation.toJSON());
+                	this.move_train_next_station(false);
             	}
             }
         }
 	}
 	
-	private void move_train_next_station() {
+	private void move_train_next_station(boolean skip_next_station) {
         RailCar activeTrain = this.get_current_train();
 		RailStation activeStation = this.get_current_station();
         RailStation nextStation = this.get_next_station();
@@ -249,10 +260,18 @@ public class MoveTrainEvent extends SimEvent{
         int nextLocation = this.get_next_location();
         activeTrain.setLocation(nextLocation);
         
-		eventQueue.add(new MoveTrainEvent(system, eventID, getRank() + travelTime, train));
+        MoveTrainEvent my_move_event = new MoveTrainEvent(system, eventID, getRank() + travelTime, train);
+		if (skip_next_station) {
+			my_move_event.skip_next_station();
+		}
+
+        eventQueue.add(my_move_event);
 	}
 
 	private void move_train_skip_station() {
+		boolean skip_next_station = true;
+		this.move_train_next_station(skip_next_station);
+
         RailCar activeTrain = this.get_current_train();
 		RailStation activeStation = this.get_current_station();
         RailStation nextStation = this.get_next_next_station();

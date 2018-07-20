@@ -13,6 +13,8 @@ add_train,301,201,0,0,10,50
 add_event,1,move_train,301
 step_once
 
+PASSED
+
 ---------------------------------------
 # Move train from A to B but train goes out of service before 
 ---------------------------------------
@@ -39,6 +41,8 @@ step_once
 step_once
 step_once
 
+PASSED.
+Issues: Depot is not the previous station to the first station.
 =============================================
 * Train is in Service AND Path is NOT blocked
 add_depot,90,North Depot,0.03,0.16
@@ -53,8 +57,30 @@ step_once
 step_once
 step_once
 step_once
+
+PASSED
 =============================================
 * Train is in Service AND Path is NOT blocked AND Station is in Service
+	Same as "Train is in Service AND Path is NOT blocked"
 =============================================
 * Train is in Service AND Path is NOT blocked AND Station is NOT in Service
+
+
+add_depot,90,North Depot,0.03,0.16
+add_station,101,Banana Bayou,0,0.04,0.1
+add_station,102,Star City,0,0.08,0.16
+add_station,103,Quatama,0,0.08,0.16
+add_train_route,201,201,Express
+extend_train_route,201,101
+extend_train_route,201,102
+extend_train_route,201,103
+add_train,301,201,0,0,10,50
+station_down,1,13,102# station_down,<StartAt>,<Duration>,<StationID>
+add_event,2,move_train,301
+step_once
+step_once
+step_once
+step_once
+
+PASSED
 =============================================
