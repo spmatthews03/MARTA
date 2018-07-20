@@ -54,7 +54,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			system.getFuelConsumptionList(bus).add(report);
 
 			// create move bus event
-			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime), (Bus)vehicle);
+			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime + vehicle.getRepairDuration()), (Bus)vehicle);
 			this.getEventQueue().add(moveEvent);
 
 		} else if (vehicle.getType().equals("Train")) {
@@ -69,7 +69,10 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			MoveTrainEvent moveEvent = new MoveTrainEvent(system, this.getID(), this.getRank() + travelTime, (RailCar
 					)vehicle);
 			this.getEventQueue().add(moveEvent);
-		}		
+		}	
+		
+		vehicle.set_delta_stall_duration(0);		
+		vehicle.setRepairDuration(0);
 	}
 	
 	public String getDescription() {

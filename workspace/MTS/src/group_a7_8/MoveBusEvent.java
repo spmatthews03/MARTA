@@ -120,6 +120,12 @@ public class MoveBusEvent extends SimEvent{
             // set location to first stop and next location to 2nd stop
             activeBus.setLocation(activeRoute.getStopID(0));
             activeRoute.getNextLocation(1);
+            
+            int towingDuration = activeBus.get_delta_stall_duration();
+            
+            //resume bus service once at the depot
+            eventQueue.add(new VehicleResumeServiceEvent(system,eventID,getRank()+towingDuration,activeBus));
+            
         }
         else{
             // set bus to refueling state
@@ -144,12 +150,11 @@ public class MoveBusEvent extends SimEvent{
 
             // TODO: create fuel report for traveling FROM Depot TO next stop
 
-            // create event to set vehicle out of service to refuel
-            int train_stall_duration = 0;
-            eventQueue.add(new VehicleOutOfServiceEvent(system,eventID,getRank(),bus, train_stall_duration));
+            // create event to set vehicle out of service to refuel to the depot
+            eventQueue.add(new VehicleOutOfServiceEvent(system,eventID,getRank(),activeBus,0,0));
 
-            // create event to resume service after refueling
-            eventQueue.add(new VehicleResumeServiceEvent(system,eventID,getRank()+travelTime,bus));
+            // create event to resume service after refueling at the depot
+            eventQueue.add(new VehicleResumeServiceEvent(system,eventID,getRank()+travelTime,activeBus));
 
         }
 	}

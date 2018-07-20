@@ -174,10 +174,10 @@ public class SimDriver implements StateChangeListener{
             	
                 martaModel.appendStationToRoute(ext_train_route_routeID, ext_train_route_railStationID);
                 break;
-            
-            case "upload_real_data":
+            // Remove according to instructions
+            /*case "upload_real_data":
                 uploadMARTAData();
-                break;
+                break;*/
             case "step_once":
             	simEngine.triggerNextEvent(martaModel);
                 System.out.println(" queue activated for 1 event");
@@ -372,34 +372,39 @@ public class SimDriver implements StateChangeListener{
             case "bus_down":
             	//sets the down time on the specified bus
             	//format: bus_down,<StartAt>,<BusID>,<TowingDuration>,<RepairDuration>
+            	String  bus_down_cmd = tokens[0].trim();
+            	Integer StartAt = Integer.decode(tokens[1].trim());
+            	Integer BusID = Integer.decode(tokens[2].trim());
+            	Integer TowingDuration = Integer.decode(tokens[3].trim());
+            	Integer RepairDuration = Integer.decode(tokens[4].trim());
+            	
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\tbusID: %d\n\trepairDuration: %d\n", 
-            			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]));
+            			bus_down_cmd,StartAt,BusID,TowingDuration,RepairDuration);
             	
             	if (martaModel.getBus(Integer.parseInt(tokens[2])) == null){
-            		System.out.println(" bus " + Integer.parseInt(tokens[2]) + " has not been created");
+            		System.out.println(" bus " + BusID + " has not been created");
                     return true;
             	}
             	
-            	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[2]));
-            	int train_stall_duration = 0;
-            	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus, train_stall_duration);
+            	Bus outOfServiceBus = martaModel.getBus(BusID);
+            	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), StartAt, outOfServiceBus, TowingDuration, RepairDuration);
             	System.out.printf("%s\n", setBusOutOfServiceEvent.toJSON());
             	simEngine.add(setBusOutOfServiceEvent);
-            	VehicleResumeServiceEvent clearBusOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceBus);
-            	System.out.printf("%s\n", clearBusOutOfServiceEvent.toJSON());
-            	simEngine.add(clearBusOutOfServiceEvent);
+            	//VehicleResumeServiceEvent clearBusOutOfServiceEvent = new VehicleResumeServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1])+Integer.decode(tokens[2])+Integer.decode(tokens[4]), outOfServiceBus);
+            	//System.out.printf("%s\n", clearBusOutOfServiceEvent.toJSON());
+            	//simEngine.add(clearBusOutOfServiceEvent);
             	break;
             case "train_down":
             	//sets the down time on the specified train
             	//format: train_down,<StartAt>,<TrainID><StallDuration>,<RepairDuration>
-            	String  cmd 					= tokens[0].trim();
+            	String  train_down_cmd 			= tokens[0].trim();
             	Integer start_time 				= Integer.decode(tokens[1].trim());
             	Integer my_trainID  			= Integer.decode(tokens[2].trim());
             	Integer delta_stall_period		= Integer.decode(tokens[3].trim());
             	Integer repairDuration          = Integer.decode(tokens[4].trim());
 
             	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\trailCarID: %d\n\trepairDuration: %d\n", 
-            					  cmd, start_time, my_trainID, delta_stall_period, repairDuration);
+            			train_down_cmd, start_time, my_trainID, delta_stall_period, repairDuration);
             	
             	RailCar tran_broken_down = martaModel.getTrain(my_trainID);
             	if (tran_broken_down == null) {
@@ -409,7 +414,7 @@ public class SimDriver implements StateChangeListener{
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
             			new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(),
             										 start_time, tran_broken_down,
-            										 delta_stall_period);
+            										 delta_stall_period, repairDuration);
 
             	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
@@ -443,7 +448,7 @@ public class SimDriver implements StateChangeListener{
 
         takeCommand.close();
     }
-
+    /*
     private static void uploadMARTAData() {
         ResultSet rs;
         int recordCounter;
@@ -594,7 +599,7 @@ public class SimDriver implements StateChangeListener{
                 }
             }
             System.out.println(Integer.toString(recordCounter) + " assigned");
-            */
+            
 
             // create the buses and related event(s)
         	System.out.print(" extracting and adding the buses and events: ");
@@ -646,7 +651,7 @@ public class SimDriver implements StateChangeListener{
             System.err.println(e.getMessage());
         }
     }
-
+    */
     private static int randomBiasedValue(int lower, int middle, int upper) {
         int lowerRange = randGenerator.nextInt(middle - lower + 1) + lower;
         int upperRange = randGenerator.nextInt(upper - middle + 1) + middle;
