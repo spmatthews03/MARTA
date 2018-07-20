@@ -135,8 +135,8 @@ public class SimDriver implements StateChangeListener{
             case "add_depot":
             	int uniqueID = Integer.parseInt(tokens[1].trim());
                 String name = tokens[2].trim();
-                int x_coord = Integer.parseInt(tokens[3].trim());
-                int y_coord = Integer.parseInt(tokens[4].trim());
+                double x_coord = Double.parseDouble(tokens[3].trim());
+                double y_coord = Double.parseDouble(tokens[4].trim());
 
                 martaModel.makeDepot(uniqueID, name, x_coord, y_coord);
             	break;

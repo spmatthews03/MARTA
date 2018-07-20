@@ -134,7 +134,7 @@ public class TransitSystem {
         return uniqueID;
     }
 
-	public int makeDepot(int uniqueID, String name, int x_coord, int y_coord) {
+	public int makeDepot(int uniqueID, String name, double x_coord, double y_coord) {
 		depot = new Depot(uniqueID, name, x_coord, y_coord);
 		listener.updateState();
 		return uniqueID;
