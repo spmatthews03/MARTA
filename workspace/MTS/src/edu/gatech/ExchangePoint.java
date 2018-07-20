@@ -3,7 +3,7 @@ package edu.gatech;
 import java.util.Hashtable;
 import java.util.Random;
 
-public class ExchangePoint extends Facility {
+public abstract class ExchangePoint extends Facility {
 	protected Random randGenerator;
 	protected Integer waiting;
 	protected boolean out_of_service;
