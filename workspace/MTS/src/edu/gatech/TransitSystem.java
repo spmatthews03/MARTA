@@ -260,7 +260,7 @@ public class TransitSystem {
     public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin()==origin && pk.getDestination()==destination) {
+    		if(pk.getOrigin().equals(origin) && pk.getDestination().equals(destination)) {
     			pathKey = pk;
     			break;
     		}

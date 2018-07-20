@@ -269,7 +269,7 @@ public class SimDriver implements StateChangeListener{
             case "speed_limit":
             	//sets the speed limit on the specified bus path
             	//format: speed_limit,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<TopSpeed>
-            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\totigin: %d\n\tdestination: %d\n\tspeed limit: %d\n", 
+            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\torigin: %d\n\tdestination: %d\n\tspeed limit: %d\n",
             			tokens[0],Integer.decode(tokens[1]),Integer.decode(tokens[2]),Integer.decode(tokens[3]),Integer.decode(tokens[4]),Integer.valueOf(tokens[5]));
             	
             	if (martaModel.getBusStop(Integer.parseInt(tokens[3])) == null){
@@ -363,7 +363,7 @@ public class SimDriver implements StateChangeListener{
                     return true;
             	}
             	
-            	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[3]));
+            	Bus outOfServiceBus = martaModel.getBus(Integer.decode(tokens[2]));
             	int train_stall_duration = 0;
             	VehicleOutOfServiceEvent setBusOutOfServiceEvent = new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(), Integer.decode(tokens[1]), outOfServiceBus, train_stall_duration);
             	System.out.printf("%s\n", setBusOutOfServiceEvent.toJSON());

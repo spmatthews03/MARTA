@@ -34,6 +34,7 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 		System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
 	}
 
+	@Override
 	public String getDescription() {
     	StringBuilder sb = new StringBuilder();
     	sb.append(vehicle.getType());
