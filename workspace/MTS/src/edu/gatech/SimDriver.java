@@ -43,11 +43,12 @@ public class SimDriver implements StateChangeListener{
     }
     
     private final String DELIMITER = ",";
-	
+	    
 	private UpdateManager updateManager;
     public boolean processCommand(String userCommandLine){
     	synchronized(lock) {
-    	//System.out.printf("processing command `%s`\n", userCommandLine);
+    	System.out.printf("SimDriver: `%s` cmd processing\n", userCommandLine);
+
         String[] tokens;
         tokens = userCommandLine.split(DELIMITER);
 
@@ -403,13 +404,10 @@ public class SimDriver implements StateChangeListener{
             	Integer my_trainID  			= Integer.decode(tokens[2].trim());
             	Integer delta_stall_period		= Integer.decode(tokens[3].trim());
             	Integer repairDuration          = Integer.decode(tokens[4].trim());
-
-            	System.out.printf("%s:\n\tstart at: %d\n\tduration: %d\n\trailCarID: %d\n\trepairDuration: %d\n", 
-            			train_down_cmd, start_time, my_trainID, delta_stall_period, repairDuration);
-            	
+         	
             	RailCar tran_broken_down = martaModel.getTrain(my_trainID);
             	if (tran_broken_down == null) {
-            		System.out.println(" train " + my_trainID + " has not been created");
+            		System.out.println("Error: train " + my_trainID + " has not been created");
                     return true;
             	}
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
@@ -417,7 +415,7 @@ public class SimDriver implements StateChangeListener{
             										 start_time, tran_broken_down,
             										 delta_stall_period, repairDuration);
 
-            	System.out.printf("%s\n", setRailOutOfServiceEvent.toJSON());
+            	System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
 
             	break;
@@ -426,7 +424,7 @@ public class SimDriver implements StateChangeListener{
 
             default:
                 System.out.println(" command not recognized");
-                return true;
+                return false;
         }
         return false;
     	}
