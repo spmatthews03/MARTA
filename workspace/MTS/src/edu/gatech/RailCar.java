@@ -16,6 +16,7 @@ public class RailCar extends Vehicle {
     public RailCar(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
         this.vehicleType = "Train";
+        this.debug_print();
     }
 
     public String toJSON() {
