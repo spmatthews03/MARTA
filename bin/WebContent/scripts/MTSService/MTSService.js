@@ -12,10 +12,11 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        events:[],
 	        commands:[],
 	        commandsQueue:[],
-	        reports:[],
+	        reports:{vehicles:[]},
 	  	  	editMode:false,
 	  	  	priorSim:false,
 	  	  	holdCommands:false,
+	  	  	fuelByBusData:{},
 	  		commandOption:""
    };
 	
@@ -89,10 +90,53 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
   		   //$log.info(update);
-  		   state.reports.splice(0,state.reports.length);
-  		   update.reports.forEach(function(report){
-  			   state.reports.push(report);
-  		   });
+  		   state.reports.vehicles.splice(0,state.reports.vehicles.length);
+    		 state.reports.minAmount=0;
+      		 state.reports.maxAmount = 0;
+      		 state.reports.totalAmount = 0;
+      		 state.reports.minPassengers=0;
+      		 state.reports.maxPassengers = 0;
+      		 state.reports.totalPassengers = 0;
+  		   var maxPassengers = 0;
+  		   var maxAmount = 0;
+  		   var totalPeople = 0;
+  		   var totalAmount = 0;
+  		   for(var r=0;r<update.reports.length;r++){
+  			   var report = update.reports[r];
+  			   var vehicleAmountTotal = 0;
+  			   
+  			   for(var i=0;i<report.reports.length;i++){
+  				 vehicleAmountTotal = vehicleAmountTotal + report.reports[i].amount;
+  			   }
+  			   report.amount = vehicleAmountTotal;
+  			   if(report.amount>maxAmount) maxAmount = report.amount;
+  			   totalAmount = totalAmount + report.amount;
+  			   
+  			   var vehiclePeopleTotal = 0;
+  			   for(var i=0;i<report.reports.length;i++){
+  				   vehiclePeopleTotal = vehiclePeopleTotal + report.reports[i].passengers;
+  			   }
+  			   report.passengers = vehiclePeopleTotal;
+  			   if(report.maxPassengers>totalPeople) maxPassengers = report.passengers;
+  			   totalPeople = totalPeople + report.passengers;
+
+  			   
+  			   report.name = report.vehicle.type+" #"+report.vehicle.ID;
+  			   state.reports.vehicles.push(report);
+//  			   $log.info('report:');
+//  			   $log.info(report);
+  		   }
+  		 state.reports.minAmount=0;
+  		 state.reports.maxAmount = maxAmount;
+  		 state.reports.totalAmount = totalAmount;
+  		 state.reports.minPassengers=0;
+  		 state.reports.maxPassengers = maxPassengers;
+  		 state.reports.totalPassengers = totalPeople;
+  		 
+  		 state.fuelByBusData.min=state.reports.minAmount;
+  		 state.fuelByBusData.max=state.reports.maxAmount;
+  		 state.fuelByBusData.total=state.reports.totalAmount;
+  		 state.fuelByBusData.items=state.reports.vehicles;
   	   }
   	   commandBlocked = false;
    };
@@ -204,8 +248,14 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	state.events.splice(0,state.events.length);
     	state.commands.splice(0,state.commands.length);
     	state.commandsQueue.splice(0,state.commandsQueue.length);
-    	state.reports.splice(0,state.reports.length);
-  	  	editMode:false;
+    	state.reports.vehicles.splice(0,state.reports.length);
+		 state.reports.minAmount=0;
+  		 state.reports.maxAmount = 0;
+  		 state.reports.totalAmount = 0;
+  		 state.reports.minPassengers=0;
+  		 state.reports.maxPassengers = 0;
+  		 state.reports.totalPassengers = 0;
+  		 editMode:false;
   	  	priorSim:false;
   		commandOption:"";
     	//$log.info('reset completed')

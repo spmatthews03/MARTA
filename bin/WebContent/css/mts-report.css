@@ -16,8 +16,14 @@
 	font-size: 16px;
 	padding-right: 4px;
 	border-right: solid 1pt rgb(80,80,88);
-	width:60px;
+	width:70px;
 	overflow: hidden;
+}
+
+.item-value{
+	padding-left:4px;
+	font-size:15px;
+	width:80px
 }
 
 .summary-header{

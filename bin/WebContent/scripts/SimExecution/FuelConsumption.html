@@ -3,15 +3,14 @@
      <div flex="20" class="report-menu" layout="column" >
         <div class="menu-label">Select Report:</div>
         <div layout="column" layout="column" layout-align="start start">
-	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==1" ng-class="{'selected':selected==1}">chevron_right</md-icon></div><div ng-click="select(1)" ng-class="{'selected':selected==1}" class="item-label">Item 1</div></div>
-	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==2" ng-class="{'selected':selected==2}">chevron_right</md-icon></div><div ng-click="select(2)" ng-class="{'selected':selected==2}" class="item-label">Item 2</div></div>
-	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==3" ng-class="{'selected':selected==3}">chevron_right</md-icon></div><div ng-click="select(3)" ng-class="{'selected':selected==3}" class="item-label">Item 3</div></div>
-	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==4" ng-class="{'selected':selected==4}">chevron_right</md-icon></div><div ng-click="select(4)" ng-class="{'selected':selected==4}" class="item-label">Item 4</div></div>
+	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==1" ng-class="{'selected':selected==1}">chevron_right</md-icon></div><div ng-click="select(1)" ng-class="{'selected':selected==1}" class="menu-item-label">Fuel Consumption by Bus</div></div>
+	        <div layout="row" layout-wrap class="menu-item" layout-align="start center"><div flex="15"><md-icon ng-show="selected==2" ng-class="{'selected':selected==2}">chevron_right</md-icon></div><div ng-click="select(2)" ng-class="{'selected':selected==2}" class="menu-item-label">Fuel Consumption Log</div></div>
         </div>
      </div>
 	  <div layout="column" flex class="report-panel">
-	     <fuel-consumption-log ng-show="selected==1"></fuel-consumption-log>
-	     <div ng-show="selected==2">
+	     <report ng-show="selected==1" data-reportdata="byBus" data-title="Fuel Consumption by Bus" data-summarylabel="buses consumed a total fuel amount of" data-colorservice="colors"></report>
+	     <fuel-consumption-log ng-show="selected==2"></fuel-consumption-log>
+	     <div ng-show="selected==3">
 		     <div>Fuel Consumption</div>
 		     <div ng-repeat="vehicleReport in reports track by $index ">
 		         <div  class="report-field">{{vehicleReport.vehicle.type}} #{{vehicleReport.vehicle.ID}}  consumed a total fuel of {{getTotal(vehicleReport.vehicle)}}</div>

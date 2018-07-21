@@ -23,10 +23,11 @@
       controller: 'reportSummaryHeaderController',
       replace: true,
       template: '<div layout="row" class="summary-header" layout-align="end center">'+
-                   '<div class="value">{{count}}</div><div class="label">{{label}}</div><div class="value">{{total}}</div></div>'+
+                   '<div class="value">{{count}}</div><div class="label">{{label}}</div><div class="value">{{roundValue(total)}}</div></div>'+
                 '</div>' 
     }
   };
+  
   var barItemDirective = function(){
     return{
       restrict:'E',
@@ -39,19 +40,23 @@
                         '<div flex layout="column">'+
                           '<div class="item-element {{getColor(index)}}" style="width:{{getWidth()}}%;" ng-class=""></div>'+
                         '</div>'+
-                        '<div flex="5"></div>'+
+                        '<div class="item-value">{{roundValue(item.amount)}}</div>'+
                    '</div>'+
                 '</div>' 
     }
   };
-
-  colorService = {};
+  
+  var roundValue = function(value){
+	return Math.round(value*100)/100;  
+  };
+  
+  var colorService = {};
   //controller
   var barItemController = function($scope, $log){
     //$log.info('barItemController');
     $scope.colorCount=colorService.getPaletteSize(); 
     $scope.getColor=function(index){
-      $log.info('class for '+index+" is "+ colorService.getBackgroundColorClass(index));
+      //$log.info('class for '+index+" is "+ colorService.getBackgroundColorClass(index));
       return colorService.getBackgroundColorClass(index);
     };
 
@@ -62,15 +67,23 @@
       //$log.info("width set to "+width+"%");
       return width;
     };
+    $scope.roundValue = roundValue;
 
   };
 
   var reportSummaryHeaderController = function($scope, $log){
-    $log.info('reportSummaryHeaderController');
+    //$log.info('reportSummaryHeaderController');
+	    $scope.roundValue = roundValue;
   };
   var reportController = function($scope, $log){
-		$log.info('reportController');
+		//$log.info('reportController');
     colorService = $scope.colorservice;
+    $scope.echo=function(){
+    	$log.info('reportdata');
+    	$log.info($scope.reportdata);
+    	
+    }
+    
   };
   angular.module('Report',['ngMaterial'])
   .directive('reportSummaryHeader',[reportSummaryHeaderDirective])

@@ -1,7 +1,7 @@
 (function(){
 
 var service = function ($log){
-   $log.info("GT ColorService");
+   //$log.info("GT ColorService");
     
    var colors = [
       "blue",
@@ -46,7 +46,7 @@ var service = function ($log){
     	getColorClass: getColorClass,
     	getBackgroundColorClass: getBackgroundColorClass,
     	getPaletteSize:getPaletteSize,
-      getColorNames:getColorNames
+        getColorNames:getColorNames
     };
     
   };
