@@ -15,8 +15,8 @@ public class SetPathDelayEventDAO extends GenericDAO<SetPathDelayEvent>{
 	}
 
 	private String insert_format=
-			"insert into %s (%s,%s) "+
-			"VALUES(%s,'%s')";
+			"insert into %s (%s,%s,%s,%s,%s) "+
+			"VALUES(%s,%d,%d,%s,%d)";
 
 	@Override
 	public void save(SetPathDelayEvent pathDelay) throws SQLException {
@@ -24,18 +24,30 @@ public class SetPathDelayEventDAO extends GenericDAO<SetPathDelayEvent>{
 		System.out.println(String.format(insert_format,tableName,
 				"pathKey",
 				"delayFactor",
+				"timeRank",
+				"eventType",
+				"eventID,",
 				pathDelay.getPathKey(),
-				pathDelay.getDelayFactor()));
+				pathDelay.getDelayFactor(),
+				pathDelay.getRank(),
+				pathDelay.getType(),
+				pathDelay.getID()));
 		
 		stmt.execute(String.format(insert_format,tableName,
 				"pathKey",
 				"delayFactor",
+				"timeRank",
+				"eventType",
+				"eventID,",
 				pathDelay.getPathKey(),
-				pathDelay.getDelayFactor()));
+				pathDelay.getDelayFactor(),
+				pathDelay.getRank(),
+				pathDelay.getType(),
+				pathDelay.getID()));
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<SetPathDelayEvent> find() throws SQLException {
