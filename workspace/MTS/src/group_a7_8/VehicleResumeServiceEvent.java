@@ -39,8 +39,10 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			Bus bus = system.getBus(vehicle.getID());
 
 			// refuel and unset refueling flag
-			bus.refuel();
-			bus.setRefueling(false);
+			if (bus.isRefueling() == true) {
+				bus.refuel();
+				bus.setRefueling(false);
+			}
 
 			// set stop
 			BusStop stop = system.getBusRoute(vehicle.getRouteID()).getBusStop(system, vehicle.getLocation());
