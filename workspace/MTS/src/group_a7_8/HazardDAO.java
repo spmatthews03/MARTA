@@ -13,7 +13,7 @@ public class HazardDAO extends GenericDAO<Hazard>{
 
 	protected HazardDAO(Connection con) {
 		super(con, "HAZARD", "true", "true");
-		System.out.printf(" constructed\n",this.getClass().getSimpleName());
+		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
 	private String insert_format=

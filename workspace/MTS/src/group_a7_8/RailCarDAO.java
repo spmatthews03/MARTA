@@ -13,7 +13,7 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 
 	protected RailCarDAO(Connection con) {
 		super(con, "VEHICLE", "type", "Train");
-		System.out.printf(" constructed\n",this.getClass().getSimpleName());
+		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
 	private String insert_format=

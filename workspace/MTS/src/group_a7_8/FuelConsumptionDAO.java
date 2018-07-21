@@ -13,7 +13,7 @@ public class FuelConsumptionDAO extends GenericDAO<FuelConsumption>{
 
 	protected FuelConsumptionDAO(Connection con) {
 		super(con, "FUELCONSUMPTION", "true", "true");
-		System.out.printf(" constructed\n",this.getClass().getSimpleName());
+		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
 	private String insert_format=

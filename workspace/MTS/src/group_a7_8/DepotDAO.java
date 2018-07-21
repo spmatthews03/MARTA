@@ -13,7 +13,7 @@ public class DepotDAO extends GenericDAO<Depot>{
 
     protected DepotDAO(Connection con) {
         super(con, "STOP", "type", "Depot");
-        System.out.printf(" constructed\n",this.getClass().getSimpleName());
+        System.out.printf("constructed %s\n",this.getClass().getSimpleName());
     }
 
     private String insert_format=

@@ -142,6 +142,10 @@ public class DAOManager {
             break;
             case DEPOT: daoCache.put(t, new DepotDAO(this.con));
             break;
+            case HAZARD: daoCache.put(t, new HazardDAO(this.con));
+            break;
+            case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(this.con));
+            break;
             default:
                 throw new SQLException("Trying to link to an unexistant table.");
             }
