@@ -18,7 +18,7 @@ public class BlockPathEvent extends SimEvent{
 	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train) {
     	super(system,timeRank,"set_path_block",eventID);
 		this.route = system.getRailRoute(train.getRouteID());
-		
+/*		
         int currentLocation = train.getLocation();
         int currentStationID = route.getStationID(currentLocation);
 
@@ -30,10 +30,13 @@ public class BlockPathEvent extends SimEvent{
 		
 		this.origin		 = currentStation;
 		this.destination = nextStation;
+*/
+		this.train = train;
+		this.origin		 = this.train.get_rail_station_current();
+		this.destination = this.train.get_rail_station_next();
 
 		this.pathKey = system.getPathKey(origin, destination);
 		this.path = system.getPath(pathKey);
-		this.train = train;
 	}
 
 	public RailRoute getRoute() {

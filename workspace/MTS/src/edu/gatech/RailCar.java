@@ -17,17 +17,52 @@ public class RailCar extends Vehicle {
         super(uniqueValue);
         this.vehicleType = "Train";
         this.rail_route = null;
+        this.system = null;
     }
-
-    public RailCar(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed, TransitSystem system) {
+    
+    private void check_references() {
+    	if (this.rail_route == null) {
+    		System.err.print("Error: No rail route associated with train");
+    	}
+    	if (this.system == null) {
+    		System.err.print("Error: No transit system associated with train");
+    	}
+    }
+    public RailCar(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
         this.vehicleType = "Train";
-        this.system = system;
-        this.rail_route = this.system.getRailRoute(inputRoute);
+        
+        // Convert from station id given in input to location index
+
         //this.debug_print();
     }
     
+    public void set_rail_route_and_location_index(RailRoute my_rail_route) {
+        if (my_rail_route == null) {
+        	System.err.println("Error: Train has invalid rail route");
+        }
+
+    	this.rail_route = my_rail_route;
+
+        int station_id = this.get_location_index_current();
+        Integer location_index = this.rail_route.get_route_location_index(station_id);
+        if (location_index == null) {
+        	System.err.println("Error: Train starting current location is invalid");
+        }
+
+        this.set_location_index_current(location_index);
+        
+        location_index = this.rail_route.getNextLocation(location_index);
+        if (location_index == null) {
+        	System.err.println("Error: Train starting next location is invalid");
+        }
+
+        this.set_location_index_next(location_index);
+    }
+    
     private RailStation get_rail_station(int location_index) {
+    	this.check_references();
+
         RailRoute rail_route = this.get_rail_route();
         int station_id = rail_route.getStationID(location_index);
         RailStation station = system.getRailStation(station_id);
@@ -52,15 +87,15 @@ public class RailCar extends Vehicle {
     }
     
     public void advance_station_location() {
-        int location_index_current = this.get_location_index_current();
-    	int location_index_next = this.get_location_index_next();
+        int location_index_next = this.get_location_index_next();
+    	int location_index_next_next = this.get_location_index_next_next();
         
-        this.set_location_index_current(location_index_current);
-        this.set_location_index_next(location_index_next);
+        this.set_location_index_current(location_index_next);
+        this.set_location_index_next(location_index_next_next);
     }
 
     private int get_location_index_current() {
-    	return this.getLocation();
+    	return this.getPastLocation();
     }
 
     private int get_location_index_next() {
@@ -93,18 +128,28 @@ public class RailCar extends Vehicle {
     }
 
     public RailStation get_rail_station_next() {
-        int location_index_next = this.get_location_index_next();
-    	RailStation station = this.get_rail_station(location_index_next);
+        int location_index = this.get_location_index_next(); /* 1 station ahead */
+    	RailStation station = this.get_rail_station(location_index);
     	if (station == null) {
     		System.err.print("Error: No next station associated with Train");
     		return null;
     	}
-    	
     	return station;
-    	
+    }
+
+    public RailStation get_rail_station_next_next() {
+        int location_index = this.get_location_index_next_next(); /* 2 stations ahead */
+    	RailStation station = this.get_rail_station(location_index);
+    	if (station == null) {
+    		System.err.print("Error: No next next station associated with Train");
+    		return null;
+    	}
+    	return station;
     }
 
     private Path get_path_next() {
+    	this.check_references();
+
 		RailStation station_current = this.get_rail_station_current();
         RailStation station_next    = this.get_rail_station_next();
         PathKey path_key = system.getPathKey(station_current, station_next);
@@ -113,8 +158,18 @@ public class RailCar extends Vehicle {
     	return path;
     }
 
-    public int calculate_travel_time_station_next() {
-    	Path path = this.get_path_next();
+    private Path get_path_next_next() {
+    	this.check_references();
+
+		RailStation station_current = this.get_rail_station_next();
+        RailStation station_next    = this.get_rail_station_next_next();
+        PathKey path_key = system.getPathKey(station_current, station_next);
+        Path path = system.getPath(path_key);
+
+    	return path;
+    }
+
+    private int calculate_travel_time_path(Path path) {
         Double delay_factor = path.getDelayFactor();
         Integer speed_limit = path.getSpeedLimit();
         Integer true_speed = this.getSpeed();
@@ -131,7 +186,17 @@ public class RailCar extends Vehicle {
         // conversion is used to translate time calculation from hours to minutes
         int travel_time = (int)((1 + (travel_distance.intValue() * 60 / true_speed)) * delay_factor);
 
-        return travel_time;
+        return travel_time;    
+    }
+
+    public int calculate_travel_time_station_next() {
+    	Path path = this.get_path_next();
+    	return calculate_travel_time_path(path);
+    }
+
+    public int calculate_travel_time_station_next_next() {
+    	Path path = this.get_path_next_next();
+    	return calculate_travel_time_path(path);
     }
 
     public String toJSON() {

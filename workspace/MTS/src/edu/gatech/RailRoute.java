@@ -27,7 +27,9 @@ public class RailRoute extends VehicleRoute {
    
    public void addNewStation(int stationID) { this.addNewExchangePoint(stationID); }
 
-   public Integer getStationID(int routeLocation) { return this.getExchangePointID(routeLocation); }
+   public Integer getStationID(int routeLocation) {
+	   return this.getExchangePointID(routeLocation); 
+   }
       
    public void displayEvent() { this.displayEvent("rail"); }
 
