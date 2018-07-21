@@ -244,7 +244,8 @@ public class MoveTrainEvent extends SimEvent {
             		}
 
                     //System.out.println(" MoveTrainEvent: \t" + activeStation.toJSON());
-                	this.move_train_next_station(false);
+                	//this.move_train_next_station(false);
+            		this.train_move_next(train);
             	}
             }
         }
@@ -282,6 +283,19 @@ public class MoveTrainEvent extends SimEvent {
         
         MoveTrainEvent my_move_event = new MoveTrainEvent(system, eventID, getRank() + travelTime, train);
 		if (skip_next_station) {
+			my_move_event.skip_next_station();
+		}
+
+        eventQueue.add(my_move_event);
+	}
+	
+	private void train_move_next(RailCar my_train) {
+		RailStation station_next = my_train.get_rail_station_next();
+		int travel_time = my_train.calculate_travel_time_station_next();
+		
+		my_train.advance_station_location();
+        MoveTrainEvent my_move_event = new MoveTrainEvent(system, eventID, getRank() + travel_time, train);
+		if (station_next.get_out_of_service()) {
 			my_move_event.skip_next_station();
 		}
 
