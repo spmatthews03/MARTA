@@ -5,6 +5,14 @@ public class RailStation extends ExchangePoint {
 	public RailStation(int uniqueValue, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
 		super(uniqueValue, inputName, inputXCoord, inputYCoord,"railStop");
 		this.set_riders(inputRiders);
+		this.debug_print();
+
+	}
+
+	private void debug_print () {
+		String class_name = this.getClass().getName();
+		System.out.println(" " + class_name + " Instantiated");
+		System.out.println("\t" + this.toJSON());		
 	}
 
     public String toJSON() {

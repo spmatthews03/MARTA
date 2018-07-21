@@ -12,6 +12,7 @@ public abstract class Vehicle {
     protected String vehicleType;
     protected Boolean outOfService;
     protected Integer delta_stall_duration;
+    protected Integer repairDuration;
 
     public Vehicle() {
         this.ID = -1;
@@ -26,7 +27,9 @@ public abstract class Vehicle {
         this.passengers = -1;
         this.capacity = -1;
         this.speed = -1;
-        outOfService = false;
+        this.outOfService = false;
+        this.delta_stall_duration = -1;
+        this.repairDuration = -1;
     }
 
     public Vehicle(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
@@ -37,8 +40,16 @@ public abstract class Vehicle {
         this.passengers = inputPassengers;
         this.capacity = inputCapacity;
         this.speed = inputSpeed;
-        outOfService = false;
+        this.outOfService = false;
+        this.delta_stall_duration = 0;
+        this.repairDuration = 0;
+        
     }
+
+	protected void debug_print () {
+		System.out.println(" " + this.getClass().getName() + " Instantiated");
+		System.out.println("\t" + this.toJSON());
+	}
 
     public void setRoute(int inputRoute) { this.route = inputRoute; }
 
@@ -70,6 +81,10 @@ public abstract class Vehicle {
     public void set_delta_stall_duration(int stall_duration) {
     	this.delta_stall_duration = stall_duration;
 	}
+    
+    public void setRepairDuration (int repairDuration) {
+    	this.repairDuration = repairDuration;
+	}
 
     public Integer getID() { return this.ID; }
 
@@ -87,6 +102,10 @@ public abstract class Vehicle {
     
     public Integer get_delta_stall_duration() {
     	return this.delta_stall_duration;
+	}
+    
+    public Integer getRepairDuration () {
+    	return this.repairDuration;
 	}
 
     public String getType() {

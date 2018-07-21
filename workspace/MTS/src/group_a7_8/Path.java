@@ -18,10 +18,12 @@ public class Path {
 		this.pathKey = pathKey;
 		this.system = system;
 		this.isBlocked = false;
+		this.speedLimit = null;
 	}
 
 	public Path(TransitSystem system,Facility origin, Facility destination) {
 		this(system, new PathKey(origin, destination));
+		this.speedLimit = null;
 	}
 	
 	public void addDelay(double delayFactor) {

@@ -41,7 +41,7 @@
         '<div class="train-dashboard tile" layout="row" layout-align="space-around stretch">'+
         '<div layput="column" layout-align="center center"><div class="dashboard-tile-label"><md-icon>directions_train</md-icon></div><div class="dashboard-tile-label"><span>Trains</span></div></div>'+
         '<div layout="row" layout-align="space-around stretch" layout-wrap>'+
-          '<div layout="column" flex="50" layout-align="center center"><div class="label">buses</div> <div class="value">{{getTrainCount()}}</div></div>'+
+          '<div layout="column" flex="50" layout-align="center center"><div class="label">trains</div> <div class="value">{{getTrainCount()}}</div></div>'+
           '<div layout="column" flex="50" layout-align="center center"><div class="label">stops</div> <div class="value">{{getTrainStopCount()}}</div></div>'+
           '<div layout="column" flex="50" layout-align="center center"><div class="label">routes</div><div class="value">{{getTrainRouteCount()}}</div></div>'+
           '<div layout="column" flex="50" layout-align="center center"><div class="label">paths</div> <div class="value">{{getTrainPathCount()}}</div></div>'+

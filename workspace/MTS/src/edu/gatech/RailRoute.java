@@ -14,7 +14,14 @@ public class RailRoute extends VehicleRoute {
 
    public RailRoute(int uniqueValue, int routeNumber, String inputName) {
 	   super(uniqueValue, routeNumber, inputName,"railRoute");
+		this.debug_print();
    }
+
+	private void debug_print () {
+		String class_name = this.getClass().getName();
+		System.out.println( class_name + " Instantiated");
+		System.out.println("\t" + this.toJSON());		
+	}
    
    public VehicleRoute getRailRoute() { return this.route; }
    

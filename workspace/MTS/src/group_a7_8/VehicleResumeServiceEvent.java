@@ -2,6 +2,7 @@ package group_a7_8;
 
 import edu.gatech.Bus;
 import edu.gatech.BusStop;
+import edu.gatech.Depot;
 import edu.gatech.RailCar;
 import edu.gatech.RailStation;
 import edu.gatech.SimEvent;
@@ -27,7 +28,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
+		System.out.printf("VehicleResumeServiceEvent %s:\n\t%s\n", eventType,toJSON());
 		
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());
@@ -54,22 +55,29 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			system.getFuelConsumptionList(bus).add(report);
 
 			// create move bus event
-			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime), (Bus)vehicle);
+			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime + vehicle.getRepairDuration()), (Bus)vehicle);
 			this.getEventQueue().add(moveEvent);
 
 		} else if (vehicle.getType().equals("Train")) {
 			
 			vehicle.setOutOfService(false); /* Train is in service */
+			vehicle.set_nextLocation(0);
 			
-			vehicle.set_prevLocation(0);
-			vehicle.set_nextLocation(1);
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);
-			double distanceFromDepot = system.getDepot().findDistance(station);
+			Depot my_depot = system.getDepot();
+	        if (my_depot  == null) {
+	        	System.out.println("Error VehicleResumeService Event " + this.eventID + ": No depot has been created");
+	        	return;
+	        }
+			double distanceFromDepot = my_depot.findDistance(station);
 			int travelTime = 1 + (int)(distanceFromDepot * 60 / vehicle.getSpeed());
 			MoveTrainEvent moveEvent = new MoveTrainEvent(system, this.getID(), this.getRank() + travelTime, (RailCar
 					)vehicle);
 			this.getEventQueue().add(moveEvent);
-		}		
+		}	
+		
+		vehicle.set_delta_stall_duration(0);		
+		vehicle.setRepairDuration(0);
 	}
 	
 	public String getDescription() {
