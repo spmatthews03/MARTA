@@ -45,13 +45,19 @@ public class SimDriver implements StateChangeListener{
     private static TransitSystem martaModel;
     private static Random randGenerator;
     private Hashtable<Table, GenericDAO> DAOs = new Hashtable<Table, GenericDAO>();
+	private boolean persistenceOn;
     
-    public SimDriver() {
+	public SimDriver() {
+		this(false);
+	}
+	
+    public SimDriver(boolean persistenceOn) {
         simEngine = new SimQueue();
         simEngine.setStateChangeListener(this);
         martaModel = new TransitSystem();
         martaModel.setStateChangeListener(this);
         randGenerator = new Random();
+        this.persistenceOn = persistenceOn;
     }
     
     public GenericDAO getDao(Table table) throws ClassNotFoundException, SQLException, Exception {
@@ -238,6 +244,7 @@ public class SimDriver implements StateChangeListener{
             	break;
             case "quit":
                 System.out.println(" stop the command loop");
+                if(persistenceOn) {
             	for (Bus bus : martaModel.getBuses().values()) {
             		try {
 						((BusDAO)getDao(Table.BUS)).save(bus);
@@ -286,6 +293,8 @@ public class SimDriver implements StateChangeListener{
 						System.out.println("Unable to save rail station");
 					}	
             	}
+            	System.out.printf("system state persisted\n");
+                }
             	return true;
             case "path_delay":
             	//sets the delay on the specified bus path
