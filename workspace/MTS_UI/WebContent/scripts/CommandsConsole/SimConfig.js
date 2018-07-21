@@ -38,7 +38,12 @@
 			                   '<md-button flex="40" ng-click="addTrainPathDelay()">Add Train Path Delay</md-button>'+
 			                   '<md-button flex="40" ng-click="setTrainSpeedLimit()">Set Train Speed Limit</md-button>'+
 			                   '<md-button flex="40" ng-click="addEvent()">add Event</md-button>'+
-			                   '</div>'+
+							   '<md-button flex="40" ng-click="setBusOutOfService()">Set Bus Out Of Service</md-button>'+
+							   '<md-button flex="40" ng-click="setTrainOutOfService()">Set Train Out Of Service</md-button>'+
+							   '<md-button flex="40" ng-click="setStationDown()">Set Station Out Of Service</md-button>'+
+							   '<md-button flex="40" ng-click="setStopDown()">Set Bus Stop Out Of Service</md-button>'+
+							   '<md-button flex="40" ng-click="addDepot()">Add Depot</md-button>'+
+							   '</div>'+
 	                       '</md-content">'+
 		              '</div>'+     
 		              '<div ng-show="mts.editMode" layout="column">'+
@@ -56,7 +61,12 @@
 							 '<add-train-form ng-switch-when="addTrain"></add-train-form>'+
 							 '<add-train-path-delay-form ng-switch-when="addTrainPathDelay"></add-train-path-delay-form>'+
 							 '<set-train-speed-limit-form ng-switch-when="setTrainSpeedLimit"></set-train-speed-limit-form>'+
-				            '<command-entry ng-switch-default></command-entry>'+
+          				     '<set-bus-out-of-service-form ng-switch-when="setBusOutOfService"></set-bus-out-of-service-form>'+
+							 '<set-train-out-of-service-form ng-switch-when="setTrainOutOfService"></set-train-out-of-service-form>'+
+            				 '<set-stop-down-form ng-switch-when="setStopDown"></set-stop-down-form>'+
+            				 '<set-station-down-form ng-switch-when="setStationDown"></set-station-down-form>'+
+            				 '<add-depot-form ng-switch-when="addDepot"></add-depot-form>'+
+				             '<command-entry ng-switch-default></command-entry>'+
 		                 '</div>'+
 		              '</div>'+
 
@@ -153,6 +163,26 @@
           mtsService.state.editMode=true;
           mtsService.state.commandOption='setTrainSpeedLimit';
 	  };
+      $scope.setBusOutOfService = function(){
+          mtsService.state.editMode=true;
+          mtsService.state.commandOption='setBusOutOfService';
+      };
+      $scope.setTrainOutOfService = function(){
+          mtsService.state.editMode=true;
+          mtsService.state.commandOption='setTrainOutOfService';
+      };
+      $scope.setStationDown = function(){
+          mtsService.state.editMode=true;
+          mtsService.state.commandOption='setStationDown';
+      };
+      $scope.setStopDown = function(){
+          mtsService.state.editMode=true;
+          mtsService.state.commandOption='setStopDown';
+      };
+      $scope.addDepot = function(){
+          mtsService.state.editMode=true;
+          mtsService.state.commandOption='addDepot';
+      };
 	  //	  
 	  //Sim Engine methods
 	  $scope.addEvent = function(){
@@ -202,6 +232,21 @@
 			  case 'addEvent':
 				  $scope.commandLine='add_event,1,move_bus,11';
 				  break;
+			  case 'addDepot':
+				  $scope.commandLine='add_depot,0,UnionDepot,4,3';
+				  break;
+			  case 'setTrainOutOfService':
+			  	  $scope.commandLine='train_down,50,3,50,30';
+			  	  break;
+              case 'setBusOutOfService':
+                  $scope.commandLine='bus_down,15,7,70,90';
+                  break;
+			  case 'setStationDown':
+			  	  $scope.commandLine='station_down,115,50,0';
+			  	  break;
+			  case 'setStopDown':
+			  	  $scope.commandLine='stop_down,200,40,3';
+			  	  break;
 			  default:
 				  $log.info('adding command '+$scope.commandOption+' is not yet supported');
 		  }

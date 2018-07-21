@@ -1,0 +1,35 @@
+ <md-content layout-padding>
+    <form name="setStationDownForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Start Time</label>
+        <input required md-no-asterisk type="number" min="0" name="time" ng-model="item.time">
+        <div ng-messages="setStationDownForm.id.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum ID value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container  class="md-block">
+        <label>Duration</label>
+        <input required md-maxlength="30" required md-no-asterisk name="duration" ng-model="item.duration">
+        <div ng-messages="setStationDownForm.name.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="md-maxlength">The id must be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+      <div layout="row">
+        <md-input-container flex="50">
+          <label>Station ID</label>
+          <input required md-no-asterisk type="number" step="any" name="stationId" ng-model="item.stationId">
+          <div ng-messages="setStationDownForm.xCoord.$error"  multiple md-auto-hide="false">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row"  layout-align="space-around center">
+        <md-button type="submit">Submit</md-button>
+        <md-button ng-click="cancel()">Cancel</md-button>
+      </div>
+    </form>
+  </md-content>
