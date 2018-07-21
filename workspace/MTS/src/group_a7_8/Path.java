@@ -76,7 +76,7 @@ public class Path {
 			}
 		}
 		else {
-			System.out.printf("hazard set for %s is null\n",pathKey);
+			//System.out.printf("hazard set for %s is null\n",pathKey);
 		}
 		return delayFactor;
 	}

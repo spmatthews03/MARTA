@@ -34,16 +34,16 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
+		//System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
 
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d is out of service\n",vehicle.getType(),vehicle.getID());
 
 		vehicle.set_delta_stall_duration(this.delta_stall_duration);
-		System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
+		//System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
 		
 		vehicle.setRepairDuration(this.repairDuration);
-		System.out.printf(" %s%d has a repair duration of %d\n\n",vehicle.getType(),vehicle.getID(), this.repairDuration);
+		//System.out.printf(" %s%d has a repair duration of %d\n\n",vehicle.getType(),vehicle.getID(), this.repairDuration);
 	}
 
 	@Override

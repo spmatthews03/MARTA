@@ -59,7 +59,7 @@ public class BlockPathEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf("BlockPathEvent %s:\n\t%s\n", eventType,toJSON());
+		//System.out.printf("BlockPathEvent %s:\n\t%s\n", eventType,toJSON());
 
 		this.path.clearIsBlocked();
 

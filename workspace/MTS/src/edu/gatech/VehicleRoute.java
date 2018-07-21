@@ -62,7 +62,7 @@ public abstract class VehicleRoute {
     protected Integer getExchangePointID(int routeLocation) { return this.exchangePointsOnRoute.get(routeLocation); }
     
     protected void displayEvent(String vehicleType) {
- 	   System.out.println(" " + vehicleType + " route: " + Integer.toString(this.ID));
+ 	   //System.out.println(" " + vehicleType + " route: " + Integer.toString(this.ID));
     }
 
     protected void takeTurn(String exchangePointType) {

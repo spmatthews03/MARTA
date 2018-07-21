@@ -20,7 +20,7 @@ public class RailRoute extends VehicleRoute {
 	private void debug_print () {
 		String class_name = this.getClass().getName();
 		System.out.println( class_name + " Instantiated");
-		System.out.println("\t" + this.toJSON());		
+		//System.out.println("\t" + this.toJSON());		
 	}
    
    public VehicleRoute getRailRoute() { return this.route; }
