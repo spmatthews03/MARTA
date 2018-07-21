@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public class PathKeyDao extends GenericDAO<PathKey>{
+public class PathKeyDAO extends GenericDAO<PathKey>{
 
-	protected PathKeyDao(Connection con) {
+	protected PathKeyDAO(Connection con) {
 		super(con, "PATHKEY", "type", "PathKey");
 		System.out.printf(" constructed\n",this.getClass().getSimpleName());
 	}
