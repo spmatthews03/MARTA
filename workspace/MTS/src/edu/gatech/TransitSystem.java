@@ -2,7 +2,10 @@ package edu.gatech;
 
 import java.util.Hashtable;
 
+import group_a7_8.DAOManager;
+import group_a7_8.DAOManager.Table;
 import group_a7_8.FuelConsumption;
+import group_a7_8.GenericDAO;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
@@ -38,6 +41,7 @@ public class TransitSystem {
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
         depot = null;
         fuelConsumption = new Hashtable<Bus, ArrayList<FuelConsumption>>();
+        //initialize DAOs
     }
 
     public void setStateChangeListener(StateChangeListener listener) {
@@ -524,8 +528,6 @@ public class TransitSystem {
 		this.trains.clear();
 		this.railRoutes.clear();
 		this.railstations.clear();
-		this.depot=null;
-		
-	}
-    
+		this.depot=null;		
+	}   
 }

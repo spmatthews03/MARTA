@@ -16,7 +16,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DAOManager {
 	
 	
-	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION};
+	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, HAZARD, FUELCONSUMPTION};
 	
     //Private
     private Connection con;

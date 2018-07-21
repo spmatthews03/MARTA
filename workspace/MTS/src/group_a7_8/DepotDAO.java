@@ -12,7 +12,7 @@ import edu.gatech.Depot;
 public class DepotDAO extends GenericDAO<Depot>{
 
     protected DepotDAO(Connection con) {
-        super(con, "STOP");
+        super(con, "STOP", "type", "Depot");
         System.out.printf(" constructed\n",this.getClass().getSimpleName());
     }
 

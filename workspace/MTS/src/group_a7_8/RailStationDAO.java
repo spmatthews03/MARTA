@@ -11,7 +11,7 @@ import edu.gatech.RailStation;
 
 public class RailStationDAO  extends GenericDAO<RailStation>{
 	protected RailStationDAO(Connection con) {
-		super(con, "STOP");
+		super(con, "STOP", "type", "RailStation");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

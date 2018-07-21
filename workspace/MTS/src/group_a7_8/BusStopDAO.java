@@ -11,7 +11,7 @@ import edu.gatech.BusStop;
 
 public class BusStopDAO  extends GenericDAO<BusStop>{
 	protected BusStopDAO(Connection con) {
-		super(con, "STOP");
+		super(con, "STOP", "type", "BusStop");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
