@@ -14,7 +14,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 	private boolean outOfService;
 	private TransitSystem system;
 	public VehicleResumeServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, Vehicle vehicle) {
-    	super(system,timeRank,"set_vehicle_outOfService",eventID);
+    	super(system,timeRank,"vehicle_resumed_service",eventID);
 		this.vehicle = vehicle;
 		this.system = system;
 		this.outOfService = false;
@@ -61,6 +61,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		} else if (vehicle.getType().equals("Train")) {
 			
 			vehicle.setOutOfService(false); /* Train is in service */
+			vehicle.setLocation(0);
 			vehicle.set_nextLocation(0);
 			
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);

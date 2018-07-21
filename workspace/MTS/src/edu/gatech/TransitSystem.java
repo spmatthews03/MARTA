@@ -190,6 +190,7 @@ public class TransitSystem {
     		//System.out.printf("Added path %s to route %d-%s\n", path2,busRoute.getID(),busRoute.getName());
     		
     		//now the path from the prior stop to the begin stop is no longer valid.  remove it
+    		/*
     		if(busRoute.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
 	    		for(PathKey pathKey : paths.keySet()) {
@@ -200,6 +201,7 @@ public class TransitSystem {
 	    			}
 	    		}    		
     		}
+    		*/
     	}
     	listener.updateState();
     }
@@ -282,15 +284,15 @@ public class TransitSystem {
     	}
     }
     
-    public void setSpeedLimit(PathKey pathKey,int speedLimit) {
-    	if(paths.contains(pathKey)) {
+    public void setSpeedLimit(PathKey pathKey,Integer speedLimit) {
+    	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).setSpeedLimit(speedLimit);
 			listener.updateState();
     	}
     }
 
     public void clearSpeedLimit(PathKey pathKey) {
-    	if(paths.contains(pathKey)) {
+    	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).clearSpeedLimit();
 			listener.updateState();
     	}

@@ -11,7 +11,7 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 	private int repairDuration;
 
 	public VehicleOutOfServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, Vehicle vehicle, int delta_stall_duration, int repairDuration) {
-    	super(system,timeRank,"set_vehicle_outOfService",eventID);
+    	super(system,timeRank,"vehicle_out_of_service",eventID);
 		this.vehicle = vehicle;
 		this.outOfService = true;
 		this.delta_stall_duration = delta_stall_duration;

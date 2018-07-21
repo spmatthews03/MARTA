@@ -8,7 +8,7 @@ public class FacilityOutOfServiceEvent extends SimEvent{
 	private ExchangePoint exchangePoint;
 	private boolean outOfService;
 	public FacilityOutOfServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, ExchangePoint exchangePoint) {
-    	super(system,timeRank,"set_vehicle_outOfService",eventID);
+    	super(system,timeRank,"exchangePoint_out_of_service",eventID);
 		this.exchangePoint = exchangePoint;
 		this.outOfService = true;
 	}
