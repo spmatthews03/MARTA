@@ -14,7 +14,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 	private boolean outOfService;
 	private TransitSystem system;
 	public VehicleResumeServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, Vehicle vehicle) {
-    	super(system,timeRank,"set_vehicle_outOfService",eventID);
+    	super(system,timeRank,"vehicle_resumed_service",eventID);
 		this.vehicle = vehicle;
 		this.system = system;
 		this.outOfService = false;
@@ -28,7 +28,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf("VehicleResumeServiceEvent %s:\n\t%s\n", eventType,toJSON());
+		//System.out.printf("VehicleResumeServiceEvent %s:\n\t%s\n", eventType,toJSON());
 		
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());
@@ -39,8 +39,10 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			Bus bus = system.getBus(vehicle.getID());
 
 			// refuel and unset refueling flag
-			bus.refuel();
-			bus.setRefueling(false);
+			if (bus.isRefueling() == true) {
+				bus.refuel();
+				bus.setRefueling(false);
+			}
 
 			// set stop
 			BusStop stop = system.getBusRoute(vehicle.getRouteID()).getBusStop(system, vehicle.getLocation());
@@ -61,6 +63,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		} else if (vehicle.getType().equals("Train")) {
 			
 			vehicle.setOutOfService(false); /* Train is in service */
+			vehicle.setLocation(0);
 			vehicle.set_nextLocation(0);
 			
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);

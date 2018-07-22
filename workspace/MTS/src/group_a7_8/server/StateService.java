@@ -30,8 +30,11 @@ public class StateService {
 		SimDriver driver = AsRestServer.getDriver();
 		
 		System.out.printf("UI requested state reset\n");
+		
+		driver.reset();
+		
         Result result = new Result();
-        result.setMessage("resetting ...");
+        result.setMessage("system reset");
         //TODO refactor as needed when integrating with driver
         result.setResultCode(true);
         return result;

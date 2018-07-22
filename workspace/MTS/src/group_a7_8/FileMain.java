@@ -5,15 +5,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.undo.UndoableEditSupport;
+
 import edu.gatech.SimDriver;
 
 public class FileMain {
 	private static final String INPUT_FILE_TOKEN="-input:";
 	private static final String CONFIG_PATH_TOKEN="-config:";
+	private static final String USE_DB="-usedb";
 
 	public static void main(String[] args) throws IOException {
 		  System.out.println("Mass Transit Simulation System using file source Starting...");
 		  String inputScriptFileName = null;
+		  boolean usedb = false;
 		  for(String arg:args) {
 			  //System.out.printf("arg %s\n",arg);
 			  if(arg.startsWith(INPUT_FILE_TOKEN)) {
@@ -22,12 +26,15 @@ public class FileMain {
 			  if(arg.startsWith(CONFIG_PATH_TOKEN)) {
 				  FileProps.SetConfigPath(arg.substring(CONFIG_PATH_TOKEN.length()).trim());
 			  }
+			  if(arg.equals(USE_DB)) {
+				  usedb = true;
+			  }
 		  }
 		  	
 		System.out.printf("url: %s\n",FileProps.get("connectionurl"));
 
 		  
-		  SimDriver commandInterpreter = new SimDriver();
+		  SimDriver commandInterpreter = new SimDriver(usedb);
 		  
 
 		  if(inputScriptFileName==null) {

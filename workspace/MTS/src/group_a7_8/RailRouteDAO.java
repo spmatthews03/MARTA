@@ -11,7 +11,7 @@ import edu.gatech.RailRoute;
 
 public class RailRouteDAO  extends GenericDAO<RailRoute>{
 	protected RailRouteDAO(Connection con) {
-		super(con, "ROUTE");
+		super(con, "ROUTE", "type", "RailRoute");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

@@ -21,8 +21,8 @@ public class SetSpeedLimitEvent extends SimEvent{
 	public void execute() {
 		displayEvent();
 		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
-		system.setSpeedLimit(pathKey, speedLimit);
-		System.out.printf(" %s speed limit: %f\n\n",pathKey,system.getPath(pathKey).getSpeedLimit());
+		this.system.setSpeedLimit(pathKey, speedLimit);
+		System.out.printf(" %s speed limit: %d\n\n",pathKey,system.getPath(pathKey).getSpeedLimit());
 	}
 	
 	public String getDescription() {

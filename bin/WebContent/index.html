@@ -11,21 +11,23 @@
     <link rel="stylesheet" href="lib/webfonts/material-icons.css">
     <link rel="stylesheet" href="lib/css/angular-material.min.css">
     <link rel="stylesheet" href="css/mts.css">
+    <link rel="stylesheet" href="css/mts-report.css">
+    <link rel="stylesheet" href="css/gt.css">
 </head>
-<body ng-app="MTS" ng-controller="MTSController as mts" ng-cloak >
+<body ng-app="MTS" ng-controller="MTSController" ng-cloak >
 
-    <div class="mts-main">
+    <div class="mts-main" layout="column">
         <div ng-show="showMenu" layout="column">
 	        <md-card>
 	          <md-card-title>
 	           	<md-card-title-text>
 	           	   <span class="md-headline">Welcome to Group A7-8 MTS Simulation System</span>
-	           	   <span class="md-subhead">Select your simulation mode:</span>
+	           	   <div class="md-subhead" ng-click='priorSimToggle()'>Select your simulation mode:</div>
 	           	</md-card-title-text>
 	          </md-card-title> 
 	          <md-card-actions layout="row">
 	             <md-button ng-click="newSimulation()">Start New Simulation</md-button>
-	             <md-button ng-click="resumeSimulation()">Resume Previous Simulation</md-button>
+	             <md-button ng-click="resumeSimulation()" ng-disabled="!mts.priorSim">Resume Previous Simulation</md-button>
 	          </md-card-actions>
 	        </md-card>
         </div>
@@ -68,6 +70,8 @@
     <script src="scripts/Dashboard/MtsDashboard.js"></script>
     <script src="scripts/SimExecution/SimExecution.js"></script>
     <script src="scripts/SimExecution/FuelConsumption.js"></script>
+    <script src="scripts/GTColorsService.js"></script>
+    <script src="scripts/graphing/report.js"></script>
     <script src="scripts/MTS.js"></script>
     <script src="scripts/FileReader/FileReader.js"></script>
     <script src="scripts/graphing/FuelGauge.js"></script>

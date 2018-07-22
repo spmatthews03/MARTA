@@ -18,24 +18,22 @@ public class Path {
 		this.pathKey = pathKey;
 		this.system = system;
 		this.isBlocked = false;
-		this.speedLimit = null;
 	}
 
 	public Path(TransitSystem system,Facility origin, Facility destination) {
 		this(system, new PathKey(origin, destination));
-		this.speedLimit = null;
 	}
 	
-	public void addDelay(double delayFactor) {
-		if(getHazards()==null) {
+	//public void addDelay(double delayFactor) {
+	//	if(getHazards()==null) {
 			
-		}
-	}
+	//	}
+	//}
 
 	public Integer getSpeedLimit() {
 		return speedLimit;
 	}
-	public void setSpeedLimit(int speedLimit) {
+	public void setSpeedLimit(Integer speedLimit) {
 		this.speedLimit = speedLimit;
 	}
 	public void clearSpeedLimit() {
@@ -60,10 +58,15 @@ public class Path {
 	public Facility getDestination() {
 		return pathKey.getDestination();
 	}
-	public double getDistance() {
-		return Math.sqrt(Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getY()),2.0) + 
-				Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getX()),2.0));
+
+	public double get_travel_distance() {
+		Facility facility_current = this.getOrigin();
+		Facility facility_next = this.getDestination();
+		Double travel_distance = facility_current.findDistance(facility_next);
+
+		return travel_distance;
 	}
+
 	public ArrayList<Hazard> getHazards(){
 		return system.getHazards(pathKey);
 	}
@@ -76,7 +79,7 @@ public class Path {
 			}
 		}
 		else {
-			System.out.printf("hazard set for %s is null\n",pathKey);
+			//System.out.printf("hazard set for %s is null\n",pathKey);
 		}
 		return delayFactor;
 	}

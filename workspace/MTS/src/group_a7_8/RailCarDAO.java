@@ -12,13 +12,13 @@ import edu.gatech.RailCar;
 public class RailCarDAO extends GenericDAO<RailCar>{
 
 	protected RailCarDAO(Connection con) {
-		super(con, "VEHICLE");
-		System.out.printf(" constructed\n",this.getClass().getSimpleName());
+		super(con, "VEHICLE", "type", "Train");
+		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
 	private String insert_format=
-			"insert into %s (%s,%s,%s,%s,%s,%s,%s,%s,%s) "+
-			"VALUES(%d,'%s',%d,%d,%d,%d,%f,%f,%d)";
+			"insert into %s (%s,%s,%s,%s,%s,%s,%s) "+
+			"VALUES(%d,'%s',%d,%d,%d,%d,%d)";
 	
 	
 	@Override
@@ -31,8 +31,6 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"location",
 				"passengers",
 				"capacity",
-				"fuellevel",
-				"fuelcapacity",
 				"speed",
 				railCar.getID(),
 				railCar.getType(),
@@ -40,8 +38,6 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				(int)railCar.getLocation(),
 				(int)railCar.getPassengers(),
 				(int)railCar.getCapacity(),
-				0, // added 0 for fuellevel so it follows 'numeric NOT NULL' declaration
-				0, // added 0 for fuelcapacity so it follows 'numeric NOT NULL' declaration
 				(int)railCar.getSpeed()));
 		
 		stmt.execute(String.format(insert_format,tableName,
@@ -51,8 +47,6 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"location",
 				"passengers",
 				"capacity",
-				"fuellevel",
-				"fuelcapacity",
 				"speed",
 				railCar.getID(),
 				railCar.getType(),
@@ -60,8 +54,6 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				railCar.getLocation(),
 				railCar.getPassengers(),
 				railCar.getCapacity(),
-				0, // added 0 for fuellevel so it follows 'numeric NOT NULL' declaration
-				0, // added 0 for fuelcapacity so it follows 'numeric NOT NULL' declaration
 				railCar.getSpeed()));
 		stmt.close();
 	}

@@ -12,8 +12,8 @@ import edu.gatech.Bus;
 public class BusDAO extends GenericDAO<Bus>{
 
 	protected BusDAO(Connection con) {
-		super(con, "VEHICLE");
-		System.out.printf(" constructed\n",this.getClass().getSimpleName());
+		super(con, "VEHICLE", "type", "Bus");
+		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
 	private String insert_format=

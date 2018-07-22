@@ -2,7 +2,10 @@ package edu.gatech;
 
 import java.util.Hashtable;
 
+import group_a7_8.DAOManager;
+import group_a7_8.DAOManager.Table;
 import group_a7_8.FuelConsumption;
+import group_a7_8.GenericDAO;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
@@ -38,6 +41,7 @@ public class TransitSystem {
         hazards = new Hashtable<PathKey,ArrayList<Hazard>>();
         depot = null;
         fuelConsumption = new Hashtable<Bus, ArrayList<FuelConsumption>>();
+        //initialize DAOs
     }
 
     public void setStateChangeListener(StateChangeListener listener) {
@@ -141,7 +145,10 @@ public class TransitSystem {
 	}
 
     public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-    	trains.put(uniqueID, new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+    	RailCar train = new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed);
+    	train.system = this;
+    	train.set_rail_route_and_location_index(this.getRailRoute(inputRoute));
+    	trains.put(uniqueID, train);
 		listener.updateState();
 		return uniqueID;
 	}
@@ -190,6 +197,7 @@ public class TransitSystem {
     		//System.out.printf("Added path %s to route %d-%s\n", path2,busRoute.getID(),busRoute.getName());
     		
     		//now the path from the prior stop to the begin stop is no longer valid.  remove it
+    		/*
     		if(busRoute.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
 	    		for(PathKey pathKey : paths.keySet()) {
@@ -200,6 +208,7 @@ public class TransitSystem {
 	    			}
 	    		}    		
     		}
+    		*/
     	}
     	listener.updateState();
     }
@@ -282,15 +291,15 @@ public class TransitSystem {
     	}
     }
     
-    public void setSpeedLimit(PathKey pathKey,int speedLimit) {
-    	if(paths.contains(pathKey)) {
+    public void setSpeedLimit(PathKey pathKey,Integer speedLimit) {
+    	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).setSpeedLimit(speedLimit);
 			listener.updateState();
     	}
     }
 
     public void clearSpeedLimit(PathKey pathKey) {
-    	if(paths.contains(pathKey)) {
+    	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).clearSpeedLimit();
 			listener.updateState();
     	}
@@ -511,5 +520,17 @@ public class TransitSystem {
     	sb.append(']');
     	return sb.toString();
 	}
-    
+
+	public void reset() {
+		this.fuelConsumption.clear();
+		this.hazards.clear();
+		this.paths.clear();
+		this.buses.clear();
+		this.busRoutes.clear();
+		this.busstops.clear();
+		this.trains.clear();
+		this.railRoutes.clear();
+		this.railstations.clear();
+		this.depot=null;		
+	}   
 }

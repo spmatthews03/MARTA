@@ -11,7 +11,7 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 	private int repairDuration;
 
 	public VehicleOutOfServiceEvent(TransitSystem system, Integer eventID, Integer timeRank, Vehicle vehicle, int delta_stall_duration, int repairDuration) {
-    	super(system,timeRank,"set_vehicle_outOfService",eventID);
+    	super(system,timeRank,"vehicle_out_of_service",eventID);
 		this.vehicle = vehicle;
 		this.outOfService = true;
 		this.delta_stall_duration = delta_stall_duration;
@@ -34,16 +34,16 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
+		//System.out.printf(" %s:\n\t%s\n", eventType,toJSON());
 
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d is out of service\n",vehicle.getType(),vehicle.getID());
 
 		vehicle.set_delta_stall_duration(this.delta_stall_duration);
-		System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
+		//System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
 		
 		vehicle.setRepairDuration(this.repairDuration);
-		System.out.printf(" %s%d has a repair duration of %d\n\n",vehicle.getType(),vehicle.getID(), this.repairDuration);
+		//System.out.printf(" %s%d has a repair duration of %d\n\n",vehicle.getType(),vehicle.getID(), this.repairDuration);
 	}
 
 	@Override

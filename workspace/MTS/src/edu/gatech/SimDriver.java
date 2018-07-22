@@ -4,19 +4,29 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 
 import group_a7_8.ClearPathDelayEvent;
 import group_a7_8.ClearSpeedLimitEvent;
+import group_a7_8.DAOManager;
 import group_a7_8.FacilityOutOfServiceEvent;
 import group_a7_8.FacilityResumeServiceEvent;
 import group_a7_8.FileProps;
 import group_a7_8.FuelConsumption;
+import group_a7_8.GenericDAO;
+import group_a7_8.BusDAO;
+import group_a7_8.BusRouteDAO;
+import group_a7_8.BusStopDAO;
+import group_a7_8.RailCarDAO;
+import group_a7_8.RailRouteDAO;
+import group_a7_8.RailStationDAO;
 import group_a7_8.MoveBusEvent;
 import group_a7_8.MoveTrainEvent;
 import group_a7_8.PathKey;
@@ -24,6 +34,7 @@ import group_a7_8.SetPathDelayEvent;
 import group_a7_8.SetSpeedLimitEvent;
 import group_a7_8.VehicleOutOfServiceEvent;
 import group_a7_8.VehicleResumeServiceEvent;
+import group_a7_8.DAOManager.Table;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 import group_a7_8.PathKey;
@@ -33,13 +44,27 @@ public class SimDriver implements StateChangeListener{
     private static SimQueue simEngine;
     private static TransitSystem martaModel;
     private static Random randGenerator;
-
-    public SimDriver() {
+    private Hashtable<Table, GenericDAO> DAOs = new Hashtable<Table, GenericDAO>();
+	private boolean persistenceOn;
+    
+	public SimDriver() {
+		this(false);
+	}
+	
+    public SimDriver(boolean persistenceOn) {
         simEngine = new SimQueue();
         simEngine.setStateChangeListener(this);
         martaModel = new TransitSystem();
         martaModel.setStateChangeListener(this);
         randGenerator = new Random();
+        this.persistenceOn = persistenceOn;
+    }
+    
+    public GenericDAO getDao(Table table) throws ClassNotFoundException, SQLException, Exception {
+    	if (!DAOs.containsKey(table)) {
+    		DAOs.put(table, DAOManager.getInstance().getDAO(table));
+    	}
+    	return DAOs.get(table);
     }
     
     private final String DELIMITER = ",";
@@ -131,7 +156,7 @@ public class SimDriver implements StateChangeListener{
                 int trainID = martaModel.makeTrain(train_uniqueID, train_inputRoute,
                 								   train_inputLocation, train_inputPassengers,
                 								   train_inputCapacity, train_inputSpeed);
-                System.out.println(" new train: " + Integer.toString(trainID) + " created");
+                //System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
             	int uniqueID = Integer.parseInt(tokens[1].trim());
@@ -181,7 +206,7 @@ public class SimDriver implements StateChangeListener{
                 break;*/
             case "step_once":
             	simEngine.triggerNextEvent(martaModel);
-                System.out.println(" queue activated for 1 event");
+                //System.out.println(" queue activated for 1 event");
                 break;
             case "step_multi":
                 System.out.println(" queue activated for " + Integer.parseInt(tokens[1]) + " event(s)");
@@ -219,7 +244,58 @@ public class SimDriver implements StateChangeListener{
             	break;
             case "quit":
                 System.out.println(" stop the command loop");
-                return true;
+                if(persistenceOn) {
+            	for (Bus bus : martaModel.getBuses().values()) {
+            		try {
+						((BusDAO)getDao(Table.BUS)).save(bus);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save bus");
+					}	
+            	}
+            	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
+            		try {
+						((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save bus route");
+					}	
+            	}
+            	for (BusStop busStop : martaModel.getStops().values()) {
+            		try {
+						((BusStopDAO)getDao(Table.BUSSTOP)).save(busStop);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save bus stop");
+					}	
+            	}
+            	for (RailCar railCar : martaModel.getTrains().values()) {
+            		try {
+						((RailCarDAO)getDao(Table.RAILCAR)).save(railCar);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save train");
+					}	
+            	}
+            	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
+            		try {
+						((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save rail route");
+					}	
+            	}
+            	for (RailStation railStation : martaModel.getRailStations().values()) {
+            		try {
+						((RailStationDAO)getDao(Table.RAILSTATION)).save(railStation);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Unable to save rail station");
+					}	
+            	}
+            	System.out.printf("system state persisted\n");
+                }
+            	return true;
             case "path_delay":
             	//sets the delay on the specified bus path
             	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>         	            	
@@ -417,7 +493,7 @@ public class SimDriver implements StateChangeListener{
             										 start_time, tran_broken_down,
             										 delta_stall_period, repairDuration);
 
-            	System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
+            	//System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
 
             	break;
@@ -746,6 +822,11 @@ public class SimDriver implements StateChangeListener{
 		}
 		sb.append("}");
 		return sb.toString();
+	}
+
+	public void reset() {
+		martaModel.reset();
+		simEngine.reset();
 	}
 	
 }

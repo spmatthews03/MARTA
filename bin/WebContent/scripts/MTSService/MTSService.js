@@ -12,8 +12,11 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	        events:[],
 	        commands:[],
 	        commandsQueue:[],
-	        reports:[],
+	        reports:{vehicles:[]},
 	  	  	editMode:false,
+	  	  	priorSim:false,
+	  	  	holdCommands:false,
+	  	  	fuelByBusData:{},
 	  		commandOption:""
    };
 	
@@ -30,7 +33,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 
     
    var sendCommands = function(){
-	   if(!commandBlocked && state.commandsQueue.length>0){
+	   if(!state.holdCommands && !commandBlocked && state.commandsQueue.length>0){
 		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
@@ -87,10 +90,53 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
   		   //$log.info(update);
-  		   state.reports.splice(0,state.reports.length);
-  		   update.reports.forEach(function(report){
-  			   state.reports.push(report);
-  		   });
+  		   state.reports.vehicles.splice(0,state.reports.vehicles.length);
+    		 state.reports.minAmount=0;
+      		 state.reports.maxAmount = 0;
+      		 state.reports.totalAmount = 0;
+      		 state.reports.minPassengers=0;
+      		 state.reports.maxPassengers = 0;
+      		 state.reports.totalPassengers = 0;
+  		   var maxPassengers = 0;
+  		   var maxAmount = 0;
+  		   var totalPeople = 0;
+  		   var totalAmount = 0;
+  		   for(var r=0;r<update.reports.length;r++){
+  			   var report = update.reports[r];
+  			   var vehicleAmountTotal = 0;
+  			   
+  			   for(var i=0;i<report.reports.length;i++){
+  				 vehicleAmountTotal = vehicleAmountTotal + report.reports[i].amount;
+  			   }
+  			   report.amount = vehicleAmountTotal;
+  			   if(report.amount>maxAmount) maxAmount = report.amount;
+  			   totalAmount = totalAmount + report.amount;
+  			   
+  			   var vehiclePeopleTotal = 0;
+  			   for(var i=0;i<report.reports.length;i++){
+  				   vehiclePeopleTotal = vehiclePeopleTotal + report.reports[i].passengers;
+  			   }
+  			   report.passengers = vehiclePeopleTotal;
+  			   if(report.maxPassengers>totalPeople) maxPassengers = report.passengers;
+  			   totalPeople = totalPeople + report.passengers;
+
+  			   
+  			   report.name = report.vehicle.type+" #"+report.vehicle.ID;
+  			   state.reports.vehicles.push(report);
+//  			   $log.info('report:');
+//  			   $log.info(report);
+  		   }
+  		 state.reports.minAmount=0;
+  		 state.reports.maxAmount = maxAmount;
+  		 state.reports.totalAmount = totalAmount;
+  		 state.reports.minPassengers=0;
+  		 state.reports.maxPassengers = maxPassengers;
+  		 state.reports.totalPassengers = totalPeople;
+  		 
+  		 state.fuelByBusData.min=state.reports.minAmount;
+  		 state.fuelByBusData.max=state.reports.maxAmount;
+  		 state.fuelByBusData.total=state.reports.totalAmount;
+  		 state.fuelByBusData.items=state.reports.vehicles;
   	   }
   	   commandBlocked = false;
    };
@@ -148,19 +194,22 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    var getStopVehicle=function(stopType,stopID,route){
-    	//$log.info(route);
-    	//$log.info("stopType: "+stopType +", stopID: "+stopID);
+    var getPathVehicle=function(stopType,originStopID,destinationStopID,route){
+    	$log.info(route);
+    	$log.info("stopType: "+stopType +", originStopID: "+originStopID+", destinationStopID: "+destinationStopID);
     	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
     	var result;
     	result = state.vehicles.find(function(vehicle){
     		if(vehicle.routeID!=route.ID) return false;
     		//$log.info(vehicle);
     		var locationID = vehicle.prevLocation;
+    		var nextLocationID = vehicle.nextLocation;
     		var vehicleStopID = route.stops[locationID];
-    		var vehicleStop = getStop(stopType,vehicleStopID);
-    		//$log.info(vehicleStop);
-    		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
+    		var vehicleNextStopID = route.stops[nextLocationID];
+    		//var vehicleStop = getStop(stopType,vehicleStopID);
+    		$log.info(vehicleStopID);
+    		$log.info(vehicleNextStopID);
+    		return (vehicle.type==vehicleType && vehicleStopID == originStopID && vehicleNextStopID == destinationStopID );
     	});
     	return result;
     };
@@ -178,16 +227,120 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	return result;
     };
 
+    var reset = function(){
+    	//$log.info('resetting system');
+    	/*
+    	 * 			time:0,
+	    	vehicles:[],
+	        routes:[],
+	        stops:[],
+	        paths:[],
+	        events:[],
+	        commands:[],
+	        commandsQueue:[],
+	        reports:[],
+	  	  	editMode:false,
+	  	  	priorSim:false,
+	  		commandOption:""
+    	 */
+    	state.time=0;
+    	state.vehicles.splice(0,state.vehicles.length);
+    	state.routes.splice(0,state.routes.length);
+    	state.stops.splice(0,state.stops.length);
+    	state.paths.splice(0,state.paths.length);
+    	state.events.splice(0,state.events.length);
+    	state.commands.splice(0,state.commands.length);
+    	state.commandsQueue.splice(0,state.commandsQueue.length);
+    	state.reports.vehicles.splice(0,state.reports.length);
+		 state.reports.minAmount=0;
+  		 state.reports.maxAmount = 0;
+  		 state.reports.totalAmount = 0;
+  		 state.reports.minPassengers=0;
+  		 state.reports.maxPassengers = 0;
+  		 state.reports.totalPassengers = 0;
+  		 editMode:false;
+  	  	priorSim:false;
+  		commandOption:"";
+    	//$log.info('reset completed')
+    	//$log.info(state);
+    };
 
     connect();
+    
+    var countBus = function(){
+    	var c=0;
+       for(var i=0;i<state.vehicles.length;i++){
+    	   if(state.vehicles[i].type=='Bus')  c++;
+       }	
+       return c;
+    };
+    var countBusStop = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='busStop')  c++;
+       }	
+       return c;
+    };
+    var countBusRoute = function(){
+    	var c=0;
+       for(var i=0;i<state.routes.length;i++){
+    	   if(state.routes[i].type=='busRoute')  c++;
+       }	
+       return c;
+    };
+    var countTrain = function(){
+    	var c=0;
+       for(var i=0;i<state.vehicles.length;i++){
+    	   if(state.vehicles[i].type=='Train')  c++;
+       }	
+       return c;
+    };
+    var countTrainStop = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='railStop')  c++;
+       }	
+       return c;
+    };
+    var countTrainRoute = function(){
+    	var c=0;
+       for(var i=0;i<state.routes.length;i++){
+    	   if(state.routes[i].type=='railRoute')  c++;
+       }	
+       return c;
+    };
+    var countDepot = function(){
+    	var c=0;
+       for(var i=0;i<state.stops.length;i++){
+    	   if(state.stops[i].type=='Depot')  c++;
+       }	
+       return c;
+    };
+    var countMoveEvent = function(){
+    	var c=0;
+       for(var i=0;i<state.events.length;i++){
+    	   if(state.events[i].type=='move_bus' || state.events[i].type=='move_train')  c++;
+       }	
+       return c;
+    };
+    
    
     return {
     	state: state,
     	executeCommand: executeCommand,
     	getStop:getStop,
     	getPath:getPath,
-    	getStopVehicle:getStopVehicle,
-    	getVehicleEvent:getVehicleEvent
+    	getPathVehicle:getPathVehicle,
+    	getVehicleEvent:getVehicleEvent,
+    	reset:reset,
+    	countBus:countBus,
+    	countBusStop:countBusStop,
+    	countBusRoute:countBusRoute,
+    	countTrain:countTrain,
+    	countTrainStop:countTrainStop,
+    	countTrainRoute:countTrainRoute,
+    	countDepot:countDepot,
+    	countMoveEvent:countMoveEvent
     };
     
   };

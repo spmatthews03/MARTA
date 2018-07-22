@@ -1,2 +1,4 @@
-password: p@ssw0rd
-url: jdbc:postgresql://localhost:5432/martadb
+connectionUrl: jdbc:postgresql://localhost:5432/martadb
+userId: mts
+password: mts
+createdb: ../../bin/createDB.sql

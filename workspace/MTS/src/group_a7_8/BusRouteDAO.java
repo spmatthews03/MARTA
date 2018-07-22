@@ -11,7 +11,7 @@ import edu.gatech.BusRoute;
 
 public class BusRouteDAO  extends GenericDAO<BusRoute>{
 	protected BusRouteDAO(Connection con) {
-		super(con, "ROUTE");
+		super(con, "ROUTE", "type", "BusRoute");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
