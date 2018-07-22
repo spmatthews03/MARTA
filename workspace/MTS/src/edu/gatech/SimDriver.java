@@ -243,59 +243,8 @@ public class SimDriver implements StateChangeListener{
             	martaModel.displayModel();
             	break;
             case "quit":
-                System.out.println(" stop the command loop");
-                if(persistenceOn) {
-            	for (Bus bus : martaModel.getBuses().values()) {
-            		try {
-						((BusDAO)getDao(Table.BUS)).save(bus);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus");
-					}	
-            	}
-            	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
-            		try {
-						((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus route");
-					}	
-            	}
-            	for (BusStop busStop : martaModel.getStops().values()) {
-            		try {
-						((BusStopDAO)getDao(Table.BUSSTOP)).save(busStop);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus stop");
-					}	
-            	}
-            	for (RailCar railCar : martaModel.getTrains().values()) {
-            		try {
-						((RailCarDAO)getDao(Table.RAILCAR)).save(railCar);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save train");
-					}	
-            	}
-            	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
-            		try {
-						((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save rail route");
-					}	
-            	}
-            	for (RailStation railStation : martaModel.getRailStations().values()) {
-            		try {
-						((RailStationDAO)getDao(Table.RAILSTATION)).save(railStation);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save rail station");
-					}	
-            	}
-            	System.out.printf("system state persisted\n");
-                }
-            	return true;
+            	this.save();
+            	break;
             case "path_delay":
             	//sets the delay on the specified bus path
             	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>         	            	
@@ -828,5 +777,59 @@ public class SimDriver implements StateChangeListener{
 		martaModel.reset();
 		simEngine.reset();
 	}
-	
+	public boolean save() {
+        System.out.println(" stop the command loop");
+        if(persistenceOn) {
+    	for (Bus bus : martaModel.getBuses().values()) {
+    		try {
+				((BusDAO)getDao(Table.BUS)).save(bus);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus");
+			}	
+    	}
+    	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
+    		try {
+				((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus route");
+			}	
+    	}
+    	for (BusStop busStop : martaModel.getStops().values()) {
+    		try {
+				((BusStopDAO)getDao(Table.BUSSTOP)).save(busStop);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus stop");
+			}	
+    	}
+    	for (RailCar railCar : martaModel.getTrains().values()) {
+    		try {
+				((RailCarDAO)getDao(Table.RAILCAR)).save(railCar);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save train");
+			}	
+    	}
+    	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
+    		try {
+				((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save rail route");
+			}	
+    	}
+    	for (RailStation railStation : martaModel.getRailStations().values()) {
+    		try {
+				((RailStationDAO)getDao(Table.RAILSTATION)).save(railStation);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save rail station");
+			}	
+    	}
+    	System.out.printf("system state persisted\n");
+        }
+    	return true;
+	}
 }
