@@ -162,7 +162,7 @@ public class MoveTrainEvent extends SimEvent {
         		current_path.setIsBlocked();
 
             	BlockPathEvent clear_block_path_event =
-            			new BlockPathEvent(this.system, eventQueue.getNextEventID(), absolute_stall_period, activeTrain);
+            			new BlockPathEvent(this.system, eventQueue.getNextEventID(), absolute_stall_period, activeTrain, current_path);
             	System.out.printf("%s\n", clear_block_path_event.toJSON());
             	eventQueue.add(clear_block_path_event);
         	}
