@@ -62,8 +62,8 @@ public abstract class VehicleRoute {
     protected void addNewExchangePoint(int exchangePointID) { this.exchangePointsOnRoute.put(exchangePointsOnRoute.size(), exchangePointID); }
     
     protected Integer getExchangePointID(int routeLocation) {
-    	System.out.print("getExchangePointID: " + routeLocation);
-    	System.out.print("getExchangePointID pointer: " + this.exchangePointsOnRoute);
+    	//System.out.print("getExchangePointID: " + routeLocation);
+    	//System.out.print("getExchangePointID pointer: " + this.exchangePointsOnRoute);
     	return this.exchangePointsOnRoute.get(routeLocation);
 	}
     
