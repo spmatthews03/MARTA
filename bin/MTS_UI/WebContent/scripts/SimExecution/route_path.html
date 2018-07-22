@@ -1,0 +1,18 @@
+<div class="path"  ng-show="{'out-of-service':path.path.isBlocked}">
+  <div layout="row" layout-align="center center">
+    <div class="gutter" flex="20" layout="column" layout-align="start start">
+      <div layout="column" class="speed-limit" ng-show="path.path.speedLimit>-1" layout-align="center center"><div class="label">LIMIT</div><div class="value">{{path.path.speedLimit}}</div></div>
+
+    </div>
+    <div flex="20" layout="column" layout-align="start start">
+      <div class="delay-factor" ng-show="path.path.delayfactor!=1" layout="row"><md-icon>clear</md-icon><div class="label">{{path.path.delayfactor}}</div></div>
+      <md-icon ng-show="!path.path.blocked && path.path.speedLimit<0 && path.path.delayfactor==1" class="path-icon">arrow_downward</md-icon>
+      <md-icon ng-show="path.path.blocked" class="path-icon blocked">clear</md-icon>
+      <md-icon ng-show="!path.path.blocked && (path.path.speedLimit>-1 || path.path.delayfactor!=1)" class="path-hazard-indicator">warning</md-icon>
+    </div>
+    <div flex>
+	  <div ng-repeat="vehicle in path.vehicleAtPath track by $index"><route-vehicle data-vehicle="vehicle"></route-vehicle></div>
+    </div>
+    <div flex="5"></div>
+  </div>
+</div>

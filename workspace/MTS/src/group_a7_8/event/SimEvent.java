@@ -1,4 +1,7 @@
-package edu.gatech;
+package group_a7_8.event;
+
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 
 public abstract class SimEvent {
     protected Integer timeRank;

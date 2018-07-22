@@ -1,0 +1,26 @@
+ <md-content layout-padding>
+    <form name="extendBusRouteForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Bus Route ID</label>
+        <input required md-no-asterisk type="number" min="0" name="routeId" ng-model="item.routeId">
+        <div ng-messages="extendBusRouteForm.routeId.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum bus route ID value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Bus Stop ID</label>
+        <input required md-no-asterisk type="number" min="0" name="stopId" ng-model="item.stopId">
+        <div ng-messages="extendBusRouteForm.routeId.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum bus stop ID value allowed</div>
+        </div>
+      </md-input-container>
+
+      <div layout="row" layout-align="space-around center">
+        <md-button type="submit">Submit</md-button>
+        <md-button ng-click="cancel()">Cancel</md-button>
+      </div>
+    </form>
+  </md-content>

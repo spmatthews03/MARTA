@@ -1,4 +1,4 @@
-package edu.gatech;
+package group_a7_8.event;
 
 import java.util.Comparator;
 

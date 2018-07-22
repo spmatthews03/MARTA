@@ -1,9 +1,10 @@
-package group_a7_8;
+package group_a7_8.event;
 
 import java.util.ArrayList;
 
-import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
+import group_a7_8.Hazard;
+import group_a7_8.PathKey;
 
 public class ClearPathDelayEvent extends SimEvent{
 	private PathKey pathKey;

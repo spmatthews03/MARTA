@@ -1,4 +1,4 @@
-package group_a7_8;
+package group_a7_8.persistence;
 
 import java.util.Hashtable;
 
@@ -9,7 +9,8 @@ import edu.gatech.Depot;
 import edu.gatech.RailCar;
 import edu.gatech.RailRoute;
 import edu.gatech.RailStation;
-import group_a7_8.DAOManager.Table;
+import group_a7_8.FileProps;
+import group_a7_8.persistence.DAOManager.Table;
 
 public class DBTest {
 	private static final String CONFIG_PATH_TOKEN="-config:";

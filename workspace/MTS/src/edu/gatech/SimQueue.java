@@ -3,6 +3,8 @@ package edu.gatech;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import group_a7_8.event.SimEvent;
+import group_a7_8.event.SimEventComparator;
 import group_a7_8.server.StateChangeListener;
 
 public class SimQueue {

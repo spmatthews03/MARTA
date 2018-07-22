@@ -1,4 +1,4 @@
-package group_a7_8;
+package group_a7_8.persistence;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +11,8 @@ import java.util.Hashtable;
 import java.util.function.Consumer;
 
 import org.postgresql.ds.PGSimpleDataSource;
+
+import group_a7_8.FileProps;
 
 @SuppressWarnings("rawtypes")
 public class DAOManager {

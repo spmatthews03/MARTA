@@ -51,11 +51,12 @@ public class StateService {
     public Result hasPriorSimulation(@Context HttpServletRequest request){
 		SimDriver driver = AsRestServer.getDriver();
 		
+		
 		System.out.printf("UI requested has prior sim\n");
         Result result = new Result();
         result.setMessage("prior sim ...");
         //TODO refactor as needed when integrating with driver
-        result.setResultCode(true);
+        result.setResultCode(driver.hasSavedSimulation());
         return result;
     }
 	public static class Result{

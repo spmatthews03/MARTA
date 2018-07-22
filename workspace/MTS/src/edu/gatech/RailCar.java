@@ -1,8 +1,8 @@
 package edu.gatech;
 
-import group_a7_8.MoveTrainEvent;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
+import group_a7_8.event.MoveTrainEvent;
 
 public class RailCar extends Vehicle {
 

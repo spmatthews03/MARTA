@@ -3,7 +3,7 @@
 	//console.log('bootstrapping angular');
 	//defining the application controller
 	var appController = function($scope, $log, $rootScope,mtsService){
-		//$log.info('MTSController');
+		$log.info('MTSController');
 		$scope.showMenu = true;
 		$scope.execMode=true; //default
 		$scope.mts = mtsService.state;
@@ -27,7 +27,8 @@
 			$scope.activeTab = ($scope.execMode ? 0 : 1);
 		};
 		$scope.activeTab = 0;
-
+		$log.info('MTSController');
+		
 	};
 
 	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module','Report','GTColors'])

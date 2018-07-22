@@ -1,12 +1,14 @@
-package group_a7_8;
+package group_a7_8.event;
 
 import javax.validation.constraints.Min;
 
 import edu.gatech.Bus;
 import edu.gatech.BusRoute;
-import edu.gatech.SimEvent;
 import edu.gatech.BusStop;
 import edu.gatech.TransitSystem;
+import group_a7_8.FuelConsumption;
+import group_a7_8.Path;
+import group_a7_8.PathKey;
 
 public class MoveBusEvent extends SimEvent{
 
