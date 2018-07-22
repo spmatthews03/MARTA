@@ -63,7 +63,10 @@ public class StateService {
 			driver.checkPriorSim();
 			boolean priorSim = driver.hasPriorSim();
 	        result.setMessage(String.format("System %s a prior simulation", (priorSim?"has":"does not have")));
-	        if(priorSim) driver.updateState();
+	        if(priorSim) {
+	        	driver.restoreSim();
+	        	driver.updateState();
+	        }
 	        result.setResultCode(priorSim);
 		} catch (Exception e) {
 			e.printStackTrace();

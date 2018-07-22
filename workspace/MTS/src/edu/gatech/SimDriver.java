@@ -35,6 +35,7 @@ import group_a7_8.persistence.GenericDAO;
 import group_a7_8.persistence.RailCarDAO;
 import group_a7_8.persistence.RailRouteDAO;
 import group_a7_8.persistence.RailStationDAO;
+import group_a7_8.persistence.SetPathDelayEventDAO;
 import group_a7_8.persistence.DAOManager.Table;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
@@ -864,5 +865,31 @@ public class SimDriver implements StateChangeListener{
 			System.out.printf("hasPriorSim = %s\n",Boolean.toString(hasPriorSim));
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public void restoreSim() throws ClassNotFoundException, SQLException, Exception {
+		//restoring events from database
+		ArrayList<SimEvent> events;
+		events = getDao(Table.SETPATHDELAYEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.CLEARPATHDELAYEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.SETSPEEDLIMITEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.CLEARSPEEDLIMITEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.FACILITYOUTOFSERVICEEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.FACILITYRESUMESERVICEEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.MOVEBUSEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.MOVETRAINEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.VEHICLEOUTOFSERVICEEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.VEHICLERESUMESERVICEEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 	}
 }
