@@ -12,7 +12,7 @@ public class RailStation extends ExchangePoint {
 	private void debug_print () {
 		String class_name = this.getClass().getName();
 		System.out.println(" " + class_name + " Instantiated");
-		System.out.println("\t" + this.toJSON());		
+		//System.out.println("\t" + this.toJSON());		
 	}
 
     public String toJSON() {

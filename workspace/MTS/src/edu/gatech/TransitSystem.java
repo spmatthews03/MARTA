@@ -145,7 +145,10 @@ public class TransitSystem {
 	}
 
     public int makeTrain(int uniqueID, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
-    	trains.put(uniqueID, new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed));
+    	RailCar train = new RailCar(uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, inputSpeed);
+    	train.system = this;
+    	train.set_rail_route_and_location_index(this.getRailRoute(inputRoute));
+    	trains.put(uniqueID, train);
 		listener.updateState();
 		return uniqueID;
 	}

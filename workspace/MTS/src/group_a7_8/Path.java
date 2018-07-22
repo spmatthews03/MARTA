@@ -58,10 +58,15 @@ public class Path {
 	public Facility getDestination() {
 		return pathKey.getDestination();
 	}
-	public double getDistance() {
-		return Math.sqrt(Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getY()),2.0) + 
-				Math.pow(((double)getDestination().getLocation().getX()  - (double)getOrigin().getLocation().getX()),2.0));
+
+	public double get_travel_distance() {
+		Facility facility_current = this.getOrigin();
+		Facility facility_next = this.getDestination();
+		Double travel_distance = facility_current.findDistance(facility_next);
+
+		return travel_distance;
 	}
+
 	public ArrayList<Hazard> getHazards(){
 		return system.getHazards(pathKey);
 	}
@@ -74,7 +79,7 @@ public class Path {
 			}
 		}
 		else {
-			System.out.printf("hazard set for %s is null\n",pathKey);
+			//System.out.printf("hazard set for %s is null\n",pathKey);
 		}
 		return delayFactor;
 	}

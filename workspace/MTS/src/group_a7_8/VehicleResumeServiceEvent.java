@@ -28,7 +28,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 	@Override
 	public void execute() {
 		displayEvent();
-		System.out.printf("VehicleResumeServiceEvent %s:\n\t%s\n", eventType,toJSON());
+		//System.out.printf("VehicleResumeServiceEvent %s:\n\t%s\n", eventType,toJSON());
 		
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d resumed service\n\n",vehicle.getType(),vehicle.getID());

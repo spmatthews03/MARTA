@@ -156,7 +156,7 @@ public class SimDriver implements StateChangeListener{
                 int trainID = martaModel.makeTrain(train_uniqueID, train_inputRoute,
                 								   train_inputLocation, train_inputPassengers,
                 								   train_inputCapacity, train_inputSpeed);
-                System.out.println(" new train: " + Integer.toString(trainID) + " created");
+                //System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
             	int uniqueID = Integer.parseInt(tokens[1].trim());
@@ -206,7 +206,7 @@ public class SimDriver implements StateChangeListener{
                 break;*/
             case "step_once":
             	simEngine.triggerNextEvent(martaModel);
-                System.out.println(" queue activated for 1 event");
+                //System.out.println(" queue activated for 1 event");
                 break;
             case "step_multi":
                 System.out.println(" queue activated for " + Integer.parseInt(tokens[1]) + " event(s)");
@@ -442,7 +442,7 @@ public class SimDriver implements StateChangeListener{
             										 start_time, tran_broken_down,
             										 delta_stall_period, repairDuration);
 
-            	System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
+            	//System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
 
             	break;
