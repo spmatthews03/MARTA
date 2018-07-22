@@ -1,0 +1,41 @@
+ <md-content layout-padding>
+    <form name="setTrainOutOfServiceForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Start At</label>
+        <input required md-no-asterisk type="number" min="0" name="time" ng-model="item.time">
+        <div ng-messages="setTrainOutOfServiceForm.time.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum start at value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Train ID</label>
+        <input required md-no-asterisk type="number" min="0" name="id" ng-model="item.id">
+        <div ng-messages="setTrainOutOfServiceForm.duration.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum duration value allowed</div>
+        </div>
+      </md-input-container>
+       <md-input-container class="md-block">
+        <label>Tow Duration</label>
+        <input required md-no-asterisk type="number" min="0" name="towDuration" ng-model="item.towDuration">
+        <div ng-messages="setTrainOutOfServiceForm.origin.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum bus stop ID value allowed</div>
+        </div>
+      </md-input-container>     
+       <md-input-container class="md-block">
+        <label>Repair Duration</label>
+        <input required md-no-asterisk type="number" min="0" name="repairDuration" ng-model="item.repairDuration">
+        <div ng-messages="setTrainOutOfServiceForm.destination.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum bus stop ID value allowed</div>
+        </div>
+       </md-input-container>
+        <div layout="row" layout-align="space-around center">
+            <md-button type="submit">Submit</md-button>
+            <md-button ng-click="cancel()">Cancel</md-button>
+        </div>
+    </form>
+  </md-content>

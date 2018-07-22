@@ -156,7 +156,7 @@ public class SimDriver implements StateChangeListener{
                 int trainID = martaModel.makeTrain(train_uniqueID, train_inputRoute,
                 								   train_inputLocation, train_inputPassengers,
                 								   train_inputCapacity, train_inputSpeed);
-                System.out.println(" new train: " + Integer.toString(trainID) + " created");
+                //System.out.println(" new train: " + Integer.toString(trainID) + " created");
                 break;
             case "add_depot":
             	int uniqueID = Integer.parseInt(tokens[1].trim());
@@ -206,7 +206,7 @@ public class SimDriver implements StateChangeListener{
                 break;*/
             case "step_once":
             	simEngine.triggerNextEvent(martaModel);
-                System.out.println(" queue activated for 1 event");
+                //System.out.println(" queue activated for 1 event");
                 break;
             case "step_multi":
                 System.out.println(" queue activated for " + Integer.parseInt(tokens[1]) + " event(s)");
@@ -243,59 +243,8 @@ public class SimDriver implements StateChangeListener{
             	martaModel.displayModel();
             	break;
             case "quit":
-                System.out.println(" stop the command loop");
-                if(persistenceOn) {
-            	for (Bus bus : martaModel.getBuses().values()) {
-            		try {
-						((BusDAO)getDao(Table.BUS)).save(bus);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus");
-					}	
-            	}
-            	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
-            		try {
-						((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus route");
-					}	
-            	}
-            	for (BusStop busStop : martaModel.getStops().values()) {
-            		try {
-						((BusStopDAO)getDao(Table.BUSSTOP)).save(busStop);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save bus stop");
-					}	
-            	}
-            	for (RailCar railCar : martaModel.getTrains().values()) {
-            		try {
-						((RailCarDAO)getDao(Table.RAILCAR)).save(railCar);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save train");
-					}	
-            	}
-            	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
-            		try {
-						((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save rail route");
-					}	
-            	}
-            	for (RailStation railStation : martaModel.getRailStations().values()) {
-            		try {
-						((RailStationDAO)getDao(Table.RAILSTATION)).save(railStation);
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Unable to save rail station");
-					}	
-            	}
-            	System.out.printf("system state persisted\n");
-                }
-            	return true;
+            	this.save();
+            	break;
             case "path_delay":
             	//sets the delay on the specified bus path
             	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>         	            	
@@ -493,7 +442,7 @@ public class SimDriver implements StateChangeListener{
             										 start_time, tran_broken_down,
             										 delta_stall_period, repairDuration);
 
-            	System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
+            	//System.out.printf("SimDriver: %s\n", setRailOutOfServiceEvent.toJSON());
             	simEngine.add(setRailOutOfServiceEvent);
 
             	break;
@@ -856,5 +805,59 @@ public class SimDriver implements StateChangeListener{
 		
 		return c>0;
 	}
-	
+	public boolean save() {
+        System.out.println(" stop the command loop");
+        if(persistenceOn) {
+    	for (Bus bus : martaModel.getBuses().values()) {
+    		try {
+				((BusDAO)getDao(Table.BUS)).save(bus);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus");
+			}	
+    	}
+    	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
+    		try {
+				((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus route");
+			}	
+    	}
+    	for (BusStop busStop : martaModel.getStops().values()) {
+    		try {
+				((BusStopDAO)getDao(Table.BUSSTOP)).save(busStop);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save bus stop");
+			}	
+    	}
+    	for (RailCar railCar : martaModel.getTrains().values()) {
+    		try {
+				((RailCarDAO)getDao(Table.RAILCAR)).save(railCar);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save train");
+			}	
+    	}
+    	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
+    		try {
+				((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save rail route");
+			}	
+    	}
+    	for (RailStation railStation : martaModel.getRailStations().values()) {
+    		try {
+				((RailStationDAO)getDao(Table.RAILSTATION)).save(railStation);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save rail station");
+			}	
+    	}
+    	System.out.printf("system state persisted\n");
+        }
+    	return true;
+	}
 }

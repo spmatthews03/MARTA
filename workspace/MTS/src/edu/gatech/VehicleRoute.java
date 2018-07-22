@@ -1,6 +1,8 @@
 package edu.gatech;
 
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class VehicleRoute {
     protected Integer ID;
@@ -59,10 +61,25 @@ public abstract class VehicleRoute {
 
     protected void addNewExchangePoint(int exchangePointID) { this.exchangePointsOnRoute.put(exchangePointsOnRoute.size(), exchangePointID); }
     
-    protected Integer getExchangePointID(int routeLocation) { return this.exchangePointsOnRoute.get(routeLocation); }
+    protected Integer getExchangePointID(int routeLocation) {
+    	//System.out.print("getExchangePointID: " + routeLocation);
+    	//System.out.print("getExchangePointID pointer: " + this.exchangePointsOnRoute);
+    	return this.exchangePointsOnRoute.get(routeLocation);
+	}
+    
+    protected Integer get_route_location_index(Integer exchange_point) {
+    	Set<Integer> keys = this.exchangePointsOnRoute.keySet();
+    	for (Integer key: keys) {
+    		Integer value = this.exchangePointsOnRoute.get(key);
+    		if (exchange_point.equals(value)) {
+    			return key;
+    		}
+    	}
+    	return null;
+    }
     
     protected void displayEvent(String vehicleType) {
- 	   System.out.println(" " + vehicleType + " route: " + Integer.toString(this.ID));
+ 	   //System.out.println(" " + vehicleType + " route: " + Integer.toString(this.ID));
     }
 
     protected void takeTurn(String exchangePointType) {

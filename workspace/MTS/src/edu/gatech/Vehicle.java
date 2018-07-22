@@ -43,12 +43,11 @@ public abstract class Vehicle {
         this.outOfService = false;
         this.delta_stall_duration = 0;
         this.repairDuration = 0;
-        
     }
 
 	protected void debug_print () {
 		System.out.println(" " + this.getClass().getName() + " Instantiated");
-		System.out.println("\t" + this.toJSON());
+		//System.out.println("\t" + this.toJSON());
 	}
 
     public void setRoute(int inputRoute) { this.route = inputRoute; }

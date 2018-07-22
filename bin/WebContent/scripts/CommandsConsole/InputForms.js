@@ -120,6 +120,51 @@ var setTrainSpeedLimitFormDirective = function(){
 		templateUrl:'scripts/CommandsConsole/SetTrainSpeed.html'
 	}
 };
+var addDepotFormDirective = function(){
+	return{
+		restrict:'E',
+		scope:{},
+		controller: 'inputFormController',
+		replace: true,
+		templateUrl:'scripts/CommandsConsole/AddDepot.html'
+	}
+};
+var setTrainOutOfServiceFormDirective = function(){
+	return{
+		restrict:'E',
+		scope:{},
+		controller: 'inputFormController',
+		replace: true,
+		templateUrl:'scripts/CommandsConsole/SetTrainOutOfService.html'
+	}
+};
+var setBusOutOfServiceFormDirective = function(){
+	return{
+		restrict:'E',
+		scope:{},
+		controller: 'inputFormController',
+		replace: true,
+		templateUrl:'scripts/CommandsConsole/SetBusOutOfService.html'
+	}
+};
+var setStationDownFormDirective = function(){
+	return{
+		restrict:'E',
+		scope:{},
+		controller: 'inputFormController',
+		replace: true,
+		templateUrl:'scripts/CommandsConsole/SetStationDown.html'
+	}
+};
+var setStopDownFormDirective = function(){
+	return{
+		restrict:'E',
+		scope:{},
+		controller: 'inputFormController',
+		replace: true,
+		templateUrl:'scripts/CommandsConsole/SetStopDown.html'
+	}
+};
 //controllers
   var inputFormController = function($scope, $log, mtsService){
 	  $log.info('inputFormController');
@@ -167,13 +212,28 @@ var setTrainSpeedLimitFormDirective = function(){
 			  command = 'extend_train_route,'+$scope.item.routeId+','+$scope.item.stopId;
 			  break;
 		  case 'addTrainPathDelay':
-			  command = 'train_path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.delayFactor;
+			  command = 'train_path_delay,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.origin+','+$scope.item.destination+','+$scope.item.delayFactor;
 			  break;
 		  case 'setBusSpeedLimit':
-			  command = 'speed_limit,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.topSpeed;
+			  command = 'speed_limit,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.origin+','+$scope.item.destination+','+$scope.item.topSpeed;
 			  break;
 		  case 'setTrainSpeedLimit':
-              command = 'train_speed_limit,,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.originStopId+','+$scope.item.destinationStopId+','+$scope.item.topSpeed;
+              command = 'train_speed_limit,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.origin+','+$scope.item.destination+','+$scope.item.topSpeed;
+			  break;
+		  case 'addDepot':
+			  command = 'add_depot,'+$scope.item.id+','+$scope.item.name+','+$scope.item.xCoord+','+$scope.item.yCoord;
+			  break;
+		  case 'setTrainDown':
+			  command = 'train_down,'+$scope.item.time+','+$scope.item.id+','+$scope.item.stallDuration+','+$scope.item.repairDuration;
+			  break;
+		  case 'setBusDown':
+			  command = 'bus_down,'+$scope.item.time+','+$scope.item.id+','+$scope.item.towDuration+','+$scope.item.repairDuration;
+			  break;
+		  case 'setStationDown':
+			  command = 'station_down,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.stationId;
+			  break;
+		  case 'setStopDown':
+			  command = 'stop_down,'+$scope.item.time+','+$scope.item.duration+','+$scope.item.stopId;
 			  break;
 		  }
 		  if(command && command.length>0){
@@ -203,5 +263,10 @@ var setTrainSpeedLimitFormDirective = function(){
   .directive('addTrainForm',[addTrainFormDirective])
   .directive('addTrainPathDelayForm',[addTrainPathDelayFormDirective])
   .directive('setTrainSpeedLimitForm',[setTrainSpeedLimitFormDirective])
+  .directive('setBusOutOfServiceForm',[setBusOutOfServiceFormDirective()])
+  .directive('setTrainOutOfServiceForm',[setTrainOutOfServiceFormDirective()])
+  .directive('setStationDownForm',[setStationDownFormDirective()])
+  .directive('setStopDownForm',[setStopDownFormDirective()])
+  .directive('addDepotForm',[addDepotFormDirective()])
   .controller('inputFormController',['$scope', '$log','MTSService', inputFormController]);
 }());
