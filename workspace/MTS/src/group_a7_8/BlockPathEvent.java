@@ -53,6 +53,8 @@ public class BlockPathEvent extends SimEvent{
 
 		this.path.clearIsBlocked();
 
+		train.set_prevLocation(0);
+		train.set_nextLocation(1);
 		int time_trigger_resume = this.getRank() + train.getRepairDuration();
 		VehicleResumeServiceEvent train_repaired_event =
 				new VehicleResumeServiceEvent(this.system, this.getEventQueue().getNextEventID(),
