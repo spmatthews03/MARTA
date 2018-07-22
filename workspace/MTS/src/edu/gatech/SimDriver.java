@@ -825,8 +825,36 @@ public class SimDriver implements StateChangeListener{
 	}
 
 	public void reset() {
+		//clear the hashtables
 		martaModel.reset();
 		simEngine.reset();
+		//clear the database
+		for(Table t : Table.values()) {
+			GenericDAO dao;
+			try {
+				dao = DAOManager.getInstance().getDAO(t);
+				dao.clear();
+			} catch (Exception e) {
+				System.out.printf("unable to clear the database due to error %s\n",e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean hasSavedSimulation() {
+		int c=0;
+		for(Table t : Table.values()) {
+			GenericDAO dao;
+			try {
+				dao = DAOManager.getInstance().getDAO(t);
+				c+=dao.count();
+			} catch (Exception e) {
+				System.out.printf("unable to count entities in the database due to error %s\n",e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		return c>0;
 	}
 	
 }

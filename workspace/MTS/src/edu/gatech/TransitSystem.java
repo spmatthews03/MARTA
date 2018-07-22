@@ -519,6 +519,7 @@ public class TransitSystem {
 	}
 
 	public void reset() {
+		// clear the hashtables
 		this.fuelConsumption.clear();
 		this.hazards.clear();
 		this.paths.clear();
@@ -529,5 +530,8 @@ public class TransitSystem {
 		this.railRoutes.clear();
 		this.railstations.clear();
 		this.depot=null;		
-	}   
+	}
+
+
+	
 }
