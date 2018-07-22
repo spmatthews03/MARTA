@@ -1,5 +1,6 @@
 package group_a7_8.persistence;
 
+import java.sql.SQLException;
 import java.util.Hashtable;
 
 import edu.gatech.Bus;
@@ -14,39 +15,75 @@ import group_a7_8.persistence.DAOManager.Table;
 
 public class DBTest {
 	private static final String CONFIG_PATH_TOKEN="-config:";
+	private static final String SCENARIO_TOKEN="-scenario:";
+	private static final String DBTEST_TOKEN="dbtest";
+	private static final String CLEARDB_TOKEN="cleardb";
+	private static final String CHECKDB_TOKEN="checkdb";
+	private static final String CREATEDB_TOKEN="createdb";
+	@SuppressWarnings("rawtypes")
+	private Hashtable<Table,GenericDAO> daos=new Hashtable<Table,GenericDAO>();
 
 	public static void main(String[] args) throws Exception {
 
+	  String scenario=null;
 	  for(String arg:args) {
 		  if(arg.startsWith(CONFIG_PATH_TOKEN)) {
 			  FileProps.SetConfigPath(arg.substring(CONFIG_PATH_TOKEN.length()).trim());
 		  }
+		  if(arg.startsWith(SCENARIO_TOKEN)) {
+			  scenario = arg.substring(SCENARIO_TOKEN.length()).trim();
+		  }
 	  }
+	  
+	  System.out.printf("DBTest started with scenario %s\n",scenario);
+	  
+	  DBTest instance = new DBTest();
+	  instance.run(scenario);
 		
+
+		
+
+		
+		//at shut down
+		DAOManager.getInstance().close();
+		System.out.printf("terminating ...\n");
+	}
+	
+	private void run(String scenario) throws Exception {
+		if(scenario==null) scenario= DBTEST_TOKEN;
+		switch(scenario) {
+		case CREATEDB_TOKEN:
+			createDB();
+			break;
+		case CLEARDB_TOKEN:
+			clearDB();
+			break;
+		case CHECKDB_TOKEN:
+			checkDB();
+			break;
+		case DBTEST_TOKEN:
+			dbTest();
+			break;
+		default:
+			this.dbTest();
+		}
+	}
+
+	public void dbTest() throws ClassNotFoundException, SQLException, Exception {
 		//at startup
-		DAOManager dao = DAOManager.getInstance();
-		System.out.println("got dao");
+		createDB();
+		
 		
 		//operational code
-		BusStopDAO busStopDao = (BusStopDAO)dao.getDAO(Table.BUSSTOP);
-		BusRouteDAO busRouteDao = (BusRouteDAO)dao.getDAO(Table.BUSROUTE);
-		BusDAO busDao = (BusDAO)dao.getDAO(Table.BUS);
-		DepotDAO depotDao = (DepotDAO)dao.getDAO(Table.DEPOT);
-		RailCarDAO railCarDao = (RailCarDAO)dao.getDAO(Table.RAILCAR);
-		RailRouteDAO railRouteDao = (RailRouteDAO)dao.getDAO(Table.RAILROUTE);
-		RailStationDAO railStationDao = (RailStationDAO)dao.getDAO(Table.RAILSTATION);
+		BusStopDAO busStopDao = (BusStopDAO)getDAO(Table.BUSSTOP);
+		BusRouteDAO busRouteDao = (BusRouteDAO)getDAO(Table.BUSROUTE);
+		BusDAO busDao = (BusDAO)getDAO(Table.BUS);
+		DepotDAO depotDao = (DepotDAO)getDAO(Table.DEPOT);
+		RailCarDAO railCarDao = (RailCarDAO)getDAO(Table.RAILCAR);
+		RailRouteDAO railRouteDao = (RailRouteDAO)getDAO(Table.RAILROUTE);
+		RailStationDAO railStationDao = (RailStationDAO)getDAO(Table.RAILSTATION);
 		
-		
-		for(Table t : Table.values()) {
-			GenericDAO entity = dao.getDAO(t);
-			System.out.printf("system has %d %s\n",entity.count(),t.toString());
-		}
-
-		/*
-		dao.dropAll();
-		dao.createDB();
-		
-
+		checkDB();
 		
 		Hashtable<Integer,BusStop> busStops = new Hashtable<Integer,BusStop>();
 		Hashtable<Integer,BusRoute> busRoutes = new Hashtable<Integer,BusRoute>();
@@ -55,7 +92,7 @@ public class DBTest {
 		Hashtable<Integer,RailCar> railCars = new Hashtable<Integer,RailCar>();
 		Hashtable<Integer,RailRoute> railRoutes = new Hashtable<Integer,RailRoute>();
 		Hashtable<Integer,RailStation> railStations = new Hashtable<Integer,RailStation>();
-		
+
 		for(int i=0;i<2;i++) {
 			busRoutes.put(i, new BusRoute(i,i,String.format("r%d", i)));
 		}
@@ -147,20 +184,30 @@ public class DBTest {
 		System.out.println("rail car cache " + railCars.size() + " entries");
 		System.out.println("rail route cache " + railRoutes.size() + " entries");
 		System.out.println("rail station cache " + railStations.size() + " entries");
-		*/
 		
 		
-		dao.clearDB();
-		
+		checkDB();		
+	}
+	public void clearDB() throws Exception{
+		DAOManager.getInstance().clearDB();
+	}
+	public void createDB() throws Exception{
+		DAOManager.getInstance().dropAll();
+		DAOManager.getInstance().createDB();
+	}
+	@SuppressWarnings("rawtypes")
+	public GenericDAO getDAO(Table t) throws ClassNotFoundException, SQLException, Exception {
+		if(!daos.containsKey(t)) {
+			daos.put(t, DAOManager.getInstance().getDAO(t));
+		}
+		return daos.get(t);
+	}
+	@SuppressWarnings("rawtypes")
+	public void checkDB() throws ClassNotFoundException, SQLException, Exception{
 		for(Table t : Table.values()) {
-			GenericDAO entity = dao.getDAO(t);
+			GenericDAO entity = getDAO(t);
 			System.out.printf("system has %d %s\n",entity.count(),t.toString());
 		}
-
-		
-		//at shut down
-		dao.close();
-		System.out.printf("terminating ...\n");
 	}
 
 }
