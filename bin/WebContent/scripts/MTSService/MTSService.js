@@ -194,19 +194,22 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    var getStopVehicle=function(stopType,stopID,route){
-    	//$log.info(route);
-    	//$log.info("stopType: "+stopType +", stopID: "+stopID);
+    var getPathVehicle=function(stopType,originStopID,destinationStopID,route){
+    	$log.info(route);
+    	$log.info("stopType: "+stopType +", originStopID: "+originStopID+", destinationStopID: "+destinationStopID);
     	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
     	var result;
     	result = state.vehicles.find(function(vehicle){
     		if(vehicle.routeID!=route.ID) return false;
     		//$log.info(vehicle);
     		var locationID = vehicle.prevLocation;
+    		var nextLocationID = vehicle.nextLocation;
     		var vehicleStopID = route.stops[locationID];
-    		var vehicleStop = getStop(stopType,vehicleStopID);
-    		//$log.info(vehicleStop);
-    		return (vehicle.type==vehicleType && vehicleStop.ID == stopID);
+    		var vehicleNextStopID = route.stops[nextLocationID];
+    		//var vehicleStop = getStop(stopType,vehicleStopID);
+    		$log.info(vehicleStopID);
+    		$log.info(vehicleNextStopID);
+    		return (vehicle.type==vehicleType && vehicleStopID == originStopID && vehicleNextStopID == destinationStopID );
     	});
     	return result;
     };
@@ -327,7 +330,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	executeCommand: executeCommand,
     	getStop:getStop,
     	getPath:getPath,
-    	getStopVehicle:getStopVehicle,
+    	getPathVehicle:getPathVehicle,
     	getVehicleEvent:getVehicleEvent,
     	reset:reset,
     	countBus:countBus,
