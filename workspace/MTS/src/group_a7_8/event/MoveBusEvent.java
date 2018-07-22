@@ -96,8 +96,8 @@ public class MoveBusEvent extends SimEvent{
             Double delayfactor = currentPath.getDelayFactor();
             
             // calculate the effect of speed limit
-            Integer speedlimit = currentPath.getSpeedLimit();
-            Integer true_speed = activeBus.getSpeed();
+            Double speedlimit = currentPath.getSpeedLimit();
+            Double true_speed = Double.valueOf(activeBus.getSpeed());
             if (speedlimit != null) {
             	if (speedlimit < true_speed) {
             		true_speed = speedlimit;

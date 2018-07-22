@@ -7,11 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import edu.gatech.BusStop;
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 
 
 public class BusStopDAO  extends GenericDAO<BusStop>{
-	protected BusStopDAO(Connection con) {
-		super(con, "STOP", "type", "BusStop");
+	protected BusStopDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+		super(system, eventQueue,con, "STOP", "type", "busStop");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

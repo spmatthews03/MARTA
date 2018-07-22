@@ -6,13 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 import group_a7_8.Path;
 
 
 public class PathDAO extends GenericDAO<Path>{
 
-	protected PathDAO(Connection con) {
-		super(con, "PATH", "type", "Path");
+	protected PathDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+		super(system,eventQueue,con, "PATH", "type", "Path");
 		System.out.printf(" constructed\n",this.getClass().getSimpleName());
 	}
 

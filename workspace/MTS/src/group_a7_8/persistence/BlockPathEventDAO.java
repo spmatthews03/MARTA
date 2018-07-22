@@ -6,13 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 import group_a7_8.event.BlockPathEvent;
 
 
 public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 
-	protected BlockPathEventDAO(Connection con) {
-		super(con, "BLOCKPATHEVENT", "type", "BlockPathEvent");
+	protected BlockPathEventDAO(TransitSystem system, SimQueue eventQueue,Connection con) {
+		super(system,eventQueue,con, "EVENT", "type", "set_path_block");
 		System.out.printf(" constructed\n",this.getClass().getSimpleName());
 	}
 

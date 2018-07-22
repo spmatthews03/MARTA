@@ -7,12 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import edu.gatech.RailCar;
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 
 
 public class RailCarDAO extends GenericDAO<RailCar>{
 
-	protected RailCarDAO(Connection con) {
-		super(con, "VEHICLE", "type", "Train");
+	protected RailCarDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+		super(system,eventQueue,con, "VEHICLE", "type", "Train");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

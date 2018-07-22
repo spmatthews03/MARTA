@@ -8,7 +8,7 @@ import edu.gatech.TransitSystem;
 public class Path {
 
 	private PathKey pathKey;
-	private Integer speedLimit;
+	private Double speedLimit;
 	private boolean isBlocked;
 	private TransitSystem system;
 
@@ -30,10 +30,10 @@ public class Path {
 	//	}
 	//}
 
-	public Integer getSpeedLimit() {
+	public Double getSpeedLimit() {
 		return speedLimit;
 	}
-	public void setSpeedLimit(Integer speedLimit) {
+	public void setSpeedLimit(double speedLimit) {
 		this.speedLimit = speedLimit;
 	}
 	public void clearSpeedLimit() {

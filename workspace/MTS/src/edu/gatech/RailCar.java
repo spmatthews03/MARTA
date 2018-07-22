@@ -171,8 +171,8 @@ public class RailCar extends Vehicle {
 
     private int calculate_travel_time_path(Path path) {
         Double delay_factor = path.getDelayFactor();
-        Integer speed_limit = path.getSpeedLimit();
-        Integer true_speed = this.getSpeed();
+        Double speed_limit = path.getSpeedLimit();
+        Double true_speed = Double.valueOf(this.getSpeed());
         Double travel_distance;
 
         if (speed_limit != null) {

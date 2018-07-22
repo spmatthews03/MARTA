@@ -106,27 +106,27 @@ public class TransitSystem {
     public int makeStop(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         // int uniqueID = stops.size();
         busstops.put(uniqueID, new BusStop(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
-        listener.updateState();
+        if(listener!=null)listener.updateState();
         return uniqueID;
     }
 
     public int makeRailStation(int uniqueID, String inputName, int inputRiders, double inputXCoord, double inputYCoord) {
         railstations.put(uniqueID, new RailStation(uniqueID, inputName, inputRiders, inputXCoord, inputYCoord));
-        listener.updateState();
+        if(listener!=null)listener.updateState();
         return uniqueID;
     }
 
     public int makeBusRoute(int uniqueID, int inputNumber, String inputName) {
         // int uniqueID = routes.size();
     	busRoutes.put(uniqueID, new BusRoute(uniqueID, inputNumber, inputName));
-        listener.updateState();
+    	if(listener!=null)listener.updateState();
         return uniqueID;
     }
     
     public int makeRailRoute(int uniqueID, int inputNumber, String inputName) {
         // int uniqueID = routes.size();
     	railRoutes.put(uniqueID, new RailRoute(uniqueID, inputNumber, inputName));
-        listener.updateState();
+    	if(listener!=null)listener.updateState();
         return uniqueID;
     }
 
@@ -134,13 +134,13 @@ public class TransitSystem {
 					   double fuelLevel, double fuelCapacity, int inputSpeed) {
         // int uniqueID = buses.size();
         buses.put(uniqueID, new Bus(this, uniqueID, inputRoute, inputLocation, inputPassengers, inputCapacity, fuelLevel, fuelCapacity, inputSpeed));
-        listener.updateState();
+        if(listener!=null)listener.updateState();
         return uniqueID;
     }
 
 	public int makeDepot(int uniqueID, String name, double x_coord, double y_coord) {
 		depot = new Depot(uniqueID, name, x_coord, y_coord);
-		listener.updateState();
+		if(listener!=null)listener.updateState();
 		return uniqueID;
 	}
 
@@ -149,7 +149,7 @@ public class TransitSystem {
     	train.system = this;
     	train.set_rail_route_and_location_index(this.getRailRoute(inputRoute));
     	trains.put(uniqueID, train);
-		listener.updateState();
+    	if(listener!=null)listener.updateState();
 		return uniqueID;
 	}
 
@@ -210,7 +210,7 @@ public class TransitSystem {
     		}
     		*/
     	}
-    	listener.updateState();
+    	if(listener!=null)listener.updateState();
     }
     
     public void appendStationToRoute(int routeID, int nextStationID) { 
@@ -254,7 +254,7 @@ public class TransitSystem {
 	    		}    		
     		}
     	}
-    	listener.updateState();
+    	if(listener!=null)listener.updateState();
     }
     
     public void addHazard(PathKey pathKey,double delayFactor) {
@@ -263,7 +263,7 @@ public class TransitSystem {
     		//System.out.printf("creating a new set o hazards for %s\n",pathKey);
     	}
     	hazards.get(pathKey).add(new Hazard(pathKey,delayFactor));
-    	listener.updateState();
+    	if(listener!=null)listener.updateState();
     }
     
     public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
@@ -284,24 +284,24 @@ public class TransitSystem {
     		for(Hazard hazard : pathHazards) {
     			if(hazard.getDelayFactor()==delayFactor) {
     				pathHazards.remove(hazard);
-    				listener.updateState();
     				break;
     			}
     		}
+        	if(listener!=null)listener.updateState();
     	}
     }
     
-    public void setSpeedLimit(PathKey pathKey,Integer speedLimit) {
+    public void setSpeedLimit(PathKey pathKey,double speedLimit) {
     	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).setSpeedLimit(speedLimit);
-			listener.updateState();
+        	if(listener!=null)listener.updateState();
     	}
     }
 
     public void clearSpeedLimit(PathKey pathKey) {
     	if(paths.containsKey(pathKey)) {
     		paths.get(pathKey).clearSpeedLimit();
-			listener.updateState();
+        	if(listener!=null)listener.updateState();
     	}
     }
 

@@ -42,3 +42,21 @@ CREATE TABLE FUELCONSUMPTION (
   passengers  	    int NOT NULL
 );
 
+CREATE TABLE EVENT (
+ id                  SERIAL PRIMARY KEY,
+ eventID             int NOT NULL,
+ type                char(50),
+ timeRank            int NOT NULL,
+ speedLimit          numeric,
+ delayFactor         numeric,
+ deltaStallDuration  int,
+ repairDuration      int,
+ originID            int,
+ destinationID       int,
+ originType          char(50),
+ destinationType     char(50),
+ vehicleID           int,
+ vehicleType         char(50),
+ exchangePointID     int,
+ exchangePointType   char(50)
+);

@@ -12,13 +12,22 @@ import java.util.function.Consumer;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 import group_a7_8.FileProps;
 
 @SuppressWarnings("rawtypes")
 public class DAOManager {
 	
 	
-	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, HAZARD, FUELCONSUMPTION};
+	public static enum Table{
+		//core entities
+		BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, HAZARD, FUELCONSUMPTION
+		//events
+		,CLEARPATHDELAYEVENT,CLEARSPEEDLIMITEVENT,FACILITYOUTOFSERVICEEVENT,FACILITYRESUMESERVICEEVENT,MOVEBUSEVENT,
+		MOVETRAINEVENT,SETPATHDELAYEVENT,SETSPEEDLIMITEVENT,VEHICLEOUTOFSERVICEEVENT,VEHICLERESUMESERVICEEVENT
+		//,BLOCKPATHEVENT
+		};
 	
     //Private
     private Connection con;
@@ -27,14 +36,18 @@ public class DAOManager {
     private String connectionUrl = "jdbc:postgresql://localhost:5432/martadb";
     private String userId = "mts";
     private String password = "mts";
+	private TransitSystem system;
+	private SimQueue eventQueue;
 
-    public DAOManager() {
+    public DAOManager(TransitSystem system,SimQueue eventQueue) {
     	if(FileProps.contains("connectionUrl")) connectionUrl = FileProps.get("connectionUrl");
     	if(FileProps.contains("userId")) userId = FileProps.get("userId");
     	if(FileProps.contains("password")) password = FileProps.get("password");
         ds.setURL(connectionUrl);
         ds.setUser(userId);
         ds.setPassword(password);
+        this.system = system;
+        this.eventQueue = eventQueue;
     }
 
     public void open() throws SQLException, ClassNotFoundException {
@@ -130,23 +143,46 @@ public class DAOManager {
     		//lazily creates the daos we will need
             switch(t)
             {
-            case BUS: daoCache.put(t, new BusDAO(con));
+            case BUS: daoCache.put(t, new BusDAO(system,eventQueue,con));
             break;
-            case BUSSTOP: daoCache.put(t, new BusStopDAO(this.con));
+            case BUSSTOP: daoCache.put(t, new BusStopDAO(system,eventQueue,this.con));
             break;
-            case BUSROUTE: daoCache.put(t, new BusRouteDAO(this.con));
+            case BUSROUTE: daoCache.put(t, new BusRouteDAO(system,eventQueue,this.con));
             break;
-            case RAILCAR: daoCache.put(t, new RailCarDAO(this.con));
+            case RAILCAR: daoCache.put(t, new RailCarDAO(system,eventQueue,this.con));
             break;
-            case RAILROUTE: daoCache.put(t, new RailRouteDAO(this.con));
+            case RAILROUTE: daoCache.put(t, new RailRouteDAO(system,eventQueue,this.con));
             break;
-            case RAILSTATION: daoCache.put(t, new RailStationDAO(this.con));
+            case RAILSTATION: daoCache.put(t, new RailStationDAO(system,eventQueue,this.con));
             break;
-            case DEPOT: daoCache.put(t, new DepotDAO(this.con));
+            case DEPOT: daoCache.put(t, new DepotDAO(system,eventQueue,this.con));
             break;
-            case HAZARD: daoCache.put(t, new HazardDAO(this.con));
+            case HAZARD: daoCache.put(t, new HazardDAO(system,eventQueue,this.con));
             break;
-            case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(this.con));
+            case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(system,eventQueue,this.con));
+            break;
+            //events
+            //case BLOCKPATHEVENT: daoCache.put(t, new BlockPathEventDAO(this.con));
+            //break;
+            case CLEARPATHDELAYEVENT: daoCache.put(t, new ClearPathDelayEventDAO(system,eventQueue,this.con));
+            break;
+            case CLEARSPEEDLIMITEVENT: daoCache.put(t, new ClearSpeedLimitEventDAO(system,eventQueue,this.con));
+            break;
+            case FACILITYOUTOFSERVICEEVENT: daoCache.put(t, new FacilityOutOfServiceEventDAO(system,eventQueue,this.con));
+            break;
+            case FACILITYRESUMESERVICEEVENT: daoCache.put(t, new FacilityResumeServiceEventDAO(system,eventQueue,this.con));
+            break;
+            case MOVEBUSEVENT: daoCache.put(t, new MoveBusEventDAO(system,eventQueue,this.con));
+            break;
+            case MOVETRAINEVENT: daoCache.put(t, new MoveTrainEventDAO(system,eventQueue,this.con));
+            break;
+            case SETPATHDELAYEVENT: daoCache.put(t, new SetPathDelayEventDAO(system,eventQueue,this.con));
+            break;
+            case SETSPEEDLIMITEVENT: daoCache.put(t, new SetSpeedLimitEventDAO(system,eventQueue,this.con));
+            break;
+            case VEHICLEOUTOFSERVICEEVENT: daoCache.put(t, new VehicleOutOfServiceEventDAO(system,eventQueue,this.con));
+            break;
+            case VEHICLERESUMESERVICEEVENT: daoCache.put(t, new VehicleResumeServiceEventDAO(system,eventQueue,this.con));
             break;
             default:
                 throw new SQLException("Trying to link to an unexistant table.");
@@ -159,9 +195,9 @@ public class DAOManager {
     
     //make the DAOManager a singleton
     public static DAOManager INSTANCE;
-    public static DAOManager getInstance() throws Exception {
+    public static DAOManager getInstance(TransitSystem system,SimQueue eventQueue) throws Exception {
     	if (INSTANCE==null) {
-    		INSTANCE = new DAOManager();
+    		INSTANCE = new DAOManager(system,eventQueue);
     	}
         return INSTANCE;
     }  

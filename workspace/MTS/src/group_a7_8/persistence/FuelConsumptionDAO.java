@@ -6,13 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 import group_a7_8.FuelConsumption;
 
 
 public class FuelConsumptionDAO extends GenericDAO<FuelConsumption>{
 
-	protected FuelConsumptionDAO(Connection con) {
-		super(con, "FUELCONSUMPTION", "true", "true");
+	protected FuelConsumptionDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+		super(system,eventQueue,con, "FUELCONSUMPTION", "true", "true");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

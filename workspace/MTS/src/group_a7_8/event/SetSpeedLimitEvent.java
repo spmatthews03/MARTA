@@ -5,8 +5,8 @@ import group_a7_8.PathKey;
 
 public class SetSpeedLimitEvent extends SimEvent{
 	private PathKey pathKey;
-	private Integer speedLimit;
-	public SetSpeedLimitEvent(TransitSystem system, Integer eventID, Integer timeRank, PathKey pathKey, Integer speedLimit) {
+	private double speedLimit;
+	public SetSpeedLimitEvent(TransitSystem system, Integer eventID, Integer timeRank, PathKey pathKey, double speedLimit) {
     	super(system,timeRank,"set_speed_limit",eventID);
 		this.pathKey = pathKey;
 		this.speedLimit = speedLimit;

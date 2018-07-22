@@ -65,7 +65,7 @@ public class SimDriver implements StateChangeListener{
     
     public GenericDAO getDao(Table table) throws ClassNotFoundException, SQLException, Exception {
     	if (!DAOs.containsKey(table)) {
-    		DAOs.put(table, DAOManager.getInstance().getDAO(table));
+    		DAOs.put(table, DAOManager.getInstance(martaModel,simEngine).getDAO(table));
     	}
     	return DAOs.get(table);
     }
@@ -720,7 +720,7 @@ public class SimDriver implements StateChangeListener{
     	synchronized(lock) {
 		if(updateManager==null) return;
 		String message = toJSON();
-		//System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
+		System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
 		try {
 			updateManager.post(message);
 		} catch (IOException e) {
@@ -784,7 +784,7 @@ public class SimDriver implements StateChangeListener{
 		for(Table t : Table.values()) {
 			GenericDAO dao;
 			try {
-				dao = DAOManager.getInstance().getDAO(t);
+				dao = DAOManager.getInstance(martaModel,simEngine).getDAO(t);
 				dao.clear();
 			} catch (Exception e) {
 				System.out.printf("unable to clear the database due to error %s\n",e.getMessage());

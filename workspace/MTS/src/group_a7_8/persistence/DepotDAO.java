@@ -7,12 +7,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import edu.gatech.Depot;
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 
 
 public class DepotDAO extends GenericDAO<Depot>{
 
-    protected DepotDAO(Connection con) {
-        super(con, "STOP", "type", "Depot");
+    protected DepotDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+        super(system,eventQueue,con, "STOP", "type", "Depot");
         System.out.printf("constructed %s\n",this.getClass().getSimpleName());
     }
 

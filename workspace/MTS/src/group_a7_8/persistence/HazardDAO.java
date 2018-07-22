@@ -6,13 +6,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
 import group_a7_8.Hazard;
 
 
 public class HazardDAO extends GenericDAO<Hazard>{
 
-	protected HazardDAO(Connection con) {
-		super(con, "HAZARD", "true", "true");
+	protected HazardDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
+		super(system,eventQueue,con, "HAZARD", "true", "true");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 

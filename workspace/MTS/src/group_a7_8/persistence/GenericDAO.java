@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import edu.gatech.Facility;
+import edu.gatech.SimQueue;
+import edu.gatech.TransitSystem;
+
 public abstract class GenericDAO<T> {
 	protected static final String count_query_format ="SELECT COUNT(id) FROM %s WHERE %s='%s'";
 	public int count() throws SQLException{
@@ -42,16 +46,29 @@ public abstract class GenericDAO<T> {
     protected final String filterName;
     protected final String filterValue;
     protected Connection con;
+	protected TransitSystem system;
+	protected SimQueue eventQueue;
 
-    protected GenericDAO(Connection con, String tableName, String filterName, String filterValue) {
+    protected GenericDAO(TransitSystem system,SimQueue eventQueue,Connection con, String tableName, String filterName, String filterValue) {
         this.tableName = tableName;
         this.filterName = filterName;
         this.filterValue = filterValue;
         this.con = con;
+        this.system = system;
+        this.eventQueue=eventQueue;
     }
     
     abstract public void save(T t) throws SQLException; 
     
     abstract public ArrayList<T> find() throws SQLException;
+	protected Facility getFacility(String type, int id) {
+		switch(type) {
+		case "busStop":
+			return system.getBusStop(id);
+		case "railStop":
+			return system.getRailStation(id);
+		}
+		return null;
+	}
 
 }
