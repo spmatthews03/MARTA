@@ -1,0 +1,15 @@
+add_depot,90,North Depot,0.03,0.16
+add_station,101,Banana Bayou,0,0.04,0.1
+add_station,102,Star City,0,0.08,0.16
+add_station,103,San Javier,56,0.081,0.20
+add_station,104,San Antonio,66,0.081,0.20
+add_station,105,Niquia,76,0.081,0.20
+add_train_route,201,201,Express
+extend_train_route,201,101
+extend_train_route,201,102
+extend_train_route,201,103
+extend_train_route,201,104
+extend_train_route,201,105
+add_train,301,201,3,0,10,50
+add_train,302,201,1,0,10,50
+add_event,2,move_train,301

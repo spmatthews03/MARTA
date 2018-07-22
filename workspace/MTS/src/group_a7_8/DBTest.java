@@ -26,9 +26,6 @@ public class DBTest {
 		DAOManager dao = DAOManager.getInstance();
 		System.out.println("got dao");
 		
-		dao.dropAll();
-		dao.createDB();
-		
 		//operational code
 		BusStopDAO busStopDao = (BusStopDAO)dao.getDAO(Table.BUSSTOP);
 		BusRouteDAO busRouteDao = (BusRouteDAO)dao.getDAO(Table.BUSROUTE);
@@ -37,14 +34,19 @@ public class DBTest {
 		RailCarDAO railCarDao = (RailCarDAO)dao.getDAO(Table.RAILCAR);
 		RailRouteDAO railRouteDao = (RailRouteDAO)dao.getDAO(Table.RAILROUTE);
 		RailStationDAO railStationDao = (RailStationDAO)dao.getDAO(Table.RAILSTATION);
-		System.out.println("system has "+busStopDao.count()+" bus stops");
-		System.out.println("system has "+busRouteDao.count()+" bus routes");
-		System.out.println("system has "+busDao.count()+" buses");
-		System.out.println("system has "+depotDao.count()+" depots");
-		System.out.println("system has "+railCarDao.count()+" rail cars");
-		System.out.println("system has "+railRouteDao.count()+" rail routes");
-		System.out.println("system has "+railStationDao.count()+" rail stations");
+		
+		
+		for(Table t : Table.values()) {
+			GenericDAO entity = dao.getDAO(t);
+			System.out.printf("system has %d %s\n",entity.count(),t.toString());
+		}
 
+		/*
+		dao.dropAll();
+		dao.createDB();
+		
+
+		
 		Hashtable<Integer,BusStop> busStops = new Hashtable<Integer,BusStop>();
 		Hashtable<Integer,BusRoute> busRoutes = new Hashtable<Integer,BusRoute>();
 		Hashtable<Integer,Bus> buses = new Hashtable<Integer,Bus>();
@@ -137,22 +139,23 @@ public class DBTest {
 		for(RailCar railCar : railCarDao.find()) {
 			railCars.put(railCar.getID(), railCar);
 		}
+		
 		System.out.println("bus cache " + buses.size() + " entries");
 		System.out.println("bus route cache " + busRoutes.size( ) + " entries");
 		System.out.println("bus stop cache " + busStops.size() + " entries");
 		System.out.println("rail car cache " + railCars.size() + " entries");
 		System.out.println("rail route cache " + railRoutes.size() + " entries");
 		System.out.println("rail station cache " + railStations.size() + " entries");
+		*/
 		
 		
 		dao.clearDB();
+		
+		for(Table t : Table.values()) {
+			GenericDAO entity = dao.getDAO(t);
+			System.out.printf("system has %d %s\n",entity.count(),t.toString());
+		}
 
-		System.out.println("system has " + busStopDao.count() + " bus stops");
-		System.out.println("system has " + busRouteDao.count() + " bus routes");
-		System.out.println("system has " + busDao.count() + " buses");
-		System.out.println("system has " + railStationDao.count() + " bus stops");
-		System.out.println("system has " + railRouteDao.count() + " bus routes");
-		System.out.println("system has " + railCarDao.count() + " buses");
 		
 		//at shut down
 		dao.close();

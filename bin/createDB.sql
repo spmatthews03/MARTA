@@ -25,12 +25,20 @@ CREATE TABLE VEHICLE (
   location  	  	  int NOT NULL,
   passengers	  	  int NOT NULL,
   capacity		  	  int NOT NULL,
-  fuellevel		  	  numeric NOT NULL,
-  fuelcapacity	  	numeric NOT NULL,
+  fuellevel		  	  numeric,
+  fuelcapacity	  	numeric,
   speed			  	    int NOT NULL
 );
 
+CREATE TABLE HAZARD (
+  id              	SERIAL PRIMARY KEY,
+  delayFactor   	  numeric NOT NULL
+);
 
-
-
+CREATE TABLE FUELCONSUMPTION (
+  id              	SERIAL PRIMARY KEY,
+  timeRank		  	  int NOT NULL,
+  amount      	  	numeric NOT NULL,
+  passengers  	    int NOT NULL
+);
 

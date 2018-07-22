@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public abstract class GenericDAO<T> {
-	protected static final String count_query_format ="SELECT COUNT(id) FROM %s";
+	protected static final String count_query_format ="SELECT COUNT(id) FROM %s WHERE %s='%s'";
 	public int count() throws SQLException{
-		PreparedStatement pstmt = con.prepareStatement(String.format(count_query_format,tableName));
+		PreparedStatement pstmt = con.prepareStatement(String.format(count_query_format,tableName,filterName,filterValue));
 		ResultSet rs = pstmt.executeQuery();
 		int count = 0;
 	    if(rs.next()) {
@@ -39,10 +39,14 @@ public abstract class GenericDAO<T> {
     
     //Protected
     protected final String tableName;
+    protected final String filterName;
+    protected final String filterValue;
     protected Connection con;
 
-    protected GenericDAO(Connection con, String tableName) {
+    protected GenericDAO(Connection con, String tableName, String filterName, String filterValue) {
         this.tableName = tableName;
+        this.filterName = filterName;
+        this.filterValue = filterValue;
         this.con = con;
     }
     

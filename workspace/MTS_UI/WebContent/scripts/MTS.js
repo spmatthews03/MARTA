@@ -30,7 +30,7 @@
 
 	};
 
-	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module'])
+	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module','Report','GTColors'])
 	.config(['$httpProvider', function ($httpProvider) {
 	            // enable http caching
 	           $httpProvider.defaults.cache = false;

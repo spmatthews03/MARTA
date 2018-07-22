@@ -16,7 +16,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DAOManager {
 	
 	
-	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION};
+	public static enum Table{BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, HAZARD, FUELCONSUMPTION};
 	
     //Private
     private Connection con;
@@ -141,6 +141,10 @@ public class DAOManager {
             case RAILSTATION: daoCache.put(t, new RailStationDAO(this.con));
             break;
             case DEPOT: daoCache.put(t, new DepotDAO(this.con));
+            break;
+            case HAZARD: daoCache.put(t, new HazardDAO(this.con));
+            break;
+            case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(this.con));
             break;
             default:
                 throw new SQLException("Trying to link to an unexistant table.");

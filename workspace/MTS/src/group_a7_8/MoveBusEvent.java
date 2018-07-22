@@ -101,6 +101,7 @@ public class MoveBusEvent extends SimEvent{
             		true_speed = speedlimit;
             	}
             }
+            //System.out.println(" speed limit between stop " + activeStopID + " and stop " + nextStopID + " is " + speedlimit);
             
             int travelTime = (int)((1 + (distanceToNextStop.intValue() * 60 / true_speed)) * delayfactor) ;
 
@@ -136,7 +137,8 @@ public class MoveBusEvent extends SimEvent{
             int dropAllPassengers = activeBus.getPassengers();
             activeBus.adjustPassengers(-(dropAllPassengers));
 
-            // set destination to first stop         
+            // set destination to first stop    
+            activeBus.setLocation(0);
 			activeBus.set_nextLocation(0);
             
             int towingDuration = activeBus.get_delta_stall_duration();

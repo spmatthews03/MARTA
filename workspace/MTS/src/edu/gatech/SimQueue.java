@@ -35,7 +35,7 @@ public class SimQueue {
     	return eventQueue.toArray(events);
     }
     
-    public void triggerNextEvent(TransitSystem busModel) {
+    public void triggerNextEvent(TransitSystem system) {
         if (eventQueue.size() > 0) {
             SimEvent activeEvent = eventQueue.poll();
             time = activeEvent.getRank();
