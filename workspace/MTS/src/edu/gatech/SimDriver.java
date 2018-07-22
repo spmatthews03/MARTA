@@ -47,6 +47,8 @@ public class SimDriver implements StateChangeListener{
     private static Random randGenerator;
     private Hashtable<Table, GenericDAO> DAOs = new Hashtable<Table, GenericDAO>();
 	private boolean persistenceOn;
+	private boolean hasPriorSim = false;
+	public boolean hasPriorSim() {return hasPriorSim;}
     
 	public SimDriver() {
 		this(false);
@@ -791,21 +793,14 @@ public class SimDriver implements StateChangeListener{
 		}
 	}
 	
-	public boolean hasSavedSimulation() {
+	public boolean hasSavedSimulation() throws ClassNotFoundException, SQLException, Exception {
 		int c=0;
 		for(Table t : Table.values()) {
-			GenericDAO dao;
-			try {
-				dao = DAOManager.getInstance().getDAO(t);
-				c+=dao.count();
-			} catch (Exception e) {
-				System.out.printf("unable to count entities in the database due to error %s\n",e.getMessage());
-				e.printStackTrace();
-			}
+				c+=getDao(t).count();
 		}
-		
 		return c>0;
 	}
+
 	public boolean save() {
         System.out.println(" stop the command loop");
         if(persistenceOn) {
@@ -860,5 +855,14 @@ public class SimDriver implements StateChangeListener{
     	System.out.printf("system state persisted\n");
         }
     	return true;
+	}
+
+	public void checkPriorSim() throws ClassNotFoundException, SQLException, Exception {
+		if(this.persistenceOn) {
+			System.out.printf("checking for prior sims\n");
+			hasPriorSim = hasSavedSimulation();
+			System.out.printf("hasPriorSim = %s\n",Boolean.toString(hasPriorSim));
+		}
+		
 	}
 }

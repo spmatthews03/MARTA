@@ -19,7 +19,6 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	  	  	fuelByBusData:{},
 	  		commandOption:""
    };
-	$log.info('configured state');
    var ws;
    var post = function(message){
        if(ws && ws.readyState === ws.OPEN) ws.send(message);
@@ -49,9 +48,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 		   commandBlocked = true;
 	   }
    }
-   $log.info('here1');
    var process = function(update){
-      $log.info(update);
+//      $log.info(update);
 	  if(update.hasOwnProperty('time')){
 		  state.time = update.time;
 	  }
@@ -141,8 +139,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   }
   	   commandBlocked = false;
    };
-   // ws = new WebSocket('ws://127.0.0.1:5808');
-   $log.info('here2');
+
    var onopen = function(){
 	  //$log.info('socket opened!');
 	  $interval(heartbeat,1000);
@@ -165,14 +162,24 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     };
     var connect = function(){
 	    //open a socket to the server
-	    //console.log('initializing web socket client...');
+	    $log.info('initializing web socket client...');
+	    var promise = $http.get('/api/MTS/priorSim');
+    	promise.then(
+    	          function(payload) { 
+    	        	  $log.info('priorSim returned :', payload);
+    	        	  state.priorSim = payload.data.resultCode;
+    	        	  $log.info('hasPriorSim = '+state.priorSim);
+    	        	  
+    	          },
+    	          function(errorPayload) {
+    	              $log.error('failure error:', errorPayload);
+    	          });
 	    ws = new WebSocket('ws://localhost:6310');
 	    ws.onopen = onopen;
 	    ws.onmessage = onmessage;
 	    ws.onclose = onclose;
 	    ws.onerror = onerror;  
     };
-    $log.info('here3');
 
 		    
     var executeCommand = function(command){
@@ -198,11 +205,10 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    $log.info('here4');
 
     var getPathVehicle=function(stopType,originStopID,destinationStopID,route){
-    	$log.info(route);
-    	$log.info("stopType: "+stopType +", originStopID: "+originStopID+", destinationStopID: "+destinationStopID);
+    	//$log.info(route);
+    	//$log.info("stopType: "+stopType +", originStopID: "+originStopID+", destinationStopID: "+destinationStopID);
     	var vehicleType = ((stopType=='busStop')?'Bus':'Train');
     	var result;
     	result = state.vehicles.find(function(vehicle){
@@ -213,8 +219,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     		var vehicleStopID = route.stops[locationID];
     		var vehicleNextStopID = route.stops[nextLocationID];
     		//var vehicleStop = getStop(stopType,vehicleStopID);
-    		$log.info(vehicleStopID);
-    		$log.info(vehicleNextStopID);
+    		//$log.info(vehicleStopID);
+    		//$log.info(vehicleNextStopID);
     		return (vehicle.type==vehicleType && vehicleStopID == originStopID && vehicleNextStopID == destinationStopID );
     	});
     	return result;
@@ -232,7 +238,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
-    $log.info('here5');
+    //$log.info('here5');
 
     var reset = function(){
     	//$log.info('resetting system');
@@ -271,7 +277,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	//$log.info('reset completed')
     	//$log.info(state);
     };
-    $log.info('connecting');
+    //$log.info('connecting');
     connect();
     
     var countBus = function(){
@@ -331,7 +337,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
        return c;
     };
     
-    $log.info('finished initializing service');
+    //$log.info('finished initializing service');
     
    
     return {

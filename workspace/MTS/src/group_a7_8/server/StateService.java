@@ -1,6 +1,8 @@
 package group_a7_8.server;
 
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,16 +29,19 @@ public class StateService {
     @Path("reset")
     @Produces(MediaType.APPLICATION_JSON)
     public Result resetState(@Context HttpServletRequest request){
-		SimDriver driver = AsRestServer.getDriver();
-		
 		System.out.printf("UI requested state reset\n");
-		
-		driver.reset();
-		
+		SimDriver driver;
         Result result = new Result();
-        result.setMessage("system reset");
-        //TODO refactor as needed when integrating with driver
-        result.setResultCode(true);
+		try {
+			driver = AsRestServer.getDriver();			
+			driver.reset();
+	        result.setMessage("system reset");
+	        result.setResultCode(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+	        result.setMessage(String.format("ERROR: %x", e.getMessage()));
+	        result.setResultCode(false);
+		} 
         return result;
     }
 
@@ -49,14 +54,22 @@ public class StateService {
     @Path("priorSim")
     @Produces(MediaType.APPLICATION_JSON)
     public Result hasPriorSimulation(@Context HttpServletRequest request){
-		SimDriver driver = AsRestServer.getDriver();
-		
-		
 		System.out.printf("UI requested has prior sim\n");
-        Result result = new Result();
-        result.setMessage("prior sim ...");
-        //TODO refactor as needed when integrating with driver
-        result.setResultCode(driver.hasSavedSimulation());
+		SimDriver driver;
+        Result result = new Result();		
+        
+        try {
+			driver = AsRestServer.getDriver();
+			driver.checkPriorSim();
+	        result.setMessage(String.format("System %s a prior simulation", (driver.hasPriorSim()?"has":"does not have")));
+	        result.setResultCode(driver.hasPriorSim());
+		} catch (Exception e) {
+			e.printStackTrace();
+	        result.setMessage(String.format("ERROR: %x", e.getMessage()));
+	        result.setResultCode(false);
+		} 
+		
+		
         return result;
     }
 	public static class Result{

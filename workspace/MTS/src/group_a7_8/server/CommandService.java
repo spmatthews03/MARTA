@@ -1,6 +1,8 @@
 package group_a7_8.server;
 
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,13 +30,17 @@ public class CommandService {
     @Path("command")
     @Produces(MediaType.APPLICATION_JSON)
     public Result addCommandt(@QueryParam("line") String userCommandLine,@Context HttpServletRequest request){
-		SimDriver driver = AsRestServer.getDriver();
-		
-		//System.out.printf("session id %s\n", request.getSession().getId());
-		//System.out.printf("driver %s\n", driver);
-    	System.out.printf("executing command: %s\n", userCommandLine);
+		SimDriver driver;
         Result result = new Result(userCommandLine);
-        result.setQuit(driver.processCommand(userCommandLine));
+		try {
+	    	System.out.printf("executing command: %s\n", userCommandLine);
+			driver = AsRestServer.getDriver();
+	        result.setQuit(driver.processCommand(userCommandLine));
+		} catch (Exception e) {
+			e.printStackTrace();
+	        System.out.printf("ERROR: %x", e.getMessage());
+	        result.setQuit(false);
+		} 
         return result;
     }
 	public static class Result{

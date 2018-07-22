@@ -2,6 +2,8 @@ package group_a7_8.server;
 
 
 
+import java.sql.SQLException;
+
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 
@@ -105,10 +107,12 @@ public class AsRestServer {
 	    jettyServer.join();
 	}
 
-	public static SimDriver getDriver() {
+	public static SimDriver getDriver() throws ClassNotFoundException, SQLException, Exception {
 		if(driver==null) {
 			driver = new SimDriver(usedb);
+			driver.checkPriorSim();
 			driver.setUpdateManager(getUpdateManager());
+			
 			getUpdateManager().setDriver(driver);
 		}
 		return driver;
