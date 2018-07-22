@@ -36,84 +36,6 @@ public class MoveTrainEvent extends SimEvent {
         RailRoute activeRoute = system.getRailRoute(train_route_id);
     	return activeRoute;
 	}
-/*
-    private RailStation get_current_station() {
-        RailCar activeTrain = this.get_current_train();
-        RailRoute activeRoute = this.get_current_route();
-    	
-        int station_current_id = activeTrain.getLocation();
-        System.out.println("station_current_id " + station_current_id);
-        //int activeStationID = activeRoute.getStationID(activeLocation);
-        //System.out.println("activeStationID " + activeStationID);
-        RailStation activeStation = system.getRailStation(station_current_id);
-
-        return activeStation;
-	}
-    
-    private int get_next_location() {
-        RailCar activeTrain = this.get_current_train();
-    	RailRoute activeRoute = get_current_route();
-
-        int location_index = activeTrain.getLocation();
-        
-        int nextLocation = activeRoute.getNextLocation(activeLocation);
-
-        return nextLocation;
-    }
-
-    private int get_next_next_location() {
-        RailCar activeTrain = this.get_current_train();
-    	RailRoute activeRoute = get_current_route();
-
-        int activeLocation = activeTrain.getLocation();
-        int nextLocation = activeRoute.get_next_next_location(activeLocation);
-
-        return nextLocation;
-    }
-
-    private RailStation get_next_station() {
-    	
-        //RailCar activeTrain = this.get_current_train();
-    	//RailRoute activeRoute = get_current_route();
-
-        //int activeLocation = activeTrain.getLocation();
-        //int station_current_id = activeRoute.getNextLocation(activeLocation);
-        
-        //int nextStationID = activeRoute.getStationID(nextLocation);
-        int location_index = this.get_next_location();
-        System.out.println("location_index " + location_index);
-        int station_id = this.get_current_route().getStationID(location_index);
-        System.out.println("station_id " + station_id);
-        RailStation rail_station = system.getRailStation(station_id);
-        System.out.println("rail_station " + rail_station);
-
-        return rail_station;
-	}
-
-    private RailStation get_next_next_station() {
-    	
-    	//RailCar activeTrain = this.get_current_train();
-    	//RailRoute activeRoute = get_current_route();
-
-    	//int activeLocation = activeTrain.getLocation();
-    	//int nextLocation = activeRoute.get_next_next_location(activeLocation);
-    	//int nextStationID = activeRoute.getStationID(nextLocation);
-    	//RailStation nextStation = system.getRailStation(nextStationID);
-
-    	int location_index = this.get_next_next_location();
-        System.out.println("location_index " + location_index);
-        int station_id = this.get_current_route().getStationID(location_index);
-        System.out.println("station_id " + station_id);
-        RailStation rail_station = system.getRailStation(station_id);
-        System.out.println("rail_station " + rail_station);
-
-        return rail_station;
-
-        // int location_next_next = this.get_next_next_location();
-        // RailStation nextStation = system.getRailStation(location_next_next);
-        // return nextStation;
-	}
-*/
 
     private void drop_off_passengers() {
         /* Drop off and pickup new passengers at current station */
@@ -210,8 +132,8 @@ public class MoveTrainEvent extends SimEvent {
         	return;
         }
 
-        System.out.println("activeStation: " + activeStation.toJSON());
-        System.out.println("nextStation: "   + nextStation.toJSON());
+        //System.out.println("activeStation: " + activeStation.toJSON());
+        //System.out.println("nextStation: "   + nextStation.toJSON());
 
         PathKey current_pathkey = system.getPathKey(activeStation, nextStation);
         Path current_path = system.getPath(current_pathkey);
@@ -273,45 +195,6 @@ public class MoveTrainEvent extends SimEvent {
             }
         }
 	}
-	/*
-	private void move_train_next_station(boolean skip_next_station) {
-        RailCar activeTrain = this.get_current_train();
-		RailStation activeStation = this.get_current_station();
-        RailStation nextStation = this.get_next_station();
-
-        Path currentPath = system.getPath(system.getPathKey(activeStation, nextStation));
-        
-        // get delay factor
-        Double delayfactor = currentPath.getDelayFactor();
-        
-        // calculate the effect of speed limit
-        Integer speedlimit = currentPath.getSpeedLimit();
-        Integer true_speed = activeTrain.getSpeed();
-        if (speedlimit != null) {
-        	if (speedlimit < true_speed) {
-        		true_speed = speedlimit;
-        	}
-        }
-        
-        // Find distance to station to determine next event time
-        Double travelDistance = activeStation.findDistance(nextStation);    
-       
-        // conversion is used to translate time calculation from hours to minutes
-        int travelTime = (int)((1 + (travelDistance.intValue() * 60 / true_speed)) * delayfactor);
-        
-        RailRoute activeRoute = system.getRailRoute(train.getRouteID());
-        int activeLocation = train.getLocation();
-        int nextLocation = activeRoute.getNextLocation(activeLocation);
-        activeTrain.setLocation(nextLocation);
-        
-        MoveTrainEvent my_move_event = new MoveTrainEvent(system, eventID, getRank() + travelTime, train);
-		if (skip_next_station) {
-			my_move_event.skip_next_station();
-		}
-
-        eventQueue.add(my_move_event);
-	}
-	*/
 
 	private void train_move_next(RailCar my_train) {
 		int travel_time = my_train.calculate_travel_time_station_next();
@@ -334,53 +217,4 @@ public class MoveTrainEvent extends SimEvent {
 
         eventQueue.add(my_move_event);
 	}
-/*
-	private void move_train_skip_station() {
-		boolean skip_next_station = true;
-		this.move_train_next_station(skip_next_station);
-
-        RailCar activeTrain = this.get_current_train();
-		RailStation activeStation = this.get_current_station();
-		RailStation nextStation = this.get_next_station();
-        RailStation nextNextStation = this.get_next_next_station();
-
-        Path currentPath = system.getPath(system.getPathKey(activeStation, nextStation));
-        Path nextPath = system.getPath(system.getPathKey(nextStation, nextNextStation));
-        
-        // get delay factor
-        Double currentdelayfactor = currentPath.getDelayFactor();
-        Double nextdelayfactor = nextPath.getDelayFactor();
-        
-        // calculate the effect of speed limit
-        Integer currentspeedlimit = currentPath.getSpeedLimit();
-        Integer current_true_speed = activeTrain.getSpeed();
-        if (currentspeedlimit != null) {
-        	if (currentspeedlimit < current_true_speed) {
-        		current_true_speed = currentspeedlimit;
-        	}
-        }
-        Integer nextcurrentspeedlimit = nextPath.getSpeedLimit();
-        Integer next_true_speed = activeTrain.getSpeed();
-        if (nextcurrentspeedlimit != null) {
-        	if (nextcurrentspeedlimit < next_true_speed) {
-        		next_true_speed = nextcurrentspeedlimit;
-        	}
-        }
-        
-        // Find distance to station to determine next event time
-        Double currentTravelDistance = activeStation.findDistance(nextStation);
-        Double nextTravelDistance = nextStation.findDistance(nextNextStation);
-       
-        // conversion is used to translate time calculation from hours to minutes
-        int travelTime = (int)(((1 + (currentTravelDistance.intValue() * 60 / current_true_speed)) * currentdelayfactor) 
-        		+ ((1 + (nextTravelDistance.intValue() * 60 / next_true_speed)) * nextdelayfactor)) ;
-        
-        RailRoute activeRoute = system.getRailRoute(train.getRouteID());
-        int activeLocation = train.getLocation();
-        int nextLocation = activeRoute.getNextLocation(activeLocation);
-        activeTrain.setLocation(nextLocation);
-        
-		eventQueue.add(new MoveTrainEvent(system, eventID, getRank() + travelTime, train));
-	}
-	*/
 }

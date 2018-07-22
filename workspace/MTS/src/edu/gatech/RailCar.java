@@ -45,12 +45,6 @@ public class RailCar extends Vehicle {
     	this.rail_route = my_rail_route;
 
         Integer location_index = this.get_location_index_current();
-        /*
-        Integer location_index = this.rail_route.get_route_location_index(station_id);
-        if (location_index == null) {
-        	System.err.println("Error: Train starting current location is invalid");
-        }
-        */
 
         this.set_location_index_current(location_index);
         
@@ -60,7 +54,6 @@ public class RailCar extends Vehicle {
         	System.err.println("Error: Train starting next location is invalid");
         }
 
-        //station_id = this.rail_route.getExchangePointID(location_index);
         this.set_location_index_next(location_index);
     }
     

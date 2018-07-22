@@ -19,19 +19,6 @@ public class BlockPathEvent extends SimEvent{
 	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train) {
     	super(system,timeRank,"set_path_block",eventID);
 		this.route = system.getRailRoute(train.getRouteID());
-/*		
-        int currentLocation = train.getLocation();
-        int currentStationID = route.getStationID(currentLocation);
-
-        int nextLocation = route.getNextLocation(currentLocation);
-        int nextStationID = route.getStationID(nextLocation);
-
-        RailStation currentStation = system.getRailStation(currentStationID);
-        RailStation nextStation    = system.getRailStation(nextStationID);
-		
-		this.origin		 = currentStation;
-		this.destination = nextStation;
-*/
 		this.train = train;
 		this.origin		 = this.train.get_rail_station_current();
 		this.destination = this.train.get_rail_station_next();
@@ -67,6 +54,8 @@ public class BlockPathEvent extends SimEvent{
 
 		this.path.clearIsBlocked();
 
+		train.set_prevLocation(0);
+		train.set_nextLocation(1);
 		int time_trigger_resume = this.getRank() + train.getRepairDuration();
 		VehicleResumeServiceEvent train_repaired_event =
 				new VehicleResumeServiceEvent(this.system, this.getEventQueue().getNextEventID(),
