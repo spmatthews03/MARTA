@@ -247,7 +247,12 @@ public class SimDriver implements StateChangeListener{
             	martaModel.displayModel();
             	break;
             case "quit":
-            	this.save();
+			try {
+				this.save();
+			} catch (Exception e) {
+				System.out.printf("ERROR: Unable to save state due to error: %s\n",e.getMessage());
+				e.printStackTrace();
+			} 
             	break;
             case "path_delay":
             	//sets the delay on the specified bus path
@@ -802,10 +807,11 @@ public class SimDriver implements StateChangeListener{
 		return c>0;
 	}
 
-	public boolean save() {
-        System.out.println(" stop the command loop");
+	@SuppressWarnings("unchecked")
+	public boolean save() throws ClassNotFoundException, SQLException, Exception {
         if(persistenceOn) {
-    	for (Bus bus : martaModel.getBuses().values()) {
+        	System.out.println("saving state ...");
+            for (Bus bus : martaModel.getBuses().values()) {
     		try {
 				((BusDAO)getDao(Table.BUS)).save(bus);
 			} catch (Exception e) {
@@ -853,6 +859,44 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save rail station");
 			}	
     	}
+    	
+    	//persisting events
+    	for(SimEvent event: simEngine.getEvents()) {
+    		System.out.printf("eventtype: %s\n",event.getType());
+    		switch(event.getType()) {
+    		case "set_path_delay":
+    			getDao(Table.SETPATHDELAYEVENT).save(event);
+    			break;
+    		case "clear_path_delay":
+    			getDao(Table.CLEARPATHDELAYEVENT).save(event);
+    			break;
+    		case "set_speed_limit":
+    			getDao(Table.SETSPEEDLIMITEVENT).save(event);
+    			break;
+    		case "clear_speed_limit":
+    			getDao(Table.CLEARSPEEDLIMITEVENT).save(event);
+    			break;
+    		case "exchangePoint_out_of_service":
+    			getDao(Table.FACILITYOUTOFSERVICEEVENT).save(event);
+    			break;
+    		case "exchangePoint_resumed_service":
+    			getDao(Table.FACILITYRESUMESERVICEEVENT).save(event);
+    			break;
+    		case "move_bus":
+    			getDao(Table.MOVEBUSEVENT).save(event);
+    			break;
+    		case "move_train":
+    			getDao(Table.MOVETRAINEVENT).save(event);
+    			break;
+    		case "vehicle_out_of_service":
+    			getDao(Table.VEHICLEOUTOFSERVICEEVENT).save(event);
+    			break;
+    		case "vehicle_resumed_service":
+    			getDao(Table.VEHICLERESUMESERVICEEVENT).save(event);
+    			break;
+    		}
+    	}
+    	
     	System.out.printf("system state persisted\n");
         }
     	return true;
@@ -870,6 +914,7 @@ public class SimDriver implements StateChangeListener{
 	@SuppressWarnings("unchecked")
 	public void restoreSim() throws ClassNotFoundException, SQLException, Exception {
 		//restoring events from database
+		System.out.printf("restoring events from DB.  event queue had %d events.\n", simEngine.getSize());
 		ArrayList<SimEvent> events;
 		events = getDao(Table.SETPATHDELAYEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
@@ -891,5 +936,6 @@ public class SimDriver implements StateChangeListener{
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		events = getDao(Table.VEHICLERESUMESERVICEEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		System.out.printf("event queue now has %d events.\n", simEngine.getSize());
 	}
 }
