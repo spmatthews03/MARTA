@@ -1,4 +1,4 @@
-package group_a7_8;
+package group_a7_8.persistence;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,13 +1,14 @@
-package group_a7_8;
+package group_a7_8.event;
 
 import edu.gatech.Bus;
 import edu.gatech.BusStop;
 import edu.gatech.Depot;
 import edu.gatech.RailCar;
 import edu.gatech.RailStation;
-import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
 import edu.gatech.Vehicle;
+import group_a7_8.FuelConsumption;
+import group_a7_8.PathKey;
 
 public class VehicleResumeServiceEvent extends SimEvent{
 	private Vehicle vehicle;

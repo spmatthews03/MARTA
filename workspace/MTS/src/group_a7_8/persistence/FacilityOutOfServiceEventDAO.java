@@ -1,10 +1,12 @@
-package group_a7_8;
+package group_a7_8.persistence;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import group_a7_8.event.FacilityOutOfServiceEvent;
 
 
 public class FacilityOutOfServiceEventDAO extends GenericDAO<FacilityOutOfServiceEvent>{

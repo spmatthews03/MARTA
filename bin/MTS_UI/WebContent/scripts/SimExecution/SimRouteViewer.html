@@ -1,0 +1,46 @@
+<div layout="row" layout-wrap>
+  <div flex>
+	<div>
+	   <div layout="row" layout-wrap  layout-align="space-around start">
+	       <div ng-repeat="route in mts.routes" flex="30">
+	          <route-route data-route="route"></route-route>
+			  <!-- <div ng-repeat="stop in route.stops track by $index">stop {{stop}}</div> -->
+	       </div>
+	   </div>
+
+	</div>
+  </div>
+  <div flex="25" class="side-panel">
+    <div layout="column" >
+	    <div  class="sim-exec-controls-panel" layout="row" layout-wrap>
+	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">Events:</div><div class="time-value">{{mts.events.length}}</div></div>
+	       <div class="sim-exec-control"><md-button ng-click="stepOnce()"><md-icon>play_arrow</md-icon></md-button></div>
+	       <div class="sim-exec-control"><md-button ng-click="stepMulti(5)"><md-icon>forward_5</md-icon></md-button></div>
+	       <div class="sim-exec-control"><md-button ng-click="stepMulti(10)"><md-icon>forward_10</md-icon></md-button></div>
+	       <div class="sim-exec-control"><md-button ng-click="stepMulti(30)"><md-icon>forward_30</md-icon></md-button></div>
+	       <div class="sim-exec-control"><md-button ng-click="stop()"><md-icon>stop</md-icon></md-button></div>
+	       <div flex></div>
+	       <div layout="column" layout-align="start center" class="sim-clock wide"><div class="time-label">Time:</div><div class="time-value">{{mts.time}}</div></div>
+	    </div>
+	    <div  class="sim-exec-viewer-panel">
+			<md-content>
+			   <div layout="column">
+		  		  <event ng-repeat="event in mts.events | orderBy:'time'" data-event="event"></event>
+			   </div>
+			</md-content>
+		</div>
+	    <div  class="sim-exec-controls-panel" layout="row" layout-wrap layout-align="center center" ng-click="depotFill()">
+	       <md-icon class="depot-icon">local_hospital</md-icon>
+	       <div class="title-label">Depot</div>
+	       <div flex></div>
+	       <div layout="column" layout-align="start center" class="sim-clock"><div class="time-label">vehicles:</div><div class="time-value">{{getDepotCount()}}</div></div>
+	    </div>
+	    <div layout="column">
+	      <div ng-repeat="vehicle in mts.vehicles | filter : {outOfService:true} track by $index" layout="row" layout-wrap>
+	        <div flex></div>
+     	    <route-vehicle data-vehicle="vehicle"></route-vehicle>
+	      </div>
+	    </div>
+    </div>
+  </div>	
+</div>

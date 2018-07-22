@@ -20,6 +20,9 @@ public class AsRestServer {
 	
 	private static UpdateManager updateManager;
 	private static SimDriver driver;
+	private static final String CONFIG_PATH_TOKEN="-config:";
+	private static final String USE_DB="-usedb";
+	private static boolean usedb=false;
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -28,6 +31,16 @@ public class AsRestServer {
 	    // or programmatically obtain it for use in test cases.
 		Integer port = 6310;  //default port #
         String key = "port";
+		
+		for(String arg:args) {
+			  //System.out.printf("arg %s\n",arg);
+			  if(arg.startsWith(CONFIG_PATH_TOKEN)) {
+				  FileProps.SetConfigPath(arg.substring(CONFIG_PATH_TOKEN.length()).trim());
+			  }
+			  if(arg.equals(USE_DB)) {
+				  usedb = true;
+			  }
+		}
         if(FileProps.contains(key)) {
         	try{
         	port = Integer.decode(FileProps.get(key));
@@ -94,7 +107,7 @@ public class AsRestServer {
 
 	public static SimDriver getDriver() {
 		if(driver==null) {
-			driver = new SimDriver();
+			driver = new SimDriver(usedb);
 			driver.setUpdateManager(getUpdateManager());
 			getUpdateManager().setDriver(driver);
 		}

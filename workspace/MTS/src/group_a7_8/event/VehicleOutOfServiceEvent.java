@@ -1,6 +1,5 @@
-package group_a7_8;
+package group_a7_8.event;
 
-import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
 import edu.gatech.Vehicle;
 

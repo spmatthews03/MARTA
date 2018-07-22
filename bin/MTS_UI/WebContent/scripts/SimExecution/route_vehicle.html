@@ -1,0 +1,23 @@
+<div ng-class="{'out-of-service':inService()}" class="vehicle">
+  <div layout="row" layout-align="center center" >
+	  <!-- <i ng-show="vehicle.type=='Bus'" class="fas fa-bus vehicle-icon"></i>   
+	  <i ng-show="vehicle.type=='Train'" class="fas fa-train vehicle-icon"></i>  -->
+	  <div style="width:30px">
+		  <md-icon ng-show="vehicle.type=='Bus'" class="vehicle-icon" md-font-set="fa">&#xf55e</md-icon>
+		  <md-icon ng-show="vehicle.type=='Train'" class="vehicle-icon" md-font-set="fa">&#xf238</md-icon>
+	  </div>
+	  <div style="width:2px">
+		  <md-icon ng-show="vehicle.type=='Bus' && vehicle.refueling" class="hazard-indicator warning">local_gas_station</md-icon>
+		  <md-icon ng-show="vehicle.outOfService && !vehicle.refueling" class="hazard-indicator">error</md-icon>
+	  </div>
+	  <div class="vehicle-label"><span>#{{vehicle.ID}}<span></div>
+	  
+        <md-icon ng-show="vehicle.type=='Bus'" class="passenger-icon" md-font-set="fa">&#xf007</md-icon>
+	    <div layout="column" class="vehicle-details" layout-align="center end">
+	       <div class="value">{{vehicle.passengers}}</div>
+	       <div class="capacity">cap. {{vehicle.capacity}}</div>
+	    </div>
+	 
+	  <fuel-gauge class="gauge" ng-show="vehicle.type=='Bus'" data-level="vehicle.fuelLevel" data-capacity="vehicle.fuelCapacity" vehicleid="(vehicle.type+'-'+vehicle.ID)"></fuel-gauge>
+  </div>
+</div>

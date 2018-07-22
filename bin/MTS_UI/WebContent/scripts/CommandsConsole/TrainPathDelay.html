@@ -1,0 +1,49 @@
+ <md-content layout-padding>
+    <form name="addTrainPathDelayForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Start At</label>
+        <input required md-no-asterisk type="number" min="0" name="time" ng-model="item.time">
+        <div ng-messages="addTrainPathDelayForm.time.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum start at value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Duration</label>
+        <input required md-no-asterisk type="number" min="0" name="duration" ng-model="item.duration">
+        <div ng-messages="addTrainPathDelayForm.duration.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum duration value allowed</div>
+        </div>
+      </md-input-container>
+       <md-input-container class="md-block">
+        <label>Stop A</label>
+        <input required md-no-asterisk type="number" min="0" name="origin" ng-model="item.origin">
+        <div ng-messages="addTrainPathDelayForm.origin.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum train stop ID value allowed</div>
+        </div>
+      </md-input-container>     
+       <md-input-container class="md-block">
+        <label>Stop B</label>
+        <input required md-no-asterisk type="number" min="0" name="destination" ng-model="item.destination">
+        <div ng-messages="addTrainPathDelayForm.destination.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum train stop ID value allowed</div>
+        </div>
+      </md-input-container>     
+        <md-input-container >
+          <label>Delay Factor</label>
+          <input required md-no-asterisk type="number" min="0" step="any" name="delayFactor" ng-model="item.delayFactor">
+          <div ng-messages="addTrainPathDelayForm.delayFactor.$error"  multiple md-auto-hide="false">
+            <div ng-message="required">This field is required.</div>
+            <div ng-message="min">0 is the minimum delay factor value allowed</div>
+          </div>
+        </md-input-container>
+        <div layout="row" layout-align="space-around center">
+            <md-button type="submit">Submit</md-button>
+            <md-button ng-click="cancel()">Cancel</md-button>
+        </div>
+    </form>
+  </md-content>

@@ -19,7 +19,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	  	  	fuelByBusData:{},
 	  		commandOption:""
    };
-	
+	$log.info('configured state');
    var ws;
    var post = function(message){
        if(ws && ws.readyState === ws.OPEN) ws.send(message);
@@ -49,8 +49,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 		   commandBlocked = true;
 	   }
    }
+   $log.info('here1');
    var process = function(update){
-      //$log.info(update);
+      $log.info(update);
 	  if(update.hasOwnProperty('time')){
 		  state.time = update.time;
 	  }
@@ -141,6 +142,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   commandBlocked = false;
    };
    // ws = new WebSocket('ws://127.0.0.1:5808');
+   $log.info('here2');
    var onopen = function(){
 	  //$log.info('socket opened!');
 	  $interval(heartbeat,1000);
@@ -170,6 +172,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    ws.onclose = onclose;
 	    ws.onerror = onerror;  
     };
+    $log.info('here3');
+
 		    
     var executeCommand = function(command){
     	//$log.info('executing command: '+command);
@@ -194,6 +198,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
+    $log.info('here4');
+
     var getPathVehicle=function(stopType,originStopID,destinationStopID,route){
     	$log.info(route);
     	$log.info("stopType: "+stopType +", originStopID: "+originStopID+", destinationStopID: "+destinationStopID);
@@ -226,6 +232,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	});
     	return result;
     };
+    $log.info('here5');
 
     var reset = function(){
     	//$log.info('resetting system');
@@ -264,7 +271,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	//$log.info('reset completed')
     	//$log.info(state);
     };
-
+    $log.info('connecting');
     connect();
     
     var countBus = function(){
@@ -323,6 +330,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
        }	
        return c;
     };
+    
+    $log.info('finished initializing service');
     
    
     return {

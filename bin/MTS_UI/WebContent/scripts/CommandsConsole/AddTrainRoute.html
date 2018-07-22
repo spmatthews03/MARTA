@@ -1,0 +1,34 @@
+ <md-content layout-padding>
+    <form name="addTrainRouteForm" ng-submit="onSubmit()">
+
+      <md-input-container class="md-block">
+        <label>Route ID</label>
+        <input required md-no-asterisk type="number" min="0" name="id" ng-model="item.id">
+        <div ng-messages="addTrainRouteForm.id.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum ID value allowed</div>
+        </div>
+      </md-input-container>
+      <md-input-container  class="md-block">
+        <label>Route Number</label>
+        <input required md-no-asterisk type="number" min="0" name="number" ng-model="item.number">
+        <div ng-messages="addTrainRouteForm.number.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="min">0 is the minimum stop number value allowed</div>
+        </div>
+      </md-input-container>        
+      <md-input-container  class="md-block">
+        <label>Route Name</label>
+        <input required md-maxlength="30" required md-no-asterisk name="name" ng-model="item.name">
+        <div ng-messages="addTrainRouteForm.name.$error"  multiple md-auto-hide="false">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="md-maxlength">The id must be less than 30 characters long.</div>
+        </div>
+      </md-input-container>
+
+      <div layout="row" layout-align="space-around center">
+        <md-button type="submit">Submit</md-button>
+        <md-button ng-click="cancel()">Cancel</md-button>
+      </div>
+    </form>
+  </md-content>

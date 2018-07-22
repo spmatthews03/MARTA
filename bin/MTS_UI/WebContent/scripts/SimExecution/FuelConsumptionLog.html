@@ -1,0 +1,20 @@
+<div layout="column">
+  <div class="report-title">Fuel Consumption By Bus</div>
+  <div ng-repeat="vehicleReport in reports.vehicles | orderBy:'vehicle.ID' track by $index" class="report-section">
+        <div class="sim-exec-controls-panel" layout="row" layout-wrap layout-align="start center">
+           <md-icon class="vehicle-icon" md-font-set="fa">&#xf55e</md-icon>
+           <div>{{vehicleReport.vehicle.type}} #{{vehicleReport.vehicle.ID}}</div>
+	       <div flex></div>
+	       <div layout="column" layout-align="center start" class="sim-clock"><div class="time-label">total:</div><div class="time-value">{{roundAmount(vehicleReport.amount)}}</div></div>
+        </div>
+            
+        <div ng-repeat="report in vehicleReport.reports | orderBy:'timeRank' track by $index">
+          <div layout="row" layout-align="center center" class="report-row" layout-wrap>
+           <div class="report-field" flex="15">Time {{report.timeRank}}</div>
+           <div class="report-field" flex="35">Path: stop ID {{report.pathKey.origin}} --> stop ID {{report.pathKey.destination}}</div>
+           <div class="report-field" flex="45">amount: {{roundAmount(report.amount)}}</div>
+           <div flex></div>
+          </div>
+        </div>
+  </div>
+</div>

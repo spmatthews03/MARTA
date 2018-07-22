@@ -1,10 +1,11 @@
-package group_a7_8;
+package group_a7_8.event;
 
 import edu.gatech.RailCar;
 import edu.gatech.RailRoute;
-import edu.gatech.SimEvent;
 import edu.gatech.RailStation;
 import edu.gatech.TransitSystem;
+import group_a7_8.Path;
+import group_a7_8.PathKey;
 
 public class MoveTrainEvent extends SimEvent {
 

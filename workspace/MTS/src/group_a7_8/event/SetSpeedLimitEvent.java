@@ -1,7 +1,7 @@
-package group_a7_8;
+package group_a7_8.event;
 
-import edu.gatech.SimEvent;
 import edu.gatech.TransitSystem;
+import group_a7_8.PathKey;
 
 public class SetSpeedLimitEvent extends SimEvent{
 	private PathKey pathKey;

@@ -114,7 +114,7 @@
   };
   //controllers
   var simController = function($scope, $log, mtsService){
-		//$log.info('simController');
+		$log.info('simController');
 		$scope.mts = mtsService.state;
 		var x=0;
 		$scope.depotFill = function(){
@@ -337,7 +337,8 @@
 	  });
 	  //$scope.path.speedLimit=-1;
 	  //$scope.path.delayFactor=-1;
-	 
+	  $log.info('simController');
+		
   };
   var vehicleController = function($scope, $log){
 		//$log.info('vehicleController');

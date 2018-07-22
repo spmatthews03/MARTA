@@ -2,13 +2,13 @@ package edu.gatech;
 
 import java.util.Hashtable;
 
-import group_a7_8.DAOManager;
-import group_a7_8.DAOManager.Table;
 import group_a7_8.FuelConsumption;
-import group_a7_8.GenericDAO;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
+import group_a7_8.persistence.DAOManager;
+import group_a7_8.persistence.GenericDAO;
+import group_a7_8.persistence.DAOManager.Table;
 import group_a7_8.server.StateChangeListener;
 
 import java.util.ArrayList;

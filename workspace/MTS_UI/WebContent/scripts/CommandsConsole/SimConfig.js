@@ -66,7 +66,7 @@
             				 '<set-stop-down-form ng-switch-when="setStopDown"></set-stop-down-form>'+
             				 '<set-station-down-form ng-switch-when="setStationDown"></set-station-down-form>'+
             				 '<add-depot-form ng-switch-when="addDepot"></add-depot-form>'+
-				             '<command-entry ng-switch-default></command-entry>'+
+				             //'<command-entry ng-switch-default></command-entry>'+
 				            '<div ng-switch-default><h1 style="color:red;">should not be here!!!</h1></div>'+
 		                 '</div>'+
 		              '</div>'+
@@ -101,8 +101,8 @@
   }; 
   //controllers
   var simConfigController = function($scope, $log, $http, mtsService, fileReader){
-	  //$log.info('simConfigController');
-	  $scope.toggleOn = false;
+	  $log.info('simConfigController');
+	 // $scope.toggleOn = false;
 	  $scope.switch = function(){
 	  	$scope.toggleOn = !$scope.toggleOn;
 	  };
@@ -296,6 +296,8 @@
                  //$log.info(mtsService.state.commands);               
              });			
 	  }
+	  $log.info('simConfigController');
+
   };
   
   angular.module('CommandsConsole')
