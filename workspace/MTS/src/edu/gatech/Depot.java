@@ -4,7 +4,7 @@ public class Depot extends Facility {
 
 	public Depot(int uniqueID, String name, double x, double y) {
 		super(uniqueID, name, x, y, "depot");
-		this.debug_print();
+		//this.debug_print();
 	}
 	
 	public Depot() {

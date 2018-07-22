@@ -63,8 +63,6 @@ public class VehicleResumeServiceEvent extends SimEvent{
 		} else if (vehicle.getType().equals("Train")) {
 			
 			vehicle.setOutOfService(false); /* Train is in service */
-			vehicle.setLocation(0);
-			vehicle.set_nextLocation(0);
 			
 			RailStation station = system.getRailRoute(vehicle.getRouteID()).getRailStation (system, 0);
 			Depot my_depot = system.getDepot();
