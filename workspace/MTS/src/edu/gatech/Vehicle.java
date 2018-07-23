@@ -8,7 +8,7 @@ public abstract class Vehicle {
     protected Integer passengers;
     protected Integer capacity;
     protected Integer speed;
-    protected TransitSystem system;
+    public TransitSystem system;
     protected String vehicleType;
     protected Boolean outOfService;
     //protected Integer delta_stall_duration;
