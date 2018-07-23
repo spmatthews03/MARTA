@@ -9,7 +9,7 @@ public class BlockPathEvent extends SimEvent{
 	private RailCar train;
 	
 	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train, Path path) {
-    	super(system,timeRank,"set_path_block",eventID);
+    	super(system,timeRank,"clear_blocked_path",eventID);
 		this.train = train;
 		this.path = path;
 	}
@@ -28,6 +28,7 @@ public class BlockPathEvent extends SimEvent{
 		//System.out.printf("BlockPathEvent %s:\n\t%s\n", eventType,toJSON());
 
 		this.path.clearIsBlocked();
+		this.path.set_delta_stall_duration(0);
 
 		train.set_prevLocation(0);
 		train.set_nextLocation(1);

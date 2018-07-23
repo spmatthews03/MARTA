@@ -1,6 +1,7 @@
 package group_a7_8.persistence;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import edu.gatech.Bus;
@@ -16,6 +17,8 @@ import edu.gatech.SimQueue;
 import edu.gatech.TransitSystem;
 import edu.gatech.VehicleRoute;
 import group_a7_8.FileProps;
+import group_a7_8.FuelConsumption;
+import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
 import group_a7_8.RouteDefinition;
@@ -260,6 +263,9 @@ public class DBTest {
 		RailCarDAO railCarDao = (RailCarDAO)getDAO(Table.RAILCAR);
 		RailRouteDAO railRouteDao = (RailRouteDAO)getDAO(Table.RAILROUTE);
 		RailStationDAO railStationDao = (RailStationDAO)getDAO(Table.RAILSTATION);
+		PathDAO pathDao = (PathDAO)getDAO(Table.PATH);
+		HazardDAO hazardDao = (HazardDAO)getDAO(Table.HAZARD);
+		FuelConsumptionDAO fuelConsumptionDao = (FuelConsumptionDAO)getDAO(Table.FUELCONSUMPTION);
 		
 		checkDB();
 		
@@ -270,6 +276,24 @@ public class DBTest {
 		Hashtable<Integer,RailCar> railCars = new Hashtable<Integer,RailCar>();
 		Hashtable<Integer,RailRoute> railRoutes = new Hashtable<Integer,RailRoute>();
 		Hashtable<Integer,RailStation> railStations = new Hashtable<Integer,RailStation>();
+	    Hashtable<PathKey, Path> paths = new Hashtable<PathKey, Path>();
+	    Hashtable<PathKey, ArrayList<Hazard>> hazards = new Hashtable<PathKey, ArrayList<Hazard>>();
+	    Hashtable<Bus, ArrayList<FuelConsumption>> fuelConsumptions = new Hashtable<Bus, ArrayList<FuelConsumption>>();
+	    
+		system.makeBus(1, 1, 0, 2, 10, 50, 200,50);
+		Bus b1 = system.getBus(1);
+	    system.makeStop(1, "bs 1", 1, 1.1, 1.2);
+		BusStop bs1 = system.getBusStop(1);
+		system.makeStop(2, "bs 2", 2, 2.1, 2.2);
+		BusStop bs2 = system.getBusStop(2);
+		PathKey pk_ts1_ts2 = new PathKey(bs1, bs2);
+		Hazard hz1 = new Hazard(pk_ts1_ts2, 2.2);
+		ArrayList<Hazard> hzs = new ArrayList<Hazard>();
+		hzs.add(hz1);
+		FuelConsumption fc1 = new FuelConsumption(b1, pk_ts1_ts2, 2, 2.2, 2);
+		ArrayList<FuelConsumption> fcs = new ArrayList<FuelConsumption>();
+		fcs.add(fc1);
+
 
 		for(int i=0;i<2;i++) {
 			busRoutes.put(i, new BusRoute(i,i,String.format("r%d", i)));
@@ -289,7 +313,17 @@ public class DBTest {
 		for(int i=0;i<5;i++) {
 			railCars.put(i, new RailCar( i ));
 		}
-		
+
+		for(int i=0;i<2;i++) {
+			paths.put(pk_ts1_ts2, new Path(system, bs1, bs2));
+		}
+		for(int i=0;i<8;i++) {
+			hazards.put(pk_ts1_ts2, hzs);
+		}
+		for(int i=0;i<5;i++) {
+			fuelConsumptions.put(b1, fcs);
+		}
+
 		//update state
 		//save buses
 		for(Bus bus : buses.values()) {
@@ -316,6 +350,24 @@ public class DBTest {
 			railRouteDao.save(route);
 		}		
 
+		
+		//save paths
+		for(Path path : paths.values()) {
+			pathDao.save(path);
+		}
+		//save hazards
+		for(ArrayList<Hazard> hazard: hazards.values()) {
+			for (int i = 0; i < hazard.size(); i++) {
+				hazardDao.save(hazard.get(i));
+			}
+		}		
+		//save fuel consumptions
+		for(ArrayList<FuelConsumption> fuelConsumption: fuelConsumptions.values()) {
+			for (int i = 0; i < fuelConsumption.size(); i++) {
+				fuelConsumptionDao.save(fuelConsumption.get(i));
+			}
+		}		
+
 		checkDB();
 
 		//clear the caches
@@ -325,12 +377,18 @@ public class DBTest {
 		railStations.clear();
 		railRoutes.clear();
 		railCars.clear();
+		paths.clear();
+		hazards.clear();
+		fuelConsumptions.clear();
 		System.out.println("bus cache " + buses.size() + " entries");
 		System.out.println("bus route cache " + busRoutes.size( ) + " entries");
 		System.out.println("bus stop cache " + busStops.size() + " entries");
 		System.out.println("rail car cache " + railCars.size() + " entries");
 		System.out.println("rail route cache " + railRoutes.size() + " entries");
 		System.out.println("rail station cache " + railStations.size() + " entries");
+		System.out.println("path cache " + paths.size() + " entries");
+		System.out.println("hazard cache " + hazards.size() + " entries");
+		System.out.println("fuel consumption cache " + fuelConsumptions.size() + " entries");
 		
 		//retrieve the entries from the database
 		for(BusStop stop : busStopDao.find()) {
@@ -351,13 +409,29 @@ public class DBTest {
 		for(RailCar railCar : railCarDao.find()) {
 			railCars.put(railCar.getID(), railCar);
 		}
-		
+		for(Path path : pathDao.find()) {
+			paths.put(path.getPathKey(), path);
+		}
+		for(Hazard hazard : hazardDao.find()) {
+			hzs = new ArrayList<Hazard>();
+			hzs.add(hazard);
+			hazards.put(hazard.getPathKey(), hzs);
+		}
+		for(FuelConsumption fuelConsumption : fuelConsumptionDao.find()) {
+			fcs = new ArrayList<FuelConsumption>();
+			fcs.add(fuelConsumption);
+			fuelConsumptions.put(fuelConsumption.getBus(), fcs);
+		}
+
 		System.out.println("bus cache " + buses.size() + " entries");
 		System.out.println("bus route cache " + busRoutes.size( ) + " entries");
 		System.out.println("bus stop cache " + busStops.size() + " entries");
 		System.out.println("rail car cache " + railCars.size() + " entries");
 		System.out.println("rail route cache " + railRoutes.size() + " entries");
 		System.out.println("rail station cache " + railStations.size() + " entries");
+		System.out.println("path cache " + paths.size() + " entries");
+		System.out.println("hazards cache " + hazards.size() + " entries");
+		System.out.println("fuel consumption cache " + fuelConsumptions.size() + " entries");
 		
 		clearDB();
 		checkDB();		

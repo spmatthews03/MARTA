@@ -63,7 +63,8 @@ public class MoveTrainEvent extends SimEvent {
         int currentPassengers = activeTrain.getPassengers();
         int passengerDifferential = activeStation.exchangeRiders(getRank(), currentPassengers, activeTrain.getCapacity());
         activeTrain.adjustPassengers(passengerDifferential);
-
+        
+        System.out.println(" passengers pre-stop: " + Integer.toString(currentPassengers) + " post-stop: " + (currentPassengers + passengerDifferential));
         //System.out.println(" MoveTrainEvent: Drop off & pick up passengers pre-station: " + Integer.toString(currentPassengers) + " post-station: " + (currentPassengers + passengerDifferential));
     }
 
@@ -109,6 +110,7 @@ public class MoveTrainEvent extends SimEvent {
         	System.err.println("Error MoveTrain Event " + this.eventID + ": No train available");
         	return;
         }
+        System.out.println(" the train being observed is: " + Integer.toString(activeTrain.getID()));
         //System.out.println(" MoveTrainEvent: Train " + Integer.toString(activeTrain.getID()));
 
         // identify the current station
@@ -117,6 +119,7 @@ public class MoveTrainEvent extends SimEvent {
         	System.err.println("Error MoveTrain Event " + this.eventID + ": No train route available");
         	return;
         }
+        System.out.println(" the train is running on route: " + Integer.toString(activeRoute.getID()));
         //System.out.println(" MoveTrainEvent: on rail: " + Integer.toString(activeRoute.getID()));
 
         RailStation activeStation = activeTrain.get_rail_station_current();
@@ -124,6 +127,7 @@ public class MoveTrainEvent extends SimEvent {
         	System.err.println("Error MoveTrain Event " + this.eventID + ": No current station available");
         	return;
         }
+        System.out.println(" the train is currently at station: " + Integer.toString(activeStation.get_uniqueID()) + " - " + activeStation.getFacilityName());
         //System.out.println(" MoveTrainEvent: currently at station: " + Integer.toString(activeStation.get_uniqueID()) + " - " + activeStation.getFacilityName());
 
         RailStation nextStation = activeTrain.get_rail_station_next(); /* Determine next station */
@@ -131,36 +135,39 @@ public class MoveTrainEvent extends SimEvent {
         	System.err.println("Error MoveTrain Event " + this.eventID + ": No next station available");
         	return;
         }
-
+        System.out.println(" the train is heading to station: " + Integer.toString(nextStation.get_uniqueID()) + " - " + nextStation.getFacilityName() + "\n");
         //System.out.println("activeStation: " + activeStation.toJSON());
         //System.out.println("nextStation: "   + nextStation.toJSON());
-
+        
         PathKey current_pathkey = system.getPathKey(activeStation, nextStation);
         Path current_path = system.getPath(current_pathkey);
         //System.out.println(" MoveTrainEvent: moving to station: " + nextStation.get_uniqueID() + " - " + nextStation.getFacilityName());
 
-        System.out.println(activeStation.getFacilityName() + " -> " + nextStation.getFacilityName());
+        //System.out.println(activeStation.getFacilityName() + " -> " + nextStation.getFacilityName());
 
         if (activeTrain.getOutOfService()) {
+        	System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is going out of service and headed to the depot for repair\n");
             //System.out.println(" MoveTrainEvent: Train out of service");
         	if (current_path.getIsBlocked()) {
                 //System.out.println(" MoveTrainEvent: Path is blocked");
                 //System.out.println(" MoveTrainEvent: \t" + current_path.toJSON());
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
+        		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
-
+        		System.out.println(" path: " + activeStation.getFacilityName() + " -> " + nextStation.getFacilityName() + " is blocked\n");
                 eventQueue.add(
                 		new MoveTrainEvent(system, eventID,
                 						   absolute_stall_period , train));
+                System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is waiting to go into station " + Integer.toString(activeStation.get_uniqueID()) + " - " + activeStation.getFacilityName() + "\n");
+                //System.out.println(activeStation.getFacilityName() + " -> " + nextStation.getFacilityName());
         	} else {
                 //System.out.println(" MoveTrainEvent: Train is NOT blocked");
         		this.drop_off_passengers();
 
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
+        		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
         		
         		current_path.setIsBlocked();
-
+        		System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is blocking path: " + activeStation.getFacilityName() + " -> " + nextStation.getFacilityName() + "\n");
             	BlockPathEvent clear_block_path_event =
             			new BlockPathEvent(this.system, eventQueue.getNextEventID(), absolute_stall_period, activeTrain, current_path);
             	System.out.printf("%s\n", clear_block_path_event.toJSON());
@@ -170,27 +177,41 @@ public class MoveTrainEvent extends SimEvent {
             //System.out.println(" MoveTrainEvent: Train is in service");
             if (current_path.getIsBlocked()) { /* Path is blocked */
                 //System.out.println(" MoveTrainEvent: Path is blocked");
-
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
-        		Integer absolute_stall_period = getRank() + 1;//delta_stall_period;
-
-        		System.out.println(" Train " + activeTrain.getID() + "Going to Depot");
+            	//System.out.println(" path: " + activeStation.getFacilityName() + " -> " + nextStation.getFacilityName() + " is blocked\n");
+        		int delta_stall_period = current_path.get_delta_stall_duration();
+        		Integer absolute_stall_period = getRank() + delta_stall_period;
+        		System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is waiting to go into station " + Integer.toString(activeStation.get_uniqueID()) + " - " + activeStation.getFacilityName() + "\n");
+        		//System.out.println(" Train " + activeTrain.getID() + "Going to Depot");
                 eventQueue.add(
                 		new MoveTrainEvent(system, eventID,
                 						   absolute_stall_period , train));
-            } else { /* Path is not blocked */
-                //System.out.println(" MoveTrainEvent: Path is NOT blocked");
+            } else {
+            	/* Path after traveling the current path */
+                Path next_path = activeTrain.get_path_next_next();
+            	if (next_path.getIsBlocked()) {
+            		int delta_stall_period = next_path.get_delta_stall_duration();
+            		Integer absolute_stall_period = getRank() + delta_stall_period;
+            		System.out.println(" path out of station " + Integer.toString(nextStation.get_uniqueID()) + " - " + nextStation.getFacilityName() + " is blocked\n");
+            		//Integer absolute_stall_period = getRank() + 1;//delta_stall_period;
+            		System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is waiting to go into station " + Integer.toString(nextStation.get_uniqueID()) + " - " + nextStation.getFacilityName() + "\n");
+            		//System.out.println(" Train " + activeTrain.getID() + "Waiting on blocked next next path");
+                    eventQueue.add(
+                    		new MoveTrainEvent(system, eventID,
+                    						   absolute_stall_period , train));	
+            	} else { /* Path is not blocked */
+                    //System.out.println(" MoveTrainEvent: Path is NOT blocked");
 
-            	if (nextStation.get_out_of_service()) { /* Station is out of service */  
-                    //System.out.println(" MoveTrainEvent: Station out of service");
+                	if (nextStation.get_out_of_service()) { /* Station is out of service */  
+                        //System.out.println(" MoveTrainEvent: Station out of service");
+                		System.out.println(" station " + activeStation.get_uniqueID() + "is out of service");
+                        //System.out.println(" Skipping " + nextStation.getFacilityName());
+                		this.train_move_next_next(train);
+                	} else { /* Station is in service */
+                		//System.out.println(" MoveTrainEvent: Station in service");
 
-                    System.out.println(" Skipping " + nextStation.getFacilityName());
-            		this.train_move_next_next(train);
-            	} else { /* Station is in service */
-            		//System.out.println(" MoveTrainEvent: Station in service");
-
-            		this.drop_off_and_pick_up_passengers();
-            		this.train_move_next(train);
+                		this.drop_off_and_pick_up_passengers();
+                		this.train_move_next(train);
+                	}            		
             	}
             }
         }

@@ -22,7 +22,7 @@ public class DAOManager {
 	
 	public static enum Table{
 		//core entities
-		BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, HAZARD, FUELCONSUMPTION
+		BUS, BUSSTOP, BUSROUTE, DEPOT, RAILCAR, RAILROUTE, RAILSTATION, PATH, HAZARD, FUELCONSUMPTION
 		//events
 		,CLEARPATHDELAYEVENT,CLEARSPEEDLIMITEVENT,FACILITYOUTOFSERVICEEVENT,FACILITYRESUMESERVICEEVENT,MOVEBUSEVENT,
 		MOVETRAINEVENT,SETPATHDELAYEVENT,SETSPEEDLIMITEVENT,VEHICLEOUTOFSERVICEEVENT,VEHICLERESUMESERVICEEVENT
@@ -156,6 +156,8 @@ public class DAOManager {
             case RAILSTATION: daoCache.put(t, new RailStationDAO(system,eventQueue,this.con));
             break;
             case DEPOT: daoCache.put(t, new DepotDAO(system,eventQueue,this.con));
+            break;
+            case PATH: daoCache.put(t, new PathDAO(system,eventQueue,this.con));
             break;
             case HAZARD: daoCache.put(t, new HazardDAO(system,eventQueue,this.con));
             break;

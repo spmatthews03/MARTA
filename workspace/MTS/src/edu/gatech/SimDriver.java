@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
@@ -35,11 +37,14 @@ import group_a7_8.persistence.BusRouteDAO;
 import group_a7_8.persistence.BusStopDAO;
 import group_a7_8.persistence.DAOManager;
 import group_a7_8.persistence.GenericDAO;
+import group_a7_8.persistence.HazardDAO;
+import group_a7_8.persistence.PathDAO;
 import group_a7_8.persistence.RailCarDAO;
 import group_a7_8.persistence.RailRouteDAO;
 import group_a7_8.persistence.RailStationDAO;
 import group_a7_8.persistence.SetPathDelayEventDAO;
 import group_a7_8.persistence.DAOManager.Table;
+import group_a7_8.persistence.FuelConsumptionDAO;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 import group_a7_8.PathKey;
@@ -250,13 +255,13 @@ public class SimDriver implements StateChangeListener{
             	martaModel.displayModel();
             	break;
             case "quit":
-			try {
-				this.save();
-			} catch (Exception e) {
-				System.out.printf("ERROR: Unable to save state due to error: %s\n",e.getMessage());
-				e.printStackTrace();
-			} 
-            	break;
+				try {
+					this.save();
+				} catch (Exception e) {
+					System.out.printf("ERROR: Unable to save state due to error: %s\n",e.getMessage());
+					e.printStackTrace();
+				} 
+            	return true;
             case "path_delay":
             	//sets the delay on the specified bus path
             	//format: path_delay,<StartAt>,<Duration>,<Stop_A>,<Stop_B>,<DelayFactor>         	            	
@@ -268,13 +273,13 @@ public class SimDriver implements StateChangeListener{
             	
             	if (path_delay_origin_bus == null){
             		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (path_delay_destin_bus == null){
             		System.out.println(" stop " + Integer.parseInt(tokens[4]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (martaModel.getPathKey(path_delay_origin_bus, path_delay_destin_bus) == null){
             		System.out.println(" There is no path between stop " + Integer.parseInt(tokens[3]) + " and stop " + Integer.parseInt(tokens[4]));
-                    return true;
+                    return false;
             	}
             	            	
             	PathKey busDelayPathKey = martaModel.getPathKey(martaModel.getBusStop(Integer.decode(tokens[3])), martaModel.getBusStop(Integer.decode(tokens[4])));
@@ -296,13 +301,13 @@ public class SimDriver implements StateChangeListener{
             	           	
             	if (path_delay_origin_train == null){
             		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (path_delay_destin_train == null){
             		System.out.println(" station " + Integer.parseInt(tokens[4]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (martaModel.getPathKey(path_delay_origin_train, path_delay_destin_train) == null){
             		System.out.println(" There is no path between station " + Integer.parseInt(tokens[3]) + " and station " + Integer.parseInt(tokens[4]));
-                    return true;
+                    return false;
             	}
             	
             	PathKey railDelayPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
@@ -324,13 +329,13 @@ public class SimDriver implements StateChangeListener{
             	           	
             	if (speed_limit_origin_bus == null){
             		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (speed_limit_destin_bus == null){
             		System.out.println(" stop " + Integer.parseInt(tokens[4]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (martaModel.getPathKey(speed_limit_origin_bus, speed_limit_destin_bus) == null){
             		System.out.println(" There is no path between stop " + Integer.parseInt(tokens[3]) + " and stop " + Integer.parseInt(tokens[4]));
-                    return true;
+                    return false;
             	}
             	
             	PathKey busSpeedPathKey = martaModel.getPathKey(martaModel.getBusStop(Integer.decode(tokens[3])), martaModel.getBusStop(Integer.decode(tokens[4])));
@@ -352,13 +357,13 @@ public class SimDriver implements StateChangeListener{
             	           	
             	if (speed_limit_origin_train == null){
             		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (speed_limit_destin_train == null){
             		System.out.println(" station " + Integer.parseInt(tokens[4]) + " has not been created");
-                    return true;
+                    return false;
             	} else if (martaModel.getPathKey(speed_limit_origin_train, speed_limit_destin_train) == null){
             		System.out.println(" There is no path between station " + Integer.parseInt(tokens[3]) + " and station " + Integer.parseInt(tokens[4]));
-                    return true;
+                    return false;
             	}
             	            	
             	PathKey railSpeedPathKey = martaModel.getPathKey(martaModel.getRailStation(Integer.decode(tokens[3])), martaModel.getRailStation(Integer.decode(tokens[4])));
@@ -377,7 +382,7 @@ public class SimDriver implements StateChangeListener{
             	
             	if (martaModel.getBusStop(Integer.parseInt(tokens[3])) == null){
             		System.out.println(" stop " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	}
             	
             	BusStop outOfServiceStop = martaModel.getBusStop(Integer.decode(tokens[3]));
@@ -396,7 +401,7 @@ public class SimDriver implements StateChangeListener{
             	
             	if (martaModel.getRailStation(Integer.parseInt(tokens[3])) == null){
             		System.out.println(" station " + Integer.parseInt(tokens[3]) + " has not been created");
-                    return true;
+                    return false;
             	}
             	
             	RailStation outOfServiceStation = martaModel.getRailStation(Integer.decode(tokens[3]));
@@ -424,7 +429,7 @@ public class SimDriver implements StateChangeListener{
             	
             	if (martaModel.getBus(Integer.parseInt(tokens[2])) == null){
             		System.out.println(" bus " + BusID + " has not been created");
-                    return true;
+                    return false;
             	}
             	
             	Bus outOfServiceBus = martaModel.getBus(BusID);
@@ -447,8 +452,10 @@ public class SimDriver implements StateChangeListener{
             	RailCar tran_broken_down = martaModel.getTrain(my_trainID);
             	if (tran_broken_down == null) {
             		System.out.println("Error: train " + my_trainID + " has not been created");
-                    return true;
+                    return false;
             	}
+            	Path path_next = tran_broken_down.get_path_next();
+            	path_next.set_delta_stall_duration(delta_stall_period);
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
             			new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(),
             										 start_time, tran_broken_down,
@@ -461,12 +468,13 @@ public class SimDriver implements StateChangeListener{
             case "fuel_report":
             	
             	Hashtable<Integer, Bus> buses = martaModel.getBuses();
-            	Set <Integer> bus_IDs = buses.keySet();
+            	List<Integer> bus_IDs = new ArrayList(buses.keySet());
+            	Collections.sort(bus_IDs);
             	for (Integer bus_ID : bus_IDs) {
             		Bus bus = martaModel.getBus(bus_ID);
             		double fuel_level = bus.getFuelLevel();
             		double total_fuel_consumed = martaModel.getTotalFuelConsumed(bus);
-            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f.", bus_ID, fuel_level, total_fuel_consumed);
+            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f\n", bus_ID, fuel_level, total_fuel_consumed);
             	}
             	            	
                 break;
@@ -872,7 +880,35 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save rail station");
 			}	
     	}
-    	
+    	for (Path path : martaModel.getPaths().values()) {
+    		try {
+				((PathDAO)getDao(Table.PATH)).save(path);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save path");
+			}	
+    	}
+    	for (ArrayList<Hazard> hazard : martaModel.getAllHazards().values()) {
+    		try {
+    			for (int i = 0; i < hazard.size(); i++) {
+    				((HazardDAO)getDao(Table.HAZARD)).save(hazard.get(i));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save hazard");
+			}	
+    	}
+    	for (ArrayList<FuelConsumption> fuelConsumption : martaModel.getAllFuelConsumptions().values()) {
+    		try {
+    			for (int i = 0; i < fuelConsumption.size(); i++) {
+    				((FuelConsumptionDAO)getDao(Table.FUELCONSUMPTION)).save(fuelConsumption.get(i));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save hazard");
+			}	
+    	}
+
     	//persisting events
     	for(SimEvent event: simEngine.getEvents()) {
     		System.out.printf("eventtype: %s\n",event.getType());

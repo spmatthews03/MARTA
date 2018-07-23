@@ -119,6 +119,8 @@ public class MoveBusEvent extends SimEvent{
 	            int passengerDifferential = activeStop.exchangeRiders(getRank(), currentPassengers, activeBus.getCapacity());
 	            System.out.println(" passengers pre-stop: " + Integer.toString(currentPassengers) + " post-stop: " + (currentPassengers + passengerDifferential));
 	            activeBus.adjustPassengers(passengerDifferential);
+            } else {
+            	System.out.println(" stop " + activeStop.get_uniqueID() + "is out of service");
             }
             
             // conversion is used to translate time calculation from hours to minutes
@@ -134,7 +136,7 @@ public class MoveBusEvent extends SimEvent{
 //            system.getFuelConsumptionList(activeBus).add(report);
 //            activeBus.setFuelLevel(activeBus.getFuelLevel() - distanceToDepot);
 
-
+        	System.out.println(" bus " + Integer.toString(activeBus.getID()) + " is going out of service and headed to the depot for repair\n");
             // drop all passengers before moving to depot
             int dropAllPassengers = activeBus.getPassengers();
             activeBus.adjustPassengers(-(dropAllPassengers));
@@ -152,7 +154,7 @@ public class MoveBusEvent extends SimEvent{
         else{
             // set bus to refueling state
             activeBus.setRefueling(true);
-
+            System.out.println(" bus " + Integer.toString(activeBus.getID()) + " is headed to the depot for refuel\n");
             // calculate distance to depot
             Double distanceToDepot = activeStop.findDistance(system.getDepot());
             int travelTime = 1 + (distanceToDepot.intValue() * 60 / activeBus.getSpeed());
