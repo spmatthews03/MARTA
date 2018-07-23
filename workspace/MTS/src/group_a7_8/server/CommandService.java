@@ -38,7 +38,7 @@ public class CommandService {
 	        result.setQuit(driver.processCommand(userCommandLine));
 		} catch (Exception e) {
 			e.printStackTrace();
-	        System.out.printf("ERROR: %x", e.getMessage());
+	        System.out.printf("ERROR: %s", e.getMessage());
 	        result.setQuit(false);
 		} 
         return result;

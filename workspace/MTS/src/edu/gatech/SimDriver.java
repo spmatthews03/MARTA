@@ -266,6 +266,7 @@ public class SimDriver implements StateChangeListener{
 				} 
 				martaModel.reset();
 				simEngine.reset();
+				updateState();
 
             	return true;
             case "path_delay":

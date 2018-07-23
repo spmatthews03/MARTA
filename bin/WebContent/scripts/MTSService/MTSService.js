@@ -4,6 +4,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
    //$log.info("MTS Service");
     
    var state = {
+	   		showMenu:true,
+    		showVideo:false,
+    		execMode:true,
 			time:0,
 	    	vehicles:[],
 	        routes:[],
@@ -16,7 +19,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	  	  	editMode:false,
 	  	  	priorSim:false,
 	  	  	holdCommands:false,
-	  	  	fuelByBusData:{},
+	  	  	fuelByBusData:{min:0,max:0,items:[],total:0},
 	  		commandOption:""
    };
    var ws;
@@ -36,6 +39,13 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
+	    	if(command=="quit"){
+	  		    $log.info('winners never quit');
+	    		state.showMenu = true;
+	    		state.showVideo = false;
+	    		state.execMode = true;
+	    		reset();
+	    	}
 		   //$log.info('url: '+'/api/MTS/command?line=' + command);
 	    	var promise = $http.get('/api/MTS/command?line=' + command);
 	    	promise.then(
@@ -167,9 +177,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    var promise = $http.get('/api/MTS/priorSim');
     	promise.then(
     	          function(payload) { 
-    	        	  $log.info('priorSim returned :', payload);
+    	        	  //$log.info('priorSim returned :', payload);
     	        	  state.priorSim = payload.data.resultCode;
-    	        	  $log.info('hasPriorSim = '+state.priorSim);
+    	        	  //$log.info('hasPriorSim = '+state.priorSim);
     	        	  
     	          },
     	          function(errorPayload) {
@@ -189,6 +199,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     		//$log.info('need to switch to sim execution mode');
     		$rootScope.setExecMode(true);
     	}
+		  
+		  
     	state.commandsQueue.push(command);
     	
     };
@@ -273,24 +285,24 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   		 state.reports.maxPassengers = 0;
   		 state.reports.totalPassengers = 0;
   		 //state.fuelByBusData={};
-   		if (state.fuelByBusData.hasOwnProperty('min')) {
   			state.fuelByBusData.min=0;
-  		}
-  		if (state.fuelByBusData.hasOwnProperty('max')) {
   			state.fuelByBusData.max=0;
-  		}
-  		if (state.fuelByBusData.hasOwnProperty('total')) {
   			state.fuelByBusData.total=0;
-  		}
-  		if (state.fuelByBusData.hasOwnProperty('items')) {
   			state.fuelByBusData.items.splice(0,state.fuelByBusData.items.length);
-  		}
-  		 
-
-
   		 editMode:false;
   	  	priorSim:false;
   		commandOption:"";
+  			var promise = $http.get('/api/MTS/priorSim');
+  			promise.then(
+      	          function(payload) { 
+      	        	  //$log.info('priorSim returned :', payload);
+      	        	  state.priorSim = payload.data.resultCode;
+      	        	  //$log.info('hasPriorSim = '+state.priorSim);
+      	        	  
+      	          },
+      	          function(errorPayload) {
+      	              $log.error('failure error:', errorPayload);
+      	          });
     	//$log.info('reset completed')
     	//$log.info(state);
     };

@@ -16,9 +16,8 @@
     <link rel="stylesheet" href="css/team.css">
 </head>
 <body ng-app="MTS" ng-controller="MTSController" ng-cloak >
-
     <div class="mts-main" layout="column">
-        <div ng-show="showMenu" layout="row">
+        <div ng-show="mts.showMenu" layout="row">
             <div class="menu-holder" flex="50" layout="column">
 	        <md-card>
 	          <md-card-title>
@@ -39,7 +38,7 @@
 	        <team></team>
 	        </div>
         </div>
-        <div ng-hide="showMenu || showVideo" layout="column" class="mts-viewport">
+        <div ng-hide="mts.showMenu || mts.showVideo" layout="column" class="mts-viewport">
 	    	<md-tabs md-selected="activeTab" md-dynamic-height="true">
 	    	   <md-tab>
 		    	   <md-tab-label>
@@ -61,7 +60,7 @@
 	    	   </md-tab> 
 	    	</md-tabs>
         </div>
-        <a78-video ng-show="showVideo" src="video/SampleVideo_1280x720_5mb.mp4" title="Group A7-8 Simulation System Video"></a78-video>
+        <a78-video ng-show="mts.showVideo" src="video/SampleVideo_1280x720_5mb.mp4" title="Group A7-8 Simulation System Video"></a78-video>
 	</div>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-animate.min.js"></script>

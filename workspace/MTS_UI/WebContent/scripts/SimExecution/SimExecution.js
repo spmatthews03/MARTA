@@ -114,12 +114,12 @@
   };
   //controllers
   var simController = function($scope, $log, mtsService){
-		$log.info('simController');
+		//$log.info('simController');
 		$scope.mts = mtsService.state;
 		var x=0;
 		$scope.depotFill = function(){
 			//$log.info('depoFill');
-			
+			/*
 			$log.info("x="+x);
 			switch(x){
 			case 0:
@@ -183,7 +183,7 @@
 			}
 			if(mtsService.state.paths.length>0){
 				$log.info(mtsService.state.paths[0]);
-			}
+			}*/
 			$log.info(mtsService.state);
 		};
 		
@@ -204,12 +204,6 @@
 			  //$log.info('command: '+command);
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
-			  
-			  $log.info($scope.$parent.showMenu);
-			  $scope.$parent.showMenu=true;
-			  $scope.$parent.execMode=true;
-			  
-			  mtsService.reset();
 			  
 		};	
 		  $scope.time = mtsService.state.time;
