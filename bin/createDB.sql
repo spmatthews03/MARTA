@@ -31,12 +31,13 @@ CREATE TABLE VEHICLE (
 
 CREATE TABLE PATH (
   id              	SERIAL PRIMARY KEY,
+  type              char(50),
   originID          int,
   destinationID     int,
   originType        char(50),
   destinationType   char(50),
   speedLimit        numeric,
-  isBlocked         BIT
+  isBlocked         char(20)
 );
 
 CREATE TABLE HAZARD (
@@ -45,7 +46,8 @@ CREATE TABLE HAZARD (
   destinationID     int,
   originType        char(50),
   destinationType   char(50),
-  delayFactor   	  numeric NOT NULL
+  delayFactor   	  numeric NOT NULL,
+  type              char(50) NOT NULL
 );
 
 CREATE TABLE FUELCONSUMPTION (
@@ -58,7 +60,8 @@ CREATE TABLE FUELCONSUMPTION (
   originID          int,
   destinationID     int,
   originType        char(50),
-  destinationType   char(50)
+  destinationType   char(50),
+  type              char(50) NOT NULL
 );
 
 CREATE TABLE EVENT (
