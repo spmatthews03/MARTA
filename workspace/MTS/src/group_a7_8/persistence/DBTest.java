@@ -353,6 +353,7 @@ public class DBTest {
 		
 		//save paths
 		for(Path path : paths.values()) {
+			System.out.println(path);
 			pathDao.save(path);
 		}
 		//save hazards
@@ -413,14 +414,14 @@ public class DBTest {
 			paths.put(path.getPathKey(), path);
 		}
 		for(Hazard hazard : hazardDao.find()) {
-			hzs = new ArrayList<Hazard>();
-			hzs.add(hazard);
-			hazards.put(hazard.getPathKey(), hzs);
+			ArrayList<Hazard> hzrds = new ArrayList<Hazard>();
+			hzrds.add(hazard);
+			hazards.put(hazard.getPathKey(), hzrds);
 		}
 		for(FuelConsumption fuelConsumption : fuelConsumptionDao.find()) {
-			fcs = new ArrayList<FuelConsumption>();
-			fcs.add(fuelConsumption);
-			fuelConsumptions.put(fuelConsumption.getBus(), fcs);
+			ArrayList<FuelConsumption> fucons = new ArrayList<FuelConsumption>();
+			fucons.add(fuelConsumption);
+			fuelConsumptions.put(fuelConsumption.getBus(), fucons);
 		}
 
 		System.out.println("bus cache " + buses.size() + " entries");
