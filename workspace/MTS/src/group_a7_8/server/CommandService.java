@@ -36,6 +36,7 @@ public class CommandService {
 	    	System.out.printf("executing command: %s\n", userCommandLine);
 			driver = AsRestServer.getDriver();
 	        result.setQuit(driver.processCommand(userCommandLine));
+			result.setState(driver.toJSON());
 		} catch (Exception e) {
 			e.printStackTrace();
 	        System.out.printf("ERROR: %s", e.getMessage());
@@ -44,7 +45,8 @@ public class CommandService {
         return result;
     }
 	public static class Result{
-        String userCommandLine;
+        public String state;
+		String userCommandLine;
         boolean quit;
 
         public Result(){}
@@ -54,7 +56,15 @@ public class CommandService {
         }
 
 
-        public boolean getQuit() {
+        public String getSetState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public boolean getQuit() {
             return quit;
         }
 

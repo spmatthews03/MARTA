@@ -744,6 +744,37 @@ public class SimDriver implements StateChangeListener{
        		}
        		sb.append(']');
        	}
+       	if(martaModel.getFuelConsumption().size()>0) {
+			sb.append(",\"reports\":[");
+			boolean firstVehicle=true;
+			for(Vehicle vehicle : martaModel.getFuelConsumption().keySet()) {			
+				if(firstVehicle) {
+					firstVehicle = false;
+				}
+				else{
+					sb.append(",");
+				}
+				sb.append("{\"vehicle\":");
+				sb.append(vehicle.toJSON());
+				ArrayList<FuelConsumption> busConsumption = martaModel.getFuelConsumption().get(vehicle);
+				if(busConsumption!=null && busConsumption.size()>0) {
+					sb.append(",\"reports\":[");
+					boolean isFirst = true;
+					for(FuelConsumption report : busConsumption) {
+						if(isFirst) {
+							isFirst = false;
+						}
+						else{
+							sb.append(",");
+						}
+						sb.append(report.toJSON());
+					}
+					sb.append("]");
+				}
+				sb.append("}");
+			}
+			sb.append("]");
+       	}
         sb.append('}');
     	return sb.toString();
     	}

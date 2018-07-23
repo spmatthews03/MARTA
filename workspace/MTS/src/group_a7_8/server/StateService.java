@@ -65,7 +65,8 @@ public class StateService {
 	        result.setMessage(String.format("System %s a prior simulation", (priorSim?"has":"does not have")));
 	        if(priorSim) {
 	        	driver.restoreSim();
-	        	driver.updateState();
+	        	//driver.updateState();
+	        	result.setState(driver.toJSON());
 	        }
 	        result.setResultCode(priorSim);
 		} catch (Exception e) {
@@ -80,8 +81,17 @@ public class StateService {
 	public static class Result{
         String message;
         boolean resultCode;
+        String state;
 
-        public Result(){}
+        public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public Result(){}
 
 		public String getMessage() {
 			return message;

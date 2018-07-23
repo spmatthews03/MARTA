@@ -204,6 +204,7 @@
 			  //$log.info('command: '+command);
 			  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 			  mtsService.executeCommand(command);
+			  
 		};	
 		  $scope.time = mtsService.state.time;
 
@@ -256,9 +257,9 @@
 	  $scope.routeStops = [];
 	  $scope.routePaths = [];
 	  $scope.routeID = $scope.route.id;
-	  $scope.getStopCount=function(){
-		  return -1;
-	  };
+//	  $scope.getStopCount=function(){
+//		  return -1;
+//	  };
 	  $scope.$watch('stops',function(){
 		  if(!(typeof $scope.route.stops === "undefined")){
 			  $scope.routeStops.splice(0,$scope.routeStops.length);
@@ -337,7 +338,8 @@
 	  });
 	  //$scope.path.speedLimit=-1;
 	  //$scope.path.delayFactor=-1;
-	 
+	  $log.info('simController');
+		
   };
   var vehicleController = function($scope, $log){
 		//$log.info('vehicleController');

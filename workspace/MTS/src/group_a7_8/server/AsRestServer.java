@@ -70,19 +70,20 @@ public class AsRestServer {
         context.setContextPath("/api");
         
         //Create a Websocket handler for pushing state to the browser
-        WebSocketHandler wsHandler = new WebSocketHandler()
-	    {
-	        @Override
-	        public void configure(WebSocketServletFactory factory)
-	        {
-	            factory.setCreator(new WebClientWebSocketCreator(getUpdateManager()));
-	        }
-	    };
+//        WebSocketHandler wsHandler = new WebSocketHandler()
+//	    {
+//	        @Override
+//	        public void configure(WebSocketServletFactory factory)
+//	        {
+//	            factory.setCreator(new WebClientWebSocketCreator(getUpdateManager()));
+//	        }
+//	    };
 
 
 	    // Add the ResourceHandler  and rest API handler to the server.
 	    HandlerList handlers = new HandlerList();
-	    handlers.setHandlers(new Handler[] { wsHandler, resource_handler,context });
+	    //handlers.setHandlers(new Handler[] { wsHandler, resource_handler,context });
+	    handlers.setHandlers(new Handler[] {resource_handler,context });
 	    
 	    
 	    jettyServer.setHandler(handlers);
@@ -111,9 +112,9 @@ public class AsRestServer {
 		if(driver==null) {
 			driver = new SimDriver(usedb);
 			driver.checkPriorSim();
-			driver.setUpdateManager(getUpdateManager());
+			//driver.setUpdateManager(getUpdateManager());
 			
-			getUpdateManager().setDriver(driver);
+			//getUpdateManager().setDriver(driver);
 		}
 		return driver;
 	}

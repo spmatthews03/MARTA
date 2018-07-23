@@ -43,7 +43,7 @@ public class UpdateManagerImpl implements UpdateManager {
 	@Override
 	public void post(String message) throws IOException {
 		if(socket==null) {
-			System.out.printf("ERROR:  socket is unexpectedly null\n");
+			//System.out.printf("ERROR:  socket is unexpectedly null\n");
 			return;
 		}
 		Session session = socket.getSession();

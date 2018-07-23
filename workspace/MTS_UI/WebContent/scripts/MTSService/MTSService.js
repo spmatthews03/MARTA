@@ -22,21 +22,22 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	  	  	fuelByBusData:{min:0,max:0,items:[],total:0},
 	  		commandOption:""
    };
-   var ws;
-   var post = function(message){
-       if(ws && ws.readyState === ws.OPEN) ws.send(message);
-       //else $log.info('ws not valid');
-   };
-   var heartbeat=function(){
-    	//$log.info('heartbeat' + Date.now());
-    	post('{\"messageType\":\"heartbeat\"}')
-   };
+//   var ws;
+//   var post = function(message){
+//       if(ws && ws.readyState === ws.OPEN) ws.send(message);
+//       //else $log.info('ws not valid');
+//   };
+//   var heartbeat=function(){
+//    	//$log.info('heartbeat' + Date.now());
+//    	post('{\"messageType\":\"heartbeat\"}')
+//   };
    commandBlocked = false;
 
     
    var sendCommands = function(){
+	   //$log.info('sendCommands');
 	   if(!state.holdCommands && !commandBlocked && state.commandsQueue.length>0){
-		   //$log.info(state.commandsQueue.length+" commands to send");
+		   $log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
 	    	if(command=="quit"){
@@ -50,7 +51,8 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    	var promise = $http.get('/api/MTS/command?line=' + command);
 	    	promise.then(
 	    	          function(payload) { 
-	    	        	  //$log.info('service call returned:', payload);
+	    	        	  $log.info('service call returned:', payload);
+	    	        	  process(JSON.parse(payload.data.state));
 	    	          },
 	    	          function(errorPayload) {
 	    	              $log.error('failure error:', errorPayload);
@@ -59,7 +61,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	   }
    }
    var process = function(update){
-//      $log.info(update);
+      $log.info(update);
 	  if(update.hasOwnProperty('time')){
 		  state.time = update.time;
 	  }
@@ -151,45 +153,47 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   	   commandBlocked = false;
    };
 
-   var onopen = function(){
-	  //$log.info('socket opened!');
-	  $interval(heartbeat,1000);
-	  $interval(sendCommands,10);
-   };
-		    
-   var onmessage = function(evt){
-  	  //console.log('received socket message: '+evt.data);
-        $timeout(function(){
-            //$log.info('processing: ');
-            //$log.info(evt.data);
-        	process(JSON.parse(evt.data));
-        });
-    };
-    var onclose = function(){
-  	  //console.log('socket closed.');
-    };
-    var onerror = function(err){
-  	  //console.log('ERROR: '+err)
-    };
+   $interval(sendCommands,10);
+//   var onopen = function(){
+//	  //$log.info('socket opened!');
+//	  $interval(heartbeat,1000);
+//	  $interval(sendCommands,10);
+//   };
+//		    
+//   var onmessage = function(evt){
+//  	  //console.log('received socket message: '+evt.data);
+//        $timeout(function(){
+//            //$log.info('processing: ');
+//            //$log.info(evt.data);
+//        	process(JSON.parse(evt.data));
+//        });
+//    };
+//    var onclose = function(){
+//  	  //console.log('socket closed.');
+//    };
+//    var onerror = function(err){
+//  	  //console.log('ERROR: '+err)
+//    };
     var connect = function(){
 	    //open a socket to the server
 	    $log.info('initializing web socket client...');
 	    var promise = $http.get('/api/MTS/priorSim');
     	promise.then(
     	          function(payload) { 
-    	        	  //$log.info('priorSim returned :', payload);
+    	        	  $log.info('priorSim returned :', payload);
     	        	  state.priorSim = payload.data.resultCode;
+    	        	  process(JSON.parse(payload.data.state));
     	        	  //$log.info('hasPriorSim = '+state.priorSim);
     	        	  
     	          },
     	          function(errorPayload) {
     	              $log.error('failure error:', errorPayload);
     	          });
-	    ws = new WebSocket('ws://localhost:6310');
-	    ws.onopen = onopen;
-	    ws.onmessage = onmessage;
-	    ws.onclose = onclose;
-	    ws.onerror = onerror;  
+//	    ws = new WebSocket('ws://localhost:6310');
+//	    ws.onopen = onopen;
+//	    ws.onmessage = onmessage;
+//	    ws.onclose = onclose;
+//	    ws.onerror = onerror;  
     };
 
 		    

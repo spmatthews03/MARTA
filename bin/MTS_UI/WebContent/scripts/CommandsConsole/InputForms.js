@@ -263,10 +263,10 @@ var setStopDownFormDirective = function(){
   .directive('addTrainForm',[addTrainFormDirective])
   .directive('addTrainPathDelayForm',[addTrainPathDelayFormDirective])
   .directive('setTrainSpeedLimitForm',[setTrainSpeedLimitFormDirective])
-  .directive('setBusOutOfServiceForm',[setBusOutOfServiceFormDirective()])
-  .directive('setTrainOutOfServiceForm',[setTrainOutOfServiceFormDirective()])
-  .directive('setStationDownForm',[setStationDownFormDirective()])
-  .directive('setStopDownForm',[setStopDownFormDirective()])
-  .directive('addDepotForm',[addDepotFormDirective()])
+  .directive('setBusOutOfServiceForm',[setBusOutOfServiceFormDirective])
+  .directive('setTrainOutOfServiceForm',[setTrainOutOfServiceFormDirective])
+  .directive('setStationDownForm',[setStationDownFormDirective])
+  .directive('setStopDownForm',[setStopDownFormDirective])
+  .directive('addDepotForm',[addDepotFormDirective])
   .controller('inputFormController',['$scope', '$log','MTSService', inputFormController]);
 }());

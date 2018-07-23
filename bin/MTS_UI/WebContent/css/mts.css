@@ -60,7 +60,7 @@
 }
 
 .sim-config-panel .sim-config-controls-panel .md-button{
-	font-size: 11px;
+	font-size: 9px;
     border: 1pt solid rgb(225, 224, 225)
 }
 
@@ -97,6 +97,7 @@
 
 .command-console-title{
     border-bottom: 2pt solid rgb(224,224,224);
+        padding-left: 8px;
 }
 
 .command-line{
@@ -554,4 +555,17 @@ body{
     position: relative;
     top: -2px;
     left: 10px;
+}
+
+.menu-separator{
+	height:12px;
+	border-top:solid 1px lightgrey;
+}
+.menu-separator-icon{
+	font-size:12px;
+}
+
+.menu-holder{
+	padding-left:20px;
+	padding-top:20px;
 }
