@@ -7,11 +7,11 @@ public class Bus extends Vehicle{
     private double fuelLevel;
     private TransitSystem system;
     private boolean refueling;
+    private Integer towDuration;
 
     public Bus() {
         this.ID = -1;
         this.vehicleType = "Bus";
-        this.system = system;
     }
 
     public Bus(TransitSystem system, int uniqueValue) {
@@ -38,6 +38,8 @@ public class Bus extends Vehicle{
         this.system = system;
         this.refueling = false;
 	}
+    
+    public void setTowDuration(Integer towDuration) { this.towDuration = towDuration; }
 
 	public void setRefueling(boolean refueling){ this.refueling = refueling; }
 
@@ -48,6 +50,8 @@ public class Bus extends Vehicle{
     public boolean isRefueling(){ return this.refueling; }
 
     public double getFuelCapacity() { return this.fuelCapacity; }
+    
+    public Integer getTowDuration() { return this.towDuration; }
 
     public double getFuelLevel() { return this.fuelLevel; }
 

@@ -16,7 +16,7 @@ import group_a7_8.PathKey;
 public class HazardDAO extends GenericDAO<Hazard>{
 
 	protected HazardDAO(TransitSystem system, SimQueue eventQueue, Connection con) {
-		super(system,eventQueue,con, "HAZARD", "true", "true");
+		super(system,eventQueue,con, "HAZARD", "type", "hazard");
 		System.out.printf("constructed %s\n",this.getClass().getSimpleName());
 	}
 
@@ -60,7 +60,7 @@ public class HazardDAO extends GenericDAO<Hazard>{
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s,%s,%s,%s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<Hazard> find() throws SQLException {

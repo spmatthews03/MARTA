@@ -11,7 +11,7 @@ public abstract class Vehicle {
     protected TransitSystem system;
     protected String vehicleType;
     protected Boolean outOfService;
-    protected Integer delta_stall_duration;
+    //protected Integer delta_stall_duration;
     protected Integer repairDuration;
 
     public Vehicle() {
@@ -28,7 +28,7 @@ public abstract class Vehicle {
         this.capacity = -1;
         this.speed = -1;
         this.outOfService = false;
-        this.delta_stall_duration = -1;
+        //this.delta_stall_duration = -1;
         this.repairDuration = -1;
     }
 
@@ -41,7 +41,7 @@ public abstract class Vehicle {
         this.capacity = inputCapacity;
         this.speed = inputSpeed;
         this.outOfService = false;
-        this.delta_stall_duration = 0;
+        //this.delta_stall_duration = 0;
         this.repairDuration = 0;
     }
 
@@ -77,9 +77,9 @@ public abstract class Vehicle {
         return this.outOfService;
     }
     
-    public void set_delta_stall_duration(int stall_duration) {
-    	this.delta_stall_duration = stall_duration;
-	}
+    //public void set_delta_stall_duration(int stall_duration) {
+    //	this.delta_stall_duration = stall_duration;
+	//}
     
     public void setRepairDuration (int repairDuration) {
     	this.repairDuration = repairDuration;
@@ -99,9 +99,9 @@ public abstract class Vehicle {
 
     public Integer getSpeed() { return this.speed; }
     
-    public Integer get_delta_stall_duration() {
-    	return this.delta_stall_duration;
-	}
+    //public Integer get_delta_stall_duration() {
+    //	return this.delta_stall_duration;
+	//}
     
     public Integer getRepairDuration () {
     	return this.repairDuration;

@@ -263,7 +263,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
     	state.paths.splice(0,state.paths.length);
     	state.events.splice(0,state.events.length);
     	state.commands.splice(0,state.commands.length);
-    	state.commandsQueue.splice(0,state.commandsQueue.length);
+    	//state.commandsQueue.splice(0,state.commandsQueue.length);
     	state.reports.vehicles.splice(0,state.reports.length);
 		 state.reports.minAmount=0;
   		 state.reports.maxAmount = 0;
@@ -271,6 +271,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   		 state.reports.minPassengers=0;
   		 state.reports.maxPassengers = 0;
   		 state.reports.totalPassengers = 0;
+  		 state.fuelByBusData={};
+
+
   		 editMode:false;
   	  	priorSim:false;
   		commandOption:"";

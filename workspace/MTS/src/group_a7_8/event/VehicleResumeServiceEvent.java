@@ -60,6 +60,8 @@ public class VehicleResumeServiceEvent extends SimEvent{
 			// create move bus event
 			MoveBusEvent moveEvent = new MoveBusEvent(system, this.getID(), (int)(this.getRank() + travelTime + vehicle.getRepairDuration()), (Bus)vehicle);
 			this.getEventQueue().add(moveEvent);
+			
+			bus.setTowDuration(null);
 
 		} else if (vehicle.getType().equals("Train")) {
 			
@@ -77,8 +79,7 @@ public class VehicleResumeServiceEvent extends SimEvent{
 					)vehicle);
 			this.getEventQueue().add(moveEvent);
 		}	
-		
-		vehicle.set_delta_stall_duration(0);		
+			
 		vehicle.setRepairDuration(0);
 	}
 	
