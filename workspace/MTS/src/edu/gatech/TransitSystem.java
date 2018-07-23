@@ -535,6 +535,10 @@ public class TransitSystem {
 		this.depot=null;		
 	}
 
+	public Hashtable<PathKey, ArrayList<Hazard>> getAllHazards() {
+		return this.hazards;
+	}
+
 
 	
 }

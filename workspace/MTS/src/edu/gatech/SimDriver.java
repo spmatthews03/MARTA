@@ -15,6 +15,8 @@ import java.util.Scanner;
 
 import group_a7_8.FileProps;
 import group_a7_8.FuelConsumption;
+import group_a7_8.Hazard;
+import group_a7_8.Path;
 import group_a7_8.PathKey;
 import group_a7_8.event.ClearPathDelayEvent;
 import group_a7_8.event.ClearSpeedLimitEvent;
@@ -913,6 +915,38 @@ public class SimDriver implements StateChangeListener{
 
 	@SuppressWarnings("unchecked")
 	public void restoreSim() throws ClassNotFoundException, SQLException, Exception {
+		//restoring core entities from database
+		ArrayList<BusStop> busStops = getDao(Table.BUSSTOP).find();
+		for(BusStop stop : busStops) {martaModel.getStops().put(stop.get_uniqueID(), stop);};
+		ArrayList<BusRoute> busRoutes = getDao(Table.BUSROUTE).find();
+		for(BusRoute route : busRoutes) {martaModel.getBusRoutes().put(route.getID(), route);};
+		ArrayList<Bus> buses = getDao(Table.BUS).find();
+		for(Bus vehicle : buses) {martaModel.getBuses().put(vehicle.getID(), vehicle);};
+
+		ArrayList<RailStation> trainStops = getDao(Table.RAILSTATION).find();
+		for(RailStation stop : trainStops) {martaModel.getRailStations().put(stop.get_uniqueID(), stop);};
+		ArrayList<RailRoute> railRoutes = getDao(Table.RAILROUTE).find();
+		for(RailRoute route : railRoutes) {martaModel.getRailRoutes().put(route.getID(), route);};
+		ArrayList<RailCar> trains = getDao(Table.RAILCAR).find();
+		for(RailCar vehicle : trains) {martaModel.getTrains().put(vehicle.getID(), vehicle);};
+		
+//		ArrayList<Path> paths = getDao(Table.PATH).find();
+//		for(Path path : paths) {martaModel.getPaths().put(path.getPathKey(),path);};
+
+		ArrayList<Hazard> hazards = getDao(Table.HAZARD).find();
+		for(Hazard hazard : hazards) {
+			ArrayList<Hazard> pathHazards = new ArrayList<Hazard>();
+			pathHazards.add(hazard);
+			martaModel.getAllHazards().put(hazard.getPathKey(), pathHazards);};
+			
+		ArrayList<FuelConsumption> reportsDB = getDao(Table.FUELCONSUMPTION).find();
+		for(FuelConsumption report : reportsDB) {
+			Hashtable<Bus,ArrayList<FuelConsumption>> reports = martaModel.getFuelConsumption();
+			ArrayList<FuelConsumption> busReports = reports.get(report.getBus());
+			busReports.add(report);
+		};
+		
+		
 		//restoring events from database
 		System.out.printf("restoring events from DB.  event queue had %d events.\n", simEngine.getSize());
 		ArrayList<SimEvent> events;
