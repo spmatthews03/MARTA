@@ -31,7 +31,9 @@ public class SimQueue {
     public boolean hasEvents() {
     	return eventQueue.size()>0;
     }
-    
+    public int getSize() {
+    	return eventQueue.size();
+    }
     public SimEvent[] getEvents() {
     	SimEvent[] events = new SimEvent[1];
     	return eventQueue.toArray(events);

@@ -1,52 +1,27 @@
 package group_a7_8.event;
 
 import edu.gatech.TransitSystem;
-import edu.gatech.Vehicle;
 import group_a7_8.Path;
-import group_a7_8.PathKey;
 import edu.gatech.RailCar;
-import edu.gatech.RailRoute;
-import edu.gatech.RailStation;;
 
 public class BlockPathEvent extends SimEvent{
-	private RailRoute route;
-	private RailStation origin;
-	private RailStation destination;
-	private PathKey pathKey;
 	private Path path;
 	private RailCar train;
 	
-	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train) {
+	public BlockPathEvent(TransitSystem system, Integer eventID, Integer timeRank, RailCar train, Path path) {
     	super(system,timeRank,"set_path_block",eventID);
-		this.route = system.getRailRoute(train.getRouteID());
 		this.train = train;
-		this.origin		 = this.train.get_rail_station_current();
-		this.destination = this.train.get_rail_station_next();
-
-		this.pathKey = system.getPathKey(origin, destination);
-		this.path = system.getPath(pathKey);
+		this.path = path;
 	}
 
-	public RailRoute getRoute() {
-		return route;
-	}
-	
-	public RailStation getOrigin() {
-		return origin;
-	}
-	
-	public RailStation getDestination() {
-		return destination;
-	}
-	
-	public PathKey getPathKey() {
-		return pathKey;
-	}
-	
 	public Path getPath() {
-		return path;
+		return this.path;
 	}
-	
+
+	public RailCar getTrain() {
+		return this.train;
+	}
+
 	@Override
 	public void execute() {
 		displayEvent();
@@ -67,7 +42,7 @@ public class BlockPathEvent extends SimEvent{
 	public String getDescription() {
 	    	StringBuilder sb = new StringBuilder();
 	    	sb.append("blocking ");
-	    	sb.append(pathKey);
+	    	sb.append(this.path.getPathKey());
 	    	return sb.toString();
-	}	
+	}
 }

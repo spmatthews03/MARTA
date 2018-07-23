@@ -12,9 +12,12 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import group_a7_8.FileProps;
 import group_a7_8.FuelConsumption;
+import group_a7_8.Hazard;
+import group_a7_8.Path;
 import group_a7_8.PathKey;
 import group_a7_8.event.ClearPathDelayEvent;
 import group_a7_8.event.ClearSpeedLimitEvent;
@@ -247,7 +250,12 @@ public class SimDriver implements StateChangeListener{
             	martaModel.displayModel();
             	break;
             case "quit":
-            	this.save();
+			try {
+				this.save();
+			} catch (Exception e) {
+				System.out.printf("ERROR: Unable to save state due to error: %s\n",e.getMessage());
+				e.printStackTrace();
+			} 
             	break;
             case "path_delay":
             	//sets the delay on the specified bus path
@@ -451,6 +459,16 @@ public class SimDriver implements StateChangeListener{
 
             	break;
             case "fuel_report":
+            	
+            	Hashtable<Integer, Bus> buses = martaModel.getBuses();
+            	Set <Integer> bus_IDs = buses.keySet();
+            	for (Integer bus_ID : bus_IDs) {
+            		Bus bus = martaModel.getBus(bus_ID);
+            		double fuel_level = bus.getFuelLevel();
+            		double total_fuel_consumed = martaModel.getTotalFuelConsumed(bus);
+            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f.", bus_ID, fuel_level, total_fuel_consumed);
+            	}
+            	            	
                 break;
 
             default:
@@ -802,10 +820,11 @@ public class SimDriver implements StateChangeListener{
 		return c>0;
 	}
 
-	public boolean save() {
-        System.out.println(" stop the command loop");
+	@SuppressWarnings("unchecked")
+	public boolean save() throws ClassNotFoundException, SQLException, Exception {
         if(persistenceOn) {
-    	for (Bus bus : martaModel.getBuses().values()) {
+        	System.out.println("saving state ...");
+            for (Bus bus : martaModel.getBuses().values()) {
     		try {
 				((BusDAO)getDao(Table.BUS)).save(bus);
 			} catch (Exception e) {
@@ -853,6 +872,47 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save rail station");
 			}	
     	}
+    	
+    	//persisting events
+    	for(SimEvent event: simEngine.getEvents()) {
+    		System.out.printf("eventtype: %s\n",event.getType());
+    		switch(event.getType()) {
+    		case "set_path_delay":
+    			getDao(Table.SETPATHDELAYEVENT).save(event);
+    			break;
+    		case "clear_path_delay":
+    			getDao(Table.CLEARPATHDELAYEVENT).save(event);
+    			break;
+    		case "set_speed_limit":
+    			getDao(Table.SETSPEEDLIMITEVENT).save(event);
+    			break;
+    		case "clear_speed_limit":
+    			getDao(Table.CLEARSPEEDLIMITEVENT).save(event);
+    			break;
+    		case "exchangePoint_out_of_service":
+    			getDao(Table.FACILITYOUTOFSERVICEEVENT).save(event);
+    			break;
+    		case "exchangePoint_resumed_service":
+    			getDao(Table.FACILITYRESUMESERVICEEVENT).save(event);
+    			break;
+    		case "move_bus":
+    			getDao(Table.MOVEBUSEVENT).save(event);
+    			break;
+    		case "move_train":
+    			getDao(Table.MOVETRAINEVENT).save(event);
+    			break;
+    		case "vehicle_out_of_service":
+    			getDao(Table.VEHICLEOUTOFSERVICEEVENT).save(event);
+    			break;
+    		case "vehicle_resumed_service":
+    			getDao(Table.VEHICLERESUMESERVICEEVENT).save(event);
+    			break;
+    		case "set_path_block":
+    			getDao(Table.BLOCKPATHEVENT).save(event);
+    			break;
+    		}
+    	}
+    	
     	System.out.printf("system state persisted\n");
         }
     	return true;
@@ -869,7 +929,40 @@ public class SimDriver implements StateChangeListener{
 
 	@SuppressWarnings("unchecked")
 	public void restoreSim() throws ClassNotFoundException, SQLException, Exception {
+		//restoring core entities from database
+		ArrayList<BusStop> busStops = getDao(Table.BUSSTOP).find();
+		for(BusStop stop : busStops) {martaModel.getStops().put(stop.get_uniqueID(), stop);};
+		ArrayList<BusRoute> busRoutes = getDao(Table.BUSROUTE).find();
+		for(BusRoute route : busRoutes) {martaModel.getBusRoutes().put(route.getID(), route);};
+		ArrayList<Bus> buses = getDao(Table.BUS).find();
+		for(Bus vehicle : buses) {martaModel.getBuses().put(vehicle.getID(), vehicle);};
+
+		ArrayList<RailStation> trainStops = getDao(Table.RAILSTATION).find();
+		for(RailStation stop : trainStops) {martaModel.getRailStations().put(stop.get_uniqueID(), stop);};
+		ArrayList<RailRoute> railRoutes = getDao(Table.RAILROUTE).find();
+		for(RailRoute route : railRoutes) {martaModel.getRailRoutes().put(route.getID(), route);};
+		ArrayList<RailCar> trains = getDao(Table.RAILCAR).find();
+		for(RailCar vehicle : trains) {martaModel.getTrains().put(vehicle.getID(), vehicle);};
+		
+//		ArrayList<Path> paths = getDao(Table.PATH).find();
+//		for(Path path : paths) {martaModel.getPaths().put(path.getPathKey(),path);};
+
+		ArrayList<Hazard> hazards = getDao(Table.HAZARD).find();
+		for(Hazard hazard : hazards) {
+			ArrayList<Hazard> pathHazards = new ArrayList<Hazard>();
+			pathHazards.add(hazard);
+			martaModel.getAllHazards().put(hazard.getPathKey(), pathHazards);};
+			
+		ArrayList<FuelConsumption> reportsDB = getDao(Table.FUELCONSUMPTION).find();
+		for(FuelConsumption report : reportsDB) {
+			Hashtable<Bus,ArrayList<FuelConsumption>> reports = martaModel.getFuelConsumption();
+			ArrayList<FuelConsumption> busReports = reports.get(report.getBus());
+			busReports.add(report);
+		};
+		
+		
 		//restoring events from database
+		System.out.printf("restoring events from DB.  event queue had %d events.\n", simEngine.getSize());
 		ArrayList<SimEvent> events;
 		events = getDao(Table.SETPATHDELAYEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
@@ -891,5 +984,9 @@ public class SimDriver implements StateChangeListener{
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		events = getDao(Table.VEHICLERESUMESERVICEEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.BLOCKPATHEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		System.out.printf("event queue now has %d events.\n", simEngine.getSize());
+		
 	}
 }

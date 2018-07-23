@@ -26,7 +26,7 @@ public class DAOManager {
 		//events
 		,CLEARPATHDELAYEVENT,CLEARSPEEDLIMITEVENT,FACILITYOUTOFSERVICEEVENT,FACILITYRESUMESERVICEEVENT,MOVEBUSEVENT,
 		MOVETRAINEVENT,SETPATHDELAYEVENT,SETSPEEDLIMITEVENT,VEHICLEOUTOFSERVICEEVENT,VEHICLERESUMESERVICEEVENT
-		//,BLOCKPATHEVENT
+		,BLOCKPATHEVENT
 		};
 	
     //Private
@@ -161,9 +161,8 @@ public class DAOManager {
             break;
             case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(system,eventQueue,this.con));
             break;
+
             //events
-            //case BLOCKPATHEVENT: daoCache.put(t, new BlockPathEventDAO(this.con));
-            //break;
             case CLEARPATHDELAYEVENT: daoCache.put(t, new ClearPathDelayEventDAO(system,eventQueue,this.con));
             break;
             case CLEARSPEEDLIMITEVENT: daoCache.put(t, new ClearSpeedLimitEventDAO(system,eventQueue,this.con));
@@ -183,6 +182,8 @@ public class DAOManager {
             case VEHICLEOUTOFSERVICEEVENT: daoCache.put(t, new VehicleOutOfServiceEventDAO(system,eventQueue,this.con));
             break;
             case VEHICLERESUMESERVICEEVENT: daoCache.put(t, new VehicleResumeServiceEventDAO(system,eventQueue,this.con));
+            break;
+            case BLOCKPATHEVENT: daoCache.put(t, new BlockPathEventDAO(system,eventQueue,this.con));
             break;
             default:
                 throw new SQLException("Trying to link to an unexistant table.");
