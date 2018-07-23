@@ -31,6 +31,7 @@
 			                   '<md-button flex="40" ng-click="addBus()">Add Bus</md-button>'+
 			                   '<md-button flex="40" ng-click="addBusPathDelay()">Add Bus Path Delay</md-button>'+
 			                   '<md-button flex="40" ng-click="setBusSpeedLimit()">Set Bus Speed Limit</md-button>'+
+			                   '<md-button flex="40" ng-click="fuelReport()">Fuel Report</md-button>'+
 			                   '<md-button flex="40" ng-click="addTrainStation()">Add Train Station</md-button>'+
 			                   '<md-button flex="40" ng-click="addRailLine()">Add Rail Line</md-button>'+
 			                   '<md-button flex="40" ng-click="extendRailLine()">Extend Rail Line</md-button>'+
@@ -168,6 +169,12 @@
           mtsService.state.editMode=true;
           mtsService.state.commandOption='setBusOutOfService';
       };
+      $scope.fuelReport = function(){
+    	  var command = "fuel_report";
+    	  $log.info('command: '+command);
+		  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
+		  mtsService.executeCommand(command);
+	  };
       $scope.setTrainOutOfService = function(){
           mtsService.state.editMode=true;
           mtsService.state.commandOption='setTrainOutOfService';

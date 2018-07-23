@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
@@ -452,6 +454,8 @@ public class SimDriver implements StateChangeListener{
             		System.out.println("Error: train " + my_trainID + " has not been created");
                     return true;
             	}
+            	Path path_next = tran_broken_down.get_path_next();
+            	path_next.set_delta_stall_duration(delta_stall_period);
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
             			new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(),
             										 start_time, tran_broken_down,
@@ -464,12 +468,13 @@ public class SimDriver implements StateChangeListener{
             case "fuel_report":
             	
             	Hashtable<Integer, Bus> buses = martaModel.getBuses();
-            	Set <Integer> bus_IDs = buses.keySet();
+            	List<Integer> bus_IDs = new ArrayList(buses.keySet());
+            	Collections.sort(bus_IDs);
             	for (Integer bus_ID : bus_IDs) {
             		Bus bus = martaModel.getBus(bus_ID);
             		double fuel_level = bus.getFuelLevel();
             		double total_fuel_consumed = martaModel.getTotalFuelConsumed(bus);
-            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f.", bus_ID, fuel_level, total_fuel_consumed);
+            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f\n", bus_ID, fuel_level, total_fuel_consumed);
             	}
             	            	
                 break;

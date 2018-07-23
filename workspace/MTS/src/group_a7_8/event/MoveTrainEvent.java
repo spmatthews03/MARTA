@@ -146,7 +146,7 @@ public class MoveTrainEvent extends SimEvent {
         	if (current_path.getIsBlocked()) {
                 //System.out.println(" MoveTrainEvent: Path is blocked");
                 //System.out.println(" MoveTrainEvent: \t" + current_path.toJSON());
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
+        		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
 
                 eventQueue.add(
@@ -156,7 +156,7 @@ public class MoveTrainEvent extends SimEvent {
                 //System.out.println(" MoveTrainEvent: Train is NOT blocked");
         		this.drop_off_passengers();
 
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
+        		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
         		
         		current_path.setIsBlocked();
@@ -171,26 +171,39 @@ public class MoveTrainEvent extends SimEvent {
             if (current_path.getIsBlocked()) { /* Path is blocked */
                 //System.out.println(" MoveTrainEvent: Path is blocked");
 
-        		int delta_stall_period = activeTrain.get_delta_stall_duration();
+        		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + 1;//delta_stall_period;
 
         		System.out.println(" Train " + activeTrain.getID() + "Going to Depot");
                 eventQueue.add(
                 		new MoveTrainEvent(system, eventID,
                 						   absolute_stall_period , train));
-            } else { /* Path is not blocked */
-                //System.out.println(" MoveTrainEvent: Path is NOT blocked");
+            } else {
+            	/* Path after traveling the current path */
+                Path next_path = activeTrain.get_path_next_next();
+            	if (next_path.getIsBlocked()) {
+            		int delta_stall_period = next_path.get_delta_stall_duration();
+            		Integer absolute_stall_period = getRank() + delta_stall_period;
+            		//Integer absolute_stall_period = getRank() + 1;//delta_stall_period;
 
-            	if (nextStation.get_out_of_service()) { /* Station is out of service */  
-                    //System.out.println(" MoveTrainEvent: Station out of service");
+            		System.out.println(" Train " + activeTrain.getID() + "Waiting on blocked next next path");
+                    eventQueue.add(
+                    		new MoveTrainEvent(system, eventID,
+                    						   absolute_stall_period , train));	
+            	} else { /* Path is not blocked */
+                    //System.out.println(" MoveTrainEvent: Path is NOT blocked");
 
-                    System.out.println(" Skipping " + nextStation.getFacilityName());
-            		this.train_move_next_next(train);
-            	} else { /* Station is in service */
-            		//System.out.println(" MoveTrainEvent: Station in service");
+                	if (nextStation.get_out_of_service()) { /* Station is out of service */  
+                        //System.out.println(" MoveTrainEvent: Station out of service");
 
-            		this.drop_off_and_pick_up_passengers();
-            		this.train_move_next(train);
+                        System.out.println(" Skipping " + nextStation.getFacilityName());
+                		this.train_move_next_next(train);
+                	} else { /* Station is in service */
+                		//System.out.println(" MoveTrainEvent: Station in service");
+
+                		this.drop_off_and_pick_up_passengers();
+                		this.train_move_next(train);
+                	}            		
             	}
             }
         }

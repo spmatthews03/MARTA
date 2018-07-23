@@ -11,6 +11,7 @@ public class Path {
 	private Double speedLimit;
 	private boolean isBlocked;
 	private TransitSystem system;
+	private int delta_stall_duration;
 
 	
 	public Path(TransitSystem system, PathKey pathKey) {
@@ -18,6 +19,7 @@ public class Path {
 		this.pathKey = pathKey;
 		this.system = system;
 		this.isBlocked = false;
+		this.delta_stall_duration = 0;
 	}
 
 	public Path(TransitSystem system,Facility origin, Facility destination) {
@@ -29,6 +31,14 @@ public class Path {
 			
 	//	}
 	//}
+
+    public int get_delta_stall_duration() {
+    	return this.delta_stall_duration;
+	}
+
+    public void set_delta_stall_duration(int stall_duration) {
+    	this.delta_stall_duration = stall_duration;
+	}
 
 	public Double getSpeedLimit() {
 		return speedLimit;
