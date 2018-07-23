@@ -10,11 +10,11 @@
       template: 
             '<div class="video-panel" layout="column" layout-align="center center">'+
               '<div class="video-title">{{title}}</div>'+
-              '<div ng-hide="true" class="video-source">{{src}}</div>'+
               '<video width="640" controls>'+
                  '<source src="{{src}}" type="video/mp4">'+
                  'Your browser does not support the video tag.'+
               '</video>'+
+              '<div ng-click="toggleShowVideo()"><md-icon class="back-icon">arrow_back</md-icon> Back to Menu</div>'+
             '</div>'
   	}
   };
@@ -73,9 +73,14 @@
   	}
   };
   
+  
   //controller
   var videoController = function($scope, $log){
-		$log.info('videoController');
+		//$log.info('videoController');
+	  $scope.toggleShowVideo=function(){
+		  $log.info($scope);
+		  $scope.$parent.toggleShowVideo();
+	  };
 			
   };
   var paletteController = function($scope, $log,gtColors){
@@ -84,16 +89,16 @@
   };
 
   var teamController = function($scope, $log, $interval){
-		$log.info('teamController');
-		$scope.delay = 30000; // 3 seconds
+		//$log.info('teamController');
+		$scope.delay = 5000; // 5 seconds
 		$scope.team = {
-			name:"Group A7-8",
+			name:"Meet Group A7-8",
 			members:[
-			   {name:"martin",id:"msmith606",description:"Enterprise architect in Irvine, CA.",photo:"images/martin.png"},
-			   {name:"viktor",id:"ym32",description:"viktor description",photo:"images/viktor.png"},
-			   {name:"sean",id:"smat",description:"sean description",photo:"images/sean.png"},
-			   {name:"sebastian",id:"ssan",description:"sebastian description",photo:"images/sebastian.png"},
-			   {name:"yev",id:"ykr",description:"yev description",photo:"images/yev.png"}
+			   {name:"Martin Smith",id:"msmith606",description:"Enterprise architect in Irvine, CA.",photo:"images/martin.png"},
+			   {name:"Yuxuan \"Viktor\" Mu",id:"ymu32",description:"Security consultant to local and international firms in the greater Seattle area",photo:"images/viktor.jpg"},
+			   {name:"Sean Matthews",id:"smatthews39",description:"Security Software Engineer working as a contractor the Department of Defense in San Diego, CA",photo:"images/sean.png"},
+			   {name:"Sebastian Sanchez",id:"ssanchez44",description:"software engineer working in high performance computing in the Portland area",photo:"images/sebastian.jpg"},
+			   {name:"Yevgen Kravets",id:"ykravets3",description:"Senior Software Engineer specializing in Python and ML working in NYC Metro area",photo:"images/yev.jpg"}
 			]
 		};
 		$scope.current=0;
@@ -101,7 +106,7 @@
 			$scope.current = $scope.current-1;
 			if($scope.current >= $scope.team.members.length) $scope.current=0;
 			if($scope.current < 0) $scope.current= $scope.team.members.length-1;
-			$log.info('changing to '+$scope.current);
+			//$log.info('changing to '+$scope.current);
 		};
 		$scope.right=function(){
 			$scope.current = $scope.current+1;
@@ -112,7 +117,7 @@
 			$scope.current = $scope.current+1;
 			if($scope.current >= $scope.team.members.length) $scope.current=0;
 			if($scope.current < 0) $scope.current= $scope.team.members.length-1;
-			$log.info('changing to '+$scope.current);
+			//$log.info('changing to '+$scope.current);
 		},$scope.delay);
   };
   angular.module('Video',['ngMaterial'])

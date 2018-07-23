@@ -5,6 +5,7 @@
 	var appController = function($scope, $log, $rootScope,mtsService){
 		$log.info('MTSController');
 		$scope.showMenu = true;
+		$scope.showVideo = false;
 		$scope.execMode=true; //default
 		$scope.mts = mtsService.state;
 		$scope.priorSimToggle=function(){
@@ -26,12 +27,18 @@
 			$scope.execMode = false;
 			$scope.activeTab = ($scope.execMode ? 0 : 1);
 		};
+		$scope.toggleShowVideo = function(){
+			$scope.showVideo = !$scope.showVideo;
+			$log.info('toggle showVideo');
+			if($scope.showVideo) $scope.showMenu = false;
+			if(!$scope.showVideo) $scope.showMenu=true;
+		}
 		$scope.activeTab = 0;
 		$log.info('MTSController');
 		
 	};
 
-	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module','Report','GTColors'])
+	angular.module('MTS',['ngMaterial','CommandsConsole','MTSDashboard','SimExec','d3Module','Report','GTColors','Video'])
 	.config(['$httpProvider', function ($httpProvider) {
 	            // enable http caching
 	           $httpProvider.defaults.cache = false;

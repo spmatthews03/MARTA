@@ -564,3 +564,8 @@ body{
 .menu-separator-icon{
 	font-size:12px;
 }
+
+.menu-holder{
+	padding-left:20px;
+	padding-top:20px;
+}

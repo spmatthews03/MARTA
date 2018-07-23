@@ -13,11 +13,13 @@
     <link rel="stylesheet" href="css/mts.css">
     <link rel="stylesheet" href="css/mts-report.css">
     <link rel="stylesheet" href="css/gt.css">
+    <link rel="stylesheet" href="css/team.css">
 </head>
 <body ng-app="MTS" ng-controller="MTSController" ng-cloak >
 
     <div class="mts-main" layout="column">
-        <div ng-show="showMenu" layout="column">
+        <div ng-show="showMenu" layout="row">
+            <div class="menu-holder" flex="50" layout="column">
 	        <md-card>
 	          <md-card-title>
 	           	<md-card-title-text>
@@ -30,8 +32,14 @@
 	             <md-button ng-click="resumeSimulation()" ng-disabled="!mts.priorSim">Resume Previous Simulation</md-button>
 	          </md-card-actions>
 	        </md-card>
+	        <div ng-click="toggleShowVideo()"><md-icon class="video-icon" >play_circle_filled</md-icon>Check out the video!</div>
+	        
+	        </div>
+	        <div flex="50" layout="column">
+	        <team></team>
+	        </div>
         </div>
-        <div ng-hide="showMenu" layout="column" class="mts-viewport">
+        <div ng-hide="showMenu || showVideo" layout="column" class="mts-viewport">
 	    	<md-tabs md-selected="activeTab" md-dynamic-height="true">
 	    	   <md-tab>
 		    	   <md-tab-label>
@@ -53,6 +61,7 @@
 	    	   </md-tab> 
 	    	</md-tabs>
         </div>
+        <a78-video ng-show="showVideo" src="video/SampleVideo_1280x720_5mb.mp4" title="Group A7-8 Simulation System Video"></a78-video>
 	</div>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-animate.min.js"></script>
@@ -72,6 +81,7 @@
     <script src="scripts/SimExecution/FuelConsumption.js"></script>
     <script src="scripts/GTColorsService.js"></script>
     <script src="scripts/graphing/report.js"></script>
+    <script src="scripts/player.js"></script>
     <script src="scripts/MTS.js"></script>
     <script src="scripts/FileReader/FileReader.js"></script>
     <script src="scripts/graphing/FuelGauge.js"></script>
