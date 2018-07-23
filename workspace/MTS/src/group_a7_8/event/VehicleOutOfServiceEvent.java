@@ -45,7 +45,12 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 			RailStation lastStation = system.getRailStation(vehicle.getPastLocation());
 			RailStation nextStation = system.getRailStation(vehicle.getLocation());
 			PathKey currentPathKey = system.getPathKey(lastStation, nextStation);
-			system.getPath(currentPathKey).set_delta_stall_duration(stallDuration);
+			if (currentPathKey != null) { // Invalid path mayb it's the start up station
+				system.getPath(currentPathKey).set_delta_stall_duration(stallDuration);
+			} else {
+				System.out.printf(" %s%d has no path available for setting duration stall\n",
+						  vehicle.getType(), vehicle.getID());
+			}
 		} else {
 			Bus activeBus = system.getBus(vehicle.getID());
 			activeBus.setTowDuration(stallDuration);;

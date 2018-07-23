@@ -73,6 +73,9 @@ public class RailCar extends Vehicle {
     }
     
     public void advance_station_location() {
+        int location_index = this.get_location_index_next();
+	this.setLocation(location_index);
+/*
         int location_index_current;
     	int location_index_next;
     	int location_index_next_next;
@@ -89,10 +92,11 @@ public class RailCar extends Vehicle {
         
         this.set_location_index_current(location_index_next);
         this.set_location_index_next(location_index_next_next);
+*/
     }
 
     private int get_location_index_current() {
-    	return this.getPastLocation();
+    	return this.getLocation();
     }
 
     private int get_location_index_next() {
@@ -147,7 +151,7 @@ public class RailCar extends Vehicle {
     public Path get_path_next() {
     	this.check_references();
 
-		RailStation station_current = this.get_rail_station_current();
+	RailStation station_current = this.get_rail_station_current();
         RailStation station_next    = this.get_rail_station_next();
         PathKey path_key = system.getPathKey(station_current, station_next);
         Path path = system.getPath(path_key);

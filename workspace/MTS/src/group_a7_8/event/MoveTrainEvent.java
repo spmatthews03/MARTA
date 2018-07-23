@@ -187,7 +187,7 @@ public class MoveTrainEvent extends SimEvent {
                 						   absolute_stall_period , train));
             } else {
             	/* Path after traveling the current path */
-                Path next_path = activeTrain.get_path_next_next();
+                Path next_path = activeTrain.get_path_next();
             	if (next_path.getIsBlocked()) {
             		int delta_stall_period = next_path.get_delta_stall_duration();
             		Integer absolute_stall_period = getRank() + delta_stall_period;
