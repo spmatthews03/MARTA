@@ -1,7 +1,9 @@
 package group_a7_8.event;
 
+import edu.gatech.RailStation;
 import edu.gatech.TransitSystem;
 import edu.gatech.Vehicle;
+import group_a7_8.PathKey;
 
 public class VehicleOutOfServiceEvent extends SimEvent{
 	private Vehicle vehicle;
@@ -37,8 +39,15 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 
 		vehicle.setOutOfService(outOfService);
 		System.out.printf(" %s%d is out of service\n",vehicle.getType(),vehicle.getID());
-
-		vehicle.set_delta_stall_duration(this.delta_stall_duration);
+		
+		if(vehicle.getType().equals("Train")) {
+			RailStation lastStation = system.getRailStation(vehicle.getPastLocation());
+			RailStation nextStation = system.getRailStation(vehicle.getLocation());
+			PathKey currentPathKey = system.getPathKey(lastStation, nextStation);
+			system.getPath(currentPathKey).set_delta_stall_duration(delta_stall_duration);
+		} else {
+			vehicle.set_delta_stall_duration(this.delta_stall_duration);
+		}
 		//System.out.printf(" %s%d delta stall duration is %d\n\n",vehicle.getType(),vehicle.getID(), this.delta_stall_duration);
 		
 		vehicle.setRepairDuration(this.repairDuration);
