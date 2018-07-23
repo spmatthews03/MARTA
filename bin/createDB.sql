@@ -6,7 +6,6 @@ CREATE TABLE STOP(
   waiting           int NOT NULL,
   x          		    numeric NOT NULL,
   y          		    numeric NOT NULL
-
 );
 
 CREATE TABLE ROUTE(
@@ -30,8 +29,22 @@ CREATE TABLE VEHICLE (
   speed			  	    int NOT NULL
 );
 
+CREATE TABLE PATH (
+  id              	SERIAL PRIMARY KEY,
+  originID          int,
+  destinationID     int,
+  originType        char(50),
+  destinationType   char(50),
+  speedLimit        numeric,
+  isBlocked         BIT
+);
+
 CREATE TABLE HAZARD (
   id              	SERIAL PRIMARY KEY,
+  originID          int,
+  destinationID     int,
+  originType        char(50),
+  destinationType   char(50),
   delayFactor   	  numeric NOT NULL
 );
 
@@ -39,7 +52,13 @@ CREATE TABLE FUELCONSUMPTION (
   id              	SERIAL PRIMARY KEY,
   timeRank		  	  int NOT NULL,
   amount      	  	numeric NOT NULL,
-  passengers  	    int NOT NULL
+  passengers  	    int NOT NULL,
+  vehicleID         int,
+  vehicleType       char(50),
+  originID          int,
+  destinationID     int,
+  originType        char(50),
+  destinationType   char(50),
 );
 
 CREATE TABLE EVENT (
