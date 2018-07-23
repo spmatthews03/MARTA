@@ -25,25 +25,25 @@
 		                   '<div class="command-panel-label">Select command to add:</div>'+
 	                       '<md-content class="sim-config-controls-panel">'+
 	                           '<div layout="row" layout-wrap>'+
-			                   '<md-button flex="40" ng-click="addBusStop()">Add Bus Stop</md-button>'+
-			                   '<md-button flex="40" ng-click="addBusRoute()">Add Bus Route</md-button>'+
-			                   '<md-button flex="40" ng-click="extendBusRoute()">Extend Bus Route</md-button>'+
-			                   '<md-button flex="40" ng-click="addBus()">Add Bus</md-button>'+
-			                   '<md-button flex="40" ng-click="addBusPathDelay()">Add Bus Path Delay</md-button>'+
-			                   '<md-button flex="40" ng-click="setBusSpeedLimit()">Set Bus Speed Limit</md-button>'+
-			                   '<md-button flex="40" ng-click="fuelReport()">Fuel Report</md-button>'+
-			                   '<md-button flex="40" ng-click="addTrainStation()">Add Train Station</md-button>'+
-			                   '<md-button flex="40" ng-click="addRailLine()">Add Rail Line</md-button>'+
-			                   '<md-button flex="40" ng-click="extendRailLine()">Extend Rail Line</md-button>'+
-			                   '<md-button flex="40" ng-click="addTrain()">Add Train</md-button>'+
-			                   '<md-button flex="40" ng-click="addTrainPathDelay()">Add Train Path Delay</md-button>'+
-			                   '<md-button flex="40" ng-click="setTrainSpeedLimit()">Set Train Speed Limit</md-button>'+
-			                   '<md-button flex="40" ng-click="addEvent()">add Event</md-button>'+
-							   '<md-button flex="40" ng-click="setBusOutOfService()">Set Bus Out Of Service</md-button>'+
-							   '<md-button flex="40" ng-click="setTrainOutOfService()">Set Train Out Of Service</md-button>'+
-							   '<md-button flex="40" ng-click="setStationDown()">Set Station Out Of Service</md-button>'+
-							   '<md-button flex="40" ng-click="setStopDown()">Set Bus Stop Out Of Service</md-button>'+
-							   '<md-button flex="40" ng-click="addDepot()">Add Depot</md-button>'+
+			                   '<md-button flex="45" ng-click="addBusStop()">Add Bus Stop</md-button>'+
+			                   '<md-button flex="45" ng-click="addBusRoute()">Add Bus Route</md-button>'+
+			                   '<md-button flex="45" ng-click="extendBusRoute()">Extend Bus Route</md-button>'+
+			                   '<md-button flex="45" ng-click="addBus()">Add Bus</md-button>'+
+			                   '<md-button flex="45" ng-click="addBusPathDelay()">Add Bus Path Delay</md-button>'+
+			                   '<md-button flex="45" ng-click="setBusSpeedLimit()">Set Bus Speed Limit</md-button>'+
+			                   '<md-button flex="45" ng-click="fuelReport()">Fuel Report</md-button>'+
+			                   '<md-button flex="45" ng-click="addTrainStation()">Add Train Station</md-button>'+
+			                   '<md-button flex="45" ng-click="addRailLine()">Add Rail Line</md-button>'+
+			                   '<md-button flex="45" ng-click="extendRailLine()">Extend Rail Line</md-button>'+
+			                   '<md-button flex="45" ng-click="addTrain()">Add Train</md-button>'+
+			                   '<md-button flex="45" ng-click="addTrainPathDelay()">Add Train Path Delay</md-button>'+
+			                   '<md-button flex="45" ng-click="setTrainSpeedLimit()">Set Train Speed Limit</md-button>'+
+			                   '<md-button flex="45" ng-click="addEvent()">add Event</md-button>'+
+							   '<md-button flex="45" ng-click="setBusOutOfService()">Set Bus Out Of Service</md-button>'+
+							   '<md-button flex="45" ng-click="setTrainOutOfService()">Set Train Out Of Service</md-button>'+
+							   '<md-button flex="45" ng-click="setStationDown()">Set Station Out Of Service</md-button>'+
+							   '<md-button flex="45" ng-click="setStopDown()">Set Bus Stop Out Of Service</md-button>'+
+							   '<md-button flex="45" ng-click="addDepot()">Add Depot</md-button>'+
 							   '</div>'+
 	                       '</md-content">'+
 		              '</div>'+     

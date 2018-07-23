@@ -523,6 +523,7 @@ public class TransitSystem {
 
 	public void reset() {
 		// clear the hashtables
+		System.out.println("clearing model caches");
 		this.fuelConsumption.clear();
 		this.hazards.clear();
 		this.paths.clear();

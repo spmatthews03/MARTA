@@ -21,6 +21,7 @@ import group_a7_8.FuelConsumption;
 import group_a7_8.Hazard;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
+import group_a7_8.RouteDefinition;
 import group_a7_8.event.ClearPathDelayEvent;
 import group_a7_8.event.ClearSpeedLimitEvent;
 import group_a7_8.event.FacilityOutOfServiceEvent;
@@ -42,6 +43,7 @@ import group_a7_8.persistence.PathDAO;
 import group_a7_8.persistence.RailCarDAO;
 import group_a7_8.persistence.RailRouteDAO;
 import group_a7_8.persistence.RailStationDAO;
+import group_a7_8.persistence.RouteDefinitionDAO;
 import group_a7_8.persistence.SetPathDelayEventDAO;
 import group_a7_8.persistence.DAOManager.Table;
 import group_a7_8.persistence.FuelConsumptionDAO;
@@ -261,6 +263,9 @@ public class SimDriver implements StateChangeListener{
 					System.out.printf("ERROR: Unable to save state due to error: %s\n",e.getMessage());
 					e.printStackTrace();
 				} 
+				martaModel.reset();
+				simEngine.reset();
+
             	return true;
             case "path_delay":
             	//sets the delay on the specified bus path
@@ -908,7 +913,24 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save hazard");
 			}	
     	}
-
+    	//route definitions
+    	// bus routes
+    	for(BusRoute route :martaModel.getBusRoutes().values()) {	
+    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+    			Facility facility = route.getBusStop(martaModel, stopLocation);
+    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+    		}
+    	}
+    	for(RailRoute route :martaModel.getRailRoutes().values()) {	
+    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+    			Facility facility = route.getRailStation(martaModel, stopLocation);
+    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+    		}
+    	}
+    	
+    	
     	//persisting events
     	for(SimEvent event: simEngine.getEvents()) {
     		System.out.printf("eventtype: %s\n",event.getType());
@@ -995,6 +1017,22 @@ public class SimDriver implements StateChangeListener{
 			ArrayList<FuelConsumption> busReports = reports.get(report.getBus());
 			busReports.add(report);
 		};
+		
+		//Route definitions
+		ArrayList<RouteDefinition> definitions = getDao(Table.ROUTEDEFINITION).find();
+		
+		for(RouteDefinition rdef : definitions) {
+			if(rdef.getRoute().getType().equals("busRoute")) {
+				System.out.println("extending bus route");
+				BusRoute br = (BusRoute)rdef.getRoute();
+				br.addNewStop(rdef.getFacility().get_uniqueID());
+			}
+			if(rdef.getRoute().getType().equals("railRoute")) {
+				System.out.println("extending rail route");
+				RailRoute rr = (RailRoute)rdef.getRoute();
+				rr.addNewStation(rdef.getFacility().get_uniqueID());
+			}
+		}
 		
 		
 		//restoring events from database

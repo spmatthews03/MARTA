@@ -66,7 +66,10 @@ public class SimQueue {
 	}
 
 	public void reset() {
+		System.out.println("clearing event queue");
+
 		eventQueue.clear();
+		
 		time=0;
 		nextEventId=0;
 	}
