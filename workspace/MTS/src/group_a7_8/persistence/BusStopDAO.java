@@ -25,10 +25,10 @@ public class BusStopDAO  extends GenericDAO<BusStop>{
 		Statement stmt = con.createStatement();
 		System.out.println(String.format(insert_format,tableName,
 				"stopLogicalID","type","x","y","name","waiting",
-				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
+				stop.get_uniqueID(),filterValue,stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
 		stmt.execute(String.format(insert_format,tableName,
 				"stopLogicalID","type","x","y","name","waiting",
-				stop.get_uniqueID(),stop.getType(),stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
+				stop.get_uniqueID(),filterValue,stop.getLocation().getX(),stop.getLocation().getY(),stop.getFacilityName(),stop.get_riders()));
 		stmt.close();
 	}
 	
@@ -40,7 +40,7 @@ public class BusStopDAO  extends GenericDAO<BusStop>{
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format(select_format,
 				"stopLogicalID","name","waiting","x","y",
-				tableName,"type","busstop"));
+				tableName,"type",filterValue));
 		while(rs.next()) {
 			BusStop stop = new BusStop(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5)); 
 		   stops.add(stop);

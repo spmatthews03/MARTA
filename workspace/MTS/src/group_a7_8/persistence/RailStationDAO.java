@@ -31,7 +31,7 @@ public class RailStationDAO  extends GenericDAO<RailStation>{
 				"name",
 				"waiting",
 				station.get_uniqueID(),
-				"RailStation",
+				filterValue,
 				station.getLocation().getX(),
 				station.getLocation().getY(),
 				station.getFacilityName(),
@@ -44,7 +44,7 @@ public class RailStationDAO  extends GenericDAO<RailStation>{
 				"name",
 				"waiting",
 				station.get_uniqueID(),
-				"RailStation",
+				filterValue,
 				station.getLocation().getX(),
 				station.getLocation().getY(),
 				station.getFacilityName(),
@@ -60,7 +60,7 @@ public class RailStationDAO  extends GenericDAO<RailStation>{
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format(select_format,
 				"stopLogicalID","name","waiting","x","y",
-				tableName,"type","railstation"));
+				tableName,"type",filterValue));
 		while(rs.next()) {
 			RailStation station = new RailStation(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5)); 
 			stations.add(station);

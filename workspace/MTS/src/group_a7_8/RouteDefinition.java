@@ -31,5 +31,13 @@ public class RouteDefinition {
 	public void setFacility(Facility facility) {
 		this.facility = facility;
 	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("route: "+route.toString());
+		sb.append("order: "+order);
+		sb.append("facility: "+facility.toString());
+		return sb.toString();
+	}
 
 }

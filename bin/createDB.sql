@@ -1,8 +1,8 @@
 CREATE TABLE STOP(
   id              	SERIAL PRIMARY KEY,
-  type				      char(20) NOT NULL,
+  type				      varchar(50) NOT NULL,
   stopLogicalID		  int NOT NULL,
-  NAME              CHAR(50) NOT NULL,
+  NAME              varCHAR(50) NOT NULL,
   waiting           int NOT NULL,
   x          		    numeric NOT NULL,
   y          		    numeric NOT NULL
@@ -10,15 +10,15 @@ CREATE TABLE STOP(
 
 CREATE TABLE ROUTE(
   id              	SERIAL PRIMARY KEY,
-  type				      char(20) NOT NULL,
+  type				      varchar(50) NOT NULL,
   routeLogicalID	  int NOT NULL,
   routenumber		    int NOT NULL,
-  NAME              CHAR(50) NOT NULL
+  NAME              varCHAR(50) NOT NULL
 );
 
 CREATE TABLE VEHICLE (
   id              	SERIAL PRIMARY KEY,
-  type            	char(20),
+  type            	varchar(20),
   vehicleLogicalID	int NOT NULL,
   routeLogicalID  	int NOT NULL,
   location  	  	  int NOT NULL,
@@ -33,21 +33,21 @@ CREATE TABLE PATH (
   id              	SERIAL PRIMARY KEY,
   originID          int,
   destinationID     int,
-  originType        char(50),
-  destinationType   char(50),
+  originType        varchar(50),
+  destinationType   varchar(50),
   speedLimit        numeric,
-  isBlocked         char(20),
-  type              char(50)
+  isBlocked         varchar(20),
+  type              varchar(50)
 );
 
 CREATE TABLE HAZARD (
   id              	SERIAL PRIMARY KEY,
   originID          int,
   destinationID     int,
-  originType        char(50),
-  destinationType   char(50),
+  originType        varchar(50),
+  destinationType   varchar(50),
   delayFactor   	  numeric NOT NULL,
-  type              char(50) NOT NULL
+  type              varchar(50) NOT NULL
 );
 
 CREATE TABLE FUELCONSUMPTION (
@@ -56,18 +56,18 @@ CREATE TABLE FUELCONSUMPTION (
   amount      	  	numeric NOT NULL,
   passengers  	    int NOT NULL,
   vehicleID         int,
-  vehicleType       char(50),
+  vehicleType       varchar(50),
   originID          int,
   destinationID     int,
-  originType        char(50),
-  destinationType   char(50),
-  type              char(50) NOT NULL
+  originType        varchar(50),
+  destinationType   varchar(50),
+  type              varchar(50) NOT NULL
 );
 
 CREATE TABLE EVENT (
  id                  SERIAL PRIMARY KEY,
  eventID             int NOT NULL,
- type                char(50),
+ type                varchar(50),
  timeRank            int NOT NULL,
  speedLimit          numeric,
  delayFactor         numeric,
@@ -75,20 +75,20 @@ CREATE TABLE EVENT (
  repairDuration      int,
  originID            int,
  destinationID       int,
- originType          char(50),
- destinationType     char(50),
+ originType          varchar(50),
+ destinationType     varchar(50),
  vehicleID           int,
- vehicleType         char(50),
+ vehicleType         varchar(50),
  exchangePointID     int,
- exchangePointType   char(50)
+ exchangePointType   varchar(50)
 );
 
 CREATE TABLE ROUTEDEFINITION (
  id                  SERIAL PRIMARY KEY,
- routeType           char(50) NOT NULL,
+ routeType           varchar(50) NOT NULL,
  routeID             int NOT NULL,
  seqno               int NOT NULL,
- stopType            char(50) NOT NULL,
+ stopType            varchar(50) NOT NULL,
  stopID              int NOT NULL,
- type                char(50) NOT NULL
+ type                varchar(50) NOT NULL
  );

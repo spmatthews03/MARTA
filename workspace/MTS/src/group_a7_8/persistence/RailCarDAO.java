@@ -35,7 +35,7 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"capacity",
 				"speed",
 				railCar.getID(),
-				railCar.getType(),
+				filterValue,
 				railCar.getRouteID(),
 				(int)railCar.getLocation(),
 				(int)railCar.getPassengers(),
@@ -51,7 +51,7 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"capacity",
 				"speed",
 				railCar.getID(),
-				railCar.getType(),
+				filterValue,
 				railCar.getRouteID(),
 				railCar.getLocation(),
 				railCar.getPassengers(),
@@ -73,7 +73,7 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 				"passengers",
 				"capacity",
 				"speed",
-				tableName, "type", "train"));
+				tableName, "type", filterValue));
 		while(rs.next()) {
 			RailCar vehicle = new RailCar(
 					   rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5),

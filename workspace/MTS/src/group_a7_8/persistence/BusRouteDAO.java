@@ -26,10 +26,10 @@ public class BusRouteDAO  extends GenericDAO<BusRoute>{
 		Statement stmt = con.createStatement();
 		System.out.println(String.format(insert_format,tableName,
 				"routeLogicalID","type","name","routenumber",
-				route.getID(),route.getType(),route.getName(),route.getNumber()));
+				route.getID(),filterValue,route.getName(),route.getNumber()));
 		stmt.execute(String.format(insert_format,tableName,
 				"routeLogicalID","type","name","routenumber",
-				route.getID(),route.getType(),route.getName(),route.getNumber()));
+				route.getID(),filterValue,route.getName(),route.getNumber()));
 		stmt.close();
 	}
 
@@ -41,7 +41,7 @@ public class BusRouteDAO  extends GenericDAO<BusRoute>{
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format(select_format,
 				"routeLogicalID","name","routenumber",
-				tableName,"type","busroute"));
+				tableName,"type",filterValue));
 		while(rs.next()) {
 		   BusRoute route = new BusRoute(rs.getInt(1),rs.getInt(3),rs.getString(2));
 		   routes.add(route);

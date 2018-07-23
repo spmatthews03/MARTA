@@ -94,14 +94,14 @@ public class FuelConsumptionDAO extends GenericDAO<FuelConsumption>{
 				tableName,"type",filterValue));
 		while(rs.next()) {
 			Bus bus = system.getBus(rs.getInt(4));
-			Facility origin = getFacility(rs.getString(8),rs.getInt(6));
-			Facility destination = getFacility(rs.getString(9),rs.getInt(7));
+			Facility origin = getFacility(rs.getString(8).trim(),rs.getInt(6));
+			Facility destination = getFacility(rs.getString(9).trim(),rs.getInt(7));
 			PathKey pk = new PathKey(origin, destination);
 
 			FuelConsumption fuelConsumption = new FuelConsumption(bus, pk, 
 					   rs.getInt(1), rs.getDouble(2), rs.getInt(3));
 			fuelConsumptions.add(fuelConsumption);
-		   System.out.printf("retrieved %s\n", fuelConsumption);
+		   System.out.printf("retrieved %s\n", fuelConsumption.toJSON());
 		}
 		return fuelConsumptions;
 	}

@@ -752,7 +752,7 @@ public class SimDriver implements StateChangeListener{
     	synchronized(lock) {
 		if(updateManager==null) return;
 		String message = toJSON();
-		System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
+		//System.out.printf("new state:\n---------------------\n%s\n---------------------\n", message);
 		try {
 			updateManager.post(message);
 		} catch (IOException e) {
@@ -1011,12 +1011,7 @@ public class SimDriver implements StateChangeListener{
 			pathHazards.add(hazard);
 			martaModel.getAllHazards().put(hazard.getPathKey(), pathHazards);};
 			
-		ArrayList<FuelConsumption> reportsDB = getDao(Table.FUELCONSUMPTION).find();
-		for(FuelConsumption report : reportsDB) {
-			Hashtable<Bus,ArrayList<FuelConsumption>> reports = martaModel.getFuelConsumption();
-			ArrayList<FuelConsumption> busReports = reports.get(report.getBus());
-			busReports.add(report);
-		};
+
 		
 		//Route definitions
 		ArrayList<RouteDefinition> definitions = getDao(Table.ROUTEDEFINITION).find();
@@ -1033,6 +1028,12 @@ public class SimDriver implements StateChangeListener{
 				rr.addNewStation(rdef.getFacility().get_uniqueID());
 			}
 		}
+		
+		ArrayList<FuelConsumption> reportsDB = getDao(Table.FUELCONSUMPTION).find();
+		for(FuelConsumption report : reportsDB) {
+			ArrayList<FuelConsumption> busReports = martaModel.getFuelConsumptionList(report.getBus());
+			busReports.add(report);
+		};
 		
 		
 		//restoring events from database
