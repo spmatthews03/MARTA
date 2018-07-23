@@ -21,8 +21,8 @@ public class PathDAO extends GenericDAO<Path>{
 	}
 
 	private String insert_format=
-			"insert into %s (%s,%s,%s,%s,%s,%s,%s %s) "+
-			"VALUES(%d,%d,'%s','%s',%f,'%s','%d','%s')";
+			"insert into %s (%s,%s,%s,%s,%s,%s,%s, %s) "+
+			"VALUES(%d,%d,'%s','%s',%f,'%s',%d,'%s')";
 
 	@Override
 	public void save(Path path) throws SQLException {

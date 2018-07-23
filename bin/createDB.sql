@@ -30,14 +30,15 @@ CREATE TABLE VEHICLE (
 );
 
 CREATE TABLE PATH (
-  id              	SERIAL PRIMARY KEY,
-  originID          int,
-  destinationID     int,
-  originType        varchar(50),
-  destinationType   varchar(50),
-  speedLimit        numeric,
-  isBlocked         varchar(20),
-  type              varchar(50)
+  id              	 SERIAL PRIMARY KEY,
+  originID           int,
+  destinationID      int,
+  originType         varchar(50),
+  destinationType    varchar(50),
+  speedLimit         numeric,
+  deltaStallDuration numeric,
+  isBlocked          varchar(20),
+  type               varchar(50)
 );
 
 CREATE TABLE HAZARD (
