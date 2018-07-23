@@ -35,11 +35,14 @@ import group_a7_8.persistence.BusRouteDAO;
 import group_a7_8.persistence.BusStopDAO;
 import group_a7_8.persistence.DAOManager;
 import group_a7_8.persistence.GenericDAO;
+import group_a7_8.persistence.HazardDAO;
+import group_a7_8.persistence.PathDAO;
 import group_a7_8.persistence.RailCarDAO;
 import group_a7_8.persistence.RailRouteDAO;
 import group_a7_8.persistence.RailStationDAO;
 import group_a7_8.persistence.SetPathDelayEventDAO;
 import group_a7_8.persistence.DAOManager.Table;
+import group_a7_8.persistence.FuelConsumptionDAO;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
 import group_a7_8.PathKey;
@@ -872,7 +875,35 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save rail station");
 			}	
     	}
-    	
+    	for (Path path : martaModel.getPaths().values()) {
+    		try {
+				((PathDAO)getDao(Table.PATH)).save(path);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save path");
+			}	
+    	}
+    	for (ArrayList<Hazard> hazard : martaModel.getAllHazards().values()) {
+    		try {
+    			for (int i = 0; i < hazard.size(); i++) {
+    				((HazardDAO)getDao(Table.HAZARD)).save(hazard.get(i));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save hazard");
+			}	
+    	}
+    	for (ArrayList<FuelConsumption> fuelConsumption : martaModel.getAllFuelConsumptions().values()) {
+    		try {
+    			for (int i = 0; i < fuelConsumption.size(); i++) {
+    				((FuelConsumptionDAO)getDao(Table.FUELCONSUMPTION)).save(fuelConsumption.get(i));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save hazard");
+			}	
+    	}
+
     	//persisting events
     	for(SimEvent event: simEngine.getEvents()) {
     		System.out.printf("eventtype: %s\n",event.getType());

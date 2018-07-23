@@ -539,6 +539,9 @@ public class TransitSystem {
 		return this.hazards;
 	}
 
+	public Hashtable<Bus, ArrayList<FuelConsumption>> getAllFuelConsumptions() {
+		return this.fuelConsumption;
+	}
 
 	
 }
