@@ -14,6 +14,14 @@ public class BlockPathEvent extends SimEvent{
 		this.path = path;
 	}
 
+	public Path getPath() {
+		return this.path;
+	}
+
+	public RailCar getTrain() {
+		return this.train;
+	}
+
 	@Override
 	public void execute() {
 		displayEvent();
