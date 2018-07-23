@@ -146,9 +146,10 @@ public class MoveBusEvent extends SimEvent{
 			activeBus.set_nextLocation(0);
             
             int towingDuration = activeBus.getTowDuration();
+            int repairDuration = activeBus.getRepairDuration();
             
             //resume bus service once at the depot
-            eventQueue.add(new VehicleResumeServiceEvent(system,eventID,getRank()+towingDuration,activeBus));
+            eventQueue.add(new VehicleResumeServiceEvent(system,eventID,(int)(getRank()+towingDuration+repairDuration),activeBus));
             
         }
         else{
