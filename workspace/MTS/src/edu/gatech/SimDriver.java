@@ -466,7 +466,7 @@ public class SimDriver implements StateChangeListener{
             		Bus bus = martaModel.getBus(bus_ID);
             		double fuel_level = bus.getFuelLevel();
             		double total_fuel_consumed = martaModel.getTotalFuelConsumed(bus);
-            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f.", bus_ID, fuel_level, total_fuel_consumed);
+            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f\n", bus_ID, fuel_level, total_fuel_consumed);
             	}
             	            	
                 break;
