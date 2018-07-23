@@ -304,26 +304,26 @@
 	  
 	  $scope.$watch('time',function(){
 		  if(!(typeof $scope.path === "undefined") && !(typeof $scope.path.path === "undefined")){
-			  $log.info('path noticed time changed');
-			  $log.info('time: ',$scope.time);
-			  $log.info($scope.path);
+			  //$log.info('path noticed time changed');
+			  //$log.info('time: ',$scope.time);
+			  //$log.info($scope.path);
 			  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
 			  var vehicle = mtsService.getPathVehicle($scope.path.path.origin.type,$scope.path.path.origin.ID,$scope.path.path.destination.ID,$scope.path.route);
 			  if(!(typeof vehicle === "undefined")){
-				  $log.info('path vehicle');
-				  $log.info(vehicle);
+				 // $log.info('path vehicle');
+				  //$log.info(vehicle);
 				  if(vehicle.prevLocation == $scope.path.startLocation && vehicle.nextLocation == $scope.path.endLocation){
-					  $log.info('here! prevLocation: '+vehicle.prevLocation+', startLocation: '+$scope.path.startLocation);
+					  //$log.info('here! prevLocation: '+vehicle.prevLocation+', startLocation: '+$scope.path.startLocation);
 					  var vehicleEvent = mtsService.getVehicleEvent(vehicle.type,vehicle.ID);
 					  if(!(typeof vehicleEvent === "undefined") ){
-						  $log.info('vehicleEvent');
-						  $log.info(vehicleEvent);
+						  //$log.info('vehicleEvent');
+						  //$log.info(vehicleEvent);
 						  if(vehicleEvent.time >= $scope.time){
-							  $log.info($scope.path);
-							  $log.info(vehicle);
-							  $log.info(vehicleEvent);
+							  //$log.info($scope.path);
+							  //$log.info(vehicle);
+							  //$log.info(vehicleEvent);
 							  $scope.path.vehicleAtPath.push(vehicle);
-							  $log.info($scope.path);
+							  //$log.info($scope.path);
 						  }
 						  else{
 							  $scope.path.vehicleAtPath.splice(0,$scope.path.vehicleAtPath);
@@ -338,7 +338,7 @@
 	  });
 	  //$scope.path.speedLimit=-1;
 	  //$scope.path.delayFactor=-1;
-	  $log.info('simController');
+	  //$log.info('simController');
 		
   };
   var vehicleController = function($scope, $log){

@@ -102,7 +102,7 @@
   }; 
   //controllers
   var simConfigController = function($scope, $log, $http, mtsService, fileReader){
-	  $log.info('simConfigController');
+	  //$log.info('simConfigController');
 	 // $scope.toggleOn = false;
 	  $scope.switch = function(){
 	  	$scope.toggleOn = !$scope.toggleOn;
@@ -171,7 +171,7 @@
       };
       $scope.fuelReport = function(){
     	  var command = "fuel_report";
-    	  $log.info('command: '+command);
+    	  ///$log.info('command: '+command);
 		  mtsService.state.commands.push({index:mtsService.state.commands.length,line:command,processed:false});
 		  mtsService.executeCommand(command);
 	  };
@@ -266,7 +266,7 @@
 		  mtsService.state.commandOption='';
 	  };
 	  $scope.cancelAddCommand = function(){
-		  $log.info('cancel add command');
+		  //$log.info('cancel add command');
 		  mtsService.state.editMode=false;
 		  mtsService.state.commandOption='';
 		  //TODO reset input fields
@@ -303,7 +303,7 @@
                  //$log.info(mtsService.state.commands);               
              });			
 	  }
-	  $log.info('simConfigController');
+	  //$log.info('simConfigController');
 
   };
   

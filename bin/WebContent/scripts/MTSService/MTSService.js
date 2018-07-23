@@ -100,7 +100,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
  	      });
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
-  		   //$log.info(update);
+  		   //$log.info(update.reports);
   		   state.reports.vehicles.splice(0,state.reports.vehicles.length);
     		 state.reports.minAmount=0;
       		 state.reports.maxAmount = 0;

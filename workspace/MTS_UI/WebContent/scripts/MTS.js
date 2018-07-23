@@ -3,7 +3,7 @@
 	//console.log('bootstrapping angular');
 	//defining the application controller
 	var appController = function($scope, $log, $rootScope,mtsService){
-		$log.info('MTSController');
+		//$log.info('MTSController');
 		$scope.mts = mtsService.state;
 		$scope.priorSimToggle=function(){
 			mtsService.state.priorSim = !mtsService.state.priorSim;
@@ -26,12 +26,12 @@
 		};
 		$scope.toggleShowVideo = function(){
 			mtsService.state.showVideo = !mtsService.state.showVideo;
-			$log.info('toggle showVideo');
+			//$log.info('toggle showVideo');
 			if(mtsService.state.showVideo) mtsService.state.showMenu = false;
 			if(!mtsService.state.showVideo) mtsService.state.showMenu=true;
 		}
 		$scope.activeTab = 0;
-		$log.info('MTSController');
+		//$log.info('MTSController');
 		
 	};
 

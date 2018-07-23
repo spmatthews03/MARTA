@@ -37,11 +37,11 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
    var sendCommands = function(){
 	   //$log.info('sendCommands');
 	   if(!state.holdCommands && !commandBlocked && state.commandsQueue.length>0){
-		   $log.info(state.commandsQueue.length+" commands to send");
+		   //$log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
 		   $log.info('sending :'+command);
 	    	if(command=="quit"){
-	  		    $log.info('winners never quit');
+	  		    //$log.info('winners never quit');
 	    		state.showMenu = true;
 	    		state.showVideo = false;
 	    		state.execMode = true;
@@ -51,7 +51,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    	var promise = $http.get('/api/MTS/command?line=' + command);
 	    	promise.then(
 	    	          function(payload) { 
-	    	        	  $log.info('service call returned:', payload);
+	    	        	  //$log.info('service call returned:', payload);
 	    	        	  process(JSON.parse(payload.data.state));
 	    	          },
 	    	          function(errorPayload) {
@@ -61,7 +61,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	   }
    }
    var process = function(update){
-      $log.info(update);
+      //$log.info(update);
 	  if(update.hasOwnProperty('time')){
 		  state.time = update.time;
 	  }
@@ -100,7 +100,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
  	      });
   	   }
   	   if(update.hasOwnProperty('reports') && update.reports.length>0){
-  		   //$log.info(update);
+  		   //$log.info(update.reports);
   		   state.reports.vehicles.splice(0,state.reports.vehicles.length);
     		 state.reports.minAmount=0;
       		 state.reports.maxAmount = 0;
@@ -176,13 +176,13 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 //    };
     var connect = function(){
 	    //open a socket to the server
-	    $log.info('initializing web socket client...');
+	    //$log.info('initializing web socket client...');
 	    var promise = $http.get('/api/MTS/priorSim');
     	promise.then(
     	          function(payload) { 
-    	        	  $log.info('priorSim returned :', payload);
+    	        	  //$log.info('priorSim returned :', payload);
     	        	  state.priorSim = payload.data.resultCode;
-    	        	  process(JSON.parse(payload.data.state));
+    	        	  if(payload.data.state)  process(JSON.parse(payload.data.state));
     	        	  //$log.info('hasPriorSim = '+state.priorSim);
     	        	  
     	          },

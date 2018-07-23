@@ -62,7 +62,7 @@ public class RailStationDAO  extends GenericDAO<RailStation>{
 				"stopLogicalID","name","waiting","x","y",
 				tableName,"type",filterValue));
 		while(rs.next()) {
-			RailStation station = new RailStation(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5)); 
+			RailStation station = new RailStation(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDouble(4),rs.getDouble(5)); 
 			stations.add(station);
 		   System.out.printf("retrieved %s\n", station);
 		}

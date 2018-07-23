@@ -37,7 +37,9 @@
 	width:100%;
 	height:100%;
 }
-
+.stop-name{
+	font-size 16px;
+}
 .dashboard .dashboard-tile-label{
 	text-align: center;
 	padding-right:4px;

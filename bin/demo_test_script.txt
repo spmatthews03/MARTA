@@ -61,8 +61,7 @@ add_event,1,move_bus,7
 add_event,1,move_bus,11
 add_event,1,move_train,7
 add_event,5,move_train,20
-step_multi,2
+step_multi,6
 system_report
 fuel_report
 display_model
-quit

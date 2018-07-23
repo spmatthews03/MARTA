@@ -42,7 +42,7 @@ public class BusStopDAO  extends GenericDAO<BusStop>{
 				"stopLogicalID","name","waiting","x","y",
 				tableName,"type",filterValue));
 		while(rs.next()) {
-			BusStop stop = new BusStop(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getInt(5)); 
+			BusStop stop = new BusStop(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDouble(4),rs.getDouble(5)); 
 		   stops.add(stop);
 		   System.out.printf("retrieved %s\n", stop);
 		}

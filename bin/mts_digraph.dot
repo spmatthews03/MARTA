@@ -1,7 +1,7 @@
 digraph G
 {
-  bus11 [ label="bus#11 | 5 riding", color="#000077"];
-  bus7 [ label="bus#7 | 9 riding", color="#0000FF"];
+  bus11 [ label="bus#11 | 4 riding", color="#000077"];
+  bus7 [ label="bus#7 | 8 riding", color="#0000FF"];
 
   stop7 [ label="stop#7 | 0 waiting", color="#000077"];
   stop6 [ label="stop#6 | 0 waiting", color="#0000FF"];
@@ -12,8 +12,8 @@ digraph G
   stop1 [ label="stop#1 | 0 waiting", color="#770000"];
   stop0 [ label="stop#0 | 5 waiting", color="#770000"];
 
-  stop5 -> bus7 [ label=" dep" ];
-  bus7 -> stop7 [ label=" arr" ];
+  stop7 -> bus7 [ label=" dep" ];
+  bus7 -> stop1 [ label=" arr" ];
   stop4 -> bus11 [ label=" dep" ];
   bus11 -> stop0 [ label=" arr" ];
 }
