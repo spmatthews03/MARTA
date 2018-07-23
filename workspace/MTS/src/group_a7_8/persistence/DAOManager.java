@@ -26,7 +26,7 @@ public class DAOManager {
 		//events
 		,CLEARPATHDELAYEVENT,CLEARSPEEDLIMITEVENT,FACILITYOUTOFSERVICEEVENT,FACILITYRESUMESERVICEEVENT,MOVEBUSEVENT,
 		MOVETRAINEVENT,SETPATHDELAYEVENT,SETSPEEDLIMITEVENT,VEHICLEOUTOFSERVICEEVENT,VEHICLERESUMESERVICEEVENT
-		,BLOCKPATHEVENT
+		,BLOCKPATHEVENT, ROUTEDEFINITION
 		};
 	
     //Private
@@ -160,6 +160,8 @@ public class DAOManager {
             case HAZARD: daoCache.put(t, new HazardDAO(system,eventQueue,this.con));
             break;
             case FUELCONSUMPTION: daoCache.put(t, new FuelConsumptionDAO(system,eventQueue,this.con));
+            break;
+            case ROUTEDEFINITION: daoCache.put(t, new RouteDefinitionDAO(system,eventQueue,this.con));
             break;
 
             //events

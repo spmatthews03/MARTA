@@ -60,3 +60,13 @@ CREATE TABLE EVENT (
  exchangePointID     int,
  exchangePointType   char(50)
 );
+
+CREATE TABLE ROUTEDEFINITION (
+ id                  SERIAL PRIMARY KEY,
+ routeType           char(50) NOT NULL,
+ routeID             int NOT NULL,
+ seqno               int NOT NULL,
+ stopType            char(50) NOT NULL,
+ stopID              int NOT NULL,
+ type                char(50) NOT NULL
+ );

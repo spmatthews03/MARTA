@@ -7,14 +7,18 @@ import edu.gatech.Bus;
 import edu.gatech.BusRoute;
 import edu.gatech.BusStop;
 import edu.gatech.Depot;
+import edu.gatech.ExchangePoint;
+import edu.gatech.Facility;
 import edu.gatech.RailCar;
 import edu.gatech.RailRoute;
 import edu.gatech.RailStation;
 import edu.gatech.SimQueue;
 import edu.gatech.TransitSystem;
+import edu.gatech.VehicleRoute;
 import group_a7_8.FileProps;
 import group_a7_8.Path;
 import group_a7_8.PathKey;
+import group_a7_8.RouteDefinition;
 import group_a7_8.event.BlockPathEvent;
 import group_a7_8.event.ClearPathDelayEvent;
 import group_a7_8.event.ClearSpeedLimitEvent;
@@ -116,6 +120,7 @@ public class DBTest {
 		VehicleOutOfServiceEventDAO vehicleOutOfServiceEventDAO = (VehicleOutOfServiceEventDAO)getDAO(Table.VEHICLEOUTOFSERVICEEVENT);
 		VehicleResumeServiceEventDAO vehicleResumeServiceEventDAO = (VehicleResumeServiceEventDAO)getDAO(Table.VEHICLERESUMESERVICEEVENT);
 		BlockPathEventDAO blockPathEventDAO = (BlockPathEventDAO)getDAO(Table.BLOCKPATHEVENT);
+		RouteDefinitionDAO routeDefinitionDAO = (RouteDefinitionDAO)getDAO(Table.ROUTEDEFINITION);
 		checkDB();
 
 
@@ -175,11 +180,33 @@ public class DBTest {
 		vehicleOutOfServiceEventDAO.save((VehicleOutOfServiceEvent)events.get(9));
 		vehicleResumeServiceEventDAO.save((VehicleResumeServiceEvent)events.get(10));
 		blockPathEventDAO.save((BlockPathEvent)events.get(11));
+		
+		//route definitions
+		VehicleRoute route = br1;
+		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+			Facility facility = (route.getType().equals("busRoute")?((BusRoute)route).getBusStop(system, stopLocation):((RailRoute)route).getRailStation(system, stopLocation));
+			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+			routeDefinitionDAO.save(rdef);
+		}
+		route = tr1;
+		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+			Facility facility = (route.getType().equals("busRoute")?((BusRoute)route).getBusStop(system, stopLocation):((RailRoute)route).getRailStation(system, stopLocation));
+			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+			routeDefinitionDAO.save(rdef);
+		}
+		
 		checkDB();
 		
 		//clear cache
 		events.clear();
 		System.out.println("system has " + events.size() + " events in cache");
+		
+		//route definitions
+		br1.clearLocations();
+		tr1.clearLocations();
+		System.out.printf("route %s has %d locations\n",br1.getName(),br1.getLength());
+		System.out.printf("route %s has %d locations\n",tr1.getName(),tr1.getLength());
+		
 		
 		//restore events from db
 		int i=0;
@@ -198,8 +225,24 @@ public class DBTest {
 		for(BlockPathEvent event : blockPathEventDAO.find()) { events.put(i++, event); }
 		System.out.println("system has " + events.size() + " events in cache");
 		
+		//route definitions
+		for(RouteDefinition rdef : routeDefinitionDAO.find()) {
+			if(rdef.getRoute().getType().equals("busRoute")) {
+				System.out.println("extending bus route");
+				BusRoute br = (BusRoute)rdef.getRoute();
+				br.addNewStop(rdef.getFacility().get_uniqueID());
+			}
+			if(rdef.getRoute().getType().equals("railRoute")) {
+				System.out.println("extending rail route");
+				RailRoute rr = (RailRoute)rdef.getRoute();
+				rr.addNewStation(rdef.getFacility().get_uniqueID());
+			}
+		}
+		System.out.printf("route %s has %d locations\n",br1.getName(),br1.getLength());
+		System.out.printf("route %s has %d locations\n",tr1.getName(),tr1.getLength());
+		
 		//remove test data from db
-		clearDB();
+		//clearDB();
 		checkDB();		
 
 	}

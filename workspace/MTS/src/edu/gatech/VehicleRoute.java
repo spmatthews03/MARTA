@@ -143,4 +143,7 @@ public abstract class VehicleRoute {
         return result;
     }
 
+    public void clearLocations() {
+    	this.exchangePointsOnRoute.clear();
+    }
 }
