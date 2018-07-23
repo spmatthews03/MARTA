@@ -95,7 +95,9 @@ public class FuelConsumptionDAO extends GenericDAO<FuelConsumption>{
 		while(rs.next()) {
 			Bus bus = system.getBus(rs.getInt(4));
 			Facility origin = getFacility(rs.getString(8).trim(),rs.getInt(6));
+			if(origin==null) {System.out.printf("origin is null, type: %s, id: %d",rs.getString(8),rs.getInt(6));}
 			Facility destination = getFacility(rs.getString(9).trim(),rs.getInt(7));
+			if(destination==null) {System.out.printf("destination is null, type: %s, id: %d",rs.getString(9),rs.getInt(7));}
 			PathKey pk = new PathKey(origin, destination);
 
 			FuelConsumption fuelConsumption = new FuelConsumption(bus, pk, 

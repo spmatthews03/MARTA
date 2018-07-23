@@ -78,8 +78,8 @@ public class PathDAO extends GenericDAO<Path>{
 				"isBlocked",
 				tableName,"type",filterValue));
 		while(rs.next()) {
-			Facility origin = getFacility(rs.getString(3),rs.getInt(1));
-			Facility destination = getFacility(rs.getString(4),rs.getInt(2));
+			Facility origin = getFacility(rs.getString(3).trim(),rs.getInt(1));
+			Facility destination = getFacility(rs.getString(4).trim(),rs.getInt(2));
 			PathKey pk = new PathKey(origin, destination);
 
 			Path path = new Path(system, pk);

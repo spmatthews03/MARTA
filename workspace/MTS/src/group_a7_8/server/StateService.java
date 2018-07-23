@@ -70,7 +70,7 @@ public class StateService {
 	        result.setResultCode(priorSim);
 		} catch (Exception e) {
 			e.printStackTrace();
-	        result.setMessage(String.format("ERROR: %x", e.getMessage()));
+	        result.setMessage(String.format("ERROR: %s\n", e.getMessage()));
 	        result.setResultCode(false);
 		} 
 		

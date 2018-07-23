@@ -544,5 +544,7 @@ public class TransitSystem {
 		return this.fuelConsumption;
 	}
 
-	
+	public void setDepot(Depot depot) {
+		this.depot = depot;
+	}
 }

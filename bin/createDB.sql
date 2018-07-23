@@ -3,7 +3,7 @@ CREATE TABLE STOP(
   type				      varchar(50) NOT NULL,
   stopLogicalID		  int NOT NULL,
   NAME              varCHAR(50) NOT NULL,
-  waiting           int NOT NULL,
+  waiting           int,
   x          		    numeric NOT NULL,
   y          		    numeric NOT NULL
 );

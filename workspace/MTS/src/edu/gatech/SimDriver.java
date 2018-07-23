@@ -46,6 +46,7 @@ import group_a7_8.persistence.RailStationDAO;
 import group_a7_8.persistence.RouteDefinitionDAO;
 import group_a7_8.persistence.SetPathDelayEventDAO;
 import group_a7_8.persistence.DAOManager.Table;
+import group_a7_8.persistence.DepotDAO;
 import group_a7_8.persistence.FuelConsumptionDAO;
 import group_a7_8.server.StateChangeListener;
 import group_a7_8.server.UpdateManager;
@@ -837,7 +838,8 @@ public class SimDriver implements StateChangeListener{
 	public boolean save() throws ClassNotFoundException, SQLException, Exception {
         if(persistenceOn) {
         	System.out.println("saving state ...");
-            for (Bus bus : martaModel.getBuses().values()) {
+        	((DepotDAO)getDao(Table.DEPOT)).save(martaModel.getDepot());
+        for (Bus bus : martaModel.getBuses().values()) {
     		try {
 				((BusDAO)getDao(Table.BUS)).save(bus);
 			} catch (Exception e) {
@@ -988,6 +990,10 @@ public class SimDriver implements StateChangeListener{
 	@SuppressWarnings("unchecked")
 	public void restoreSim() throws ClassNotFoundException, SQLException, Exception {
 		//restoring core entities from database
+		ArrayList<Depot> depots = getDao(Table.DEPOT).find();
+		if(depots !=null && depots.size()>0) martaModel.setDepot(depots.get(0));
+		else System.out.printf("no depots\n");
+		
 		ArrayList<BusStop> busStops = getDao(Table.BUSSTOP).find();
 		for(BusStop stop : busStops) {martaModel.getStops().put(stop.get_uniqueID(), stop);};
 		ArrayList<BusRoute> busRoutes = getDao(Table.BUSROUTE).find();
@@ -1002,8 +1008,6 @@ public class SimDriver implements StateChangeListener{
 		ArrayList<RailCar> trains = getDao(Table.RAILCAR).find();
 		for(RailCar vehicle : trains) {martaModel.getTrains().put(vehicle.getID(), vehicle);};
 		
-//		ArrayList<Path> paths = getDao(Table.PATH).find();
-//		for(Path path : paths) {martaModel.getPaths().put(path.getPathKey(),path);};
 
 		ArrayList<Hazard> hazards = getDao(Table.HAZARD).find();
 		for(Hazard hazard : hazards) {
@@ -1028,7 +1032,10 @@ public class SimDriver implements StateChangeListener{
 				rr.addNewStation(rdef.getFacility().get_uniqueID());
 			}
 		}
-		
+
+		ArrayList<Path> paths = getDao(Table.PATH).find();
+		for(Path path : paths) {martaModel.getPaths().put(path.getPathKey(),path);};
+
 		ArrayList<FuelConsumption> reportsDB = getDao(Table.FUELCONSUMPTION).find();
 		for(FuelConsumption report : reportsDB) {
 			ArrayList<FuelConsumption> busReports = martaModel.getFuelConsumptionList(report.getBus());

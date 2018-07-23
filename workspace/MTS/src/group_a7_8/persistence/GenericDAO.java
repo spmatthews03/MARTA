@@ -67,6 +67,8 @@ public abstract class GenericDAO<T> {
 			return system.getBusStop(id);
 		case "railStop":
 			return system.getRailStation(id);
+		case "depot":
+			return system.getDepot();
 		}
 		return null;
 	}
