@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -882,6 +883,12 @@ public class SimDriver implements StateChangeListener{
     	for (BusRoute busRoute : martaModel.getBusRoutes().values()) {
     		try {
 				((BusRouteDAO)getDao(Table.BUSROUTE)).save(busRoute);
+				for(int stopLocation=0;stopLocation<busRoute.getLength();stopLocation++){
+	    			System.out.println("route "+busRoute.getName()+" has "+busRoute.getLength()+" locations");
+	    			Facility facility = busRoute.getBusStop(martaModel, stopLocation);
+	    			RouteDefinition rdef = new RouteDefinition(busRoute, stopLocation, facility);
+	    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+	    		}
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Unable to save bus route");
@@ -906,6 +913,12 @@ public class SimDriver implements StateChangeListener{
     	for (RailRoute railRoute : martaModel.getRailRoutes().values()) {
     		try {
 				((RailRouteDAO)getDao(Table.RAILROUTE)).save(railRoute);
+				for(int stopLocation=0;stopLocation<railRoute.getLength();stopLocation++){
+	    			System.out.println("route "+railRoute.getName()+" has "+railRoute.getLength()+" locations");
+	    			Facility facility = railRoute.getRailStation(martaModel, stopLocation);
+	    			RouteDefinition rdef = new RouteDefinition(railRoute, stopLocation, facility);
+	    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+	    		}
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Unable to save rail route");
@@ -919,51 +932,81 @@ public class SimDriver implements StateChangeListener{
 				System.out.println("Unable to save rail station");
 			}	
     	}
-    	for (Path path : martaModel.getPaths().values()) {
-    		try {
-				((PathDAO)getDao(Table.PATH)).save(path);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Unable to save path");
-			}	
-    	}
-    	for (ArrayList<Hazard> hazard : martaModel.getAllHazards().values()) {
-    		try {
-    			for (int i = 0; i < hazard.size(); i++) {
-    				((HazardDAO)getDao(Table.HAZARD)).save(hazard.get(i));
-    			}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Unable to save hazard");
-			}	
-    	}
-    	for (ArrayList<FuelConsumption> fuelConsumption : martaModel.getAllFuelConsumptions().values()) {
-    		try {
-    			for (int i = 0; i < fuelConsumption.size(); i++) {
-    				((FuelConsumptionDAO)getDao(Table.FUELCONSUMPTION)).save(fuelConsumption.get(i));
-    			}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Unable to save hazard");
-			}	
-    	}
-    	//route definitions
-    	// bus routes
-    	for(BusRoute route :martaModel.getBusRoutes().values()) {	
-    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
-    			Facility facility = route.getBusStop(martaModel, stopLocation);
-    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
-    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
-    		}
-    	}
-    	for(RailRoute route :martaModel.getRailRoutes().values()) {	
-    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
-    			Facility facility = route.getRailStation(martaModel, stopLocation);
-    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
-    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+    	
+    	Enumeration<PathKey> pkEnum = martaModel.getPaths().keys();
+    	while(pkEnum.hasMoreElements())
+    	{
+    		PathKey pk = pkEnum.nextElement();
+    		if(martaModel.getPaths().containsKey(pk)) {
+    			Path path = martaModel.getPaths().get(pk);
+        		try {
+    				((PathDAO)getDao(Table.PATH)).save(path);
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    				System.out.println("Unable to save path");
+    			}	
     		}
     	}
     	
+    	Enumeration<PathKey> pkEnum2 = martaModel.getAllHazards().keys();
+    	while(pkEnum2.hasMoreElements())
+    	{
+    		PathKey pk = pkEnum2.nextElement();
+    		ArrayList<Hazard> pathHazards = martaModel.getHazards(pk);
+    		try {
+    			for (int j = 0; j < pathHazards.size(); j++) {
+    				((HazardDAO)getDao(Table.HAZARD)).save(pathHazards.get(j));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save hazard");
+			}	
+    	}
+
+   	
+    	
+    	Enumeration<Bus> busEnum =    martaModel.getAllFuelConsumptions().keys();
+    	while(busEnum.hasMoreElements()) {
+    		Bus bus = busEnum.nextElement();
+    		ArrayList<FuelConsumption> fuelConsumption= martaModel.getFuelConsumptionList(bus);
+    		try {
+    			for (int j = 0; j < fuelConsumption.size(); j++) {
+    				((FuelConsumptionDAO)getDao(Table.FUELCONSUMPTION)).save(fuelConsumption.get(j));
+    			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to save fuel consumption");
+			}	
+    	}
+
+
+    	//route definitions
+    	// bus routes
+//    	System.out.printf("saving bus route definitions\n");
+//    	Enumeration<Integer> brouteIDEnum = martaModel.getBusRoutes().keys();
+//    	while(brouteIDEnum.hasMoreElements()){
+//    		BusRoute route = martaModel.getBusRoutes().get(brouteIDEnum.nextElement());
+//    	    System.out.printf("route %s has %s stops\n",route.getName(), route.getLength());
+//    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+//    			System.out.println("route "+route.getName()+" has "+route.getLength()+" locations");
+//    			Facility facility = route.getBusStop(martaModel, stopLocation);
+//    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+//    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+//    		}
+//    	}
+//
+//    	System.out.printf("saving bus route definitions\n");
+//    	Enumeration<Integer> rrouteIDEnum = martaModel.getRailRoutes().keys();
+//    	while(rrouteIDEnum.hasMoreElements()){
+//    		RailRoute route = martaModel.getRailRoutes().get(rrouteIDEnum.nextElement());
+//    	    System.out.printf("route %s has %s stops\n",route.getName(), route.getLength());
+//    		for(int stopLocation=0;stopLocation<route.getLength();stopLocation++){
+//    			System.out.println("route "+route.getName()+" has "+route.getLength()+" locations");
+//    			Facility facility = route.getRailStation(martaModel, stopLocation);
+//    			RouteDefinition rdef = new RouteDefinition(route, stopLocation, facility);
+//    			((RouteDefinitionDAO)getDao(Table.ROUTEDEFINITION)).save(rdef);
+//    		}
+//    	}
     	
     	//persisting events
     	for(SimEvent event: simEngine.getEvents()) {

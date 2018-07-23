@@ -35,7 +35,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 
     
    var sendCommands = function(){
-	   
+	   //$log.info('sendCommands');
 	   if(!state.holdCommands && !commandBlocked && state.commandsQueue.length>0){
 		   $log.info(state.commandsQueue.length+" commands to send");
 		   var command = state.commandsQueue.shift();
@@ -52,7 +52,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    	promise.then(
 	    	          function(payload) { 
 	    	        	  $log.info('service call returned:', payload);
-	    	        	  process(payload.data.state);
+	    	        	  process(JSON.parse(payload.data.state));
 	    	          },
 	    	          function(errorPayload) {
 	    	              $log.error('failure error:', errorPayload);
@@ -180,8 +180,9 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 	    var promise = $http.get('/api/MTS/priorSim');
     	promise.then(
     	          function(payload) { 
-    	        	  //$log.info('priorSim returned :', payload);
+    	        	  $log.info('priorSim returned :', payload);
     	        	  state.priorSim = payload.data.resultCode;
+    	        	  process(JSON.parse(payload.data.state));
     	        	  //$log.info('hasPriorSim = '+state.priorSim);
     	        	  
     	          },

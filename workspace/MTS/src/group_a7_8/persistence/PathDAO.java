@@ -85,7 +85,7 @@ public class PathDAO extends GenericDAO<Path>{
 		while(rs.next()) {
 			Facility origin = getFacility(rs.getString(3).trim(),rs.getInt(1));
 			Facility destination = getFacility(rs.getString(4).trim(),rs.getInt(2));
-			Double speedLimit = rs.getDouble(5);
+			//Double speedLimit = rs.getDouble(5);
 			boolean isBlocked = rs.getBoolean(6);
 			int delta_stall_duration = rs.getInt(7);
 			PathKey pk = new PathKey(origin, destination);
@@ -95,7 +95,16 @@ public class PathDAO extends GenericDAO<Path>{
 				path.setIsBlocked();
 			}
 			path.set_delta_stall_duration(delta_stall_duration);
-			path.setSpeedLimit(speedLimit);
+			String speedLimit =  rs.getString(5);
+			double sl = -1;
+			if(speedLimit!=null){
+				try {
+					sl = Double.parseDouble(speedLimit);
+				}catch(NumberFormatException e) {}
+			}
+				
+			
+			path.setSpeedLimit(sl);
 
 		    paths.add(path);
 		}

@@ -66,8 +66,8 @@ public class StateService {
 	        if(priorSim) {
 	        	driver.restoreSim();
 	        	//driver.updateState();
-	        	result.setState(driver.toJSON());
 	        }
+        	result.setState(driver.toJSON());
 	        result.setResultCode(priorSim);
 		} catch (Exception e) {
 			e.printStackTrace();
