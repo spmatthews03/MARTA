@@ -32,8 +32,8 @@ public abstract class SimEvent {
     public abstract String getDescription();
     
     public void displayEvent() {
-        // System.out.println();
-        //System.out.println("# event rank: " + Integer.toString(timeRank) + " type: " + eventType + " ID: " + Integer.toString(eventID));
+        System.out.println();
+        System.out.println("# event rank: " + Integer.toString(timeRank) + " type: " + eventType + " ID: " + Integer.toString(eventID));
     }
 
     //Override the equals method to compare the object
