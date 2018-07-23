@@ -119,7 +119,7 @@
 		var x=0;
 		$scope.depotFill = function(){
 			//$log.info('depoFill');
-			/*
+			
 			$log.info("x="+x);
 			switch(x){
 			case 0:
@@ -183,7 +183,7 @@
 			}
 			if(mtsService.state.paths.length>0){
 				$log.info(mtsService.state.paths[0]);
-			}*/
+			}
 			$log.info(mtsService.state);
 		};
 		
