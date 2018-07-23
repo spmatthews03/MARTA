@@ -60,7 +60,7 @@ public class HazardDAO extends GenericDAO<Hazard>{
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s,%s,%s,%s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<Hazard> find() throws SQLException {

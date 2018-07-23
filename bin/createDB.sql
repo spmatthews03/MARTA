@@ -31,13 +31,13 @@ CREATE TABLE VEHICLE (
 
 CREATE TABLE PATH (
   id              	SERIAL PRIMARY KEY,
-  type              char(50),
   originID          int,
   destinationID     int,
   originType        char(50),
   destinationType   char(50),
   speedLimit        numeric,
-  isBlocked         char(20)
+  isBlocked         char(20),
+  type              char(50)
 );
 
 CREATE TABLE HAZARD (
