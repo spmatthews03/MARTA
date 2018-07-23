@@ -79,6 +79,10 @@ public class RailCarDAO extends GenericDAO<RailCar>{
 					   rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5),
 					   rs.getInt(6)
 					   );
+			vehicle.system = this.system;
+	    	int inputRoute = rs.getInt(2);
+	    	vehicle.set_rail_route(this.system.getRailRoute(inputRoute));
+
 			railCars.add(vehicle);
 		    System.out.printf("retrieved %s\n", vehicle);
 		}
