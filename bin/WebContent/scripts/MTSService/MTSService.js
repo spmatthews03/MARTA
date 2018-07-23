@@ -121,6 +121,7 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
 
   			   
   			   report.name = report.vehicle.type+" #"+report.vehicle.ID;
+  			   report.ID = Number(report.vehicle.ID);
   			   state.reports.vehicles.push(report);
 //  			   $log.info('report:');
 //  			   $log.info(report);
@@ -271,7 +272,20 @@ var service = function ($log, $timeout, $interval, $http, $rootScope){
   		 state.reports.minPassengers=0;
   		 state.reports.maxPassengers = 0;
   		 state.reports.totalPassengers = 0;
-  		 state.fuelByBusData={};
+  		 //state.fuelByBusData={};
+   		if (state.fuelByBusData.hasOwnProperty('min')) {
+  			state.fuelByBusData.min=0;
+  		}
+  		if (state.fuelByBusData.hasOwnProperty('max')) {
+  			state.fuelByBusData.max=0;
+  		}
+  		if (state.fuelByBusData.hasOwnProperty('total')) {
+  			state.fuelByBusData.total=0;
+  		}
+  		if (state.fuelByBusData.hasOwnProperty('items')) {
+  			state.fuelByBusData.items.splice(0,state.fuelByBusData.items.length);
+  		}
+  		 
 
 
   		 editMode:false;

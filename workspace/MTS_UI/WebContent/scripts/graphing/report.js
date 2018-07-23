@@ -8,11 +8,12 @@
   		controller: 'reportController',
   		replace: true,
       template: '<div layout="column">'+
-                   '<div class="report-title">{{title}}</div>'+
+                   '<div class="report-title" ng-click="echo()">{{title}}</div>'+
                    '<report-summary-header data-count="reportdata.items.length" data-total="reportdata.total" data-label="summarylabel"></report-summary-header>'+
                    '<div class="bar-chart-body">'+
-                     '<bar-item class="bar-item" ng-repeat="item in reportdata.items | orderBy:\'amount\':\'reverse:true\'" data-item="item" data-min="reportdata.min" data-max="reportdata.max" data-index="$index"></bar-item>'+
+                     '<bar-item class="bar-item" ng-repeat="item in reportdata.items | orderBy:\'ID\'" data-item="item" data-min="reportdata.min" data-max="reportdata.max" data-index="$index"></bar-item>'+
                    '</div>'+
+                   //'<div><div ng-repeat="item in reportdata.items">{{item}}</div></div>'+
                 '</div>' 
   	}
   };
