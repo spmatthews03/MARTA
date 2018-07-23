@@ -115,7 +115,7 @@ public class DBTest {
 		SetSpeedLimitEventDAO setSpeedLimitEventDAO = (SetSpeedLimitEventDAO)getDAO(Table.SETSPEEDLIMITEVENT);
 		VehicleOutOfServiceEventDAO vehicleOutOfServiceEventDAO = (VehicleOutOfServiceEventDAO)getDAO(Table.VEHICLEOUTOFSERVICEEVENT);
 		VehicleResumeServiceEventDAO vehicleResumeServiceEventDAO = (VehicleResumeServiceEventDAO)getDAO(Table.VEHICLERESUMESERVICEEVENT);
-		
+		BlockPathEventDAO blockPathEventDAO = (BlockPathEventDAO)getDAO(Table.BLOCKPATHEVENT);
 		checkDB();
 
 
@@ -160,8 +160,7 @@ public class DBTest {
 		events.put(8, new MoveTrainEvent(system, 8, 8, t1));
 		events.put(9, new VehicleOutOfServiceEvent(system, 9, 9, b1,10,10));
 		events.put(10, new VehicleResumeServiceEvent(system, 10, 10, b1));
-		//events.put(11, new BlockPathEvent(system, 1, 1, p_ts1_ts2);
-		//events.put(12, new ClearBlockPathEvent(system, 1, 1, p_ts1_ts2);
+		events.put(11, new BlockPathEvent(system, 1, 1, t1,p_ts1_ts2));
 		System.out.println("system has " + events.size() + " events in cache");
 		
 		//save events
@@ -175,7 +174,7 @@ public class DBTest {
 		moveTrainEventDAO.save((MoveTrainEvent)events.get(8));
 		vehicleOutOfServiceEventDAO.save((VehicleOutOfServiceEvent)events.get(9));
 		vehicleResumeServiceEventDAO.save((VehicleResumeServiceEvent)events.get(10));
-		//blockPathEventDAO.save((BlockPathEvent)events.get(1));
+		blockPathEventDAO.save((BlockPathEvent)events.get(11));
 		checkDB();
 		
 		//clear cache
@@ -195,6 +194,8 @@ public class DBTest {
 		for(SetSpeedLimitEvent event : setSpeedLimitEventDAO.find()) { events.put(i++, event); }
 		for(VehicleOutOfServiceEvent event : vehicleOutOfServiceEventDAO.find()) { events.put(i++, event); }
 		for(VehicleResumeServiceEvent event : vehicleResumeServiceEventDAO.find()) { events.put(i++, event); }
+		for(VehicleResumeServiceEvent event : vehicleResumeServiceEventDAO.find()) { events.put(i++, event); }
+		for(BlockPathEvent event : blockPathEventDAO.find()) { events.put(i++, event); }
 		System.out.println("system has " + events.size() + " events in cache");
 		
 		//remove test data from db

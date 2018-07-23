@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import group_a7_8.FileProps;
 import group_a7_8.FuelConsumption;
@@ -460,6 +461,16 @@ public class SimDriver implements StateChangeListener{
 
             	break;
             case "fuel_report":
+            	
+            	Hashtable<Integer, Bus> buses = martaModel.getBuses();
+            	Set <Integer> bus_IDs = buses.keySet();
+            	for (Integer bus_ID : bus_IDs) {
+            		Bus bus = martaModel.getBus(bus_ID);
+            		double fuel_level = bus.getFuelLevel();
+            		double total_fuel_consumed = martaModel.getTotalFuelConsumed(bus);
+            		System.out.printf(" bus %d - current fuel level: %f, total fuel consumed: %f\n", bus_ID, fuel_level, total_fuel_consumed);
+            	}
+            	            	
                 break;
 
             default:
@@ -898,6 +909,9 @@ public class SimDriver implements StateChangeListener{
     		case "vehicle_resumed_service":
     			getDao(Table.VEHICLERESUMESERVICEEVENT).save(event);
     			break;
+    		case "set_path_block":
+    			getDao(Table.BLOCKPATHEVENT).save(event);
+    			break;
     		}
     	}
     	
@@ -972,6 +986,9 @@ public class SimDriver implements StateChangeListener{
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		events = getDao(Table.VEHICLERESUMESERVICEEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.BLOCKPATHEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		System.out.printf("event queue now has %d events.\n", simEngine.getSize());
+		
 	}
 }

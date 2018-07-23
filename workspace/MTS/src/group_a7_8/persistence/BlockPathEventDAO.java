@@ -23,8 +23,8 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 	}
 
 	private String insert_format=
-			"insert into %s (%s,%s,%s,%s,%s,%s,%s,%s) " +
-			"VALUES(%s,%d,%s,%d,%d,%d,%d,%s)";
+			"insert into %s (%s,%s,%s,%s,%s,%s,%s,%s,%s) " +
+			"VALUES('%s',%d,'%s',%d,'%s',%d,%d,%d,'%s')";
 
 	@Override
 	public void save(BlockPathEvent blockPathEvent) throws SQLException {
@@ -39,6 +39,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 				"destinationID",
 
 				/* Train object */
+				"vehicleType",
 				"vehicleID",
 
 				/* Event data */
@@ -53,6 +54,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 				path.getDestination().get_uniqueID(),
 				
 				/* Train object */		
+				blockPathEvent.getTrain().getType(),
 				blockPathEvent.getTrain().getID(),
 
 				/* Event data */
@@ -70,6 +72,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 				"destinationID",
 
 				/* Train object */
+				"vehicleType",
 				"vehicleID",
 
 				/* Event data */
@@ -84,6 +87,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 				path.getDestination().get_uniqueID(),
 				
 				/* Train object */		
+				blockPathEvent.getTrain().getType(),
 				blockPathEvent.getTrain().getID(),
 
 				/* Event data */
@@ -95,7 +99,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 		stmt.close();
 	}
 
-	private String select_format="select %s,%s,%s,%s,%s,%s,%s,%s from %s where %s='%s'";
+	private String select_format="select %s,%s,%s,%s,%s,%s,%s,%s,%s from %s where %s='%s'";
 
 	@Override
 	public ArrayList<BlockPathEvent> find() throws SQLException {
@@ -109,13 +113,14 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 				"destinationID",
 
 				/* Train object */
+				"vehicleType",
 				"vehicleID",
 
 				/* Event data */
 				"eventID",
 				"timeRank",
 				"type",
-				tableName,"type","BlockPathEvent"));
+				tableName,"type",filterValue));
 
 		while(rs.next()) {
 			/* Path object */
@@ -130,7 +135,7 @@ public class BlockPathEventDAO extends GenericDAO<BlockPathEvent>{
 			Path    path		 = this.system.getPath(path_key);
 
 			/* Train object */
-			int trainID		= rs.getInt(5);
+			int trainID		= rs.getInt(6);
 			RailCar train	= system.getTrain(trainID);
 			
 			/* Event data */
