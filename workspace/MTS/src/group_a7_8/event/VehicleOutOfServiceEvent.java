@@ -1,6 +1,8 @@
 package group_a7_8.event;
 
 import edu.gatech.Bus;
+import edu.gatech.RailCar;
+import edu.gatech.RailRoute;
 import edu.gatech.RailStation;
 import edu.gatech.TransitSystem;
 import edu.gatech.Vehicle;
@@ -42,11 +44,20 @@ public class VehicleOutOfServiceEvent extends SimEvent{
 		System.out.printf(" %s%d is out of service\n",vehicle.getType(),vehicle.getID());
 		
 		if(vehicle.getType().equals("Train")) {
-			RailStation lastStation = system.getRailStation(vehicle.getPastLocation());
-			RailStation nextStation = system.getRailStation(vehicle.getLocation());
-			PathKey currentPathKey = system.getPathKey(lastStation, nextStation);
-			if (currentPathKey != null) { // Invalid path mayb it's the start up station
-				system.getPath(currentPathKey).set_delta_stall_duration(stallDuration);
+			RailCar activeTrain = system.getTrain(vehicle.getID());
+			RailRoute activeRoute = system.getRailRoute(activeTrain.getRouteID());
+			
+			RailStation lastStation = activeRoute.getRailStation(system, activeTrain.getPastLocation());
+			RailStation nextStation = activeRoute.getRailStation(system, activeTrain.getLocation());
+			RailStation nextNextStation = activeRoute.getRailStation(system, (activeTrain.getLocation()+1) % activeRoute.getLength());
+			PathKey nextPathKey = system.getPathKey(nextStation, nextNextStation);
+			//System.out.println(" last location " + activeTrain.getPastLocation() + ", station " + lastStation.getFacilityName());
+			//System.out.println(" next location " + activeTrain.getLocation() + ", station " + nextStation.getFacilityName());
+			//System.out.println(" next next station " + nextNextStation.getFacilityName());
+			
+			if (nextPathKey != null) { // Invalid path mayb it's the start up station
+				system.getPath(nextPathKey).set_delta_stall_duration(stallDuration);
+				//System.out.println(" train " + activeTrain.getID() + " should be stalling at " + nextPathKey.toString() + " for " + system.getPath(nextPathKey).get_delta_stall_duration());
 			} else {
 				System.out.printf(" %s%d has no path available for setting duration stall\n",
 						  vehicle.getType(), vehicle.getID());

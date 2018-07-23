@@ -153,7 +153,7 @@ public class MoveTrainEvent extends SimEvent {
                 //System.out.println(" MoveTrainEvent: \t" + current_path.toJSON());
         		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
-        		System.out.println(" path: " + activeStation.getFacilityName() + " -> " + nextStation.getFacilityName() + " is blocked\n");
+        		System.out.println(" path: " + current_path.toString() + " is blocked\n");
                 eventQueue.add(
                 		new MoveTrainEvent(system, eventID,
                 						   absolute_stall_period , train));
@@ -165,9 +165,10 @@ public class MoveTrainEvent extends SimEvent {
 
         		int delta_stall_period = current_path.get_delta_stall_duration();
         		Integer absolute_stall_period = getRank() + delta_stall_period;
+        		//System.out.println(" train " + activeTrain.getID() + " is stalling at " + current_path.toString() + " for " + current_path.get_delta_stall_duration());
         		
         		current_path.setIsBlocked();
-        		System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is blocking path: " + activeStation.getFacilityName() + " -> " + nextStation.getFacilityName() + "\n");
+        		System.out.println(" train " + Integer.toString(activeTrain.getID()) + " is blocking path: " + current_path.toString() + "\n");
             	BlockPathEvent clear_block_path_event =
             			new BlockPathEvent(this.system, eventQueue.getNextEventID(), absolute_stall_period, activeTrain, current_path);
             	System.out.printf("%s\n", clear_block_path_event.toJSON());
