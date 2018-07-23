@@ -907,6 +907,9 @@ public class SimDriver implements StateChangeListener{
     		case "vehicle_resumed_service":
     			getDao(Table.VEHICLERESUMESERVICEEVENT).save(event);
     			break;
+    		case "set_path_block":
+    			getDao(Table.BLOCKPATHEVENT).save(event);
+    			break;
     		}
     	}
     	
@@ -981,6 +984,9 @@ public class SimDriver implements StateChangeListener{
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		events = getDao(Table.VEHICLERESUMESERVICEEVENT).find();
 		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
+		events = getDao(Table.BLOCKPATHEVENT).find();
+		for(int i=0;i<events.size();i++) {simEngine.add(events.get(i));}
 		System.out.printf("event queue now has %d events.\n", simEngine.getSize());
+		
 	}
 }
