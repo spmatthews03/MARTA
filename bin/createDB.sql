@@ -58,7 +58,7 @@ CREATE TABLE FUELCONSUMPTION (
   originID          int,
   destinationID     int,
   originType        char(50),
-  destinationType   char(50),
+  destinationType   char(50)
 );
 
 CREATE TABLE EVENT (
