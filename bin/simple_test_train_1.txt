@@ -1,3 +1,4 @@
+add_depot,90,North Depot,0.09,0.12
 add_station,0,Appleville,5,0.0,0.08
 add_station,1,Banana Bayou,0,0.04,0.1
 add_station,2,Star City,0,0.08,0.16
