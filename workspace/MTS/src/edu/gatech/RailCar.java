@@ -31,30 +31,16 @@ public class RailCar extends Vehicle {
     public RailCar(int uniqueValue, int inputRoute, int inputLocation, int inputPassengers, int inputCapacity, int inputSpeed) {
         super(uniqueValue, inputRoute,inputLocation,inputPassengers,inputCapacity,inputSpeed);
         this.vehicleType = "Train";
-        
-        // Convert from station id given in input to location index
-
+        this.set_location_index_current(inputLocation);
+        this.set_location_index_next(inputLocation);
         //this.debug_print();
     }
     
-    public void set_rail_route_and_location_index(RailRoute my_rail_route) {
+    public void set_rail_route(RailRoute my_rail_route) {
         if (my_rail_route == null) {
         	System.err.println("Error: Train has invalid rail route");
         }
-
     	this.rail_route = my_rail_route;
-
-        Integer location_index = this.get_location_index_current();
-
-        this.set_location_index_current(location_index);
-        
-
-        location_index = this.rail_route.getNextLocation(location_index);
-        if (location_index == null) {
-        	System.err.println("Error: Train starting next location is invalid");
-        }
-
-        this.set_location_index_next(location_index);
     }
     
     private RailStation get_rail_station(int location_index) {
@@ -87,8 +73,19 @@ public class RailCar extends Vehicle {
     }
     
     public void advance_station_location() {
-        int location_index_next = this.get_location_index_next();
-    	int location_index_next_next = this.get_location_index_next_next();
+        int location_index_current;
+    	int location_index_next;
+    	int location_index_next_next;
+
+    	location_index_current = this.getPastLocation();
+    	location_index_next    = this.getLocation(); 
+    	if (location_index_current == location_index_next) {
+            location_index_next = location_index_current;
+        	location_index_next_next = location_index_current + 1;    		
+    	} else {
+            location_index_next = this.get_location_index_next();
+        	location_index_next_next = this.get_location_index_next_next();
+    	}
         
         this.set_location_index_current(location_index_next);
         this.set_location_index_next(location_index_next_next);
