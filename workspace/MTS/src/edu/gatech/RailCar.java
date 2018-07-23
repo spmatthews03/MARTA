@@ -147,7 +147,7 @@ public class RailCar extends Vehicle {
     	return station;
     }
 
-    private Path get_path_next() {
+    public Path get_path_next() {
     	this.check_references();
 
 		RailStation station_current = this.get_rail_station_current();
@@ -158,7 +158,7 @@ public class RailCar extends Vehicle {
     	return path;
     }
 
-    private Path get_path_next_next() {
+    public Path get_path_next_next() {
     	this.check_references();
 
 		RailStation station_current = this.get_rail_station_next();

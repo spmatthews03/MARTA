@@ -448,6 +448,8 @@ public class SimDriver implements StateChangeListener{
             		System.out.println("Error: train " + my_trainID + " has not been created");
                     return true;
             	}
+            	Path path_next = tran_broken_down.get_path_next();
+            	path_next.set_delta_stall_duration(delta_stall_period);
             	VehicleOutOfServiceEvent setRailOutOfServiceEvent =
             			new VehicleOutOfServiceEvent(martaModel, simEngine.getNextEventID(),
             										 start_time, tran_broken_down,

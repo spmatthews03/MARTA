@@ -28,6 +28,7 @@ public class BlockPathEvent extends SimEvent{
 		//System.out.printf("BlockPathEvent %s:\n\t%s\n", eventType,toJSON());
 
 		this.path.clearIsBlocked();
+		this.path.set_delta_stall_duration(0);
 
 		train.set_prevLocation(0);
 		train.set_nextLocation(1);
