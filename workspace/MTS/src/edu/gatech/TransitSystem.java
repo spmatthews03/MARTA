@@ -197,18 +197,18 @@ public class TransitSystem {
     		//System.out.printf("Added path %s to route %d-%s\n", path2,busRoute.getID(),busRoute.getName());
     		
     		//now the path from the prior stop to the begin stop is no longer valid.  remove it
-    		/*
+    		
     		if(busRoute.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStop,beginStop);
 	    		for(PathKey pathKey : paths.keySet()) {
-	    			if(pathKey.equals(pathToRemove)) {
+	    			if(pathKey == pathToRemove) {
 	        			paths.remove(pathKey);
 	        			//System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,busRoute.getID(),busRoute.getName());
 	        			break;
 	    			}
 	    		}    		
     		}
-    		*/
+    		
     	}
     	if(listener!=null)listener.updateState();
     }
@@ -246,7 +246,7 @@ public class TransitSystem {
     		if(railRoute.getLength()>2) {
 	    		PathKey pathToRemove = new PathKey(priorStation,beginStation);
 	    		for(PathKey pathKey : paths.keySet()) {
-	    			if(pathKey.equals(pathToRemove)) {
+	    			if(pathKey == pathToRemove) {
 	        			paths.remove(pathKey);
 	        			//System.out.printf("Removed path %s from route %d-%s\n", pathToRemove,railRoute.getID(),railRoute.getName());
 	        			break;
@@ -269,7 +269,7 @@ public class TransitSystem {
     public PathKey getPathKey(ExchangePoint origin, ExchangePoint destination) {
     	PathKey pathKey = null;
     	for(PathKey pk : paths.keySet()) {
-    		if(pk.getOrigin().equals(origin) && pk.getDestination().equals(destination)) {
+    		if(pk.getOrigin() == origin && pk.getDestination() == destination) {
     			pathKey = pk;
     			break;
     		}
