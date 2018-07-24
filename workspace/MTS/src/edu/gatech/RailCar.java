@@ -176,7 +176,7 @@ public class RailCar extends Vehicle {
         Double true_speed = Double.valueOf(this.getSpeed());
         Double travel_distance;
 
-        if (speed_limit != null) {
+        if (speed_limit != null && speed_limit>-1) {
         	if (speed_limit < true_speed) {
         		true_speed = speed_limit;
         	}

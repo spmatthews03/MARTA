@@ -98,7 +98,7 @@ public class MoveBusEvent extends SimEvent{
             // calculate the effect of speed limit
             Double speedlimit = currentPath.getSpeedLimit();
             Double true_speed = Double.valueOf(activeBus.getSpeed());
-            if (speedlimit != null) {
+            if (speedlimit != null && speedlimit>-1) {
             	if (speedlimit < true_speed) {
             		true_speed = speedlimit;
             	}
@@ -106,6 +106,7 @@ public class MoveBusEvent extends SimEvent{
             //System.out.println(" speed limit between stop " + activeStopID + " and stop " + nextStopID + " is " + speedlimit);
             
             int travelTime = (int)((1 + (distanceToNextStop.intValue() * 60 / true_speed)) * delayfactor) ;
+            
 
             // Create a fuel report to next stop
             FuelConsumption report = new FuelConsumption(activeBus, new PathKey(activeStop, nextStop),
@@ -127,6 +128,9 @@ public class MoveBusEvent extends SimEvent{
             activeBus.setLocation(nextLocation);
 
             // generate next event for this bus
+            System.out.printf("move bus event ID %d for bus#%d for %d, where rank is %s and travel time is %d, distance to next stop %f\n",
+            		getID(),getBus().getID(),getRank() + travelTime,getRank(),travelTime,distanceToNextStop);
+            
             eventQueue.add(new MoveBusEvent(system, eventID, getRank() + travelTime,bus));
         }
         else if(activeBus.getOutOfService()){
