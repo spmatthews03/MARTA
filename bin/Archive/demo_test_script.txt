@@ -53,14 +53,14 @@ station_down,85,30,6
 train_speed_limit,85,30,6,5,15
 add_bus,7,0,0,8,10,20,50,50
 add_bus,11,1,0,5,10,40,100,30
-add_train,7,0,0,5,20,50
+add_train,99,0,0,5,20,50
 add_train,20,0,0,10,20,50
 bus_down,39,7,30,10
 train_down,66,7,30,40
 add_event,1,move_bus,7
 add_event,1,move_bus,11
-add_event,1,move_train,7
-add_event,5,move_train,20
+add_event,1,move_train,99
+add_event,15,move_train,20
 step_multi,6
 system_report
 fuel_report
